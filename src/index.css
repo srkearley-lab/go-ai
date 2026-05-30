@@ -1,0 +1,138 @@
+@import "tailwindcss";
+
+:root {
+  /* Typography scale — 1.25 ratio, 16px base */
+  --text-xs:   0.64rem;
+  --text-sm:   0.8rem;
+  --text-base: 1rem;
+  --text-md:   1.25rem;
+  --text-lg:   1.563rem;
+  --text-xl:   1.953rem;
+  --text-2xl:  2.441rem;
+  --text-3xl:  3.052rem;
+
+  /* 8px spacing grid */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-32: 128px;
+
+  /* Layout widths */
+  --width-sm:  640px;
+  --width-md:  768px;
+  --width-lg:  1024px;
+  --width-xl:  1280px;
+  --width-2xl: 1440px;
+
+  /* Border radius */
+  --radius-sm:   4px;
+  --radius-md:   8px;
+  --radius-lg:   12px;
+  --radius-xl:   16px;
+  --radius-full: 9999px;
+
+  /* Neutrals */
+  --color-neutral-0:   #ffffff;
+  --color-neutral-50:  #f8fafc;
+  --color-neutral-100: #f1f5f9;
+  --color-neutral-200: #e2e8f0;
+  --color-neutral-300: #cbd5e1;
+  --color-neutral-400: #94a3b8;
+  --color-neutral-500: #64748b;
+  --color-neutral-600: #475569;
+  --color-neutral-700: #334155;
+  --color-neutral-800: #1e293b;
+  --color-neutral-900: #0f172a;
+  --color-neutral-950: #020617;
+
+  /* Brand — Electric Indigo */
+  --color-brand-50:  #eef2ff;
+  --color-brand-100: #e0e7ff;
+  --color-brand-200: #c7d2fe;
+  --color-brand-400: #818cf8;
+  --color-brand-500: #6366f1;
+  --color-brand-600: #4f46e5;
+  --color-brand-700: #4338ca;
+  --color-brand-900: #312e81;
+
+  /* Accent — Amber */
+  --color-accent-50:  #fffbeb;
+  --color-accent-100: #fef3c7;
+  --color-accent-400: #fbbf24;
+  --color-accent-500: #f59e0b;
+  --color-accent-600: #d97706;
+
+  /* Semantic */
+  --color-success:       #16a34a;
+  --color-success-light: #dcfce7;
+  --color-danger:        #dc2626;
+  --color-danger-light:  #fee2e2;
+
+  /* Dark surfaces — site is dark-mode first */
+  --surface-base:    #080c18;
+  --surface-subtle:  #0d1120;
+  --surface-raised:  #131828;
+  --surface-overlay: #1b2236;
+
+  /* Text */
+  --text-primary:   #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-tertiary:  #64748b;
+  --text-disabled:  #334155;
+  --text-inverse:   #080c18;
+
+  /* Borders */
+  --border-default: #1b2236;
+  --border-strong:  #28315a;
+  --border-focus:   var(--color-brand-500);
+
+  /* Shadows */
+  --shadow-sm:    0 1px 2px 0 rgba(0,0,0,0.5);
+  --shadow-md:    0 4px 6px -1px rgba(0,0,0,0.5), 0 2px 4px -2px rgba(0,0,0,0.3);
+  --shadow-lg:    0 10px 15px -3px rgba(0,0,0,0.6), 0 4px 6px -4px rgba(0,0,0,0.3);
+  --shadow-xl:    0 20px 25px -5px rgba(0,0,0,0.7), 0 8px 10px -6px rgba(0,0,0,0.4);
+  --shadow-focus: 0 0 0 3px rgba(99,102,241,0.35);
+}
+
+/* Base reset */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  background: var(--surface-base);
+  color: var(--text-primary);
+  line-height: 1.6;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root { width: 100%; }
+
+h1, h2, h3, h4, h5, h6 { margin: 0; }
+p { margin: 0; }
+a { text-decoration: none; color: inherit; }
+button { font-family: inherit; }
+img { display: block; }
+
+/* Dot-grid texture — hero and accent sections */
+.dot-grid {
+  background-image: radial-gradient(circle, var(--border-strong) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--surface-base); }
+::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: var(--radius-full); }
+::-webkit-scrollbar-thumb:hover { background: var(--text-tertiary); }
