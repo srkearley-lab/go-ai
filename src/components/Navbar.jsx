@@ -52,43 +52,8 @@ export default function Navbar() {
           }}
         >
           {/* Logo */}
-          <Link
-            to="/"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 'var(--space-2)',
-              textDecoration: 'none',
-            }}
-          >
-            <span
-              style={{
-                width: 28,
-                height: 28,
-                background: 'var(--color-brand-500)',
-                borderRadius: 'var(--radius-md)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: 'var(--text-xs)',
-                fontWeight: 700,
-                color: 'var(--color-neutral-0)',
-                letterSpacing: '-0.02em',
-                flexShrink: 0,
-              }}
-            >
-              G
-            </span>
-            <span
-              style={{
-                fontSize: 'var(--text-base)',
-                fontWeight: 700,
-                color: 'var(--text-primary)',
-                letterSpacing: '-0.02em',
-              }}
-            >
-              GO AI
-            </span>
+          <Link to="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
+            <img src="/logo.png" alt="GO AI" className="h-8 w-auto" />
           </Link>
 
           {/* Desktop nav */}

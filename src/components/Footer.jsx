@@ -22,20 +22,8 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10 pb-12" style={{ borderBottom: '1px solid var(--border-default)' }}>
           {/* Brand */}
           <div className="md:col-span-1" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
-              <span
-                style={{
-                  width: 28, height: 28,
-                  background: 'var(--color-brand-500)',
-                  borderRadius: 'var(--radius-md)',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontSize: 'var(--text-xs)', fontWeight: 700,
-                  color: 'var(--color-neutral-0)',
-                }}
-              >G</span>
-              <span style={{ fontSize: 'var(--text-base)', fontWeight: 700, color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>
-                GO AI
-              </span>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <img src="/logo.png" alt="GO AI" className="h-7 w-auto" />
             </div>
             <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', lineHeight: 1.6, maxWidth: '26ch' }}>
               AI-powered websites and automation for businesses in Greece.
