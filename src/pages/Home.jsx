@@ -16,6 +16,10 @@ const ShaderAnimation = lazy(() =>
   import('../components/ShaderAnimation').then((m) => ({ default: m.ShaderAnimation }))
 )
 
+const ContainerScrollLazy = lazy(() =>
+  import('../components/ContainerScroll').then((m) => ({ default: m.ContainerScroll }))
+)
+
 const WHATSAPP = '#'
 
 // ── Data ─────────────────────────────────────────────────────────────────────
@@ -461,6 +465,147 @@ export default function Home() {
             ))}
           </motion.div>
         </div>
+      </section>
+
+      {/* ── Container scroll showcase ── */}
+      <section style={{ background: 'var(--surface-base)', borderTop: '1px solid var(--border-default)' }}>
+        <Suspense fallback={<div style={{ height: '80rem', background: 'var(--surface-base)' }} />}>
+          <ContainerScrollLazy
+            titleComponent={
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'var(--space-4)' }}>
+                <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--color-brand-400)' }}>
+                  What we build
+                </p>
+                <h2
+                  style={{
+                    fontSize: 'clamp(var(--text-xl), 3vw, var(--text-2xl))',
+                    fontWeight: 700,
+                    lineHeight: 1.15,
+                    letterSpacing: '-0.02em',
+                    color: 'var(--text-primary)',
+                    maxWidth: '22ch',
+                  }}
+                >
+                  See what GO AI builds for your business
+                </h2>
+                <p style={{ fontSize: 'var(--text-base)', lineHeight: 1.6, color: 'var(--text-secondary)', maxWidth: '48ch' }}>
+                  Premium websites, automation and content — all managed through WhatsApp
+                </p>
+              </div>
+            }
+          >
+            {/* Placeholder until a real screenshot is added as /public/demo-preview.png */}
+            <div
+              style={{
+                width: '100%',
+                height: '100%',
+                display: 'grid',
+                gridTemplateColumns: '240px 1fr',
+              }}
+            >
+              {/* Simulated sidebar */}
+              <div
+                style={{
+                  background: 'var(--surface-raised)',
+                  borderRight: '1px solid var(--border-default)',
+                  padding: 'var(--space-6)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: 'var(--space-3)',
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', marginBottom: 'var(--space-4)' }}>
+                  <div style={{ width: 24, height: 24, borderRadius: 'var(--radius-md)', background: 'var(--color-brand-500)' }} />
+                  <div style={{ width: 48, height: 6, borderRadius: 3, background: 'var(--text-tertiary)' }} />
+                </div>
+                {['Dashboard', 'Websites', 'SEO', 'Automation', 'Analytics', 'WhatsApp', 'Content'].map((item) => (
+                  <div
+                    key={item}
+                    style={{
+                      height: 32,
+                      borderRadius: 'var(--radius-md)',
+                      background: item === 'Dashboard' ? 'rgba(99,102,241,0.12)' : 'transparent',
+                      border: item === 'Dashboard' ? '1px solid rgba(99,102,241,0.2)' : 'none',
+                      display: 'flex',
+                      alignItems: 'center',
+                      padding: '0 var(--space-3)',
+                      gap: 'var(--space-2)',
+                    }}
+                  >
+                    <div style={{ width: 14, height: 14, borderRadius: 4, background: item === 'Dashboard' ? 'var(--color-brand-400)' : 'var(--border-strong)', flexShrink: 0 }} />
+                    <div style={{ height: 5, width: `${40 + item.length * 4}px`, borderRadius: 2, background: item === 'Dashboard' ? 'var(--color-brand-400)' : 'var(--text-disabled)' }} />
+                  </div>
+                ))}
+              </div>
+
+              {/* Simulated main panel */}
+              <div style={{ padding: 'var(--space-6)', display: 'flex', flexDirection: 'column', gap: 'var(--space-5)' }}>
+                {/* Stat cards row */}
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 'var(--space-4)' }}>
+                  {[
+                    { label: 'Website visits', value: '2,847', change: '+12%', up: true },
+                    { label: 'Enquiries',       value: '134',   change: '+28%', up: true },
+                    { label: 'Conversion rate', value: '4.7%',  change: '+0.8%', up: true },
+                  ].map((stat) => (
+                    <div
+                      key={stat.label}
+                      style={{
+                        background: 'var(--surface-raised)',
+                        border: '1px solid var(--border-default)',
+                        borderRadius: 'var(--radius-md)',
+                        padding: 'var(--space-4)',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: 'var(--space-2)',
+                      }}
+                    >
+                      <div style={{ height: 4, width: 60, borderRadius: 2, background: 'var(--text-disabled)' }} />
+                      <div style={{ height: 9, width: 50, borderRadius: 3, background: 'var(--text-secondary)' }} />
+                      <div style={{ height: 4, width: 30, borderRadius: 2, background: 'var(--color-success)' }} />
+                    </div>
+                  ))}
+                </div>
+
+                {/* Chart placeholder */}
+                <div
+                  style={{
+                    flex: 1,
+                    background: 'var(--surface-raised)',
+                    border: '1px solid var(--border-default)',
+                    borderRadius: 'var(--radius-md)',
+                    padding: 'var(--space-5)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: 'var(--space-4)',
+                  }}
+                >
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div style={{ height: 6, width: 80, borderRadius: 3, background: 'var(--text-secondary)' }} />
+                    <div style={{ display: 'flex', gap: 'var(--space-2)' }}>
+                      {['7d', '30d', '90d'].map((t) => (
+                        <div key={t} style={{ height: 20, width: 28, borderRadius: 'var(--radius-sm)', background: t === '30d' ? 'rgba(99,102,241,0.15)' : 'var(--surface-subtle)', border: t === '30d' ? '1px solid rgba(99,102,241,0.25)' : '1px solid var(--border-default)' }} />
+                      ))}
+                    </div>
+                  </div>
+                  {/* Bar chart */}
+                  <div style={{ flex: 1, display: 'flex', alignItems: 'flex-end', gap: 'var(--space-2)' }}>
+                    {[40, 65, 45, 80, 60, 90, 55, 75, 85, 70, 95, 60].map((h, i) => (
+                      <div
+                        key={i}
+                        style={{
+                          flex: 1,
+                          height: `${h}%`,
+                          borderRadius: '3px 3px 0 0',
+                          background: i === 10 ? 'var(--color-brand-500)' : 'rgba(99,102,241,0.25)',
+                        }}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ContainerScrollLazy>
+        </Suspense>
       </section>
 
       {/* ── What we do ── */}
