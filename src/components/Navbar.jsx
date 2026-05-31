@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
+import { GoAILogo } from './GoAILogo'
 
 const links = [
   { label: 'Services', href: '/services' },
@@ -53,7 +54,7 @@ export default function Navbar() {
         >
           {/* Logo */}
           <Link to="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
-            <img src="/logo.png" alt="GO AI" className="h-8 w-auto" />
+            <GoAILogo size="md" />
           </Link>
 
           {/* Desktop nav */}

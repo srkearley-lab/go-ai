@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { MessageCircle } from 'lucide-react'
+import { GoAILogo } from './GoAILogo'
 
 const WHATSAPP = '#'
 
@@ -23,7 +24,7 @@ export default function Footer() {
           {/* Brand */}
           <div className="md:col-span-1" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
-              <img src="/logo.png" alt="GO AI" className="h-7 w-auto" />
+              <GoAILogo size="sm" />
             </div>
             <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', lineHeight: 1.6, maxWidth: '26ch' }}>
               AI-powered websites and automation for businesses in Greece.
