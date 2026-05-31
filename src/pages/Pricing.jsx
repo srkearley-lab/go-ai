@@ -1,7 +1,10 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { motion, useReducedMotion } from 'framer-motion'
-import { Check, ArrowRight, MessageCircle } from 'lucide-react'
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
+import { Check, ArrowRight, MessageCircle, ShoppingCart, ChevronDown } from 'lucide-react'
 import PageHero from '../components/PageHero'
+import { useBasket, PACKAGE_FORM_TYPES } from '../context/BasketContext'
+import { packageDetails } from '../data/packageDetails'
 
 const WHATSAPP = '#'
 
@@ -427,9 +430,116 @@ function CTAButton({ to, label, primary = false }) {
   )
 }
 
+// ── Basket button ─────────────────────────────────────────────────────────────
+
+function BasketButton({ item }) {
+  const { addItem, removeItem, isInBasket } = useBasket()
+  const inBasket = isInBasket(item.id)
+  return (
+    <button
+      type="button"
+      onClick={() => inBasket ? removeItem(item.id) : addItem(item)}
+      style={{
+        height: 36, padding: '0 var(--space-4)',
+        display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-2)',
+        fontSize: 'var(--text-xs)', fontWeight: 500,
+        background: inBasket ? 'rgba(22,163,74,0.1)' : 'transparent',
+        color: inBasket ? 'var(--color-success)' : 'var(--text-secondary)',
+        border: `1px solid ${inBasket ? 'rgba(22,163,74,0.3)' : 'var(--border-default)'}`,
+        borderRadius: 'var(--radius-md)', cursor: 'pointer',
+        transition: 'all 120ms ease', fontFamily: 'inherit', flexShrink: 0,
+      }}
+      onMouseEnter={(e) => { if (!inBasket) { e.currentTarget.style.color = 'var(--text-primary)'; e.currentTarget.style.borderColor = 'var(--border-strong)' } }}
+      onMouseLeave={(e) => { if (!inBasket) { e.currentTarget.style.color = 'var(--text-secondary)'; e.currentTarget.style.borderColor = 'var(--border-default)' } }}
+    >
+      {inBasket
+        ? <><Check size={11} strokeWidth={3} /> In Basket</>
+        : <><ShoppingCart size={11} /> Add to Basket</>}
+    </button>
+  )
+}
+
+// ── Find Out More panel ───────────────────────────────────────────────────────
+
+function FindOutMorePanel({ name, item }) {
+  const details = packageDetails[name]
+  if (!details) return null
+
+  return (
+    <div style={{ borderTop: '1px solid var(--border-default)', paddingTop: 'var(--space-6)', marginTop: 'var(--space-4)', display: 'flex', flexDirection: 'column', gap: 'var(--space-6)' }}>
+      <div>
+        <h4 style={{ fontSize: 'var(--text-md)', fontWeight: 700, color: 'var(--text-primary)', lineHeight: 1.2, marginBottom: 'var(--space-3)' }}>
+          {details.headline}
+        </h4>
+        <p style={{ fontSize: 'var(--text-sm)', lineHeight: 1.7, color: 'var(--text-secondary)' }}>
+          {details.overview}
+        </p>
+      </div>
+
+      <div className="fom-grid grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Who this is for */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
+          <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', margin: 0 }}>Who this is for</p>
+          <p style={{ fontSize: 'var(--text-sm)', lineHeight: 1.6, color: 'var(--text-secondary)', margin: 0 }}>{details.whoFor}</p>
+        </div>
+
+        {/* What we need from you */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
+          <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', margin: 0 }}>What we need from you</p>
+          <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
+            {details.youNeed.map(item => (
+              <li key={item} style={{ display: 'flex', alignItems: 'flex-start', gap: 'var(--space-2)', fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
+                <span style={{ color: 'var(--color-brand-400)', flexShrink: 0, marginTop: 2 }}>→</span>
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* What's included */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
+          <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', margin: 0 }}>What's included</p>
+          <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
+            {details.included.map(i => (
+              <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 'var(--space-2)' }}>
+                <span style={{ width: 14, height: 14, borderRadius: '50%', background: 'rgba(99,102,241,0.1)', border: '1px solid rgba(99,102,241,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-brand-400)', flexShrink: 0, marginTop: 2 }}>
+                  <Check size={8} strokeWidth={3} />
+                </span>
+                <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-primary)', lineHeight: 1.5 }}>{i}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* How it works */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
+          <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', margin: 0 }}>How it works</p>
+          <ol style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
+            {details.steps.map((step, i) => (
+              <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 'var(--space-3)' }}>
+                <span style={{ width: 20, height: 20, borderRadius: '50%', background: 'var(--surface-overlay)', border: '1px solid var(--border-strong)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--color-brand-400)', flexShrink: 0, marginTop: 1 }}>
+                  {i + 1}
+                </span>
+                <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', lineHeight: 1.5 }}>{step}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </div>
+
+      {/* CTA */}
+      <div style={{ paddingTop: 'var(--space-2)' }}>
+        <BasketButton item={item} />
+      </div>
+    </div>
+  )
+}
+
 // ── Section 1 — Website Only ──────────────────────────────────────────────────
 
 function WebsiteOnlySection({ reduceMotion }) {
+  const [showDetails, setShowDetails] = useState(false)
+  const basketItem = { id: 'Website Only', name: 'Website Only', priceDisplay: '€350 one-off', formTypes: PACKAGE_FORM_TYPES['Website Only'] }
   return (
     <section style={{ padding: 'var(--space-16) var(--space-8)', background: 'var(--surface-base)' }}>
       <div style={{ maxWidth: 'var(--width-xl)', margin: '0 auto' }}>
@@ -470,7 +580,22 @@ function WebsiteOnlySection({ reduceMotion }) {
             <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', fontStyle: 'italic' }}>
               No monthly fee required. Add monthly support whenever you're ready.
             </p>
-            <CTAButton to="/contact" label={websiteOnly.cta} primary />
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-3)', alignItems: 'center' }}>
+              <CTAButton to="/contact" label={websiteOnly.cta} primary />
+              <BasketButton item={basketItem} />
+            </div>
+            <button
+              type="button"
+              onClick={() => setShowDetails(v => !v)}
+              style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-1)', background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-brand-400)', fontSize: 'var(--text-xs)', fontWeight: 500, padding: 0, fontFamily: 'inherit', transition: 'color 120ms ease' }}
+              onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--color-brand-200)' }}
+              onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--color-brand-400)' }}
+            >
+              {showDetails ? 'Hide details' : 'Find Out More'}
+              <motion.span animate={{ rotate: showDetails ? 180 : 0 }} transition={{ duration: 0.15 }} style={{ display: 'flex' }}>
+                <ChevronDown size={13} />
+              </motion.span>
+            </button>
           </div>
 
           {/* Right — features */}
@@ -482,6 +607,22 @@ function WebsiteOnlySection({ reduceMotion }) {
               {websiteOnly.features.map(f => <FeatureItem key={f} text={f} />)}
             </ul>
           </div>
+
+          {/* Find Out More panel — spans full width */}
+          <AnimatePresence>
+            {showDetails && (
+              <motion.div
+                key="fom-website-only"
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                style={{ overflow: 'hidden', gridColumn: '1 / -1' }}
+              >
+                <FindOutMorePanel name="Website Only" item={basketItem} />
+              </motion.div>
+            )}
+          </AnimatePresence>
         </motion.div>
 
         <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', marginTop: 'var(--space-5)', fontStyle: 'italic', textAlign: 'center' }}>
@@ -500,6 +641,13 @@ function WebsiteOnlySection({ reduceMotion }) {
 // ── Section 2 — Add-Ons ───────────────────────────────────────────────────────
 
 function AddOnCard({ addon, variants }) {
+  const [showDetails, setShowDetails] = useState(false)
+  const basketItem = {
+    id: addon.name,
+    name: addon.name,
+    priceDisplay: `€${addon.monthly}/month${addon.setup ? ` + €${addon.setup} setup` : ''}`,
+    formTypes: PACKAGE_FORM_TYPES[addon.name] || [],
+  }
   return (
     <motion.div
       variants={variants}
@@ -539,6 +687,35 @@ function AddOnCard({ addon, variants }) {
       <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
         {addon.features.map(f => <FeatureItem key={f} text={f} />)}
       </ul>
+
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 'var(--space-2)', paddingTop: 'var(--space-2)', borderTop: '1px solid var(--border-default)' }}>
+        <BasketButton item={basketItem} />
+        <button
+          type="button"
+          onClick={() => setShowDetails(v => !v)}
+          style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-1)', background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-brand-400)', fontSize: 'var(--text-xs)', fontWeight: 500, padding: 0, fontFamily: 'inherit' }}
+        >
+          {showDetails ? 'Hide' : 'Find Out More'}
+          <motion.span animate={{ rotate: showDetails ? 180 : 0 }} transition={{ duration: 0.15 }} style={{ display: 'flex' }}>
+            <ChevronDown size={12} />
+          </motion.span>
+        </button>
+      </div>
+
+      <AnimatePresence>
+        {showDetails && (
+          <motion.div
+            key={`fom-${addon.name}`}
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            style={{ overflow: 'hidden' }}
+          >
+            <FindOutMorePanel name={addon.name} item={basketItem} />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   )
 }
@@ -612,6 +789,13 @@ function SavingsBadge({ yearly, upfront }) {
 }
 
 function SmallBundleCard({ bundle, variants }) {
+  const [showDetails, setShowDetails] = useState(false)
+  const basketItem = {
+    id: bundle.name,
+    name: bundle.name,
+    priceDisplay: `€${bundle.oneOff} one-off + €${bundle.monthly}/month`,
+    formTypes: PACKAGE_FORM_TYPES[bundle.name] || [],
+  }
   return (
     <motion.div
       variants={variants}
@@ -652,12 +836,47 @@ function SmallBundleCard({ bundle, variants }) {
         {bundle.features.map(f => <FeatureItem key={f} text={f} />)}
       </ul>
 
-      <CTAButton to="/contact" label={bundle.cta} />
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 'var(--space-2)' }}>
+        <CTAButton to="/contact" label={bundle.cta} />
+        <BasketButton item={basketItem} />
+      </div>
+      <button
+        type="button"
+        onClick={() => setShowDetails(v => !v)}
+        style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-1)', background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-brand-400)', fontSize: 'var(--text-xs)', fontWeight: 500, padding: 0, fontFamily: 'inherit' }}
+      >
+        {showDetails ? 'Hide details' : 'Find Out More'}
+        <motion.span animate={{ rotate: showDetails ? 180 : 0 }} transition={{ duration: 0.15 }} style={{ display: 'flex' }}>
+          <ChevronDown size={12} />
+        </motion.span>
+      </button>
+
+      <AnimatePresence>
+        {showDetails && (
+          <motion.div
+            key={`fom-${bundle.name}`}
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            style={{ overflow: 'hidden' }}
+          >
+            <FindOutMorePanel name={bundle.name} item={basketItem} />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   )
 }
 
 function RecommendedBundleCard({ bundle, variants }) {
+  const [showDetails, setShowDetails] = useState(false)
+  const basketItem = {
+    id: bundle.name,
+    name: bundle.name,
+    priceDisplay: `€${bundle.oneOff} one-off + €${bundle.monthly}/month`,
+    formTypes: PACKAGE_FORM_TYPES[bundle.name] || [],
+  }
   return (
     <motion.div
       variants={variants}
@@ -703,7 +922,20 @@ function RecommendedBundleCard({ bundle, variants }) {
           Most growing businesses get better value from a bundle.
         </p>
 
-        <CTAButton to="/contact" label={bundle.cta} primary />
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-3)', alignItems: 'center' }}>
+          <CTAButton to="/contact" label={bundle.cta} primary />
+          <BasketButton item={basketItem} />
+        </div>
+        <button
+          type="button"
+          onClick={() => setShowDetails(v => !v)}
+          style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-1)', background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-brand-400)', fontSize: 'var(--text-xs)', fontWeight: 500, padding: 0, fontFamily: 'inherit' }}
+        >
+          {showDetails ? 'Hide details' : 'Find Out More'}
+          <motion.span animate={{ rotate: showDetails ? 180 : 0 }} transition={{ duration: 0.15 }} style={{ display: 'flex' }}>
+            <ChevronDown size={12} />
+          </motion.span>
+        </button>
       </div>
 
       {/* Right — features */}
@@ -715,6 +947,22 @@ function RecommendedBundleCard({ bundle, variants }) {
           {bundle.features.map(f => <FeatureItem key={f} text={f} accent />)}
         </ul>
       </div>
+
+      {/* Find Out More — spans both columns */}
+      <AnimatePresence>
+        {showDetails && (
+          <motion.div
+            key={`fom-rec-${bundle.name}`}
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            style={{ overflow: 'hidden', gridColumn: '1 / -1' }}
+          >
+            <FindOutMorePanel name={bundle.name} item={basketItem} />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   )
 }
@@ -927,6 +1175,14 @@ function FinalCTA({ reduceMotion }) {
 // ── Section 5 — One-Off Website Setup Pricing ────────────────────────────────
 
 function WebsiteSetupCard({ pkg, variants }) {
+  const [showDetails, setShowDetails] = useState(false)
+  const basketItem = {
+    id: pkg.name,
+    name: pkg.name,
+    priceDisplay: `From ${pkg.price} one-off`,
+    formTypes: PACKAGE_FORM_TYPES[pkg.name] || ['website'],
+  }
+
   if (pkg.featured) {
     return (
       <motion.div
@@ -963,7 +1219,20 @@ function WebsiteSetupCard({ pkg, variants }) {
           <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-secondary)', fontStyle: 'italic' }}>
             Starting price for initial build only. Final quote based on scope.
           </p>
-          <CTAButton to="/contact" label={pkg.cta} primary />
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-3)', alignItems: 'center' }}>
+            <CTAButton to="/contact" label={pkg.cta} primary />
+            <BasketButton item={basketItem} />
+          </div>
+          <button
+            type="button"
+            onClick={() => setShowDetails(v => !v)}
+            style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-1)', background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-brand-400)', fontSize: 'var(--text-xs)', fontWeight: 500, padding: 0, fontFamily: 'inherit' }}
+          >
+            {showDetails ? 'Hide details' : 'Find Out More'}
+            <motion.span animate={{ rotate: showDetails ? 180 : 0 }} transition={{ duration: 0.15 }} style={{ display: 'flex' }}>
+              <ChevronDown size={12} />
+            </motion.span>
+          </button>
         </div>
 
         {/* Right */}
@@ -975,6 +1244,21 @@ function WebsiteSetupCard({ pkg, variants }) {
             {pkg.features.map(f => <FeatureItem key={f} text={f} accent />)}
           </ul>
         </div>
+
+        <AnimatePresence>
+          {showDetails && (
+            <motion.div
+              key={`fom-ws-${pkg.name}`}
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              style={{ overflow: 'hidden', gridColumn: '1 / -1' }}
+            >
+              <FindOutMorePanel name={pkg.name} item={basketItem} />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </motion.div>
     )
   }
@@ -1016,7 +1300,35 @@ function WebsiteSetupCard({ pkg, variants }) {
         {pkg.features.map(f => <FeatureItem key={f} text={f} />)}
       </ul>
 
-      <CTAButton to="/contact" label={pkg.cta} />
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 'var(--space-2)', paddingTop: 'var(--space-2)', borderTop: '1px solid var(--border-default)' }}>
+        <CTAButton to="/contact" label={pkg.cta} />
+        <BasketButton item={basketItem} />
+      </div>
+      <button
+        type="button"
+        onClick={() => setShowDetails(v => !v)}
+        style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-1)', background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-brand-400)', fontSize: 'var(--text-xs)', fontWeight: 500, padding: 0, fontFamily: 'inherit' }}
+      >
+        {showDetails ? 'Hide details' : 'Find Out More'}
+        <motion.span animate={{ rotate: showDetails ? 180 : 0 }} transition={{ duration: 0.15 }} style={{ display: 'flex' }}>
+          <ChevronDown size={12} />
+        </motion.span>
+      </button>
+
+      <AnimatePresence>
+        {showDetails && (
+          <motion.div
+            key={`fom-ws-std-${pkg.name}`}
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            style={{ overflow: 'hidden' }}
+          >
+            <FindOutMorePanel name={pkg.name} item={basketItem} />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   )
 }
