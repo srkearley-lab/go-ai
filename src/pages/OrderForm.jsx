@@ -1,7 +1,7 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
-import { Check, ArrowRight, ArrowLeft, Send, CheckCircle, ShoppingBag, AlertCircle, CreditCard } from 'lucide-react'
+import { Check, ArrowRight, ArrowLeft, Send, CheckCircle, ShoppingBag, AlertCircle, CreditCard, Paperclip, X } from 'lucide-react'
 import { useBasket } from '../context/BasketContext'
 import { useSEO } from '../lib/seo'
 
@@ -166,6 +166,56 @@ function Divider({ title }) {
   )
 }
 
+function FileUploadField({ label, files, onAdd, onRemove, hint }) {
+  const inputRef = useRef(null)
+
+  const handleChange = (e) => {
+    const picked = Array.from(e.target.files).map(f => ({ name: f.name, size: f.size }))
+    onAdd(picked)
+    e.target.value = ''
+  }
+
+  const fmt = (bytes) => bytes < 1024 ? `${bytes} B` : bytes < 1048576 ? `${(bytes / 1024).toFixed(1)} KB` : `${(bytes / 1048576).toFixed(1)} MB`
+
+  return (
+    <div>
+      <p style={labelStyle}>{label}</p>
+      <input ref={inputRef} type="file" multiple onChange={handleChange} style={{ display: 'none' }} />
+      <button
+        type="button"
+        onClick={() => inputRef.current?.click()}
+        style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-2)', height: 36, padding: '0 var(--space-4)', fontSize: 'var(--text-sm)', fontWeight: 500, background: 'var(--surface-subtle)', color: 'var(--text-secondary)', border: '1px solid var(--border-default)', borderRadius: 'var(--radius-md)', cursor: 'pointer', fontFamily: 'inherit', transition: 'all 120ms ease' }}
+        onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--border-strong)'; e.currentTarget.style.color = 'var(--text-primary)' }}
+        onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--border-default)'; e.currentTarget.style.color = 'var(--text-secondary)' }}
+      >
+        <Paperclip size={14} /> Choose files
+      </button>
+
+      {files.length > 0 && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2)', marginTop: 'var(--space-3)' }}>
+          {files.map((f, i) => (
+            <div key={i} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--space-2) var(--space-3)', background: 'rgba(99,102,241,0.06)', border: '1px solid rgba(99,102,241,0.15)', borderRadius: 'var(--radius-md)' }}>
+              <span style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', fontSize: 'var(--text-sm)', color: 'var(--text-primary)', minWidth: 0 }}>
+                <Paperclip size={12} color="var(--color-brand-400)" />
+                <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{f.name}</span>
+                <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', flexShrink: 0 }}>({fmt(f.size)})</span>
+              </span>
+              <button type="button" onClick={() => onRemove(i)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-tertiary)', display: 'flex', padding: 'var(--space-1)', borderRadius: 'var(--radius-sm)', transition: 'color 120ms ease', flexShrink: 0 }}
+                onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--color-danger)' }}
+                onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--text-tertiary)' }}
+              >
+                <X size={13} />
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {hint && <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', marginTop: 'var(--space-2)' }}>{hint}</p>}
+    </div>
+  )
+}
+
 // ── Progress bar ──────────────────────────────────────────────────────────────
 
 function ProgressBar({ steps, currentIndex }) {
@@ -210,7 +260,7 @@ function ContactStep({ data, set, errors }) {
 
 // ── Step 2: Business and project details ──────────────────────────────────────
 
-function BusinessStep({ data, set }) {
+function BusinessStep({ data, set, uploads, onAddFiles, onRemoveFile }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-6)' }}>
       <Divider title="About your business" />
@@ -220,6 +270,14 @@ function BusinessStep({ data, set }) {
       </div>
       <TextareaField label="Target audience" id="targetAudience" placeholder="Who are your ideal customers? e.g. European tourists, local families, corporate clients..." value={data.targetAudience} onChange={set('targetAudience')} rows={3} required />
       <Field label="Existing website URL" id="existingWebsite" placeholder="www.example.gr (leave blank if none)" value={data.existingWebsite} onChange={set('existingWebsite')} hint="Leave blank if you don't have one yet" />
+      <Divider title="Brand assets" />
+      <FileUploadField
+        label="Upload brand assets (optional)"
+        files={uploads}
+        onAdd={onAddFiles}
+        onRemove={onRemoveFile}
+        hint="Logo, brand colours guide, photos, or any reference files. If you prefer, email them to hello@goai.example after submitting."
+      />
       <Divider title="Project timing" />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         <Field label="Preferred launch date" id="launchDate" type="date" value={data.launchDate} onChange={set('launchDate')} hint="Target date — we'll confirm if achievable" />
@@ -330,7 +388,7 @@ function SummaryRow({ label, value }) {
   )
 }
 
-function ReviewStep({ form, items, consent, setConsent, errors }) {
+function ReviewStep({ form, items, uploads, consent, setConsent, errors }) {
   const recurring = items.filter(i => /\/mo(nth)?/i.test(i.priceDisplay))
   const oneOff = items.filter(i => !/\/mo(nth)?/i.test(i.priceDisplay))
 
@@ -376,6 +434,24 @@ function ReviewStep({ form, items, consent, setConsent, errors }) {
           {form.business.targetAudience && <SummaryRow label="Target audience" value={form.business.targetAudience} />}
         </div>
       </div>
+
+      {/* Uploaded files */}
+      {uploads.length > 0 && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
+          <p style={{ ...labelStyle, margin: 0 }}>Uploaded files ({uploads.length})</p>
+          <div style={{ padding: 'var(--space-4)', background: 'var(--surface-subtle)', border: '1px solid var(--border-default)', borderRadius: 'var(--radius-md)', display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
+            {uploads.map((f, i) => (
+              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', fontSize: 'var(--text-sm)' }}>
+                <Paperclip size={12} color="var(--color-brand-400)" style={{ flexShrink: 0 }} />
+                <span style={{ color: 'var(--text-primary)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{f.name}</span>
+              </div>
+            ))}
+          </div>
+          <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', fontStyle: 'italic' }}>
+            File names recorded. If files are large, email them to hello@goai.example after submitting.
+          </p>
+        </div>
+      )}
 
       {/* Consent */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
@@ -453,10 +529,10 @@ function PaymentStep({ items }) {
 
 // ── Confirmation ──────────────────────────────────────────────────────────────
 
-function Confirmation({ hasRecurring, reduceMotion }) {
+function Confirmation({ hasRecurring, hasUploads, reduceMotion }) {
   const message = hasRecurring
     ? "Thank you — we've received your details. This package includes a recurring monthly cost. GoAI will contact you to complete the direct debit or subscription setup securely before the service starts."
-    : "Thank you — we've received your details. Your selected package and information have been submitted to GoAI. We'll review everything and come back to you with the next steps and payment details."
+    : `Thank you — we've received your details. Your selected package, project information${hasUploads ? ' and uploaded file references' : ''} have been submitted to GoAI. We'll review everything and come back to you with the next steps and payment details.`
 
   return (
     <main style={{ paddingTop: 64, minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--surface-base)', padding: 'var(--space-8)' }}>
@@ -509,9 +585,17 @@ export default function OrderForm() {
   const { items, neededFormTypes, clearBasket } = useBasket()
   const [submitted, setSubmitted] = useState(false)
   const [submittedWithRecurring, setSubmittedWithRecurring] = useState(false)
+  const [submittedWithUploads, setSubmittedWithUploads] = useState(false)
   const [currentIndex, setCurrentIndex] = useState(0)
   const [errors, setErrors] = useState({})
   const [consent, setConsent] = useState(false)
+  const [uploads, setUploads] = useState([])
+
+  const addFiles = (picked) => setUploads(prev => {
+    const existing = new Set(prev.map(f => f.name))
+    return [...prev, ...picked.filter(f => !existing.has(f.name))]
+  })
+  const removeFile = (index) => setUploads(prev => prev.filter((_, i) => i !== index))
 
   useSEO({ title: 'Start Your Order — GO AI', description: 'Complete your GO AI order form. Tell us about your business and what you need — we handle the rest.' })
 
@@ -573,6 +657,7 @@ export default function OrderForm() {
         country: form.contact.country,
       },
       project: form.business,
+      uploadedFiles: uploads.map(f => f.name),
       selectedPackages: items.map(i => ({ name: i.name, price: i.priceDisplay })),
       packageAnswers: {
         ...(neededFormTypes.includes('website') ? { website: form.website } : {}),
@@ -583,12 +668,13 @@ export default function OrderForm() {
     }
     console.log('GO AI Order Submission:', JSON.stringify(submission, null, 2))
     setSubmittedWithRecurring(recurring)
+    setSubmittedWithUploads(uploads.length > 0)
     clearBasket()
     setSubmitted(true)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
-  if (submitted) return <Confirmation hasRecurring={submittedWithRecurring} reduceMotion={reduceMotion} />
+  if (submitted) return <Confirmation hasRecurring={submittedWithRecurring} hasUploads={submittedWithUploads} reduceMotion={reduceMotion} />
 
   // Empty basket guard
   if (items.length === 0) {
@@ -644,9 +730,9 @@ export default function OrderForm() {
                 transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
               >
                 {currentStep.id === 'contact'  && <ContactStep data={form.contact} set={setField('contact')} errors={errors} />}
-                {currentStep.id === 'business' && <BusinessStep data={form.business} set={setField('business')} />}
+                {currentStep.id === 'business' && <BusinessStep data={form.business} set={setField('business')} uploads={uploads} onAddFiles={addFiles} onRemoveFile={removeFile} />}
                 {currentStep.id === 'packages' && <PackageQuestionsStep form={form} setField={setField} setMulti={setMulti} neededFormTypes={neededFormTypes} />}
-                {currentStep.id === 'review'   && <ReviewStep form={form} items={items} consent={consent} setConsent={setConsent} errors={errors} />}
+                {currentStep.id === 'review'   && <ReviewStep form={form} items={items} uploads={uploads} consent={consent} setConsent={setConsent} errors={errors} />}
                 {currentStep.id === 'payment'  && <PaymentStep items={items} />}
               </motion.div>
             </AnimatePresence>
