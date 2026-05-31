@@ -6,7 +6,6 @@ import {
   Home as HomeIcon, Dumbbell, UtensilsCrossed, Coffee,
   Scissors, Map, Car, Anchor,
   MessageSquare, Zap, ArrowRight,
-  BarChart3, Server, Share2, Check,
 } from 'lucide-react'
 import SectionHeader from '../components/SectionHeader'
 import ServiceCard from '../components/ServiceCard'
@@ -50,24 +49,6 @@ const steps = [
   { icon: MessageCircle, number: 3, title: 'You manage via WhatsApp', description: 'Control bookings, review reports and request updates directly from your phone. No dashboards to learn.' },
 ]
 
-const individualPackages = [
-  { icon: Globe,     name: 'Website Package',                price: 450, period: 'one-time' },
-  { icon: Search,    name: 'Search Engine Optimisation',     price: 120, period: 'mo' },
-  { icon: BarChart3, name: 'Analytics Package',              price: 120, period: 'mo' },
-  { icon: Server,    name: 'Hosting & Storage Package',      price: 120, period: 'mo' },
-  { icon: Share2,    name: 'Social Media Package',           price: 150, period: 'mo' },
-]
-
-const bundleBreakdown = [
-  { name: 'Website Package',           price: 450 },
-  { name: 'SEO Package',               price: 120 },
-  { name: 'Analytics Package',         price: 120 },
-  { name: 'Hosting & Storage Package', price: 120 },
-  { name: 'Social Media Package',      price: 150 },
-]
-const BUNDLE_NORMAL = 960
-const BUNDLE_PRICE  = 850
-const BUNDLE_SAVING = BUNDLE_NORMAL - BUNDLE_PRICE
 
 // ── Section wrapper ───────────────────────────────────────────────────────────
 
@@ -84,190 +65,6 @@ function Section({ children, style, className }) {
   )
 }
 
-// ── Individual package card ───────────────────────────────────────────────────
-
-function IndividualCard({ icon: Icon, name, price, period, variants }) {
-  const reduceMotion = useReducedMotion()
-  return (
-    <motion.div
-      variants={variants}
-      whileHover={reduceMotion ? {} : { y: -2, transition: { duration: 0.15 } }}
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: 'var(--space-4)',
-        padding: 'var(--space-4) var(--space-5)',
-        background: 'var(--surface-raised)',
-        border: '1px solid var(--border-default)',
-        borderRadius: 'var(--radius-md)',
-        transition: 'border-color 150ms ease, box-shadow 150ms ease',
-      }}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.borderColor = 'var(--border-strong)'
-        e.currentTarget.style.boxShadow = 'var(--shadow-sm)'
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.borderColor = 'var(--border-default)'
-        e.currentTarget.style.boxShadow = 'none'
-      }}
-    >
-      <div
-        style={{
-          width: 36, height: 36, flexShrink: 0,
-          background: 'rgba(99,102,241,0.1)',
-          border: '1px solid rgba(99,102,241,0.15)',
-          borderRadius: 'var(--radius-md)',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          color: 'var(--color-brand-400)',
-        }}
-      >
-        <Icon size={17} />
-      </div>
-      <span style={{ flex: 1, fontSize: 'var(--text-sm)', fontWeight: 500, color: 'var(--text-primary)', lineHeight: 1.3 }}>
-        {name}
-      </span>
-      <div style={{ display: 'flex', alignItems: 'baseline', gap: 2, flexShrink: 0 }}>
-        <span style={{ fontSize: 'var(--text-md)', fontWeight: 700, color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>
-          €{price}
-        </span>
-        <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)' }}>
-          {period === 'one-time' ? ' one-time' : `/${period}`}
-        </span>
-      </div>
-    </motion.div>
-  )
-}
-
-// ── Bundle card ───────────────────────────────────────────────────────────────
-
-function BundleCard({ variants }) {
-  const reduceMotion = useReducedMotion()
-  return (
-    <motion.div
-      variants={variants}
-      style={{
-        background: 'var(--surface-overlay)',
-        border: '1px solid var(--color-brand-500)',
-        borderLeft: '3px solid var(--color-brand-500)',
-        borderRadius: 'var(--radius-lg)',
-        padding: 'var(--space-8)',
-        boxShadow: 'var(--shadow-lg)',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 'var(--space-6)',
-        position: 'relative',
-      }}
-    >
-      {/* Badge */}
-      <div
-        style={{
-          position: 'absolute', top: 'var(--space-5)', right: 'var(--space-5)',
-          fontSize: 'var(--text-xs)', fontWeight: 600,
-          letterSpacing: '0.04em', textTransform: 'uppercase',
-          color: 'var(--color-brand-400)',
-          background: 'rgba(99,102,241,0.12)',
-          border: '1px solid rgba(99,102,241,0.25)',
-          borderRadius: 'var(--radius-full)',
-          padding: '3px var(--space-3)',
-        }}
-      >
-        Most Popular
-      </div>
-
-      {/* Title + price */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)', paddingRight: 'var(--space-20)' }}>
-        <h3 style={{ fontSize: 'var(--text-lg)', fontWeight: 700, color: 'var(--text-primary)', lineHeight: 1.1 }}>
-          Most Popular Package
-        </h3>
-        <div style={{ display: 'flex', alignItems: 'baseline', gap: 'var(--space-1)' }}>
-          <span style={{ fontSize: 'var(--text-2xl)', fontWeight: 700, letterSpacing: '-0.03em', color: 'var(--text-primary)', lineHeight: 1 }}>
-            €{BUNDLE_PRICE}
-          </span>
-          <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-tertiary)' }}>/mo</span>
-        </div>
-        <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
-          All five packages combined — website, SEO, analytics, hosting and social media in one plan.
-        </p>
-      </div>
-
-      <hr style={{ border: 'none', borderTop: '1px solid var(--border-default)', margin: 0 }} />
-
-      {/* Breakdown */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
-        {bundleBreakdown.map((item, i) => (
-          <div
-            key={item.name}
-            style={{
-              display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-              padding: 'var(--space-2) 0',
-              borderBottom: i < bundleBreakdown.length - 1 ? '1px solid var(--border-default)' : 'none',
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
-              <span style={{ width: 14, height: 14, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(99,102,241,0.1)', border: '1px solid rgba(99,102,241,0.2)', borderRadius: '50%', color: 'var(--color-brand-400)', flexShrink: 0 }}>
-                <Check size={8} strokeWidth={3} />
-              </span>
-              <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)' }}>{item.name}</span>
-            </div>
-            <span style={{ fontSize: 'var(--text-sm)', fontWeight: 500, color: 'var(--text-tertiary)' }}>€{item.price}</span>
-          </div>
-        ))}
-      </div>
-
-      <hr style={{ border: 'none', borderTop: '1px solid var(--border-default)', margin: 0 }} />
-
-      {/* Normal total (strikethrough) */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-tertiary)' }}>Normal total</span>
-          <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-tertiary)', textDecoration: 'line-through', textDecorationThickness: '1.5px' }}>
-            €{BUNDLE_NORMAL}/mo
-          </span>
-        </div>
-
-        {/* Savings — amber accent */}
-        <div
-          style={{
-            display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-            padding: 'var(--space-3) var(--space-4)',
-            background: 'rgba(245,158,11,0.08)',
-            border: '1px solid rgba(245,158,11,0.18)',
-            borderRadius: 'var(--radius-md)',
-          }}
-        >
-          <span style={{ fontSize: 'var(--text-sm)', fontWeight: 500, color: 'var(--color-accent-500)' }}>
-            You save
-          </span>
-          <span style={{ fontSize: 'var(--text-md)', fontWeight: 700, color: 'var(--color-accent-400)', letterSpacing: '-0.01em' }}>
-            €{BUNDLE_SAVING}/mo
-          </span>
-        </div>
-      </div>
-
-      {/* CTA */}
-      <Link
-        to="/contact"
-        style={{
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          height: 44,
-          fontSize: 'var(--text-sm)', fontWeight: 500,
-          background: 'var(--color-brand-500)',
-          color: 'var(--color-neutral-0)',
-          border: '1px solid var(--color-brand-600)',
-          borderRadius: 'var(--radius-md)',
-          transition: 'background 120ms ease, transform 60ms ease',
-          marginTop: 'auto',
-        }}
-        onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--color-brand-600)' }}
-        onMouseLeave={(e) => { e.currentTarget.style.background = 'var(--color-brand-500)' }}
-        onMouseDown={(e) => { e.currentTarget.style.transform = 'translateY(1px)' }}
-        onMouseUp={(e) => { e.currentTarget.style.transform = 'translateY(0)' }}
-      >
-        Get This Package
-      </Link>
-    </motion.div>
-  )
-}
 
 // ── Page ─────────────────────────────────────────────────────────────────────
 
@@ -695,61 +492,74 @@ export default function Home() {
         </div>
       </Section>
 
-      {/* ── Packages ── */}
+      {/* ── Pricing teaser ── */}
       <Section>
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'var(--space-12)' }}>
-          <SectionHeader
-            tag="Pricing"
-            title="Simple, transparent pricing"
-            description="Pick individual packages or save €110 a month with our most popular bundle."
-          />
+        <motion.div
+          initial={reduceMotion ? {} : { opacity: 0, y: 8 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'var(--space-10)', textAlign: 'center' }}
+        >
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'var(--space-3)' }}>
+            <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--color-brand-400)' }}>Pricing</p>
+            <h2 style={{ fontSize: 'clamp(var(--text-xl), 3vw, var(--text-2xl))', fontWeight: 700, lineHeight: 1.15, letterSpacing: '-0.02em', color: 'var(--text-primary)', maxWidth: '18ch' }}>
+              Simple Website & AI Growth Packages
+            </h2>
+            <p style={{ fontSize: 'var(--text-base)', lineHeight: 1.6, color: 'var(--text-secondary)', maxWidth: '50ch' }}>
+              Start with a professional website from €350, then add monthly support when you're ready to grow.
+            </p>
+          </div>
 
-          {/* Pricing layout — individual cards left, bundle right */}
-          <motion.div
-            variants={stagger}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, margin: '-60px' }}
-            className="pricing-layout"
-            style={{ width: '100%' }}
+          {/* Key price points */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 w-full" style={{ maxWidth: 'var(--width-lg)' }}>
+            {[
+              { label: 'Website Only',         price: '€350',    period: 'one-off',  note: 'Get online professionally' },
+              { label: 'Marketing Bundle',      price: '€300',    period: '/month',   note: 'Recommended · Saves €600/yr', highlight: true },
+              { label: 'Full AI Growth',        price: '€950',    period: '/month',   note: 'Everything included' },
+            ].map(({ label, price, period, note, highlight }) => (
+              <div
+                key={label}
+                style={{
+                  background: highlight ? 'var(--surface-overlay)' : 'var(--surface-raised)',
+                  border: highlight ? '1px solid var(--color-brand-500)' : '1px solid var(--border-default)',
+                  borderLeft: highlight ? '3px solid var(--color-brand-500)' : undefined,
+                  borderRadius: 'var(--radius-lg)',
+                  padding: 'var(--space-6)',
+                  display: 'flex', flexDirection: 'column', gap: 'var(--space-2)',
+                  textAlign: 'left',
+                }}
+              >
+                <p style={{ fontSize: 'var(--text-xs)', fontWeight: 500, color: highlight ? 'var(--color-brand-400)' : 'var(--text-tertiary)' }}>{label}</p>
+                <div style={{ display: 'flex', alignItems: 'baseline', gap: 2 }}>
+                  <span style={{ fontSize: 'var(--text-xl)', fontWeight: 700, letterSpacing: '-0.02em', color: 'var(--text-primary)', lineHeight: 1 }}>{price}</span>
+                  <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)' }}>{period}</span>
+                </div>
+                <p style={{ fontSize: 'var(--text-xs)', color: highlight ? 'var(--color-accent-400)' : 'var(--text-tertiary)' }}>{note}</p>
+              </div>
+            ))}
+          </div>
+
+          <Link
+            to="/pricing"
+            style={{
+              display: 'inline-flex', alignItems: 'center', gap: 'var(--space-2)',
+              height: 44, padding: '0 var(--space-6)',
+              fontSize: 'var(--text-sm)', fontWeight: 500,
+              background: 'var(--color-brand-500)',
+              color: 'var(--color-neutral-0)',
+              border: '1px solid var(--color-brand-600)',
+              borderRadius: 'var(--radius-md)',
+              transition: 'background 120ms ease, transform 60ms ease',
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--color-brand-600)' }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = 'var(--color-brand-500)' }}
+            onMouseDown={(e) => { e.currentTarget.style.transform = 'translateY(1px)' }}
+            onMouseUp={(e) => { e.currentTarget.style.transform = 'translateY(0)' }}
           >
-            {/* Individual packages */}
-            <div className="individual-packages" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
-              {individualPackages.map((pkg) => (
-                <IndividualCard key={pkg.name} {...pkg} variants={{
-                  hidden: { opacity: 0, y: 8 },
-                  show: { opacity: 1, y: 0, transition: { duration: 0.18, ease: [0.16, 1, 0.3, 1] } },
-                }} />
-              ))}
-            </div>
-
-            {/* Bundle card */}
-            <div className="bundle-card-wrapper">
-              <BundleCard variants={{
-                hidden: { opacity: 0, y: 10 },
-                show: { opacity: 1, y: 0, transition: { duration: 0.22, ease: [0.16, 1, 0.3, 1] } },
-              }} />
-            </div>
-          </motion.div>
-
-          <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', textAlign: 'center' }}>
-            All prices exclude Greek VAT (24%). Custom plans available for larger businesses.
-          </p>
-        </div>
-
-        <style>{`
-          .pricing-layout {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: var(--space-6);
-            align-items: start;
-          }
-          @media (max-width: 768px) {
-            .pricing-layout      { grid-template-columns: 1fr; }
-            .bundle-card-wrapper { order: -1; }
-            .individual-packages { order: 1; }
-          }
-        `}</style>
+            See all packages & pricing <ArrowRight size={14} />
+          </Link>
+        </motion.div>
       </Section>
 
       {/* ── Final CTA ── */}

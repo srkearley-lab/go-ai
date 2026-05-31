@@ -7,6 +7,7 @@ import Services from './pages/Services'
 import Industries from './pages/Industries'
 import Portfolio from './pages/Portfolio'
 import Automation from './pages/Automation'
+import Pricing from './pages/Pricing'
 import Contact from './pages/Contact'
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
         <Route path="/industries" element={<Industries />} />
         <Route path="/portfolio" element={<Portfolio />} />
         <Route path="/automation" element={<Automation />} />
+        <Route path="/pricing" element={<Pricing />} />
         <Route path="/contact" element={<Contact />} />
       </Routes>
       <Footer />

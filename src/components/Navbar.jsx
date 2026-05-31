@@ -9,6 +9,7 @@ const links = [
   { label: 'Industries', href: '/industries' },
   { label: 'Portfolio', href: '/portfolio' },
   { label: 'Automation', href: '/automation' },
+  { label: 'Pricing', href: '/pricing' },
 ]
 
 export default function Navbar() {
