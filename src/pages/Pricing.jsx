@@ -731,7 +731,7 @@ function AddOnsSection({ reduceMotion }) {
   }
 
   return (
-    <section style={{ padding: 'var(--space-16) var(--space-8)', background: 'var(--surface-subtle)', borderTop: '1px solid var(--border-default)', borderBottom: '1px solid var(--border-default)' }}>
+    <section id="packages" style={{ padding: 'var(--space-16) var(--space-8)', background: 'var(--surface-subtle)', borderTop: '1px solid var(--border-default)', borderBottom: '1px solid var(--border-default)' }}>
       <div style={{ maxWidth: 'var(--width-xl)', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'var(--space-10)' }}>
         <div>
           <SectionLabel>Step 2 — Optional Monthly Add-Ons</SectionLabel>
@@ -983,7 +983,7 @@ function BundlesSection({ reduceMotion }) {
   const after = standard.slice(2)
 
   return (
-    <section style={{ padding: 'var(--space-16) var(--space-8)', background: 'var(--surface-base)' }}>
+    <section id="bundles" style={{ padding: 'var(--space-16) var(--space-8)', background: 'var(--surface-base)' }}>
       <div style={{ maxWidth: 'var(--width-xl)', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'var(--space-10)' }}>
         <div>
           <SectionLabel>Step 3 — Save with a Bundle</SectionLabel>
@@ -1348,7 +1348,7 @@ function WebsiteSetupSection({ reduceMotion }) {
   const after = websiteSetupPackages.filter(p => !p.featured).slice(2)
 
   return (
-    <section style={{ padding: 'var(--space-16) var(--space-8)', background: 'var(--surface-subtle)', borderTop: '1px solid var(--border-default)', borderBottom: '1px solid var(--border-default)' }}>
+    <section id="websites" style={{ padding: 'var(--space-16) var(--space-8)', background: 'var(--surface-subtle)', borderTop: '1px solid var(--border-default)', borderBottom: '1px solid var(--border-default)' }}>
       <div style={{ maxWidth: 'var(--width-xl)', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'var(--space-10)' }}>
 
         <div>
