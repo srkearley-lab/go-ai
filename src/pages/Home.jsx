@@ -1,13 +1,14 @@
-import { useRef, lazy, Suspense } from 'react'
+import { useRef, lazy, Suspense, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { motion, useReducedMotion } from 'framer-motion'
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import {
   Globe, FileText, Search, Mail, Video, MessageCircle,
   Home as HomeIcon, Dumbbell, UtensilsCrossed, Coffee,
   Scissors, Map, Car, Anchor,
-  MessageSquare, Zap, ArrowRight,
+  MessageSquare, Zap, ArrowRight, ChevronDown,
 } from 'lucide-react'
 import SectionHeader from '../components/SectionHeader'
+import { useSEO } from '../lib/seo'
 import ServiceCard from '../components/ServiceCard'
 import IndustryCard from '../components/IndustryCard'
 import StepCard from '../components/StepCard'
@@ -50,6 +51,39 @@ const steps = [
 ]
 
 
+// ── Inline FAQ item (accordion) ───────────────────────────────────────────────
+
+function HomeFAQItem({ q, a }) {
+  const [open, setOpen] = useState(false)
+  const reduceMotion = useReducedMotion()
+  return (
+    <div style={{ borderBottom: '1px solid var(--border-default)' }}>
+      <button
+        onClick={() => setOpen(!open)}
+        style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-4)', padding: 'var(--space-5) 0', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left' }}
+      >
+        <span style={{ fontSize: 'var(--text-sm)', fontWeight: 500, color: 'var(--text-primary)', lineHeight: 1.5 }}>{q}</span>
+        <motion.span animate={{ rotate: open ? 180 : 0 }} transition={{ duration: reduceMotion ? 0 : 0.15 }} style={{ flexShrink: 0, color: 'var(--text-tertiary)', display: 'flex' }}>
+          <ChevronDown size={16} />
+        </motion.span>
+      </button>
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            initial={reduceMotion ? {} : { height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
+            style={{ overflow: 'hidden' }}
+          >
+            <p style={{ fontSize: 'var(--text-sm)', lineHeight: 1.7, color: 'var(--text-secondary)', paddingBottom: 'var(--space-5)' }}>{a}</p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  )
+}
+
 // ── Section wrapper ───────────────────────────────────────────────────────────
 
 function Section({ children, style, className }) {
@@ -70,6 +104,10 @@ function Section({ children, style, className }) {
 
 export default function Home() {
   const reduceMotion = useReducedMotion()
+  useSEO({
+    title: 'GO AI — AI-powered websites and automation for businesses in Greece',
+    description: 'GO AI builds modern websites, AI-powered workflows, content systems, lead funnels and monthly growth packages for businesses that want to look professional, save time and scale faster.',
+  })
 
   const stagger = {
     hidden: {},
@@ -171,8 +209,9 @@ export default function Home() {
                 maxWidth: '16ch',
               }}
             >
-              AI-powered websites and automation for{' '}
-              <span style={{ color: 'var(--color-brand-400)' }}>businesses in Greece</span>
+              Launch your website.{' '}
+              <span style={{ color: 'var(--color-brand-400)' }}>Automate your business.</span>{' '}
+              Grow with AI.
             </h1>
             <p
               style={{
@@ -182,7 +221,7 @@ export default function Home() {
                 maxWidth: '52ch',
               }}
             >
-              From beautiful websites to WhatsApp bots and email flows — we build your entire digital presence in under 7 days. You manage everything from your phone.
+              GoAI builds modern websites, AI-powered workflows, content systems, lead funnels and monthly growth packages for businesses that want to look professional, save time and scale faster.
             </p>
           </motion.div>
 
@@ -194,7 +233,7 @@ export default function Home() {
             style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-3)', justifyContent: 'center' }}
           >
             <Link
-              to="/contact"
+              to="/book"
               style={{
                 height: 44,
                 padding: '0 var(--space-6)',
@@ -211,10 +250,10 @@ export default function Home() {
               onMouseDown={(e) => { e.currentTarget.style.transform = 'translateY(1px)' }}
               onMouseUp={(e) => { e.currentTarget.style.transform = 'translateY(0)' }}
             >
-              Request a Proposal
+              Book a Free Consultation
             </Link>
             <Link
-              to="/portfolio"
+              to="/pricing"
               style={{
                 height: 44,
                 padding: '0 var(--space-6)',
@@ -231,7 +270,7 @@ export default function Home() {
               onMouseDown={(e) => { e.currentTarget.style.transform = 'translateY(1px)' }}
               onMouseUp={(e) => { e.currentTarget.style.transform = 'translateY(0)' }}
             >
-              See Our Work <ArrowRight size={15} />
+              View Packages <ArrowRight size={15} />
             </Link>
           </motion.div>
 
@@ -562,6 +601,30 @@ export default function Home() {
         </motion.div>
       </Section>
 
+      {/* ── FAQ ── */}
+      <Section style={{ background: 'var(--surface-subtle)', borderTop: '1px solid var(--border-default)', borderBottom: '1px solid var(--border-default)' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-10)' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'var(--space-3)', textAlign: 'center' }}>
+            <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--color-brand-400)' }}>FAQ</p>
+            <h2 style={{ fontSize: 'clamp(var(--text-xl), 3vw, var(--text-2xl))', fontWeight: 700, lineHeight: 1.15, letterSpacing: '-0.02em', color: 'var(--text-primary)' }}>Common questions</h2>
+          </div>
+          <div style={{ maxWidth: 720, margin: '0 auto', width: '100%' }}>
+            {[
+              { q: 'Do I have to buy a monthly package?', a: 'No. You can get a website for a one-off cost of €350 with no ongoing commitment. Monthly packages are optional and can be added whenever you\'re ready.' },
+              { q: 'Can I just pay for a website?', a: 'Yes. Our Website Only package is €350 one-off. It includes a professionally designed, mobile-responsive website with basic SEO and a contact form.' },
+              { q: 'Can I add monthly packages later?', a: 'Absolutely. Many clients start with a website and add SEO, social media, or automation as they grow. There\'s no minimum contract — start and stop any time.' },
+              { q: 'What is the best package for a startup?', a: 'We recommend the Website Only (€350) or the Website + Hosting Care bundle (€90/month). Once you\'re established, the Website + Marketing Engine is the most popular growth package.' },
+              { q: 'What if I already have a website?', a: 'We can rebuild or redesign it, or just add our monthly services to your existing site. We\'ll assess it as part of your free consultation and recommend the best approach.' },
+              { q: 'Can you help with AI avatars and videos?', a: 'Yes — AI Avatar & Video Content is one of our monthly add-ons. We create 8 AI-generated videos per month, including a custom digital avatar, optimised for Instagram and TikTok.' },
+              { q: 'How long does a website take?', a: 'Most websites are ready within 5–7 working days of receiving your onboarding form. More complex builds with custom features may take slightly longer.' },
+              { q: 'What happens after I pay?', a: 'You\'ll receive a link to our client onboarding form. Once completed, we begin building straight away. You\'ll receive a review link before anything goes live.' },
+            ].map(({ q, a }, i) => (
+              <HomeFAQItem key={i} q={q} a={a} />
+            ))}
+          </div>
+        </div>
+      </Section>
+
       {/* ── Final CTA ── */}
       <section
         style={{
@@ -598,7 +661,7 @@ export default function Home() {
                 color: 'var(--text-primary)',
               }}
             >
-              Request your free digital improvement plan
+              Ready to grow your business online?
             </h2>
             <p style={{ fontSize: 'var(--text-base)', lineHeight: 1.6, color: 'var(--text-secondary)', maxWidth: '44ch' }}>
               Tell us about your business and we'll send a personalised plan showing exactly what we'd build — and what it would cost. No commitment.
@@ -607,7 +670,7 @@ export default function Home() {
 
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-3)', justifyContent: 'center' }}>
             <Link
-              to="/contact"
+              to="/book"
               style={{
                 height: 44,
                 padding: '0 var(--space-6)',
@@ -624,7 +687,7 @@ export default function Home() {
               onMouseDown={(e) => { e.currentTarget.style.transform = 'translateY(1px)' }}
               onMouseUp={(e) => { e.currentTarget.style.transform = 'translateY(0)' }}
             >
-              Request my free plan
+              Book a Free Consultation
             </Link>
             <a
               href={WHATSAPP}

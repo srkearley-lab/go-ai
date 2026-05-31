@@ -9,6 +9,11 @@ import Portfolio from './pages/Portfolio'
 import Automation from './pages/Automation'
 import Pricing from './pages/Pricing'
 import Contact from './pages/Contact'
+import HowItWorks from './pages/HowItWorks'
+import Book from './pages/Book'
+import Onboarding from './pages/Onboarding'
+import ThankYou from './pages/ThankYou'
+import ControlCentre from './pages/ControlCentre'
 
 function App() {
   return (
@@ -23,6 +28,11 @@ function App() {
         <Route path="/automation" element={<Automation />} />
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/how-it-works" element={<HowItWorks />} />
+        <Route path="/book" element={<Book />} />
+        <Route path="/onboarding" element={<Onboarding />} />
+        <Route path="/thank-you" element={<ThankYou />} />
+        <Route path="/control" element={<ControlCentre />} />
       </Routes>
       <Footer />
     </BrowserRouter>

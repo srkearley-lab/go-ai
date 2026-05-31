@@ -61,9 +61,11 @@ export default function Footer() {
             {[
               ['/', 'Home'],
               ['/services', 'Services'],
-              ['/industries', 'Industries'],
+              ['/how-it-works', 'How It Works'],
+              ['/pricing', 'Pricing'],
               ['/portfolio', 'Portfolio'],
               ['/automation', 'Automation'],
+              ['/book', 'Book a Consultation'],
             ].map(([href, label]) => (
               <Link key={href} to={href} style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', transition: 'color 120ms ease' }}
                 onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--text-primary)' }}
@@ -105,9 +107,17 @@ export default function Footer() {
           <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)' }}>
             © {new Date().getFullYear()} GO AI. All rights reserved.
           </p>
-          <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)' }}>
-            Built with AI. Powered by results.
-          </p>
+          <div style={{ display: 'flex', gap: 'var(--space-4)', alignItems: 'center' }}>
+            <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)' }}>
+              Built with AI. Powered by results.
+            </p>
+            <Link to="/control" style={{ fontSize: 'var(--text-xs)', color: 'var(--text-disabled)', transition: 'color 120ms ease' }}
+              onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--text-tertiary)' }}
+              onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--text-disabled)' }}
+            >
+              Staff
+            </Link>
+          </div>
         </div>
       </div>
     </footer>

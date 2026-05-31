@@ -6,10 +6,9 @@ import { GoAILogo } from './GoAILogo'
 
 const links = [
   { label: 'Services', href: '/services' },
-  { label: 'Industries', href: '/industries' },
-  { label: 'Portfolio', href: '/portfolio' },
-  { label: 'Automation', href: '/automation' },
+  { label: 'How It Works', href: '/how-it-works' },
   { label: 'Pricing', href: '/pricing' },
+  { label: 'Portfolio', href: '/portfolio' },
 ]
 
 export default function Navbar() {
@@ -89,7 +88,7 @@ export default function Navbar() {
           {/* Desktop CTA */}
           <div className="hidden md:flex" style={{ alignItems: 'center', gap: 'var(--space-3)' }}>
             <Link
-              to="/contact"
+              to="/book"
               style={{
                 height: 36,
                 padding: '0 var(--space-4)',
@@ -106,7 +105,7 @@ export default function Navbar() {
               onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--color-brand-600)' }}
               onMouseLeave={(e) => { e.currentTarget.style.background = 'var(--color-brand-500)' }}
             >
-              Request Proposal
+              Book a Call
             </Link>
           </div>
 
