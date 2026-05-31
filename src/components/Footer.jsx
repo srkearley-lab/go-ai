@@ -13,16 +13,13 @@ export default function Footer() {
         padding: 'var(--space-16) var(--space-8) var(--space-8)',
       }}
     >
-      <div
-        style={{
-          maxWidth: 'var(--width-xl)',
-          margin: '0 auto',
-        }}
-      >
-        {/* Top row */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-10 pb-12" style={{ borderBottom: '1px solid var(--border-default)' }}>
+      <div style={{ maxWidth: 'var(--width-xl)', margin: '0 auto' }}>
+
+        {/* Top row — Brand + Pages + Contact (3 columns) */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 pb-12" style={{ borderBottom: '1px solid var(--border-default)' }}>
+
           {/* Brand */}
-          <div className="md:col-span-1" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <GoAILogo size="sm" />
             </div>
@@ -35,15 +32,11 @@ export default function Footer() {
               rel="noreferrer"
               style={{
                 display: 'inline-flex', alignItems: 'center', gap: 'var(--space-2)',
-                height: 36,
-                padding: '0 var(--space-4)',
+                height: 36, padding: '0 var(--space-4)',
                 fontSize: 'var(--text-sm)', fontWeight: 500,
-                background: '#25d366',
-                color: '#fff',
-                border: 'none',
-                borderRadius: 'var(--radius-md)',
-                width: 'fit-content',
-                transition: 'background 120ms ease',
+                background: '#25d366', color: '#fff',
+                border: 'none', borderRadius: 'var(--radius-md)',
+                width: 'fit-content', transition: 'background 120ms ease',
               }}
               onMouseEnter={(e) => { e.currentTarget.style.background = '#1ebe5d' }}
               onMouseLeave={(e) => { e.currentTarget.style.background = '#25d366' }}
@@ -53,7 +46,7 @@ export default function Footer() {
             </a>
           </div>
 
-          {/* Quick links */}
+          {/* Pages */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
             <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-tertiary)', marginBottom: 'var(--space-1)' }}>
               Pages
@@ -66,27 +59,18 @@ export default function Footer() {
               ['/faq',       'FAQ'],
               ['/contact',   'Contact Us'],
             ].map(([href, label]) => (
-              <Link key={href} to={href} style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', transition: 'color 120ms ease' }}
+              <Link key={href} to={href}
+                style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', transition: 'color 120ms ease' }}
                 onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--text-primary)' }}
                 onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--text-secondary)' }}
               >{label}</Link>
             ))}
           </div>
 
-          {/* Services */}
+          {/* Contact */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
             <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-tertiary)', marginBottom: 'var(--space-1)' }}>
-              Services
-            </p>
-            {['Website Design', 'SEO', 'WhatsApp Automation', 'Email Automation', 'AI Content & Marketing', 'AI Automation'].map((s) => (
-              <span key={s} style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)' }}>{s}</span>
-            ))}
-          </div>
-
-          {/* Contact GoAI */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
-            <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-tertiary)', marginBottom: 'var(--space-1)' }}>
-              Contact GoAI
+              Contact
             </p>
             <a
               href="mailto:hello@goai.example"
@@ -111,6 +95,7 @@ export default function Footer() {
               GoAI Digital Studio, 123 Example Street, Corfu, Greece 49100
             </p>
           </div>
+
         </div>
 
         {/* Bottom row */}
@@ -125,7 +110,8 @@ export default function Footer() {
             <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)' }}>
               Built with AI. Powered by results.
             </p>
-            <Link to="/control" style={{ fontSize: 'var(--text-xs)', color: 'var(--text-disabled)', transition: 'color 120ms ease' }}
+            <Link to="/control"
+              style={{ fontSize: 'var(--text-xs)', color: 'var(--text-disabled)', transition: 'color 120ms ease' }}
               onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--text-tertiary)' }}
               onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--text-disabled)' }}
             >
@@ -133,6 +119,7 @@ export default function Footer() {
             </Link>
           </div>
         </div>
+
       </div>
     </footer>
   )

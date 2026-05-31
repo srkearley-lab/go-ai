@@ -118,7 +118,7 @@ export default function Navbar() {
 
             {/* Choose Your Package */}
             <Link
-              to="/packages"
+              to="/quote"
               style={{
                 height: 36,
                 padding: '0 var(--space-4)',
@@ -136,7 +136,7 @@ export default function Navbar() {
               onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--color-brand-600)' }}
               onMouseLeave={(e) => { e.currentTarget.style.background = 'var(--color-brand-500)' }}
             >
-              Choose Your Package
+              Get a Quote Today
             </Link>
           </div>
 
@@ -220,7 +220,7 @@ export default function Navbar() {
             {/* Mobile CTA row */}
             <div style={{ display: 'flex', gap: 'var(--space-3)', marginTop: 'var(--space-5)', flexWrap: 'wrap' }}>
               <Link
-                to="/packages"
+                to="/quote"
                 style={{
                   flex: 1, minWidth: 140,
                   height: 44, display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
@@ -230,7 +230,7 @@ export default function Navbar() {
                   textDecoration: 'none',
                 }}
               >
-                Choose Your Package
+                Get a Quote Today
               </Link>
               <Link
                 to="/order"

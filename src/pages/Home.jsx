@@ -6,7 +6,7 @@ import {
   Home as HomeIcon, Dumbbell, UtensilsCrossed, Coffee,
   Scissors, Map, Car, Anchor,
   MessageSquare, Zap, MessageCircle,
-  ArrowRight, TrendingUp, Bot, ShieldCheck,
+  ArrowRight, TrendingUp, Bot,
 } from 'lucide-react'
 import SectionHeader from '../components/SectionHeader'
 import { useSEO } from '../lib/seo'
@@ -65,27 +65,6 @@ const quickChoiceItems = [
   },
 ]
 
-const startingPoints = [
-  {
-    question: 'Just need to get online?',
-    recommendation: 'Start with the Basic Launch Website',
-    cta: 'View Basic Website',
-    href: '/websites',
-  },
-  {
-    question: 'Need a proper business website?',
-    recommendation: 'Choose the Business Website',
-    cta: 'View Business Website',
-    href: '/websites',
-  },
-  {
-    question: 'Want ongoing growth support?',
-    recommendation: 'Explore the AI Growth Package',
-    cta: 'View Bundles',
-    href: '/bundles',
-  },
-]
-
 const trustPoints = [
   {
     icon: TrendingUp,
@@ -113,6 +92,141 @@ function Section({ children, style, id }) {
         {children}
       </div>
     </section>
+  )
+}
+
+// ── Top 3 Recommended Packages ────────────────────────────────────────────────
+
+const topPackages = [
+  {
+    name: 'Basic Launch Website',
+    bestFor: 'Businesses that just need to get online professionally',
+    price: 'From €450',
+    priceNote: 'one-off',
+    cta: 'View Basic Website',
+    href: '/websites',
+    recommended: false,
+  },
+  {
+    name: 'Business Website',
+    bestFor: 'Businesses that want a proper professional website',
+    price: 'From €1,200',
+    priceNote: 'one-off',
+    cta: 'View Business Website',
+    href: '/websites',
+    recommended: true,
+  },
+  {
+    name: 'Website and Social Growth',
+    bestFor: 'Businesses wanting ongoing monthly support and growth',
+    price: '€220',
+    priceNote: '/month',
+    cta: 'View Bundles',
+    href: '/bundles',
+    recommended: false,
+  },
+]
+
+function TopPackagesSection({ reduceMotion, stagger, cardVariants }) {
+  return (
+    <Section
+      style={{ background: 'var(--surface-base)', borderBottom: '1px solid var(--border-default)' }}
+    >
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'var(--space-12)' }}>
+        <SectionHeader
+          tag="Start here"
+          title="Start with the right package"
+          description="Three popular starting points — choose the one that fits where your business is right now."
+        />
+        <motion.div
+          variants={stagger}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: '-60px' }}
+          className="grid grid-cols-1 md:grid-cols-3 gap-5 w-full"
+        >
+          {topPackages.map((pkg) => (
+            <motion.div
+              key={pkg.name}
+              variants={cardVariants}
+              style={{
+                background: pkg.recommended ? 'var(--surface-overlay)' : 'var(--surface-raised)',
+                border: pkg.recommended ? '2px solid var(--color-brand-500)' : '1px solid var(--border-default)',
+                borderRadius: 'var(--radius-lg)',
+                padding: 'var(--space-8)',
+                display: 'flex', flexDirection: 'column', gap: 'var(--space-5)',
+                position: 'relative',
+                boxShadow: pkg.recommended ? 'var(--shadow-lg)' : 'none',
+                transition: 'border-color 150ms ease, box-shadow 150ms ease',
+              }}
+              onMouseEnter={(e) => {
+                if (!pkg.recommended) {
+                  e.currentTarget.style.borderColor = 'var(--color-brand-500)'
+                  e.currentTarget.style.boxShadow = 'var(--shadow-md)'
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (!pkg.recommended) {
+                  e.currentTarget.style.borderColor = 'var(--border-default)'
+                  e.currentTarget.style.boxShadow = 'none'
+                }
+              }}
+            >
+              {pkg.recommended && (
+                <span style={{
+                  position: 'absolute', top: 'var(--space-4)', right: 'var(--space-4)',
+                  display: 'inline-flex', alignItems: 'center',
+                  fontSize: 'var(--text-xs)', fontWeight: 600,
+                  letterSpacing: '0.05em', textTransform: 'uppercase',
+                  background: 'var(--color-brand-500)', border: '1px solid var(--color-brand-600)',
+                  color: 'var(--color-neutral-0)',
+                  borderRadius: 'var(--radius-full)', padding: '3px var(--space-3)',
+                }}>
+                  Recommended
+                </span>
+              )}
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
+                <h3 style={{ fontSize: 'var(--text-md)', fontWeight: 700, lineHeight: 1.2, color: 'var(--text-primary)', letterSpacing: '-0.01em', paddingRight: pkg.recommended ? 'var(--space-16)' : 0 }}>
+                  {pkg.name}
+                </h3>
+                <p style={{ fontSize: 'var(--text-sm)', lineHeight: 1.6, color: 'var(--text-secondary)' }}>
+                  {pkg.bestFor}
+                </p>
+              </div>
+
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: 'var(--space-1)' }}>
+                <span style={{ fontSize: 'var(--text-xl)', fontWeight: 700, letterSpacing: '-0.02em', color: 'var(--text-primary)', lineHeight: 1 }}>
+                  {pkg.price}
+                </span>
+                <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)' }}>{pkg.priceNote}</span>
+              </div>
+
+              <Link
+                to={pkg.href}
+                style={{
+                  marginTop: 'auto',
+                  height: 40, padding: '0 var(--space-5)',
+                  display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-2)',
+                  fontSize: 'var(--text-sm)', fontWeight: 600,
+                  background: pkg.recommended ? 'var(--color-brand-500)' : 'var(--color-brand-500)',
+                  color: 'var(--color-neutral-0)',
+                  border: '1px solid var(--color-brand-600)',
+                  borderRadius: 'var(--radius-md)',
+                  transition: 'background 120ms ease, transform 60ms ease',
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--color-brand-600)' }}
+                onMouseLeave={(e) => { e.currentTarget.style.background = 'var(--color-brand-500)' }}
+                onMouseDown={(e) => { e.currentTarget.style.transform = 'translateY(1px)' }}
+                onMouseUp={(e) => { e.currentTarget.style.transform = 'translateY(0)' }}
+              >
+                {pkg.cta} <ArrowRight size={14} />
+              </Link>
+            </motion.div>
+          ))}
+        </motion.div>
+      </div>
+    </Section>
   )
 }
 
@@ -255,7 +369,10 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── b) Quick Choice ── */}
+      {/* ── b) Top 3 Recommended Packages ── */}
+      <TopPackagesSection reduceMotion={reduceMotion} stagger={stagger} cardVariants={cardVariants} />
+
+      {/* ── c) Quick Choice ── */}
       <Section
         id="get-started"
         style={{ background: 'var(--surface-subtle)', borderTop: '1px solid var(--border-default)', borderBottom: '1px solid var(--border-default)' }}
@@ -289,11 +406,9 @@ export default function Home() {
                 onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--color-brand-500)'; e.currentTarget.style.boxShadow = 'var(--shadow-lg)' }}
                 onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--border-default)'; e.currentTarget.style.boxShadow = 'none' }}
               >
-                {/* Icon block */}
                 <div style={{ width: 52, height: 52, background: 'rgba(99,102,241,0.1)', border: '1px solid rgba(99,102,241,0.2)', borderRadius: 'var(--radius-lg)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-brand-400)' }}>
                   <item.icon size={24} />
                 </div>
-
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
                   <span style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--color-brand-400)' }}>
                     {item.category}
@@ -305,7 +420,6 @@ export default function Home() {
                     {item.description}
                   </p>
                 </div>
-
                 <Link
                   to={item.href}
                   style={{ marginTop: 'auto', display: 'inline-flex', alignItems: 'center', gap: 'var(--space-2)', fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--color-brand-400)', transition: 'color 120ms ease' }}
@@ -320,60 +434,52 @@ export default function Home() {
         </div>
       </Section>
 
-      {/* ── c) Recommended Starting Points ── */}
-      <Section>
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'var(--space-12)' }}>
-          <SectionHeader
-            tag="Recommended"
-            title="Not sure where to start?"
-            description="We've matched the most common situations to the right starting point."
-          />
-          <motion.div
-            variants={stagger}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, margin: '-60px' }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-5 w-full"
-          >
-            {startingPoints.map((sp) => (
-              <motion.div
-                key={sp.question}
-                variants={cardVariants}
-                style={{
-                  background: 'var(--surface-raised)',
-                  border: '1px solid var(--border-default)',
-                  borderRadius: 'var(--radius-lg)',
-                  padding: 'var(--space-6)',
-                  display: 'flex', flexDirection: 'column', gap: 'var(--space-4)',
-                  transition: 'border-color 150ms ease, box-shadow 150ms ease',
-                }}
-                onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--border-strong)'; e.currentTarget.style.boxShadow = 'var(--shadow-md)' }}
-                onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--border-default)'; e.currentTarget.style.boxShadow = 'none' }}
-              >
-                <p style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--text-primary)', lineHeight: 1.3 }}>
-                  {sp.question}
-                </p>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
-                  <span style={{ width: 4, height: 4, borderRadius: '50%', background: 'var(--color-brand-500)', flexShrink: 0 }} />
-                  <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', lineHeight: 1.4 }}>
-                    {sp.recommendation}
-                  </p>
-                </div>
-                <Link
-                  to={sp.href}
-                  style={{ height: 36, padding: '0 var(--space-4)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: 'var(--text-xs)', fontWeight: 600, background: 'transparent', color: 'var(--text-primary)', border: '1px solid var(--border-strong)', borderRadius: 'var(--radius-md)', transition: 'background 120ms ease', marginTop: 'auto', alignSelf: 'flex-start' }}
-                  onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--surface-overlay)' }}
-                  onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent' }}
-                >
-                  {sp.cta}
-                </Link>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </Section>
+      {/* ── d) Build a stronger digital presence ── */}
+      <section style={{ background: 'var(--surface-raised)', borderTop: '1px solid var(--border-default)', padding: 'var(--space-20) var(--space-8)' }}>
+        <motion.div
+          initial={reduceMotion ? {} : { opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          style={{ maxWidth: 'var(--width-md)', margin: '0 auto', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'var(--space-8)' }}
+        >
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'var(--space-4)' }}>
+            <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--color-accent-500)' }}>
+              Ready to grow?
+            </p>
+            <h2 style={{ fontSize: 'clamp(var(--text-xl), 4vw, var(--text-2xl))', fontWeight: 700, lineHeight: 1.15, letterSpacing: '-0.02em', color: 'var(--text-primary)' }}>
+              Build a stronger digital presence
+            </h2>
+            <p style={{ fontSize: 'var(--text-base)', lineHeight: 1.6, color: 'var(--text-secondary)', maxWidth: '46ch' }}>
+              Choose your package, send us your details, and we'll handle everything from there — no back-and-forth, no unnecessary meetings.
+            </p>
+          </div>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-3)', justifyContent: 'center' }}>
+            <Link
+              to="/packages"
+              style={{ height: 44, padding: '0 var(--space-6)', display: 'inline-flex', alignItems: 'center', fontSize: 'var(--text-sm)', fontWeight: 600, background: 'var(--color-brand-500)', color: 'var(--color-neutral-0)', border: '1px solid var(--color-brand-600)', borderRadius: 'var(--radius-md)', transition: 'background 120ms ease, transform 60ms ease' }}
+              onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--color-brand-600)' }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = 'var(--color-brand-500)' }}
+              onMouseDown={(e) => { e.currentTarget.style.transform = 'translateY(1px)' }}
+              onMouseUp={(e) => { e.currentTarget.style.transform = 'translateY(0)' }}
+            >
+              Choose your package
+            </Link>
+            <Link
+              to="/contact"
+              style={{ height: 44, padding: '0 var(--space-6)', display: 'inline-flex', alignItems: 'center', fontSize: 'var(--text-sm)', fontWeight: 600, background: 'var(--color-brand-500)', color: 'var(--color-neutral-0)', border: '1px solid var(--color-brand-600)', borderRadius: 'var(--radius-md)', transition: 'background 120ms ease, transform 60ms ease' }}
+              onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--color-brand-600)' }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = 'var(--color-brand-500)' }}
+              onMouseDown={(e) => { e.currentTarget.style.transform = 'translateY(1px)' }}
+              onMouseUp={(e) => { e.currentTarget.style.transform = 'translateY(0)' }}
+            >
+              Send us an email
+            </Link>
+          </div>
+        </motion.div>
+      </section>
 
-      {/* ── d) Industries (portfolio / business types) ── */}
+      {/* ── e) Built for businesses / Industries ── */}
       <Section style={{ background: 'var(--surface-subtle)', borderTop: '1px solid var(--border-default)', borderBottom: '1px solid var(--border-default)' }}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'var(--space-12)' }}>
           <SectionHeader
@@ -405,7 +511,7 @@ export default function Home() {
         </div>
       </Section>
 
-      {/* ── e) How It Works ── */}
+      {/* ── f) From package to launch in 5 steps ── */}
       <Section>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'var(--space-16)' }}>
           <SectionHeader
@@ -434,7 +540,7 @@ export default function Home() {
         </div>
       </Section>
 
-      {/* ── f) Why GoAI trust section ── */}
+      {/* ── g) Why GoAI trust section ── */}
       <Section style={{ background: 'var(--surface-subtle)', borderTop: '1px solid var(--border-default)', borderBottom: '1px solid var(--border-default)' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-16)' }}>
           {/* Stats row */}
@@ -480,61 +586,6 @@ export default function Home() {
           </div>
         </div>
       </Section>
-
-      {/* ── g) Final CTA ── */}
-      <section style={{ background: 'var(--surface-raised)', borderTop: '1px solid var(--border-default)', padding: 'var(--space-20) var(--space-8)' }}>
-        <motion.div
-          initial={reduceMotion ? {} : { opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-60px' }}
-          transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          style={{ maxWidth: 'var(--width-md)', margin: '0 auto', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'var(--space-8)' }}
-        >
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'var(--space-4)' }}>
-            <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--color-accent-500)' }}>
-              Ready to grow?
-            </p>
-            <h2 style={{ fontSize: 'clamp(var(--text-xl), 4vw, var(--text-2xl))', fontWeight: 700, lineHeight: 1.15, letterSpacing: '-0.02em', color: 'var(--text-primary)' }}>
-              Build a stronger digital presence
-            </h2>
-            <p style={{ fontSize: 'var(--text-base)', lineHeight: 1.6, color: 'var(--text-secondary)', maxWidth: '46ch' }}>
-              Choose your package, send us your details, and we'll handle everything from there — no back-and-forth, no unnecessary meetings.
-            </p>
-          </div>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-3)', justifyContent: 'center' }}>
-            <Link
-              to="/packages"
-              style={{ height: 44, padding: '0 var(--space-6)', display: 'inline-flex', alignItems: 'center', fontSize: 'var(--text-sm)', fontWeight: 600, background: 'var(--color-brand-500)', color: 'var(--color-neutral-0)', border: '1px solid var(--color-brand-600)', borderRadius: 'var(--radius-md)', transition: 'background 120ms ease, transform 60ms ease' }}
-              onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--color-brand-600)' }}
-              onMouseLeave={(e) => { e.currentTarget.style.background = 'var(--color-brand-500)' }}
-              onMouseDown={(e) => { e.currentTarget.style.transform = 'translateY(1px)' }}
-              onMouseUp={(e) => { e.currentTarget.style.transform = 'translateY(0)' }}
-            >
-              Choose Your Package
-            </Link>
-            <Link
-              to="/book"
-              style={{ height: 44, padding: '0 var(--space-6)', display: 'inline-flex', alignItems: 'center', fontSize: 'var(--text-sm)', fontWeight: 500, background: 'transparent', color: 'var(--text-primary)', border: '1px solid var(--border-strong)', borderRadius: 'var(--radius-md)', transition: 'background 120ms ease, transform 60ms ease' }}
-              onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--surface-overlay)' }}
-              onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent' }}
-              onMouseDown={(e) => { e.currentTarget.style.transform = 'translateY(1px)' }}
-              onMouseUp={(e) => { e.currentTarget.style.transform = 'translateY(0)' }}
-            >
-              Schedule a Call
-            </Link>
-            <Link
-              to="/contact"
-              style={{ height: 44, padding: '0 var(--space-6)', display: 'inline-flex', alignItems: 'center', fontSize: 'var(--text-sm)', fontWeight: 500, background: 'transparent', color: 'var(--text-secondary)', border: '1px solid var(--border-default)', borderRadius: 'var(--radius-md)', transition: 'color 120ms ease, background 120ms ease, transform 60ms ease' }}
-              onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--text-primary)'; e.currentTarget.style.background = 'var(--surface-raised)' }}
-              onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--text-secondary)'; e.currentTarget.style.background = 'transparent' }}
-              onMouseDown={(e) => { e.currentTarget.style.transform = 'translateY(1px)' }}
-              onMouseUp={(e) => { e.currentTarget.style.transform = 'translateY(0)' }}
-            >
-              Send Us an Email
-            </Link>
-          </div>
-        </motion.div>
-      </section>
 
     </main>
   )

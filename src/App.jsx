@@ -40,6 +40,7 @@ function App() {
           <Route path="/bundles" element={<Bundles />} />
           <Route path="/websites" element={<Websites />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/quote" element={<Contact />} />
           <Route path="/how-it-works" element={<HowItWorks />} />
           <Route path="/book" element={<Book />} />
           <Route path="/onboarding" element={<Onboarding />} />

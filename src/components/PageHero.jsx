@@ -34,7 +34,7 @@ export default function PageHero({ tag, title, description }) {
           margin: '0 auto',
           display: 'flex',
           flexDirection: 'column',
-          gap: 'var(--space-4)',
+          gap: 'var(--space-2)',
         }}
       >
         {tag && (

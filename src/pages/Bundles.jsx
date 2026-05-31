@@ -259,7 +259,7 @@ function SmallBundleCard({ bundle, variants }) {
   const basketItem = {
     id: bundle.name,
     name: bundle.name,
-    priceDisplay: `Website ${bundle.oneOffDisplay} + €${bundle.monthly}/month`,
+    priceDisplay: `€${bundle.monthly}/month`,
     formTypes: PACKAGE_FORM_TYPES[bundle.detailKey] || [],
   }
   return (
@@ -281,14 +281,9 @@ function SmallBundleCard({ bundle, variants }) {
         <Badge label={bundle.badge} />
       </div>
 
-      <div style={{ display: 'flex', alignItems: 'baseline', gap: 'var(--space-4)' }}>
-        <div>
-          <span style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--text-secondary)', lineHeight: 1 }}>Website {bundle.oneOffDisplay}</span>
-        </div>
-        <div>
-          <span style={{ fontSize: 'var(--text-lg)', fontWeight: 700, letterSpacing: '-0.02em', color: 'var(--text-primary)', lineHeight: 1 }}>€{bundle.monthly}</span>
-          <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)' }}>/mo</span>
-        </div>
+      <div style={{ display: 'flex', alignItems: 'baseline', gap: 'var(--space-1)' }}>
+        <span style={{ fontSize: 'var(--text-lg)', fontWeight: 700, letterSpacing: '-0.02em', color: 'var(--text-primary)', lineHeight: 1 }}>€{bundle.monthly}</span>
+        <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)' }}>/month</span>
       </div>
 
       <SavingsBadge yearly={bundle.savesYearly} upfront={bundle.savesUpfront} />
@@ -340,7 +335,7 @@ function RecommendedBundleCard({ bundle, variants }) {
   const basketItem = {
     id: bundle.name,
     name: bundle.name,
-    priceDisplay: `Website ${bundle.oneOffDisplay} + €${bundle.monthly}/month`,
+    priceDisplay: `€${bundle.monthly}/month`,
     formTypes: PACKAGE_FORM_TYPES[bundle.detailKey] || [],
   }
   return (
@@ -371,14 +366,9 @@ function RecommendedBundleCard({ bundle, variants }) {
           </p>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'baseline', flexWrap: 'wrap', gap: 'var(--space-5)' }}>
-          <div>
-            <span style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--text-secondary)', lineHeight: 1 }}>Website {bundle.oneOffDisplay}</span>
-          </div>
-          <div>
-            <span style={{ fontSize: 'var(--text-2xl)', fontWeight: 700, letterSpacing: '-0.03em', color: 'var(--text-primary)', lineHeight: 1 }}>€{bundle.monthly}</span>
-            <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-tertiary)' }}>/month</span>
-          </div>
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: 'var(--space-1)' }}>
+          <span style={{ fontSize: 'var(--text-2xl)', fontWeight: 700, letterSpacing: '-0.03em', color: 'var(--text-primary)', lineHeight: 1 }}>€{bundle.monthly}</span>
+          <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-tertiary)' }}>/month</span>
         </div>
 
         <SavingsBadge yearly={bundle.savesYearly} upfront={bundle.savesUpfront} />
