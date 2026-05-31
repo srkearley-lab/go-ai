@@ -34,20 +34,22 @@ const services = [
 ]
 
 const industries = [
-  { icon: HomeIcon,         label: 'Villa Rentals' },
-  { icon: Dumbbell,         label: 'Gyms & Fitness' },
-  { icon: UtensilsCrossed,  label: 'Restaurants' },
-  { icon: Coffee,           label: 'Cafés' },
-  { icon: Scissors,         label: 'Hair & Beauty' },
-  { icon: Map,              label: 'Tourism Companies' },
-  { icon: Car,              label: 'Car Hire' },
-  { icon: Anchor,           label: 'Boat Hire' },
+  { icon: HomeIcon,        label: 'Villa Rentals',     href: '/industries#villa-rentals' },
+  { icon: Dumbbell,        label: 'Gyms & Fitness',    href: '/industries#gyms-fitness' },
+  { icon: UtensilsCrossed, label: 'Restaurants',       href: '/industries#restaurants' },
+  { icon: Coffee,          label: 'Cafés',             href: '/industries#cafes' },
+  { icon: Scissors,        label: 'Hair & Beauty',     href: '/industries#hair-beauty' },
+  { icon: Map,             label: 'Tourism Companies', href: '/industries#tourism' },
+  { icon: Car,             label: 'Car Hire',          href: '/industries#car-hire' },
+  { icon: Anchor,          label: 'Boat Hire',         href: '/industries#boat-hire' },
 ]
 
 const steps = [
-  { icon: MessageSquare, number: 1, title: 'Tell us about your business', description: 'Fill in our short form or message us on WhatsApp. We\'ll ask a few quick questions about your goals and current setup.' },
-  { icon: Zap,           number: 2, title: 'We build everything', description: 'Your website, content, SEO and automation flows — done within 7 days. No meetings, no back-and-forth.' },
-  { icon: MessageCircle, number: 3, title: 'You manage via WhatsApp', description: 'Control bookings, review reports and request updates directly from your phone. No dashboards to learn.' },
+  { icon: FileText,      number: 1, title: 'Choose your package',        description: 'Browse our packages and pick the one that matches your goals and budget. Not sure? We\'ll help you choose.' },
+  { icon: MessageSquare, number: 2, title: 'Send us your details',        description: 'Complete a short onboarding form covering your business, branding and what you need. Takes around 10 minutes.' },
+  { icon: Zap,           number: 3, title: 'We build or set up the work', description: 'We design, build and configure everything based on your brief — website, content, automations and integrations.' },
+  { icon: MessageCircle, number: 4, title: 'Review and approve',          description: 'We share a preview for your feedback. We update until you\'re completely happy — no limits on revisions.' },
+  { icon: Globe,         number: 5, title: 'Launch or activate',          description: 'We publish your site, activate your automations and confirm everything is working. You\'re live and ready to grow.' },
 ]
 
 
@@ -233,7 +235,7 @@ export default function Home() {
             style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-3)', justifyContent: 'center' }}
           >
             <Link
-              to="/book"
+              to="/pricing"
               style={{
                 height: 44,
                 padding: '0 var(--space-6)',
@@ -250,10 +252,10 @@ export default function Home() {
               onMouseDown={(e) => { e.currentTarget.style.transform = 'translateY(1px)' }}
               onMouseUp={(e) => { e.currentTarget.style.transform = 'translateY(0)' }}
             >
-              Book a Free Consultation
+              Choose Your Package
             </Link>
             <Link
-              to="/pricing"
+              to="/book"
               style={{
                 height: 44,
                 padding: '0 var(--space-6)',
@@ -270,7 +272,7 @@ export default function Home() {
               onMouseDown={(e) => { e.currentTarget.style.transform = 'translateY(1px)' }}
               onMouseUp={(e) => { e.currentTarget.style.transform = 'translateY(0)' }}
             >
-              View Packages <ArrowRight size={15} />
+              Schedule a Call <ArrowRight size={15} />
             </Link>
           </motion.div>
 
@@ -471,8 +473,8 @@ export default function Home() {
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'var(--space-12)' }}>
           <SectionHeader
             tag="Industries"
-            title="Built for local businesses in Greece"
-            description="We specialise in the businesses that drive Greek tourism and everyday life."
+            title="Built for businesses that want to look professional online"
+            description="We work with the businesses that depend on their online presence to attract customers and grow."
           />
           <motion.div
             variants={stagger}
@@ -482,7 +484,13 @@ export default function Home() {
             className="grid grid-cols-2 sm:grid-cols-4 gap-4 w-full"
           >
             {industries.map((ind) => (
-              <IndustryCard key={ind.label} icon={ind.icon} label={ind.label} />
+              <Link
+                key={ind.label}
+                to={ind.href}
+                style={{ textDecoration: 'none', display: 'block' }}
+              >
+                <IndustryCard icon={ind.icon} label={ind.label} />
+              </Link>
             ))}
           </motion.div>
 
@@ -507,15 +515,15 @@ export default function Home() {
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'var(--space-16)' }}>
           <SectionHeader
             tag="How it works"
-            title="From idea to live in 3 steps"
-            description="No long briefs, no design reviews, no waiting weeks. We keep it simple."
+            title="From package to launch in 5 steps"
+            description="A simple, predictable process — no long briefs, no meetings, no waiting weeks."
           />
           <motion.div
             variants={stagger}
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, margin: '-60px' }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-12 w-full"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 w-full"
           >
             {steps.map((step, i) => (
               <StepCard
@@ -669,17 +677,15 @@ export default function Home() {
           </div>
 
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-3)', justifyContent: 'center' }}>
+            {/* Primary */}
             <Link
-              to="/book"
+              to="/pricing"
               style={{
-                height: 44,
-                padding: '0 var(--space-6)',
+                height: 44, padding: '0 var(--space-6)',
                 display: 'inline-flex', alignItems: 'center',
                 fontSize: 'var(--text-sm)', fontWeight: 500,
-                background: 'var(--color-brand-500)',
-                color: 'var(--color-neutral-0)',
-                border: '1px solid var(--color-brand-600)',
-                borderRadius: 'var(--radius-md)',
+                background: 'var(--color-brand-500)', color: 'var(--color-neutral-0)',
+                border: '1px solid var(--color-brand-600)', borderRadius: 'var(--radius-md)',
                 transition: 'background 120ms ease, transform 60ms ease',
               }}
               onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--color-brand-600)' }}
@@ -687,31 +693,44 @@ export default function Home() {
               onMouseDown={(e) => { e.currentTarget.style.transform = 'translateY(1px)' }}
               onMouseUp={(e) => { e.currentTarget.style.transform = 'translateY(0)' }}
             >
-              Book a Free Consultation
+              Choose Your Package
             </Link>
-            <a
-              href={WHATSAPP}
-              target="_blank"
-              rel="noreferrer"
+            {/* Secondary */}
+            <Link
+              to="/book"
               style={{
-                height: 44,
-                padding: '0 var(--space-6)',
-                display: 'inline-flex', alignItems: 'center', gap: 'var(--space-2)',
+                height: 44, padding: '0 var(--space-6)',
+                display: 'inline-flex', alignItems: 'center',
                 fontSize: 'var(--text-sm)', fontWeight: 500,
-                background: '#25d366',
-                color: '#fff',
-                border: 'none',
-                borderRadius: 'var(--radius-md)',
+                background: 'transparent', color: 'var(--text-primary)',
+                border: '1px solid var(--border-strong)', borderRadius: 'var(--radius-md)',
                 transition: 'background 120ms ease, transform 60ms ease',
               }}
-              onMouseEnter={(e) => { e.currentTarget.style.background = '#1ebe5d' }}
-              onMouseLeave={(e) => { e.currentTarget.style.background = '#25d366' }}
+              onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--surface-overlay)' }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent' }}
               onMouseDown={(e) => { e.currentTarget.style.transform = 'translateY(1px)' }}
               onMouseUp={(e) => { e.currentTarget.style.transform = 'translateY(0)' }}
             >
-              <MessageCircle size={16} />
-              Message on WhatsApp
-            </a>
+              Schedule a Call
+            </Link>
+            {/* Tertiary */}
+            <Link
+              to="/contact"
+              style={{
+                height: 44, padding: '0 var(--space-6)',
+                display: 'inline-flex', alignItems: 'center',
+                fontSize: 'var(--text-sm)', fontWeight: 500,
+                background: 'transparent', color: 'var(--text-secondary)',
+                border: '1px solid var(--border-default)', borderRadius: 'var(--radius-md)',
+                transition: 'color 120ms ease, background 120ms ease, transform 60ms ease',
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--text-primary)'; e.currentTarget.style.background = 'var(--surface-raised)' }}
+              onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--text-secondary)'; e.currentTarget.style.background = 'transparent' }}
+              onMouseDown={(e) => { e.currentTarget.style.transform = 'translateY(1px)' }}
+              onMouseUp={(e) => { e.currentTarget.style.transform = 'translateY(0)' }}
+            >
+              Send Us an Email
+            </Link>
           </div>
         </motion.div>
       </section>

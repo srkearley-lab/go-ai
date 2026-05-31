@@ -65,7 +65,7 @@ export default function Footer() {
               ['/pricing', 'Pricing'],
               ['/portfolio', 'Portfolio'],
               ['/automation', 'Automation'],
-              ['/book', 'Book a Consultation'],
+              ['/book', 'Schedule a Call'],
             ].map(([href, label]) => (
               <Link key={href} to={href} style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', transition: 'color 120ms ease' }}
                 onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--text-primary)' }}
@@ -93,7 +93,7 @@ export default function Footer() {
               onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--text-primary)' }}
               onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--text-secondary)' }}
             >
-              Request a Proposal
+              Choose Your Package
             </Link>
             <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)' }}>Greece</p>
           </div>

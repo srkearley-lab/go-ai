@@ -291,7 +291,7 @@ function ServiceDetailCard({ icon: Icon, title, description, included, bestFor }
       </div>
 
       {/* Best for */}
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-2)', marginTop: 'auto' }}>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-2)' }}>
         <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', marginRight: 'var(--space-1)', alignSelf: 'center' }}>
           Best for:
         </span>
@@ -299,8 +299,7 @@ function ServiceDetailCard({ icon: Icon, title, description, included, bestFor }
           <span
             key={tag}
             style={{
-              fontSize: 'var(--text-xs)',
-              fontWeight: 500,
+              fontSize: 'var(--text-xs)', fontWeight: 500,
               color: 'var(--text-secondary)',
               background: 'var(--surface-subtle)',
               border: '1px solid var(--border-default)',
@@ -311,6 +310,23 @@ function ServiceDetailCard({ icon: Icon, title, description, included, bestFor }
             {tag}
           </span>
         ))}
+      </div>
+
+      {/* Card CTA */}
+      <div style={{ paddingTop: 'var(--space-3)', borderTop: '1px solid var(--border-default)' }}>
+        <Link
+          to="/pricing"
+          style={{
+            display: 'inline-flex', alignItems: 'center', gap: 'var(--space-2)',
+            fontSize: 'var(--text-xs)', fontWeight: 600,
+            color: 'var(--color-brand-400)',
+            transition: 'color 120ms ease',
+          }}
+          onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--color-brand-200)' }}
+          onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--color-brand-400)' }}
+        >
+          Start with this service <ArrowRight size={12} />
+        </Link>
       </div>
     </motion.div>
   )
@@ -458,18 +474,18 @@ export default function Services() {
           >
             <Diff
               number={1}
-              title="Built for Greek businesses specifically"
-              body="Every template, automation and copy block is built around how local businesses in Greece operate — tourist seasons, Greek-speaking customers, local search intent and WhatsApp-first communication."
+              title="Built to convert visitors into customers"
+              body="Every page, automation and content block is designed to move visitors toward a booking, enquiry or purchase. We don't just build websites — we build systems that work while you sleep."
             />
             <Diff
               number={2}
-              title="Live in 7 days, managed via WhatsApp"
-              body="No long project timelines, no dashboards to learn. Your website goes live within a week, and every update, report or request goes through a single WhatsApp message."
+              title="Live in 7 days, managed via one message"
+              body="No long project timelines, no dashboards to learn. Your website goes live within a week, and every update, report or request is handled via a single WhatsApp message."
             />
             <Diff
               number={3}
-              title="AI-powered at a fraction of the agency cost"
-              body="By using AI to handle writing, design and automation, we deliver the quality of a full-service agency at a price that makes sense for a local business with real margins."
+              title="AI-powered at a fraction of agency cost"
+              body="By using AI to handle writing, design and automation, we deliver the quality of a full-service agency at a price that makes sense for a business with real margins."
             />
           </motion.div>
         </div>
@@ -506,7 +522,7 @@ export default function Services() {
 
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-3)', justifyContent: 'center' }}>
             <Link
-              to="/contact"
+              to="/pricing"
               style={{
                 height: 44, padding: '0 var(--space-6)',
                 display: 'inline-flex', alignItems: 'center',
@@ -522,28 +538,25 @@ export default function Services() {
               onMouseDown={(e) => { e.currentTarget.style.transform = 'translateY(1px)' }}
               onMouseUp={(e) => { e.currentTarget.style.transform = 'translateY(0)' }}
             >
-              Request my free plan
+              Choose Your Package
             </Link>
-            <a
-              href={WHATSAPP}
-              target="_blank"
-              rel="noreferrer"
+            <Link
+              to="/book"
               style={{
                 height: 44, padding: '0 var(--space-6)',
                 display: 'inline-flex', alignItems: 'center', gap: 'var(--space-2)',
                 fontSize: 'var(--text-sm)', fontWeight: 500,
-                background: '#25d366', color: '#fff',
-                border: 'none', borderRadius: 'var(--radius-md)',
+                background: 'transparent', color: 'var(--text-primary)',
+                border: '1px solid var(--border-strong)', borderRadius: 'var(--radius-md)',
                 transition: 'background 120ms ease, transform 60ms ease',
               }}
-              onMouseEnter={(e) => { e.currentTarget.style.background = '#1ebe5d' }}
-              onMouseLeave={(e) => { e.currentTarget.style.background = '#25d366' }}
+              onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--surface-raised)' }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent' }}
               onMouseDown={(e) => { e.currentTarget.style.transform = 'translateY(1px)' }}
               onMouseUp={(e) => { e.currentTarget.style.transform = 'translateY(0)' }}
             >
-              <MessageCircle size={16} />
-              Ask on WhatsApp
-            </a>
+              Schedule a Call
+            </Link>
           </div>
         </motion.div>
       </section>

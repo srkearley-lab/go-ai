@@ -21,7 +21,7 @@ export default function IndustryCard({ icon: Icon, label }) {
         gap: 'var(--space-3)',
         textAlign: 'center',
         transition: 'border-color 150ms ease, box-shadow 150ms ease',
-        cursor: 'default',
+        cursor: 'pointer',
       }}
       onMouseEnter={(e) => {
         e.currentTarget.style.borderColor = 'var(--color-brand-500)'

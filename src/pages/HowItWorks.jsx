@@ -11,59 +11,38 @@ import { useSEO } from '../lib/seo'
 const steps = [
   {
     number: 1,
-    icon: Calendar,
-    title: 'Book a consultation',
-    description: 'Schedule a free 30-minute call. We review your current setup, understand your goals, and answer any questions. No commitment required.',
-    detail: 'Via video call, phone, or WhatsApp message — whatever suits you.',
+    icon: Package,
+    title: 'Choose your package',
+    description: 'Browse our packages and pick the one that fits your goals and budget. Not sure where to start? Our pricing page breaks everything down clearly.',
+    detail: 'Start with a website only, or jump straight into a growth bundle. You can always add more later.',
   },
   {
     number: 2,
-    icon: Package,
-    title: 'Choose your package',
-    description: 'Based on your goals and budget, we recommend the right starting point — website only, a bundle, or a full AI growth system.',
-    detail: 'We\'ll send a written proposal with clear pricing within 24 hours.',
+    icon: ClipboardList,
+    title: 'Send us your details',
+    description: 'Complete a short onboarding form covering your business, branding preferences, target audience, pages needed and any existing content.',
+    detail: 'Takes around 10–15 minutes. No technical knowledge needed — just tell us about your business.',
   },
   {
     number: 3,
-    icon: ClipboardList,
-    title: 'Complete your onboarding form',
-    description: 'A short form covering your business details, branding preferences, target audience, pages needed and any content you already have.',
-    detail: 'Takes around 10–15 minutes. No technical knowledge needed.',
+    icon: Hammer,
+    title: 'We build or set up the work',
+    description: 'We design, build and configure everything based on your brief — website, content, SEO setup, automations and integrations, all in one go.',
+    detail: 'Most websites are ready within 5–7 working days. Automation setups can go live even faster.',
   },
   {
     number: 4,
-    icon: Hammer,
-    title: 'We build your website and systems',
-    description: 'We design, build and configure everything — website, automations, content, SEO setup and integrations — based on your brief.',
-    detail: 'Most websites are complete within 5–7 working days. Complex builds may take longer.',
+    icon: Eye,
+    title: 'Review and approve',
+    description: 'We share a preview link so you can review the work before anything goes live. Request changes and we update until you\'re completely satisfied.',
+    detail: 'No limits on revision rounds. We don\'t launch until you\'re happy.',
   },
   {
     number: 5,
-    icon: Eye,
-    title: 'Review and approve',
-    description: 'We share a preview link so you can review the site before it goes live. Request changes and we\'ll update until you\'re happy.',
-    detail: 'Unlimited review rounds included. We don\'t launch until you\'re satisfied.',
-  },
-  {
-    number: 6,
     icon: Rocket,
-    title: 'Launch',
-    description: 'We connect your domain, publish the site and run a final quality check. Your business is live and visible on Google.',
-    detail: 'We handle all technical setup — hosting, SSL, redirects and domain configuration.',
-  },
-  {
-    number: 7,
-    icon: PlusCircle,
-    title: 'Add monthly packages if needed',
-    description: 'Once your website is live, add any monthly services — SEO, social media, AI automation, video content, email campaigns and more.',
-    detail: 'Start small and scale up as your business grows. Cancel or change any time.',
-  },
-  {
-    number: 8,
-    icon: HeadphonesIcon,
-    title: 'Receive ongoing updates and support',
-    description: 'On monthly plans, we handle content updates, reports, optimisations and new requests — all via a single WhatsApp message.',
-    detail: 'You manage your entire digital presence from your phone. No dashboards or tech skills needed.',
+    title: 'Launch or activate',
+    description: 'We publish your website, connect your domain, activate your automations and confirm everything is working correctly.',
+    detail: 'We handle all technical setup — hosting, SSL, domain connection and final quality checks.',
   },
 ]
 
@@ -138,8 +117,8 @@ export default function HowItWorks() {
     <main style={{ paddingTop: 64 }}>
       <PageHero
         tag="How it works"
-        title="From first call to launch — and beyond"
-        description="8 clear steps. No jargon, no long waits, no complicated processes. We handle the technical side — you manage everything via WhatsApp."
+        title="From package choice to launch — 5 simple steps"
+        description="No long briefs, no complicated processes, no waiting weeks. We handle the technical side completely — you just review and approve."
       />
 
       {/* Steps */}
@@ -189,11 +168,11 @@ export default function HowItWorks() {
             Ready to get started?
           </h2>
           <p style={{ fontSize: 'var(--text-base)', lineHeight: 1.6, color: 'var(--text-secondary)', maxWidth: '42ch' }}>
-            Step 1 is a free call. No commitment, no payment required. We'll recommend the right path for your business.
+            Start by choosing your package. Everything else follows from there — no calls required to get going.
           </p>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-3)', justifyContent: 'center' }}>
             <Link
-              to="/book"
+              to="/pricing"
               style={{
                 height: 44, padding: '0 var(--space-6)',
                 display: 'inline-flex', alignItems: 'center', gap: 'var(--space-2)',
@@ -205,11 +184,10 @@ export default function HowItWorks() {
               onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--color-brand-600)' }}
               onMouseLeave={(e) => { e.currentTarget.style.background = 'var(--color-brand-500)' }}
             >
-              <Calendar size={15} />
-              Book a free consultation
+              Choose Your Package
             </Link>
             <Link
-              to="/pricing"
+              to="/book"
               style={{
                 height: 44, padding: '0 var(--space-6)',
                 display: 'inline-flex', alignItems: 'center', gap: 'var(--space-2)',
@@ -221,7 +199,7 @@ export default function HowItWorks() {
               onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--surface-raised)' }}
               onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent' }}
             >
-              View packages <ArrowRight size={14} />
+              Schedule a Call <ArrowRight size={14} />
             </Link>
           </div>
         </motion.div>

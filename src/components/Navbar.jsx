@@ -88,7 +88,7 @@ export default function Navbar() {
           {/* Desktop CTA */}
           <div className="hidden md:flex" style={{ alignItems: 'center', gap: 'var(--space-3)' }}>
             <Link
-              to="/book"
+              to="/pricing"
               style={{
                 height: 36,
                 padding: '0 var(--space-4)',
@@ -105,7 +105,7 @@ export default function Navbar() {
               onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--color-brand-600)' }}
               onMouseLeave={(e) => { e.currentTarget.style.background = 'var(--color-brand-500)' }}
             >
-              Book a Call
+              Choose Your Package
             </Link>
           </div>
 
@@ -184,7 +184,7 @@ export default function Navbar() {
                 borderRadius: 'var(--radius-md)',
               }}
             >
-              Request Proposal
+              Choose Your Package
             </Link>
           </motion.div>
         )}

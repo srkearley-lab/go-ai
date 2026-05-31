@@ -48,7 +48,7 @@ export default function ThankYou() {
             You're all set
           </h1>
           <p style={{ fontSize: 'var(--text-base)', lineHeight: 1.7, color: 'var(--text-secondary)', maxWidth: '42ch', margin: '0 auto' }}>
-            We've received your message and will be in touch within 24 hours. In the meantime, feel free to book a consultation or message us on WhatsApp.
+            We've received your message and will be in touch within 24 hours. In the meantime, feel free to schedule a call or browse our packages.
           </p>
         </div>
 
@@ -103,7 +103,7 @@ export default function ThankYou() {
             onMouseLeave={(e) => { e.currentTarget.style.background = 'var(--color-brand-500)' }}
           >
             <Calendar size={15} />
-            Book a consultation
+            Schedule a Call
           </a>
           <a
             href={WHATSAPP}
