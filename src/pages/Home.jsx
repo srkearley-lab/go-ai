@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef, lazy, Suspense } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, useReducedMotion } from 'framer-motion'
 import {
@@ -12,6 +12,9 @@ import SectionHeader from '../components/SectionHeader'
 import ServiceCard from '../components/ServiceCard'
 import IndustryCard from '../components/IndustryCard'
 import StepCard from '../components/StepCard'
+const ShaderAnimation = lazy(() =>
+  import('../components/ShaderAnimation').then((m) => ({ default: m.ShaderAnimation }))
+)
 
 const WHATSAPP = '#'
 
@@ -277,7 +280,6 @@ export default function Home() {
 
       {/* ── Hero ── */}
       <section
-        className="dot-grid"
         style={{
           minHeight: '92vh',
           display: 'flex',
@@ -288,12 +290,27 @@ export default function Home() {
           overflow: 'hidden',
         }}
       >
-        {/* Subtle radial fade at centre — NOT a gradient blob, just depth */}
+        {/* Layer 1 — WebGL shader (lazy-loaded so three.js splits into its own chunk) */}
+        <Suspense fallback={<div style={{ position: 'absolute', inset: 0, background: '#000' }} />}>
+          <ShaderAnimation />
+        </Suspense>
+
+        {/* Layer 2 — dark overlay so text stays readable */}
         <div
           style={{
             position: 'absolute',
             inset: 0,
-            background: 'radial-gradient(ellipse 80% 60% at 50% 50%, rgba(8,12,24,0) 0%, var(--surface-base) 70%)',
+            background: 'rgba(0,0,0,0.55)',
+            pointerEvents: 'none',
+          }}
+        />
+
+        {/* Layer 3 — radial vignette fading to site background at edges */}
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            background: 'radial-gradient(ellipse 80% 60% at 50% 50%, transparent 0%, var(--surface-base) 75%)',
             pointerEvents: 'none',
           }}
         />
