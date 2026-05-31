@@ -29,7 +29,7 @@ export default function MobileBottomBar() {
         }}
       >
         {[
-          { label: 'Packages', icon: Package, href: '/pricing' },
+          { label: 'Packages', icon: Package, href: '/packages' },
           { label: count > 0 ? `Basket (${count})` : 'Basket', icon: ShoppingCart, href: '/order', highlight: count > 0 },
           { label: 'Contact', icon: Mail, href: '/contact' },
         ].map(({ label, icon: Icon, href, highlight }) => {

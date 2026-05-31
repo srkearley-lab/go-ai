@@ -13,7 +13,7 @@ const steps = [
     number: 1,
     icon: Package,
     title: 'Choose your package',
-    description: 'Browse our packages and pick the one that fits your goals and budget. Not sure where to start? Our pricing page breaks everything down clearly.',
+    description: 'Browse our packages and pick the one that fits your goals and budget. Not sure where to start? Our packages and bundles pages break everything down clearly.',
     detail: 'Start with a website only, or jump straight into a growth bundle. You can always add more later.',
   },
   {
@@ -172,7 +172,7 @@ export default function HowItWorks() {
           </p>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-3)', justifyContent: 'center' }}>
             <Link
-              to="/pricing"
+              to="/packages"
               style={{
                 height: 44, padding: '0 var(--space-6)',
                 display: 'inline-flex', alignItems: 'center', gap: 'var(--space-2)',

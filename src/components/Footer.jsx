@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { MessageCircle } from 'lucide-react'
+import { MessageCircle, Mail, Phone, MapPin } from 'lucide-react'
 import { GoAILogo } from './GoAILogo'
 
 const WHATSAPP = '#'
@@ -27,7 +27,7 @@ export default function Footer() {
               <GoAILogo size="sm" />
             </div>
             <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', lineHeight: 1.6, maxWidth: '26ch' }}>
-              AI-powered websites and automation for businesses in Greece.
+              AI-powered websites and automation for businesses that want to grow online.
             </p>
             <a
               href={WHATSAPP}
@@ -59,13 +59,12 @@ export default function Footer() {
               Pages
             </p>
             {[
-              ['/', 'Home'],
-              ['/services', 'Services'],
-              ['/how-it-works', 'How It Works'],
-              ['/pricing', 'Pricing'],
+              ['/websites',  'Websites'],
+              ['/packages',  'Packages'],
+              ['/bundles',   'Bundles'],
               ['/portfolio', 'Portfolio'],
-              ['/automation', 'Automation'],
-              ['/book', 'Schedule a Call'],
+              ['/faq',       'FAQ'],
+              ['/contact',   'Contact Us'],
             ].map(([href, label]) => (
               <Link key={href} to={href} style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', transition: 'color 120ms ease' }}
                 onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--text-primary)' }}
@@ -79,23 +78,38 @@ export default function Footer() {
             <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-tertiary)', marginBottom: 'var(--space-1)' }}>
               Services
             </p>
-            {['Website Design', 'SEO', 'WhatsApp Automation', 'Email Automation', 'Video Ads', 'AI Proposals'].map((s) => (
+            {['Website Design', 'SEO', 'WhatsApp Automation', 'Email Automation', 'AI Content & Marketing', 'AI Automation'].map((s) => (
               <span key={s} style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)' }}>{s}</span>
             ))}
           </div>
 
-          {/* Contact */}
+          {/* Contact GoAI */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
             <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-tertiary)', marginBottom: 'var(--space-1)' }}>
-              Contact
+              Contact GoAI
             </p>
-            <Link to="/contact" style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', transition: 'color 120ms ease' }}
+            <a
+              href="mailto:hello@goai.example"
+              style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', transition: 'color 120ms ease' }}
               onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--text-primary)' }}
               onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--text-secondary)' }}
             >
-              Choose Your Package
-            </Link>
-            <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)' }}>Greece</p>
+              <Mail size={13} />
+              hello@goai.example
+            </a>
+            <a
+              href="tel:+30000000000"
+              style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', transition: 'color 120ms ease' }}
+              onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--text-primary)' }}
+              onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--text-secondary)' }}
+            >
+              <Phone size={13} />
+              +30 000 000 0000
+            </a>
+            <p style={{ display: 'flex', alignItems: 'flex-start', gap: 'var(--space-2)', fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
+              <MapPin size={13} style={{ flexShrink: 0, marginTop: 2 }} />
+              GoAI Digital Studio, 123 Example Street, Corfu, Greece 49100
+            </p>
           </div>
         </div>
 

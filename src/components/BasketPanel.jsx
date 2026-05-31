@@ -187,22 +187,6 @@ export default function BasketPanel() {
                 >
                   Proceed to Order Form <ArrowRight size={15} />
                 </Link>
-                <Link
-                  to="/book"
-                  onClick={() => setOpen(false)}
-                  style={{
-                    height: 40, display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    fontSize: 'var(--text-sm)', fontWeight: 500,
-                    background: 'transparent', color: 'var(--text-secondary)',
-                    border: '1px solid var(--border-default)', borderRadius: 'var(--radius-md)',
-                    transition: 'background 120ms ease',
-                    textDecoration: 'none',
-                  }}
-                  onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--surface-subtle)' }}
-                  onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent' }}
-                >
-                  Schedule a call instead
-                </Link>
               </div>
             </motion.div>
           </>

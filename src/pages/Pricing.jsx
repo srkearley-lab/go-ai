@@ -10,24 +10,6 @@ const WHATSAPP = '#'
 
 // ── Data ─────────────────────────────────────────────────────────────────────
 
-const websiteOnly = {
-  badge: 'Starter',
-  name: 'Website Only',
-  price: 350,
-  monthly: null,
-  description: 'Everything you need to get your business online professionally — built once, yours to keep.',
-  features: [
-    'Professional website build',
-    'Home, About, Services & Contact pages',
-    'Mobile-responsive design',
-    'Basic SEO setup',
-    'Contact form',
-    'Social media links',
-    'Setup included in one-off cost',
-  ],
-  cta: 'Start with Website Only',
-}
-
 const addOns = [
   {
     name: 'Hosting & Website Care',
@@ -77,13 +59,13 @@ const bundles = [
   {
     badge: 'Peace of Mind',
     name: 'Website + Hosting Care',
-    oneOff: 350,
+    oneOffDisplay: 'from €450',
     monthly: 90,
     savesYearly: 120,
     savesUpfront: null,
     recommended: false,
     features: [
-      'Everything in Website Only',
+      'Professional website build',
       'Reliable managed hosting',
       'Monthly security & backups',
       'Up to 2 hours of updates/month',
@@ -93,13 +75,13 @@ const bundles = [
   {
     badge: 'Growth',
     name: 'Website + Social Growth',
-    oneOff: 350,
+    oneOffDisplay: 'from €450',
     monthly: 220,
     savesYearly: 360,
     savesUpfront: null,
     recommended: false,
     features: [
-      'Everything in Website Only',
+      'Professional website build',
       'Managed hosting included',
       '12 social posts/month',
       'Captions, hashtags, scheduling',
@@ -109,13 +91,13 @@ const bundles = [
   {
     badge: 'Recommended',
     name: 'Website + Marketing Engine',
-    oneOff: 350,
+    oneOffDisplay: 'from €450',
     monthly: 300,
     savesYearly: 600,
     savesUpfront: null,
     recommended: true,
     features: [
-      'Everything in Website Only',
+      'Professional website build',
       'Managed hosting included',
       'Monthly SEO blog posts',
       'Email newsletter campaigns',
@@ -128,13 +110,13 @@ const bundles = [
   {
     badge: 'Automation',
     name: 'Website + AI Automation',
-    oneOff: 500,
+    oneOffDisplay: 'from €450',
     monthly: 350,
     savesYearly: 600,
-    savesUpfront: 100,
+    savesUpfront: null,
     recommended: false,
     features: [
-      'Everything in Website Only',
+      'Professional website build',
       'Managed hosting included',
       'WhatsApp enquiry automation',
       'Email follow-up sequences',
@@ -145,118 +127,19 @@ const bundles = [
   {
     badge: 'Premium',
     name: 'Full AI Growth Package',
-    oneOff: 800,
+    oneOffDisplay: 'from €450',
     monthly: 950,
     savesYearly: 2400,
     savesUpfront: 250,
     recommended: false,
     features: [
-      'Everything in Website Only',
+      'Professional website build',
       'All monthly add-ons included',
       'AI Avatar & Video content',
       'AI proposals & sales documents',
       'Dedicated account manager',
     ],
     cta: 'Build My AI Growth Package',
-  },
-]
-
-const tableRows = [
-  {
-    name: 'Website Only',
-    oneOff: '€350',
-    monthly: '—',
-    includes: 'Website, SEO, contact form, 4 pages',
-    saving: '—',
-    recommended: false,
-  },
-  {
-    name: 'Hosting & Website Care',
-    oneOff: 'Setup: Included',
-    monthly: '€100/mo',
-    includes: 'Hosting, security, monthly updates',
-    saving: '—',
-    recommended: false,
-  },
-  {
-    name: 'Social Media Content',
-    oneOff: 'Setup: Included',
-    monthly: '€150/mo',
-    includes: '12 posts/month, captions, scheduling',
-    saving: '—',
-    recommended: false,
-  },
-  {
-    name: 'AI Content & Marketing',
-    oneOff: 'Setup: Included',
-    monthly: '€250/mo',
-    includes: 'Blog posts, SEO content, email',
-    saving: '—',
-    recommended: false,
-  },
-  {
-    name: 'AI Automation',
-    oneOff: '€250 setup',
-    monthly: '€300/mo',
-    includes: 'WhatsApp bot, email flows, CRM',
-    saving: '—',
-    recommended: false,
-  },
-  {
-    name: 'AI Avatar & Video Content',
-    oneOff: '€250 setup',
-    monthly: '€300/mo',
-    includes: 'AI videos, avatar, social clips',
-    saving: '—',
-    recommended: false,
-  },
-  {
-    name: 'Proposal & Sales Documents',
-    oneOff: '€200 setup',
-    monthly: '€200/mo',
-    includes: 'AI proposals, quotes, follow-ups',
-    saving: '—',
-    recommended: false,
-  },
-  {
-    name: 'Website + Hosting Care',
-    oneOff: '€350',
-    monthly: '€90/mo',
-    includes: 'Website + hosting + care',
-    saving: '€120/yr',
-    recommended: false,
-  },
-  {
-    name: 'Website + Social Growth',
-    oneOff: '€350',
-    monthly: '€220/mo',
-    includes: 'Website + social content + hosting',
-    saving: '€360/yr',
-    recommended: false,
-  },
-  {
-    name: 'Website + Marketing Engine ⭐',
-    oneOff: '€350',
-    monthly: '€300/mo',
-    includes: 'Website + SEO + content + social + hosting',
-    saving: '€600/yr',
-    recommended: true,
-  },
-  {
-    name: 'Website + AI Automation',
-    oneOff: '€500',
-    monthly: '€350/mo',
-    includes: 'Website + full automation + hosting',
-    saving: '€100 upfront + €600/yr',
-    recommended: false,
-  },
-  {
-    name: 'Full AI Growth Package',
-    oneOff: '€800',
-    monthly: '€950/mo',
-    includes: 'All services included',
-    saving: '€250 upfront + €2,400/yr',
-    recommended: false,
   },
 ]
 
@@ -535,110 +418,7 @@ function FindOutMorePanel({ name, item }) {
   )
 }
 
-// ── Section 1 — Website Only ──────────────────────────────────────────────────
-
-function WebsiteOnlySection({ reduceMotion }) {
-  const [showDetails, setShowDetails] = useState(false)
-  const basketItem = { id: 'Website Only', name: 'Website Only', priceDisplay: '€350 one-off', formTypes: PACKAGE_FORM_TYPES['Website Only'] }
-  return (
-    <section style={{ padding: 'var(--space-16) var(--space-8)', background: 'var(--surface-base)' }}>
-      <div style={{ maxWidth: 'var(--width-xl)', margin: '0 auto' }}>
-        <SectionLabel>Step 1 — Your Foundation</SectionLabel>
-        <motion.div
-          initial={reduceMotion ? {} : { opacity: 0, y: 8 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-60px' }}
-          transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          style={{
-            background: 'var(--surface-raised)',
-            border: '1px solid var(--border-default)',
-            borderRadius: 'var(--radius-lg)',
-            padding: 'var(--space-8)',
-            display: 'grid',
-            gap: 'var(--space-10)',
-            alignItems: 'start',
-          }}
-          className="website-only-grid"
-        >
-          {/* Left */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-5)' }}>
-            <Badge label={websiteOnly.badge} />
-            <div>
-              <h2 style={{ fontSize: 'var(--text-xl)', fontWeight: 700, lineHeight: 1.1, letterSpacing: '-0.02em', color: 'var(--text-primary)', marginBottom: 'var(--space-3)' }}>
-                {websiteOnly.name}
-              </h2>
-              <p style={{ fontSize: 'var(--text-sm)', lineHeight: 1.7, color: 'var(--text-secondary)' }}>
-                {websiteOnly.description}
-              </p>
-            </div>
-            <div style={{ display: 'flex', alignItems: 'baseline', gap: 'var(--space-1)' }}>
-              <span style={{ fontSize: 'var(--text-2xl)', fontWeight: 700, letterSpacing: '-0.03em', color: 'var(--text-primary)', lineHeight: 1 }}>
-                €{websiteOnly.price}
-              </span>
-              <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-tertiary)' }}>one-off</span>
-            </div>
-            <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', fontStyle: 'italic' }}>
-              No monthly fee required. Add monthly support whenever you're ready.
-            </p>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-3)', alignItems: 'center' }}>
-              <CTAButton to="/contact" label={websiteOnly.cta} primary />
-              <BasketButton item={basketItem} />
-            </div>
-            <button
-              type="button"
-              onClick={() => setShowDetails(v => !v)}
-              style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-1)', background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-brand-400)', fontSize: 'var(--text-xs)', fontWeight: 500, padding: 0, fontFamily: 'inherit', transition: 'color 120ms ease' }}
-              onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--color-brand-200)' }}
-              onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--color-brand-400)' }}
-            >
-              {showDetails ? 'Hide details' : 'Find Out More'}
-              <motion.span animate={{ rotate: showDetails ? 180 : 0 }} transition={{ duration: 0.15 }} style={{ display: 'flex' }}>
-                <ChevronDown size={13} />
-              </motion.span>
-            </button>
-          </div>
-
-          {/* Right — features */}
-          <div>
-            <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', marginBottom: 'var(--space-4)' }}>
-              What's included
-            </p>
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
-              {websiteOnly.features.map(f => <FeatureItem key={f} text={f} />)}
-            </ul>
-          </div>
-
-          {/* Find Out More panel — spans full width */}
-          <AnimatePresence>
-            {showDetails && (
-              <motion.div
-                key="fom-website-only"
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                style={{ overflow: 'hidden', gridColumn: '1 / -1' }}
-              >
-                <FindOutMorePanel name="Website Only" item={basketItem} />
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </motion.div>
-
-        <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', marginTop: 'var(--space-5)', fontStyle: 'italic', textAlign: 'center' }}>
-          "Your website is the foundation. Monthly support helps it perform."
-        </p>
-      </div>
-
-      <style>{`
-        .website-only-grid { grid-template-columns: 1fr 1fr; }
-        @media (max-width: 768px) { .website-only-grid { grid-template-columns: 1fr; } }
-      `}</style>
-    </section>
-  )
-}
-
-// ── Section 2 — Add-Ons ───────────────────────────────────────────────────────
+// ── Section 1 — Add-Ons ──────────────────────────────────────────────────────
 
 function AddOnCard({ addon, variants }) {
   const [showDetails, setShowDetails] = useState(false)
@@ -734,7 +514,7 @@ function AddOnsSection({ reduceMotion }) {
     <section id="packages" style={{ padding: 'var(--space-16) var(--space-8)', background: 'var(--surface-subtle)', borderTop: '1px solid var(--border-default)', borderBottom: '1px solid var(--border-default)' }}>
       <div style={{ maxWidth: 'var(--width-xl)', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'var(--space-10)' }}>
         <div>
-          <SectionLabel>Step 2 — Optional Monthly Add-Ons</SectionLabel>
+          <SectionLabel>Monthly Add-Ons</SectionLabel>
           <h2 style={{ fontSize: 'clamp(var(--text-lg), 2.5vw, var(--text-xl))', fontWeight: 700, lineHeight: 1.15, letterSpacing: '-0.02em', color: 'var(--text-primary)', marginBottom: 'var(--space-3)' }}>
             Add the services you need
           </h2>
@@ -793,7 +573,7 @@ function SmallBundleCard({ bundle, variants }) {
   const basketItem = {
     id: bundle.name,
     name: bundle.name,
-    priceDisplay: `€${bundle.oneOff} one-off + €${bundle.monthly}/month`,
+    priceDisplay: `Website ${bundle.oneOffDisplay} + €${bundle.monthly}/month`,
     formTypes: PACKAGE_FORM_TYPES[bundle.name] || [],
   }
   return (
@@ -819,8 +599,7 @@ function SmallBundleCard({ bundle, variants }) {
 
       <div style={{ display: 'flex', alignItems: 'baseline', gap: 'var(--space-4)' }}>
         <div>
-          <span style={{ fontSize: 'var(--text-lg)', fontWeight: 700, letterSpacing: '-0.02em', color: 'var(--text-primary)', lineHeight: 1 }}>€{bundle.oneOff}</span>
-          <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)' }}> one-off</span>
+          <span style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--text-secondary)', lineHeight: 1 }}>Website {bundle.oneOffDisplay}</span>
         </div>
         <div>
           <span style={{ fontSize: 'var(--text-lg)', fontWeight: 700, letterSpacing: '-0.02em', color: 'var(--text-primary)', lineHeight: 1 }}>€{bundle.monthly}</span>
@@ -874,7 +653,7 @@ function RecommendedBundleCard({ bundle, variants }) {
   const basketItem = {
     id: bundle.name,
     name: bundle.name,
-    priceDisplay: `€${bundle.oneOff} one-off + €${bundle.monthly}/month`,
+    priceDisplay: `Website ${bundle.oneOffDisplay} + €${bundle.monthly}/month`,
     formTypes: PACKAGE_FORM_TYPES[bundle.name] || [],
   }
   return (
@@ -907,8 +686,7 @@ function RecommendedBundleCard({ bundle, variants }) {
 
         <div style={{ display: 'flex', alignItems: 'baseline', flexWrap: 'wrap', gap: 'var(--space-5)' }}>
           <div>
-            <span style={{ fontSize: 'var(--text-2xl)', fontWeight: 700, letterSpacing: '-0.03em', color: 'var(--text-primary)', lineHeight: 1 }}>€{bundle.oneOff}</span>
-            <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-tertiary)' }}> one-off</span>
+            <span style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--text-secondary)', lineHeight: 1 }}>Website {bundle.oneOffDisplay}</span>
           </div>
           <div>
             <span style={{ fontSize: 'var(--text-2xl)', fontWeight: 700, letterSpacing: '-0.03em', color: 'var(--text-primary)', lineHeight: 1 }}>€{bundle.monthly}</span>
@@ -986,7 +764,7 @@ function BundlesSection({ reduceMotion }) {
     <section id="bundles" style={{ padding: 'var(--space-16) var(--space-8)', background: 'var(--surface-base)' }}>
       <div style={{ maxWidth: 'var(--width-xl)', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'var(--space-10)' }}>
         <div>
-          <SectionLabel>Step 3 — Save with a Bundle</SectionLabel>
+          <SectionLabel>Recommended Bundles</SectionLabel>
           <h2 style={{ fontSize: 'clamp(var(--text-lg), 2.5vw, var(--text-xl))', fontWeight: 700, lineHeight: 1.15, letterSpacing: '-0.02em', color: 'var(--text-primary)', marginBottom: 'var(--space-3)' }}>
             Recommended bundles
           </h2>
@@ -1025,101 +803,7 @@ function BundlesSection({ reduceMotion }) {
   )
 }
 
-// ── Section 4 — Comparison Table ─────────────────────────────────────────────
-
-function ComparisonTable({ reduceMotion }) {
-  return (
-    <section style={{ padding: 'var(--space-16) var(--space-8)', background: 'var(--surface-subtle)', borderTop: '1px solid var(--border-default)', borderBottom: '1px solid var(--border-default)' }}>
-      <div style={{ maxWidth: 'var(--width-xl)', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'var(--space-8)' }}>
-        <div>
-          <SectionLabel>Compare All Packages</SectionLabel>
-          <h2 style={{ fontSize: 'clamp(var(--text-lg), 2.5vw, var(--text-xl))', fontWeight: 700, lineHeight: 1.15, letterSpacing: '-0.02em', color: 'var(--text-primary)' }}>
-            All pricing at a glance
-          </h2>
-        </div>
-
-        <motion.div
-          initial={reduceMotion ? {} : { opacity: 0, y: 8 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-60px' }}
-          transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}
-        >
-          <table style={{
-            width: '100%', minWidth: 640,
-            borderCollapse: 'collapse',
-            fontSize: 'var(--text-sm)',
-          }}>
-            <thead>
-              <tr>
-                {['Package', 'One-Off Cost', 'Monthly Cost', 'Includes', 'Saving'].map(col => (
-                  <th key={col} style={{
-                    padding: 'var(--space-3) var(--space-4)',
-                    textAlign: 'left',
-                    fontSize: 'var(--text-xs)', fontWeight: 600,
-                    letterSpacing: '0.06em', textTransform: 'uppercase',
-                    color: 'var(--text-tertiary)',
-                    borderBottom: '1px solid var(--border-strong)',
-                    background: 'var(--surface-raised)',
-                    whiteSpace: 'nowrap',
-                  }}>
-                    {col}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {tableRows.map((row, i) => (
-                <tr
-                  key={row.name}
-                  style={{
-                    background: row.recommended
-                      ? 'rgba(99,102,241,0.06)'
-                      : i % 2 === 0 ? 'var(--surface-raised)' : 'transparent',
-                    borderLeft: row.recommended ? '3px solid var(--color-brand-500)' : 'none',
-                  }}
-                >
-                  <td style={{ padding: 'var(--space-3) var(--space-4)', color: 'var(--text-primary)', fontWeight: row.recommended ? 600 : 400, borderBottom: '1px solid var(--border-default)' }}>
-                    {row.name}
-                    {row.recommended && (
-                      <span style={{ marginLeft: 'var(--space-2)', fontSize: 'var(--text-xs)', color: 'var(--color-brand-400)', fontWeight: 600 }}>
-                        ← Recommended
-                      </span>
-                    )}
-                  </td>
-                  <td style={{ padding: 'var(--space-3) var(--space-4)', color: 'var(--text-secondary)', borderBottom: '1px solid var(--border-default)', whiteSpace: 'nowrap' }}>
-                    {row.oneOff}
-                  </td>
-                  <td style={{ padding: 'var(--space-3) var(--space-4)', color: 'var(--text-secondary)', borderBottom: '1px solid var(--border-default)', whiteSpace: 'nowrap' }}>
-                    {row.monthly}
-                  </td>
-                  <td style={{ padding: 'var(--space-3) var(--space-4)', color: 'var(--text-secondary)', borderBottom: '1px solid var(--border-default)' }}>
-                    {row.includes}
-                  </td>
-                  <td style={{ padding: 'var(--space-3) var(--space-4)', borderBottom: '1px solid var(--border-default)', whiteSpace: 'nowrap' }}>
-                    {row.saving !== '—' ? (
-                      <span style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--color-accent-400)' }}>
-                        {row.saving}
-                      </span>
-                    ) : (
-                      <span style={{ color: 'var(--text-disabled)' }}>—</span>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </motion.div>
-
-        <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)' }}>
-          All prices exclude Greek VAT (24%). Custom plans available for larger businesses.
-        </p>
-      </div>
-    </section>
-  )
-}
-
-// ── Section 5 — Final CTA ─────────────────────────────────────────────────────
+// ── Final CTA ─────────────────────────────────────────────────────────────────
 
 function FinalCTA({ reduceMotion }) {
   return (
@@ -1404,10 +1088,8 @@ export default function Pricing() {
         title="Simple Website & AI Growth Packages"
         description="Start with a professional website for a one-off cost, then add monthly support to help your business grow, stay visible, and save time."
       />
-      <WebsiteOnlySection reduceMotion={reduceMotion} />
       <AddOnsSection reduceMotion={reduceMotion} />
       <BundlesSection reduceMotion={reduceMotion} />
-      <ComparisonTable reduceMotion={reduceMotion} />
       <WebsiteSetupSection reduceMotion={reduceMotion} />
       <FinalCTA reduceMotion={reduceMotion} />
     </main>

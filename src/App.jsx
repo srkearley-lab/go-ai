@@ -11,6 +11,9 @@ import Industries from './pages/Industries'
 import Portfolio from './pages/Portfolio'
 import Automation from './pages/Automation'
 import Pricing from './pages/Pricing'
+import Packages from './pages/Packages'
+import Bundles from './pages/Bundles'
+import Websites from './pages/Websites'
 import Contact from './pages/Contact'
 import HowItWorks from './pages/HowItWorks'
 import Book from './pages/Book'
@@ -33,6 +36,9 @@ function App() {
           <Route path="/portfolio" element={<Portfolio />} />
           <Route path="/automation" element={<Automation />} />
           <Route path="/pricing" element={<Pricing />} />
+          <Route path="/packages" element={<Packages />} />
+          <Route path="/bundles" element={<Bundles />} />
+          <Route path="/websites" element={<Websites />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/how-it-works" element={<HowItWorks />} />
           <Route path="/book" element={<Book />} />

@@ -6,9 +6,9 @@ import { GoAILogo } from './GoAILogo'
 import { useBasket } from '../context/BasketContext'
 
 const navLinks = [
-  { label: 'Websites',  href: '/pricing#websites' },
-  { label: 'Packages',  href: '/pricing#packages' },
-  { label: 'Bundles',   href: '/pricing#bundles' },
+  { label: 'Websites',  href: '/websites' },
+  { label: 'Packages',  href: '/packages' },
+  { label: 'Bundles',   href: '/bundles' },
   { label: 'Portfolio', href: '/portfolio' },
   { label: 'FAQ',       href: '/faq' },
   { label: 'Contact',   href: '/contact' },
@@ -30,10 +30,7 @@ export default function Navbar() {
 
   useEffect(() => { setMenuOpen(false) }, [location])
 
-  const isActive = (href) => {
-    const [path] = href.split('#')
-    return path ? location.pathname === path : false
-  }
+  const isActive = (href) => location.pathname === href
 
   return (
     <>
@@ -121,7 +118,7 @@ export default function Navbar() {
 
             {/* Choose Your Package */}
             <Link
-              to="/pricing"
+              to="/packages"
               style={{
                 height: 36,
                 padding: '0 var(--space-4)',
@@ -223,7 +220,7 @@ export default function Navbar() {
             {/* Mobile CTA row */}
             <div style={{ display: 'flex', gap: 'var(--space-3)', marginTop: 'var(--space-5)', flexWrap: 'wrap' }}>
               <Link
-                to="/pricing"
+                to="/packages"
                 style={{
                   flex: 1, minWidth: 140,
                   height: 44, display: 'inline-flex', alignItems: 'center', justifyContent: 'center',

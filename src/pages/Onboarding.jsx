@@ -235,7 +235,7 @@ export default function Onboarding() {
             <SectionDivider title="Package & services" />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <SelectField label="Package selected" id="packageSelected"
-                options={['Website Only (€350)', 'Website + Hosting Care', 'Website + Social Growth', 'Website + Marketing Engine (Recommended)', 'Website + AI Automation', 'Full AI Growth Package', 'Not decided yet']}
+                options={['Basic Launch Website (from €450)', 'Starter Business Website (from €750)', 'Business Website (from €1,200)', 'Growth Website (from €1,750)', 'Premium AI-Ready Website (from €2,500+)', 'Website + Hosting Care', 'Website + Social Growth', 'Website + Marketing Engine (Recommended)', 'Website + AI Automation', 'Full AI Growth Package', 'Not decided yet']}
                 value={form.packageSelected} onChange={set('packageSelected')} required />
               <SelectField label="Hosting status" id="hostingStatus"
                 options={['Included in my package', 'I have existing hosting', 'I need help with hosting', 'Not sure']}

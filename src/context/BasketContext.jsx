@@ -1,8 +1,15 @@
 import { createContext, useContext, useState, useCallback } from 'react'
 
 export const PACKAGE_FORM_TYPES = {
+  'Website Design':             ['website'],
+  'SEO':                        [],
+  'WhatsApp Automation':        ['automation'],
+  'Email Automation':           [],
+  'Video Websites':             ['website'],
+  'AI Prompts':                 [],
   'Website Only':               ['website'],
   'Hosting & Website Care':     [],
+  'Hosting and Web Care':       [],
   'Social Media Content':       ['social'],
   'AI Content & Marketing':     ['social'],
   'AI Automation':              ['automation'],

@@ -135,7 +135,7 @@ export default function FAQ() {
           </div>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-3)', justifyContent: 'center' }}>
             <Link
-              to="/pricing"
+              to="/packages"
               style={{ height: 44, padding: '0 var(--space-6)', display: 'inline-flex', alignItems: 'center', gap: 'var(--space-2)', fontSize: 'var(--text-sm)', fontWeight: 500, background: 'var(--color-brand-500)', color: 'var(--color-neutral-0)', border: '1px solid var(--color-brand-600)', borderRadius: 'var(--radius-md)', textDecoration: 'none', transition: 'background 120ms ease' }}
               onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--color-brand-600)' }}
               onMouseLeave={(e) => { e.currentTarget.style.background = 'var(--color-brand-500)' }}

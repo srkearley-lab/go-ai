@@ -45,7 +45,7 @@ const quickChoiceItems = [
     title: 'Get a professional website',
     description: 'One-off website setup packages for businesses that need a professional online presence — from a single-page launch site to a full premium build.',
     cta: 'View Website Packages',
-    href: '/pricing#websites',
+    href: '/websites',
   },
   {
     icon: Package,
@@ -53,7 +53,7 @@ const quickChoiceItems = [
     title: 'Add individual monthly services',
     description: 'Hosting care, social content, AI marketing, automation, video content and proposal tools — add exactly the services your business needs.',
     cta: 'View Service Packages',
-    href: '/pricing#packages',
+    href: '/packages',
   },
   {
     icon: Layers,
@@ -61,7 +61,7 @@ const quickChoiceItems = [
     title: 'Everything together in one bundle',
     description: 'Combined monthly support packages covering website, content, marketing, automation and growth — all managed for you, for one monthly price.',
     cta: 'View Bundles',
-    href: '/pricing#bundles',
+    href: '/bundles',
   },
 ]
 
@@ -70,19 +70,19 @@ const startingPoints = [
     question: 'Just need to get online?',
     recommendation: 'Start with the Basic Launch Website',
     cta: 'View Basic Website',
-    href: '/pricing#websites',
+    href: '/websites',
   },
   {
     question: 'Need a proper business website?',
     recommendation: 'Choose the Business Website',
     cta: 'View Business Website',
-    href: '/pricing#websites',
+    href: '/websites',
   },
   {
     question: 'Want ongoing growth support?',
     recommendation: 'Explore the AI Growth Package',
     cta: 'View Bundles',
-    href: '/pricing#bundles',
+    href: '/bundles',
   },
 ]
 
@@ -217,7 +217,7 @@ export default function Home() {
             style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-3)', justifyContent: 'center' }}
           >
             <Link
-              to="#packages"
+              to="/packages"
               style={{ height: 44, padding: '0 var(--space-6)', display: 'inline-flex', alignItems: 'center', gap: 'var(--space-2)', fontSize: 'var(--text-sm)', fontWeight: 600, background: 'var(--color-brand-500)', color: 'var(--color-neutral-0)', border: '1px solid var(--color-brand-600)', borderRadius: 'var(--radius-md)', transition: 'background 120ms ease, transform 60ms ease' }}
               onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--color-brand-600)' }}
               onMouseLeave={(e) => { e.currentTarget.style.background = 'var(--color-brand-500)' }}
@@ -227,7 +227,7 @@ export default function Home() {
               Choose Your Package <ArrowRight size={15} />
             </Link>
             <Link
-              to="/pricing#websites"
+              to="/websites"
               style={{ height: 44, padding: '0 var(--space-6)', display: 'inline-flex', alignItems: 'center', gap: 'var(--space-2)', fontSize: 'var(--text-sm)', fontWeight: 500, background: 'transparent', color: 'var(--text-primary)', border: '1px solid var(--border-strong)', borderRadius: 'var(--radius-md)', transition: 'background 120ms ease, transform 60ms ease' }}
               onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--surface-raised)' }}
               onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent' }}
@@ -257,7 +257,7 @@ export default function Home() {
 
       {/* ── b) Quick Choice ── */}
       <Section
-        id="packages"
+        id="get-started"
         style={{ background: 'var(--surface-subtle)', borderTop: '1px solid var(--border-default)', borderBottom: '1px solid var(--border-default)' }}
       >
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'var(--space-12)' }}>
@@ -503,7 +503,7 @@ export default function Home() {
           </div>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-3)', justifyContent: 'center' }}>
             <Link
-              to="/pricing"
+              to="/packages"
               style={{ height: 44, padding: '0 var(--space-6)', display: 'inline-flex', alignItems: 'center', fontSize: 'var(--text-sm)', fontWeight: 600, background: 'var(--color-brand-500)', color: 'var(--color-neutral-0)', border: '1px solid var(--color-brand-600)', borderRadius: 'var(--radius-md)', transition: 'background 120ms ease, transform 60ms ease' }}
               onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--color-brand-600)' }}
               onMouseLeave={(e) => { e.currentTarget.style.background = 'var(--color-brand-500)' }}

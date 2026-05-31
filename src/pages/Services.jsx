@@ -315,7 +315,7 @@ function ServiceDetailCard({ icon: Icon, title, description, included, bestFor }
       {/* Card CTA */}
       <div style={{ paddingTop: 'var(--space-3)', borderTop: '1px solid var(--border-default)' }}>
         <Link
-          to="/pricing"
+          to="/packages"
           style={{
             display: 'inline-flex', alignItems: 'center', gap: 'var(--space-2)',
             fontSize: 'var(--text-xs)', fontWeight: 600,
@@ -522,7 +522,7 @@ export default function Services() {
 
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-3)', justifyContent: 'center' }}>
             <Link
-              to="/pricing"
+              to="/packages"
               style={{
                 height: 44, padding: '0 var(--space-6)',
                 display: 'inline-flex', alignItems: 'center',
