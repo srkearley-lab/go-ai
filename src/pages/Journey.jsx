@@ -48,6 +48,39 @@ const steps = [
   },
 ]
 
+const differenceItems = [
+  {
+    icon: Globe,
+    term: 'Websites',
+    subtitle: 'One-off website builds',
+    description: 'Choose this when you need a new website, landing page, or online presence built from scratch.',
+  },
+  {
+    icon: Package,
+    term: 'Packages',
+    subtitle: 'Structured service options',
+    description: 'Choose this when you want a clear level of setup, support, design, automation or digital delivery included in one option.',
+  },
+  {
+    icon: Layers,
+    term: 'Bundles',
+    subtitle: 'Monthly support plans',
+    description: 'Choose this when you want ongoing help, improvements, hosting, maintenance, updates or optimisation each month.',
+  },
+  {
+    icon: PlusCircle,
+    term: 'Add-ons',
+    subtitle: 'Optional extras',
+    description: 'Choose these when you want to add specific features or services on top of a website, package or bundle.',
+  },
+  {
+    icon: FileText,
+    term: 'Start Your Journey',
+    subtitle: 'The guided route',
+    description: 'Use this if you are not sure what to choose and want to be taken step by step through the full setup.',
+  },
+]
+
 const glossary = [
   { term: 'Websites',            definition: 'One-off website builds' },
   { term: 'Packages',            definition: 'Main fixed-price service options' },
@@ -81,6 +114,69 @@ export default function Journey() {
 
       <section style={{ padding: 'var(--space-12) var(--space-8) var(--space-20)', background: 'var(--surface-base)' }}>
         <div style={{ maxWidth: 'var(--width-xl)', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'var(--space-12)' }}>
+
+          {/* ── What's the difference? ── */}
+          <div>
+            <p style={{
+              fontSize: 'var(--text-xs)', fontWeight: 600,
+              letterSpacing: '0.06em', textTransform: 'uppercase',
+              color: 'var(--goai-violet)', marginBottom: 'var(--space-5)',
+            }}>
+              What's the difference?
+            </p>
+            <motion.div
+              variants={stagger}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: '-60px' }}
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
+                gap: 'var(--space-4)',
+              }}
+            >
+              {differenceItems.map((item) => {
+                const Icon = item.icon
+                return (
+                  <motion.div
+                    key={item.term}
+                    variants={cardVariants}
+                    style={{
+                      background: 'var(--surface-raised)',
+                      border: '1px solid var(--border-default)',
+                      borderRadius: 'var(--radius-lg)',
+                      padding: 'var(--space-5)',
+                      display: 'flex', flexDirection: 'column', gap: 'var(--space-3)',
+                    }}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)' }}>
+                      <div style={{
+                        width: 32, height: 32, flexShrink: 0,
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        borderRadius: 'var(--radius-md)',
+                        background: 'rgba(118, 39, 239, 0.1)',
+                        border: '1px solid rgba(118, 39, 239, 0.2)',
+                        color: 'var(--goai-violet)',
+                      }}>
+                        <Icon size={15} strokeWidth={1.75} />
+                      </div>
+                      <div>
+                        <p style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--text-primary)', lineHeight: 1.2 }}>
+                          {item.term}
+                        </p>
+                        <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', marginTop: 2 }}>
+                          {item.subtitle}
+                        </p>
+                      </div>
+                    </div>
+                    <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
+                      {item.description}
+                    </p>
+                  </motion.div>
+                )
+              })}
+            </motion.div>
+          </div>
 
           {/* ── Language clarity glossary (Part 6) ── */}
           <motion.div

@@ -459,24 +459,6 @@ export default function Addons() {
       <section style={{ padding: 'var(--space-12) var(--space-8)', background: 'var(--surface-base)' }}>
         <div style={{ maxWidth: 'var(--width-xl)', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'var(--space-16)' }}>
 
-          {/* Explanation box */}
-          <div style={{
-            background: 'var(--surface-raised)',
-            border: '1px solid var(--goai-violet)',
-            borderLeft: '3px solid var(--goai-violet)',
-            borderRadius: 'var(--radius-lg)',
-            padding: 'var(--space-6)',
-            display: 'flex', flexDirection: 'column', gap: 'var(--space-3)',
-          }}>
-            <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--goai-violet)', margin: 0 }}>
-              Packages vs Add-ons
-            </p>
-            <p style={{ fontSize: 'var(--text-sm)', lineHeight: 1.7, color: 'var(--text-secondary)', margin: 0 }}>
-              Choose a <strong style={{ color: 'var(--text-primary)' }}>package</strong> if you need a complete website or core service option.
-              Choose <strong style={{ color: 'var(--text-primary)' }}>add-ons</strong> if you only need smaller extras or want to bolt extra support onto your existing package.
-            </p>
-          </div>
-
           {/* Groups */}
           {groups.map((group) => (
             <div key={group.id} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-6)' }}>
