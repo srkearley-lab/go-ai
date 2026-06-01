@@ -477,32 +477,57 @@ const STEP_LABELS = [
 function ProgressBar({ current }) {
   return (
     <div style={{ marginBottom: 'var(--space-10)' }}>
-      <div style={{ display: 'flex', gap: 'var(--space-1)', marginBottom: 'var(--space-3)' }}>
-        {STEP_LABELS.map((label, i) => {
-          const done = i < current
-          const active = i === current
-          return (
-            <div key={label} style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 'var(--space-1)' }}>
-              <div style={{
-                height: 3, borderRadius: 'var(--radius-full)',
-                background: done ? 'var(--goai-violet)' : active ? 'var(--goai-blue)' : 'var(--border-default)',
-                transition: 'background 200ms ease',
-              }} />
-              <span style={{
-                fontSize: '0.58rem', fontWeight: active ? 600 : 400,
-                color: active ? 'var(--text-primary)' : done ? 'var(--goai-violet)' : 'var(--text-tertiary)',
-                transition: 'color 200ms ease',
-                whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
-              }}>
-                {label}
-              </span>
-            </div>
-          )
-        })}
+
+      {/* Desktop: 7 labelled segments */}
+      <div className="rq-progress-desktop">
+        <div style={{ display: 'flex', gap: 'var(--space-1)', marginBottom: 'var(--space-3)' }}>
+          {STEP_LABELS.map((label, i) => {
+            const done = i < current
+            const active = i === current
+            return (
+              <div key={label} style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 'var(--space-1)' }}>
+                <div style={{
+                  height: 3, borderRadius: 'var(--radius-full)',
+                  background: done ? 'var(--goai-violet)' : active ? 'var(--goai-blue)' : 'var(--border-default)',
+                  transition: 'background 200ms ease',
+                }} />
+                <span style={{
+                  fontSize: '0.58rem', fontWeight: active ? 600 : 400,
+                  color: active ? 'var(--text-primary)' : done ? 'var(--goai-violet)' : 'var(--text-tertiary)',
+                  transition: 'color 200ms ease',
+                  whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
+                }}>
+                  {label}
+                </span>
+              </div>
+            )
+          })}
+        </div>
+        <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', margin: 0 }}>
+          Step {current + 1} of {STEP_LABELS.length}
+        </p>
       </div>
-      <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', margin: 0 }}>
-        Step {current + 1} of {STEP_LABELS.length}
-      </p>
+
+      {/* Mobile: compact "Step X of 7 — Name" + single progress bar */}
+      <div className="rq-progress-mobile">
+        <p style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--text-primary)', margin: '0 0 var(--space-2)' }}>
+          Step {current + 1} of {STEP_LABELS.length}
+          <span style={{ fontWeight: 400, color: 'var(--text-secondary)' }}> — {STEP_LABELS[current]}</span>
+        </p>
+        <div style={{ display: 'flex', gap: 3 }}>
+          {STEP_LABELS.map((_, i) => (
+            <div
+              key={i}
+              style={{
+                flex: 1, height: 3, borderRadius: 'var(--radius-full)',
+                background: i < current ? 'var(--goai-violet)' : i === current ? 'var(--goai-blue)' : 'var(--border-default)',
+                transition: 'background 200ms ease',
+              }}
+            />
+          ))}
+        </div>
+      </div>
+
     </div>
   )
 }
@@ -973,7 +998,7 @@ export default function RequestQuote() {
         description="Tell us about your project and we'll come back with a tailored recommendation."
       />
 
-      <section style={{ padding: 'var(--space-16) var(--space-8) var(--space-24)', background: 'var(--surface-base)' }}>
+      <section className="rq-section" style={{ padding: 'var(--space-16) var(--space-8) var(--space-24)', background: 'var(--surface-base)' }}>
         <div style={{ maxWidth: 780, margin: '0 auto' }}>
           {submitted ? (
             <div style={{
@@ -985,6 +1010,7 @@ export default function RequestQuote() {
             </div>
           ) : (
             <motion.div
+              className="rq-form-card"
               initial={reduceMotion ? {} : { opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
@@ -1096,8 +1122,13 @@ export default function RequestQuote() {
         .rq-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-5); }
         .rq-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--space-5); }
         .rq-checkbox-grid { grid-template-columns: repeat(2, 1fr) !important; }
+        .rq-progress-mobile { display: none; }
         @media (max-width: 640px) {
           .rq-grid-2, .rq-grid-3, .rq-checkbox-grid { grid-template-columns: 1fr !important; }
+          .rq-progress-desktop { display: none !important; }
+          .rq-progress-mobile { display: block !important; }
+          .rq-form-card { padding: var(--space-5) !important; border-radius: var(--radius-lg) !important; }
+          .rq-section { padding-left: var(--space-4) !important; padding-right: var(--space-4) !important; padding-bottom: var(--space-20) !important; }
         }
       `}</style>
     </main>
