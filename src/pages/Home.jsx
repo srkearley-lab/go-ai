@@ -35,7 +35,7 @@ const steps = [
   { icon: Package,      number: 2, title: 'Choose your package',    description: 'Pick the setup or service option that best fits your business.' },
   { icon: Layers,       number: 3, title: 'Add a monthly bundle',   description: 'Add ongoing support, updates, hosting help or digital growth support if needed.' },
   { icon: PlusCircle,   number: 4, title: 'Add optional extras',    description: 'Bolt on extra features such as storage, extra pages, forms, automation or additional functionality.' },
-  { icon: FileText,     number: 5, title: 'Review and complete',    description: 'Review your selections, then add fixed-price items to basket, buy online, or request a tailored quote if your setup needs a recommendation.' },
+  { icon: FileText,     number: 5, title: 'Review and complete',    description: 'Review your selections, then add fixed-price items to basket and proceed to checkout, or request a quote if any items need a recommendation.' },
 ]
 
 const quickChoiceItems = [

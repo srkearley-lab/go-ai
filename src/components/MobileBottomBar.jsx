@@ -6,7 +6,7 @@ export default function MobileBottomBar() {
 
   const items = [
     { label: 'Websites',  icon: Globe,     href: '/websites' },
-    { label: 'Get Quote', icon: FileText,   href: '/quote' },
+    { label: 'Get Quote', icon: FileText,   href: '/request-quote' },
     { label: 'Contact',   icon: Mail,       href: '/contact' },
   ]
 
