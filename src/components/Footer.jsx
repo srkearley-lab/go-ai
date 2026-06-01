@@ -1,10 +1,13 @@
 import { Link } from 'react-router-dom'
 import { MessageCircle, Mail, Phone, MapPin } from 'lucide-react'
 import { GoAILogo } from './GoAILogo'
+import { useTranslations } from '../context/LanguageContext'
 
 const WHATSAPP = '#'
 
 export default function Footer() {
+  const t = useTranslations()
+
   return (
     <footer
       style={{
@@ -24,7 +27,7 @@ export default function Footer() {
               <GoAILogo size="sm" />
             </div>
             <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', lineHeight: 1.6, maxWidth: '26ch' }}>
-              AI-powered websites and automation for businesses that want to grow online.
+              {t.footer.brandTagline}
             </p>
             <a
               href={WHATSAPP}
@@ -42,27 +45,16 @@ export default function Footer() {
               onMouseLeave={(e) => { e.currentTarget.style.background = '#25d366' }}
             >
               <MessageCircle size={15} />
-              WhatsApp us
+              {t.buttons.whatsappUs}
             </a>
           </div>
 
           {/* Pages */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
             <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-tertiary)', marginBottom: 'var(--space-1)' }}>
-              Pages
+              {t.footer.pagesLabel}
             </p>
-            {[
-              ['/websites',                      'Websites'],
-              ['/packages',                      'Packages'],
-              ['/bundles',                       'Bundles'],
-              ['/addons',                        'Add-ons'],
-              ['/journey',                       'Start Your Journey'],
-              ['/journey#whats-the-difference',  "What's the Difference?"],
-              ['/request-quote',                 'Request a Quote'],
-              ['/portfolio',                     'Portfolio'],
-              ['/faq',                           'FAQ'],
-              ['/contact',                       'Contact Us'],
-            ].map(([href, label]) => (
+            {t.footer.links.map(([href, label]) => (
               <Link key={href} to={href}
                 style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', transition: 'color 120ms ease' }}
                 onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--text-primary)' }}
@@ -74,7 +66,7 @@ export default function Footer() {
           {/* Contact */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
             <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-tertiary)', marginBottom: 'var(--space-1)' }}>
-              Contact
+              {t.footer.contactLabel}
             </p>
             <a
               href="mailto:hello@goai.example"
@@ -108,10 +100,10 @@ export default function Footer() {
           style={{ paddingTop: 'var(--space-6)' }}
         >
           <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)' }}>
-            © {new Date().getFullYear()} GO AI. All rights reserved.
+            {t.footer.copyright}
           </p>
           <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)' }}>
-            Built with AI. Powered by results.
+            {t.footer.tagline}
           </p>
         </div>
 

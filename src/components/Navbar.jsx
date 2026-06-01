@@ -4,15 +4,17 @@ import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { Menu, X, ShoppingCart } from 'lucide-react'
 import { GoAILogo } from './GoAILogo'
 import { useBasket } from '../context/BasketContext'
+import { useTranslations } from '../context/LanguageContext'
+import LanguageToggle from './LanguageToggle'
 
-const navLinks = [
-  { label: 'Websites',  href: '/websites' },
-  { label: 'Packages',  href: '/packages' },
-  { label: 'Bundles',   href: '/bundles' },
-  { label: 'Add-ons',   href: '/addons' },
-  { label: 'Portfolio', href: '/portfolio' },
-  { label: 'FAQ',       href: '/faq' },
-  { label: 'Contact',   href: '/contact' },
+const NAV_KEYS = [
+  { key: 'websites',  href: '/websites' },
+  { key: 'packages',  href: '/packages' },
+  { key: 'bundles',   href: '/bundles' },
+  { key: 'addons',    href: '/addons' },
+  { key: 'portfolio', href: '/portfolio' },
+  { key: 'faq',       href: '/faq' },
+  { key: 'contact',   href: '/contact' },
 ]
 
 export default function Navbar() {
@@ -22,6 +24,7 @@ export default function Navbar() {
   const location = useLocation()
   const { items } = useBasket()
   const basketCount = items.length
+  const t = useTranslations()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24)
@@ -32,6 +35,8 @@ export default function Navbar() {
   useEffect(() => { setMenuOpen(false) }, [location])
 
   const isActive = (href) => location.pathname === href.split('#')[0]
+
+  const navLinks = NAV_KEYS.map(({ key, href }) => ({ label: t.nav[key], href }))
 
   return (
     <>
@@ -90,8 +95,10 @@ export default function Navbar() {
             ))}
           </nav>
 
-          {/* Desktop right: basket + CTA */}
+          {/* Desktop right: language toggle + basket + CTAs */}
           <div className="hidden md:flex" style={{ alignItems: 'center', gap: 'var(--space-2)', flexShrink: 0 }}>
+            <LanguageToggle />
+
             {/* Basket */}
             <Link
               to="/order"
@@ -114,7 +121,7 @@ export default function Navbar() {
               onMouseLeave={(e) => { e.currentTarget.style.background = basketCount > 0 ? 'rgba(99,102,241,0.08)' : 'transparent'; e.currentTarget.style.color = basketCount > 0 ? 'var(--color-brand-400)' : 'var(--text-tertiary)' }}
             >
               <ShoppingCart size={13} />
-              {basketCount > 0 ? `Basket (${basketCount})` : 'Basket'}
+              {basketCount > 0 ? `${t.nav.basket} (${basketCount})` : t.nav.basket}
             </Link>
 
             {/* Start Your Journey */}
@@ -138,7 +145,7 @@ export default function Navbar() {
               onMouseEnter={(e) => { e.currentTarget.style.filter = 'brightness(1.12)'; e.currentTarget.style.boxShadow = '0 0 40px rgba(118, 39, 239, 0.5)' }}
               onMouseLeave={(e) => { e.currentTarget.style.filter = 'brightness(1)'; e.currentTarget.style.boxShadow = '0 0 30px rgba(118, 39, 239, 0.35)' }}
             >
-              Start Your Journey
+              {t.nav.startJourney}
             </Link>
 
             {/* Request a Quote */}
@@ -161,12 +168,13 @@ export default function Navbar() {
               onMouseEnter={(e) => { e.currentTarget.style.background = 'linear-gradient(90deg, #293BFF 0%, #7627EF 100%)'; e.currentTarget.style.color = '#FFFFFF'; e.currentTarget.style.borderColor = 'transparent' }}
               onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--text-primary)'; e.currentTarget.style.borderColor = 'var(--goai-violet)' }}
             >
-              Request a Quote
+              {t.nav.requestQuote}
             </Link>
           </div>
 
-          {/* Mobile: basket count + burger */}
+          {/* Mobile: language toggle + basket count + burger */}
           <div className="flex md:hidden" style={{ alignItems: 'center', gap: 'var(--space-2)' }}>
+            <LanguageToggle />
             {basketCount > 0 && (
               <Link
                 to="/order"
@@ -256,7 +264,7 @@ export default function Navbar() {
                   textDecoration: 'none',
                 }}
               >
-                Start Your Journey
+                {t.nav.startJourney}
               </Link>
               <Link
                 to="/request-quote"
@@ -270,7 +278,7 @@ export default function Navbar() {
                   textDecoration: 'none',
                 }}
               >
-                Request a Quote
+                {t.nav.requestQuote}
               </Link>
               <Link
                 to="/order"
@@ -286,7 +294,7 @@ export default function Navbar() {
                 }}
               >
                 <ShoppingCart size={15} />
-                {basketCount > 0 ? `Basket (${basketCount})` : 'Basket'}
+                {basketCount > 0 ? `${t.nav.basket} (${basketCount})` : t.nav.basket}
               </Link>
             </div>
           </motion.div>

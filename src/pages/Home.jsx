@@ -12,6 +12,7 @@ import SectionHeader from '../components/SectionHeader'
 import { useSEO } from '../lib/seo'
 import IndustryCard from '../components/IndustryCard'
 import StepCard from '../components/StepCard'
+import { useTranslations } from '../context/LanguageContext'
 
 const ShaderAnimation = lazy(() =>
   import('../components/ShaderAnimation').then((m) => ({ default: m.ShaderAnimation }))
@@ -127,16 +128,16 @@ const topPackages = [
   },
 ]
 
-function TopPackagesSection({ reduceMotion, stagger, cardVariants }) {
+function TopPackagesSection({ reduceMotion, stagger, cardVariants, t }) {
   return (
     <Section
       style={{ background: 'var(--surface-base)', borderBottom: '1px solid var(--border-default)' }}
     >
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'var(--space-12)' }}>
         <SectionHeader
-          tag="Start here"
-          title="Start with the right package"
-          description="Three popular starting points — choose the one that fits where your business is right now."
+          tag={t.home.startTag}
+          title={t.home.startTitle}
+          description={t.home.startBody}
         />
         <motion.div
           variants={stagger}
@@ -183,7 +184,7 @@ function TopPackagesSection({ reduceMotion, stagger, cardVariants }) {
                   borderRadius: 'var(--radius-full)', padding: '3px var(--space-3)',
                   boxShadow: '0 0 12px rgba(118, 39, 239, 0.4)',
                 }}>
-                  Recommended
+                  {t.labels.recommended}
                 </span>
               )}
 
@@ -236,6 +237,7 @@ function TopPackagesSection({ reduceMotion, stagger, cardVariants }) {
 
 export default function Home() {
   const reduceMotion = useReducedMotion()
+  const t = useTranslations()
   useSEO({
     title: 'GO AI — AI-powered websites, content and automation',
     description: 'GO AI builds professional websites, AI-powered content systems, automation and monthly growth packages for businesses that want to look professional online and turn visitors into customers.',
@@ -289,7 +291,7 @@ export default function Home() {
           >
             <span style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-2)', fontSize: 'var(--text-xs)', fontWeight: 500, color: 'var(--text-secondary)', background: 'var(--surface-raised)', border: '1px solid var(--border-default)', borderRadius: 'var(--radius-full)', padding: 'var(--space-2) var(--space-4)' }}>
               <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--color-success)', flexShrink: 0 }} />
-              Now taking new clients
+              {t.home.badge}
             </span>
           </motion.div>
 
@@ -310,8 +312,8 @@ export default function Home() {
                 maxWidth: '20ch',
               }}
             >
-              AI-powered websites, content and automation for businesses that want to{' '}
-              <span style={{ background: 'linear-gradient(90deg, #293BFF 0%, #7627EF 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>grow online.</span>
+              {t.home.headlinePlain}{' '}
+              <span style={{ background: 'linear-gradient(90deg, #293BFF 0%, #7627EF 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>{t.home.headlineGradient}</span>
             </h1>
             <p
               style={{
@@ -321,7 +323,7 @@ export default function Home() {
                 maxWidth: '54ch',
               }}
             >
-              Choose a website, package or bundle, send us your details, and we'll help you build a stronger digital presence without unnecessary back-and-forth.
+              {t.home.subheading}
             </p>
           </motion.div>
 
@@ -340,7 +342,7 @@ export default function Home() {
               onMouseDown={(e) => { e.currentTarget.style.transform = 'translateY(1px)' }}
               onMouseUp={(e) => { e.currentTarget.style.transform = 'translateY(0)' }}
             >
-              Start Your Journey <ArrowRight size={15} />
+              {t.home.ctaJourney} <ArrowRight size={15} />
             </Link>
             <Link
               to="/websites"
@@ -350,7 +352,7 @@ export default function Home() {
               onMouseDown={(e) => { e.currentTarget.style.transform = 'translateY(1px)' }}
               onMouseUp={(e) => { e.currentTarget.style.transform = 'translateY(0)' }}
             >
-              View Websites
+              {t.home.ctaWebsites}
             </Link>
             <Link
               to="/bundles"
@@ -360,7 +362,7 @@ export default function Home() {
               onMouseDown={(e) => { e.currentTarget.style.transform = 'translateY(1px)' }}
               onMouseUp={(e) => { e.currentTarget.style.transform = 'translateY(0)' }}
             >
-              View Monthly Bundles
+              {t.home.ctaBundles}
             </Link>
           </motion.div>
 
@@ -371,7 +373,7 @@ export default function Home() {
             transition={{ duration: 0.2, delay: reduceMotion ? 0 : 0.22 }}
             style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-6)', flexWrap: 'wrap', justifyContent: 'center' }}
           >
-            {['Websites from €450', 'Live in 5–7 days', 'WhatsApp-managed', 'No tech skills needed'].map((item) => (
+            {t.home.socialProof.map((item) => (
               <span key={item} style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)' }}>
                 <span style={{ width: 4, height: 4, borderRadius: '50%', background: 'var(--color-brand-500)', flexShrink: 0 }} />
                 {item}
@@ -382,7 +384,7 @@ export default function Home() {
       </section>
 
       {/* ── b) Top 3 Recommended Packages ── */}
-      <TopPackagesSection reduceMotion={reduceMotion} stagger={stagger} cardVariants={cardVariants} />
+      <TopPackagesSection reduceMotion={reduceMotion} stagger={stagger} cardVariants={cardVariants} t={t} />
 
       {/* ── c) Quick Choice ── */}
       <Section
@@ -391,9 +393,9 @@ export default function Home() {
       >
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'var(--space-12)' }}>
           <SectionHeader
-            tag="Get started"
-            title="What do you need help with?"
-            description="Choose the option that best matches what your business needs right now."
+            tag={t.home.getStartedTag}
+            title={t.home.getStartedTitle}
+            description={t.home.getStartedBody}
           />
           <motion.div
             variants={stagger}
@@ -457,13 +459,13 @@ export default function Home() {
         >
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'var(--space-4)' }}>
             <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--color-accent-500)' }}>
-              Ready to grow?
+              {t.home.readyTag}
             </p>
             <h2 style={{ fontSize: 'clamp(var(--text-xl), 4vw, var(--text-2xl))', fontWeight: 700, lineHeight: 1.15, letterSpacing: '-0.02em', color: 'var(--text-primary)' }}>
-              Build a stronger digital presence
+              {t.home.readyTitle}
             </h2>
             <p style={{ fontSize: 'var(--text-base)', lineHeight: 1.6, color: 'var(--text-secondary)', maxWidth: '46ch' }}>
-              Choose your package, send us your details, and we'll handle everything from there — no back-and-forth, no unnecessary meetings.
+              {t.home.readyBody}
             </p>
           </div>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-3)', justifyContent: 'center' }}>
@@ -475,7 +477,7 @@ export default function Home() {
               onMouseDown={(e) => { e.currentTarget.style.transform = 'translateY(1px)' }}
               onMouseUp={(e) => { e.currentTarget.style.transform = 'translateY(0)' }}
             >
-              Get a Quote Today
+              {t.home.getQuoteToday}
             </Link>
             <Link
               to="/contact"
@@ -485,7 +487,7 @@ export default function Home() {
               onMouseDown={(e) => { e.currentTarget.style.transform = 'translateY(1px)' }}
               onMouseUp={(e) => { e.currentTarget.style.transform = 'translateY(0)' }}
             >
-              Contact Us
+              {t.home.contactUs}
             </Link>
           </div>
         </motion.div>
@@ -495,9 +497,9 @@ export default function Home() {
       <Section style={{ background: 'var(--surface-subtle)', borderTop: '1px solid var(--border-default)', borderBottom: '1px solid var(--border-default)' }}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'var(--space-12)' }}>
           <SectionHeader
-            tag="Industries"
-            title="Built for businesses that want to look professional online"
-            description="We work with the businesses that depend on their online presence to attract customers and grow."
+            tag={t.home.industriesTag}
+            title={t.home.industriesTitle}
+            description={t.home.industriesBody}
           />
           <motion.div
             variants={stagger}
@@ -518,7 +520,7 @@ export default function Home() {
             onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--color-brand-200)' }}
             onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--color-brand-400)' }}
           >
-            See all industries <ArrowRight size={14} />
+            {t.home.viewAllIndustries} <ArrowRight size={14} />
           </Link>
         </div>
       </Section>
@@ -527,9 +529,9 @@ export default function Home() {
       <Section>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'var(--space-16)' }}>
           <SectionHeader
-            tag="How it works"
-            title="From package to launch in 5 steps"
-            description="A simple, predictable process — no long briefs, no meetings, no waiting weeks."
+            tag={t.home.howItWorksTag}
+            title={t.home.howItWorksTitle}
+            description={t.home.howItWorksBody}
           />
           <motion.div
             variants={stagger}

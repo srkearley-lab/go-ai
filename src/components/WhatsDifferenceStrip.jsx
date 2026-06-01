@@ -1,54 +1,21 @@
 import { Link } from 'react-router-dom'
 import { motion, useReducedMotion } from 'framer-motion'
 import { Globe, Package, Layers, PlusCircle, FileText } from 'lucide-react'
+import { useTranslations } from '../context/LanguageContext'
 
-const CARDS = [
-  {
-    id: 'websites',
-    icon: Globe,
-    term: 'Websites',
-    subtitle: 'One-off website builds',
-    description: 'For businesses that need a professional online presence.',
-    href: '/websites',
-  },
-  {
-    id: 'packages',
-    icon: Package,
-    term: 'Packages',
-    subtitle: 'Structured service options',
-    description: 'Fixed-price services with a clear scope.',
-    href: '/packages',
-  },
-  {
-    id: 'bundles',
-    icon: Layers,
-    term: 'Bundles',
-    subtitle: 'Monthly support plans',
-    description: 'Ongoing support, improvements, hosting, and growth services.',
-    href: '/bundles',
-  },
-  {
-    id: 'addons',
-    icon: PlusCircle,
-    term: 'Add-ons',
-    subtitle: 'Optional extras',
-    description: 'Extra features such as forms, automations, integrations, storage, or support.',
-    href: '/addons',
-  },
-  {
-    id: 'quote',
-    icon: FileText,
-    term: 'Get a Quote',
-    subtitle: 'Tailored recommendation',
-    description: 'Best for customers who are unsure what they need or want a custom recommendation.',
-    href: '/request-quote',
-  },
+const CARD_META = [
+  { id: 'websites', icon: Globe,        href: '/websites' },
+  { id: 'packages', icon: Package,      href: '/packages' },
+  { id: 'bundles',  icon: Layers,       href: '/bundles'  },
+  { id: 'addons',   icon: PlusCircle,   href: '/addons'   },
+  { id: 'quote',    icon: FileText,     href: '/request-quote' },
 ]
 
 const MotionLink = motion(Link)
 
 export default function WhatsDifferenceStrip({ activePage = null, insideJourney = false }) {
   const reduceMotion = useReducedMotion()
+  const t = useTranslations()
 
   const stagger = {
     hidden: {},
@@ -76,14 +43,14 @@ export default function WhatsDifferenceStrip({ activePage = null, insideJourney 
             letterSpacing: '0.06em', textTransform: 'uppercase',
             color: 'var(--goai-violet)', marginBottom: 'var(--space-2)',
           }}>
-            Quick reference
+            {t.strip.quickRef}
           </p>
           <h2 style={{
             fontSize: 'clamp(var(--text-sm), 1.8vw, var(--text-md))',
             fontWeight: 700, letterSpacing: '-0.01em',
             color: 'var(--text-primary)', lineHeight: 1.2,
           }}>
-            What's the difference?
+            {t.strip.heading}
           </h2>
         </motion.div>
 
@@ -94,9 +61,10 @@ export default function WhatsDifferenceStrip({ activePage = null, insideJourney 
           whileInView="show"
           viewport={{ once: true, margin: '-40px' }}
         >
-          {CARDS.map((card) => {
-            const Icon = card.icon
-            const isActive = activePage === card.id
+          {CARD_META.map((meta) => {
+            const Icon = meta.icon
+            const isActive = activePage === meta.id
+            const card = t.strip.cards[meta.id]
 
             const sharedStyle = {
               position: 'relative',
@@ -125,7 +93,7 @@ export default function WhatsDifferenceStrip({ activePage = null, insideJourney 
                     lineHeight: 1.4,
                     whiteSpace: 'nowrap',
                   }}>
-                    You are here
+                    {t.strip.youAreHere}
                   </span>
                 )}
                 <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)' }}>
@@ -156,7 +124,7 @@ export default function WhatsDifferenceStrip({ activePage = null, insideJourney 
 
             if (insideJourney) {
               return (
-                <motion.div key={card.id} variants={fadeUp} style={sharedStyle}>
+                <motion.div key={meta.id} variants={fadeUp} style={sharedStyle}>
                   {cardInner}
                 </motion.div>
               )
@@ -164,8 +132,8 @@ export default function WhatsDifferenceStrip({ activePage = null, insideJourney 
 
             return (
               <MotionLink
-                key={card.id}
-                to={card.href}
+                key={meta.id}
+                to={meta.href}
                 variants={fadeUp}
                 style={sharedStyle}
                 className={isActive ? undefined : 'wds-card-hover'}

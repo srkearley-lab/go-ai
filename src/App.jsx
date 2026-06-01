@@ -5,6 +5,7 @@ import ScrollToTop from './components/ScrollToTop'
 import BasketPanel from './components/BasketPanel'
 import MobileBottomBar from './components/MobileBottomBar'
 import { BasketProvider } from './context/BasketContext'
+import { LanguageProvider } from './context/LanguageContext'
 import Home from './pages/Home'
 import Services from './pages/Services'
 import Industries from './pages/Industries'
@@ -30,6 +31,7 @@ import Journey from './pages/Journey'
 function App() {
   return (
     <BrowserRouter>
+      <LanguageProvider>
       <BasketProvider>
         <ScrollToTop />
         <Navbar />
@@ -60,6 +62,7 @@ function App() {
         <BasketPanel />
         <MobileBottomBar />
       </BasketProvider>
+      </LanguageProvider>
     </BrowserRouter>
   )
 }

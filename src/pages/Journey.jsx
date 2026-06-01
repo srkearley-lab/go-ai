@@ -8,6 +8,7 @@ import {
 } from 'lucide-react'
 import PageHero from '../components/PageHero'
 import WhatsDifferenceStrip from '../components/WhatsDifferenceStrip'
+import { useTranslations } from '../context/LanguageContext'
 
 // ─── Data ──────────────────────────────────────────────────────────────────────
 
@@ -327,11 +328,11 @@ const ADDON_GROUPS = [
 // ─── Preserved What's the Difference data ──────────────────────────────────────
 
 const differenceItems = [
-  { icon: Globe,      term: 'Websites',    subtitle: 'One-off website builds',      description: 'One-off website builds for businesses that need a professional online presence.' },
-  { icon: Package,    term: 'Packages',    subtitle: 'Structured service options',   description: 'Structured service options that combine key website features into clear, ready-made choices.' },
-  { icon: Layers,     term: 'Bundles',     subtitle: 'Monthly support plans',        description: 'Monthly support plans for businesses that want ongoing updates, improvements, hosting support, content changes, and digital growth support.' },
-  { icon: PlusCircle, term: 'Add-ons',     subtitle: 'Optional extras',              description: 'Optional extras that can be added to a website, package, or bundle, such as storage, hosting support, extra pages, forms, automation, integrations, or additional features.' },
-  { icon: FileText,   term: 'Get a Quote', subtitle: 'Tailored recommendation',      description: 'Best for customers who are unsure what they need or want a tailored recommendation based on their business.' },
+  { id: 'websites', icon: Globe,      term: 'Websites',    subtitle: 'One-off website builds',      description: 'One-off website builds for businesses that need a professional online presence.' },
+  { id: 'packages', icon: Package,    term: 'Packages',    subtitle: 'Structured service options',   description: 'Structured service options that combine key website features into clear, ready-made choices.' },
+  { id: 'bundles',  icon: Layers,     term: 'Bundles',     subtitle: 'Monthly support plans',        description: 'Monthly support plans for businesses that want ongoing updates, improvements, hosting support, content changes, and digital growth support.' },
+  { id: 'addons',   icon: PlusCircle, term: 'Add-ons',     subtitle: 'Optional extras',              description: 'Optional extras that can be added to a website, package, or bundle, such as storage, hosting support, extra pages, forms, automation, integrations, or additional features.' },
+  { id: 'quote',    icon: FileText,   term: 'Get a Quote', subtitle: 'Tailored recommendation',      description: 'Best for customers who are unsure what they need or want a tailored recommendation based on their business.' },
 ]
 
 // ─── Shared helpers ─────────────────────────────────────────────────────────────
@@ -426,13 +427,15 @@ const secondaryBtn = {
 
 // ─── Progress indicator ─────────────────────────────────────────────────────────
 
-const STEP_LABELS = ['Website', 'Package', 'Bundle', 'Add-ons', 'Review', 'Payment']
+const STEP_COUNT = 6
 
 function ProgressIndicator({ currentStep, onGoToStep }) {
+  const t = useTranslations()
+  const stepLabels = [t.journey.website, t.journey.package, t.journey.bundle, t.journey.addons, t.journey.reviewLabel, t.journey.paymentLabel]
   return (
     <div style={{ marginBottom: 'var(--space-8)' }}>
       <div style={{ display: 'flex', gap: 'var(--space-1)', marginBottom: 'var(--space-3)', overflowX: 'auto', paddingBottom: 2 }}>
-        {STEP_LABELS.map((label, i) => {
+        {stepLabels.map((label, i) => {
           const done = i < currentStep
           const active = i === currentStep
           return (
@@ -461,7 +464,7 @@ function ProgressIndicator({ currentStep, onGoToStep }) {
         })}
       </div>
       <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', margin: 0 }}>
-        Step {currentStep + 1} of {STEP_LABELS.length}
+        {t.journey.step} {currentStep + 1} {t.journey.of} {STEP_COUNT}
       </p>
     </div>
   )
@@ -795,10 +798,11 @@ function AddonSelectCard({ addon, isSelected, onToggle }) {
 // ─── Step screens ───────────────────────────────────────────────────────────────
 
 function StepHeader({ stepNum, title, description }) {
+  const t = useTranslations()
   return (
     <div style={{ marginBottom: 'var(--space-6)' }}>
       <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--goai-violet)', marginBottom: 'var(--space-2)' }}>
-        Step {stepNum} of {STEP_LABELS.length}
+        {t.journey.step} {stepNum} {t.journey.of} {STEP_COUNT}
       </p>
       <h2 style={{ fontSize: 'clamp(var(--text-md), 2.5vw, var(--text-lg))', fontWeight: 700, color: 'var(--text-primary)', letterSpacing: '-0.01em', lineHeight: 1.2, marginBottom: 'var(--space-2)' }}>
         {title}
@@ -813,12 +817,13 @@ function StepHeader({ stepNum, title, description }) {
 }
 
 function StepWebsite({ onToggle, selected, onSkip, onContinue }) {
+  const t = useTranslations()
   return (
     <div>
       <StepHeader
         stepNum={1}
-        title="Choose Your Website"
-        description="Start with the right website tier for your business. Prices shown are one-off build costs."
+        title={t.journey.steps.website.title}
+        description={t.journey.steps.website.desc}
       />
       <WhatsDifferenceStrip activePage="websites" insideJourney={true} />
       <div className="journey-website-grid">
@@ -837,7 +842,7 @@ function StepWebsite({ onToggle, selected, onSkip, onContinue }) {
           onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--surface-subtle)' }}
           onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent' }}
         >
-          Skip this step
+          {t.buttons.skipStep}
         </button>
         <button
           type="button"
@@ -853,7 +858,7 @@ function StepWebsite({ onToggle, selected, onSkip, onContinue }) {
           onMouseEnter={(e) => { if (selected) { e.currentTarget.style.filter = 'brightness(1.1)'; e.currentTarget.style.boxShadow = '0 0 30px rgba(118,39,239,0.45)' } }}
           onMouseLeave={(e) => { if (selected) { e.currentTarget.style.filter = 'brightness(1)'; e.currentTarget.style.boxShadow = '0 0 20px rgba(118,39,239,0.3)' } }}
         >
-          Continue <ArrowRight size={14} />
+          {t.buttons.continue} <ArrowRight size={14} />
         </button>
       </div>
     </div>
@@ -861,12 +866,13 @@ function StepWebsite({ onToggle, selected, onSkip, onContinue }) {
 }
 
 function StepPackage({ onToggle, onSkip, onBack, onContinue, selected }) {
+  const t = useTranslations()
   return (
     <div>
       <StepHeader
         stepNum={2}
-        title="Choose Your Package"
-        description="Select an individual service to add to your build. This is optional — you can skip and choose later."
+        title={t.journey.steps.package.title}
+        description={t.journey.steps.package.desc}
       />
       <WhatsDifferenceStrip activePage="packages" insideJourney={true} />
       <div className="journey-package-grid">
@@ -885,7 +891,7 @@ function StepPackage({ onToggle, onSkip, onBack, onContinue, selected }) {
           onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--text-primary)'; e.currentTarget.style.borderColor = 'var(--border-strong)' }}
           onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--text-secondary)'; e.currentTarget.style.borderColor = 'var(--border-default)' }}
         >
-          ← Back
+          {t.buttons.back}
         </button>
         <div style={{ display: 'flex', gap: 'var(--space-3)', alignItems: 'center', flexWrap: 'wrap' }}>
           <button
@@ -893,7 +899,7 @@ function StepPackage({ onToggle, onSkip, onBack, onContinue, selected }) {
             onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--surface-subtle)' }}
             onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent' }}
           >
-            Skip this step
+            {t.buttons.skipStep}
           </button>
           <button
             type="button"
@@ -909,7 +915,7 @@ function StepPackage({ onToggle, onSkip, onBack, onContinue, selected }) {
             onMouseEnter={(e) => { if (selected) { e.currentTarget.style.filter = 'brightness(1.1)'; e.currentTarget.style.boxShadow = '0 0 30px rgba(118,39,239,0.45)' } }}
             onMouseLeave={(e) => { if (selected) { e.currentTarget.style.filter = 'brightness(1)'; e.currentTarget.style.boxShadow = '0 0 20px rgba(118,39,239,0.3)' } }}
           >
-            Continue to bundles <ArrowRight size={14} />
+            {t.buttons.continueToBundles} <ArrowRight size={14} />
           </button>
         </div>
       </div>
@@ -918,12 +924,13 @@ function StepPackage({ onToggle, onSkip, onBack, onContinue, selected }) {
 }
 
 function StepBundle({ onToggle, onSkip, onBack, onContinue, selected }) {
+  const t = useTranslations()
   return (
     <div>
       <StepHeader
         stepNum={3}
-        title="Add a Monthly Bundle"
-        description="Monthly bundles combine ongoing support, hosting, content, and growth into one price. Optional — skip if not needed."
+        title={t.journey.steps.bundle.title}
+        description={t.journey.steps.bundle.desc}
       />
       <WhatsDifferenceStrip activePage="bundles" insideJourney={true} />
       <div className="journey-bundle-grid">
@@ -942,7 +949,7 @@ function StepBundle({ onToggle, onSkip, onBack, onContinue, selected }) {
           onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--text-primary)'; e.currentTarget.style.borderColor = 'var(--border-strong)' }}
           onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--text-secondary)'; e.currentTarget.style.borderColor = 'var(--border-default)' }}
         >
-          ← Back
+          {t.buttons.back}
         </button>
         <div style={{ display: 'flex', gap: 'var(--space-3)', alignItems: 'center', flexWrap: 'wrap' }}>
           <button
@@ -950,7 +957,7 @@ function StepBundle({ onToggle, onSkip, onBack, onContinue, selected }) {
             onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--surface-subtle)' }}
             onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent' }}
           >
-            Skip this step
+            {t.buttons.skipStep}
           </button>
           <button
             type="button"
@@ -966,7 +973,7 @@ function StepBundle({ onToggle, onSkip, onBack, onContinue, selected }) {
             onMouseEnter={(e) => { if (selected) { e.currentTarget.style.filter = 'brightness(1.1)'; e.currentTarget.style.boxShadow = '0 0 30px rgba(118,39,239,0.45)' } }}
             onMouseLeave={(e) => { if (selected) { e.currentTarget.style.filter = 'brightness(1)'; e.currentTarget.style.boxShadow = '0 0 20px rgba(118,39,239,0.3)' } }}
           >
-            Continue to add-ons <ArrowRight size={14} />
+            {t.buttons.continueToAddons} <ArrowRight size={14} />
           </button>
         </div>
       </div>
@@ -975,13 +982,14 @@ function StepBundle({ onToggle, onSkip, onBack, onContinue, selected }) {
 }
 
 function StepAddons({ selectedAddons, onToggle, onContinue, onSkip, onBack }) {
+  const t = useTranslations()
   const selectedIds = selectedAddons.map(a => a.id)
   return (
     <div>
       <StepHeader
         stepNum={4}
-        title="Add Optional Extras"
-        description="Bolt on specific features or services to your setup. You can add as many as you need, or skip and continue to review."
+        title={t.journey.steps.addons.title}
+        description={t.journey.steps.addons.desc}
       />
       <WhatsDifferenceStrip activePage="addons" insideJourney={true} />
       {selectedAddons.length > 0 && (
@@ -992,7 +1000,7 @@ function StepAddons({ selectedAddons, onToggle, onContinue, onSkip, onBack }) {
           display: 'flex', flexWrap: 'wrap', gap: 'var(--space-2)', alignItems: 'center',
         }}>
           <span style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--goai-violet)', flexShrink: 0 }}>
-            Added:
+            {t.labels.added}
           </span>
           {selectedAddons.map(a => (
             <span key={a.id} style={{
@@ -1045,7 +1053,7 @@ function StepAddons({ selectedAddons, onToggle, onContinue, onSkip, onBack }) {
           onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--text-primary)'; e.currentTarget.style.borderColor = 'var(--border-strong)' }}
           onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--text-secondary)'; e.currentTarget.style.borderColor = 'var(--border-default)' }}
         >
-          ← Back
+          {t.buttons.back}
         </button>
         <div style={{ display: 'flex', gap: 'var(--space-3)', alignItems: 'center', flexWrap: 'wrap' }}>
           {selectedAddons.length === 0 && (
@@ -1054,7 +1062,7 @@ function StepAddons({ selectedAddons, onToggle, onContinue, onSkip, onBack }) {
               onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--surface-subtle)' }}
               onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent' }}
             >
-              Skip add-ons
+              {t.buttons.skipAddons}
             </button>
           )}
           <button
@@ -1073,7 +1081,7 @@ function StepAddons({ selectedAddons, onToggle, onContinue, onSkip, onBack }) {
             onMouseEnter={(e) => { e.currentTarget.style.filter = 'brightness(1.1)'; e.currentTarget.style.boxShadow = '0 0 36px rgba(118,39,239,0.5)' }}
             onMouseLeave={(e) => { e.currentTarget.style.filter = 'brightness(1)'; e.currentTarget.style.boxShadow = '0 0 24px rgba(118,39,239,0.35)' }}
           >
-            Continue to review <ArrowRight size={14} />
+            {t.buttons.continueToReview} <ArrowRight size={14} />
           </button>
         </div>
       </div>
@@ -1122,12 +1130,14 @@ function ReviewRow({ label, value, lines, onEdit, editLabel = 'Edit', placeholde
 }
 
 function StepReview({ website, pkg, bundle, addons, oneOffItems, monthlyItems, quoteItems, oneOffTotal, monthlyTotal, hasQuoteItems, hasFixedItems, onEditWebsite, onEditPackage, onEditBundle, onEditAddons, onPaySecurely, onRequestProposal, onBack }) {
+  const t = useTranslations()
+  const rv = t.journey.reviewRows
   return (
     <div>
       <StepHeader
         stepNum={5}
-        title="Review & Complete"
-        description="Check your selections below, then choose how to proceed."
+        title={t.journey.steps.review.title}
+        description={t.journey.steps.review.desc}
       />
       <WhatsDifferenceStrip activePage="quote" insideJourney={true} />
 
@@ -1140,36 +1150,36 @@ function StepReview({ website, pkg, bundle, addons, oneOffItems, monthlyItems, q
         marginBottom: 'var(--space-6)',
       }}>
         <ReviewRow
-          label="Website"
+          label={rv.websiteLabel}
           value={website ? `${website.name} — ${website.price}${website.priceNote ? ' ' + website.priceNote : ''}` : null}
           onEdit={onEditWebsite}
-          editLabel="Edit website"
-          placeholder="No website selected"
+          editLabel={rv.editWebsite}
+          placeholder={rv.noWebsite}
         />
         <ReviewRow
-          label="Package"
+          label={rv.packageLabel}
           value={pkg ? `${pkg.name} — ${pkg.price}${pkg.priceNote ? ' ' + pkg.priceNote : ''}` : null}
           onEdit={onEditPackage}
-          editLabel="Edit package"
-          placeholder="No package selected"
+          editLabel={rv.editPackage}
+          placeholder={rv.noPackage}
         />
         <ReviewRow
-          label="Monthly bundle"
+          label={rv.bundleLabel}
           value={bundle ? `${bundle.name} — ${bundle.price}${bundle.priceNote}` : null}
           onEdit={onEditBundle}
-          editLabel="Edit bundle"
-          placeholder="No bundle selected"
+          editLabel={rv.editBundle}
+          placeholder={rv.noBundle}
         />
         <ReviewRow
-          label="Add-ons"
+          label={rv.addonsLabel}
           lines={addons.length ? addons.map(a =>
             a.isQuote
-              ? `${a.name} — Quote requested`
+              ? `${a.name} — ${rv.quoteRequired}`
               : `${a.name} — ${a.price}${a.priceNote ? ' ' + a.priceNote : ''}`
           ) : undefined}
           onEdit={onEditAddons}
-          editLabel="Edit add-ons"
-          placeholder="No add-ons selected"
+          editLabel={rv.editAddons}
+          placeholder={rv.noAddons}
         />
       </div>
 
@@ -1181,7 +1191,7 @@ function StepReview({ website, pkg, bundle, addons, oneOffItems, monthlyItems, q
             borderRadius: 'var(--radius-lg)', padding: 'var(--space-5)',
           }}>
             <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.05em', textTransform: 'uppercase', color: 'var(--text-tertiary)', marginBottom: 'var(--space-3)' }}>
-              Due today
+              {rv.dueToday}
             </p>
             {oneOffItems.map(item => (
               <div key={item.name} style={{ display: 'flex', justifyContent: 'space-between', gap: 'var(--space-4)', padding: 'var(--space-1) 0', fontSize: 'var(--text-sm)', color: 'var(--text-secondary)' }}>
@@ -1190,7 +1200,7 @@ function StepReview({ website, pkg, bundle, addons, oneOffItems, monthlyItems, q
               </div>
             ))}
             <div style={{ borderTop: '1px solid var(--border-default)', marginTop: 'var(--space-3)', paddingTop: 'var(--space-3)', display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
-              <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--text-primary)' }}>Total due today</span>
+              <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--text-primary)' }}>{rv.totalDueToday}</span>
               <span style={{ fontSize: 'var(--text-lg)', fontWeight: 700, color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>€{oneOffTotal.toLocaleString('en-IE')}</span>
             </div>
           </div>
@@ -1201,7 +1211,7 @@ function StepReview({ website, pkg, bundle, addons, oneOffItems, monthlyItems, q
             borderRadius: 'var(--radius-lg)', padding: 'var(--space-5)',
           }}>
             <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.05em', textTransform: 'uppercase', color: 'var(--text-tertiary)', marginBottom: 'var(--space-3)' }}>
-              Monthly recurring
+              {rv.monthly}
             </p>
             {monthlyItems.map(item => (
               <div key={item.name} style={{ display: 'flex', justifyContent: 'space-between', gap: 'var(--space-4)', padding: 'var(--space-1) 0', fontSize: 'var(--text-sm)', color: 'var(--text-secondary)' }}>
@@ -1210,7 +1220,7 @@ function StepReview({ website, pkg, bundle, addons, oneOffItems, monthlyItems, q
               </div>
             ))}
             <div style={{ borderTop: '1px solid var(--border-default)', marginTop: 'var(--space-3)', paddingTop: 'var(--space-3)', display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
-              <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--text-primary)' }}>Monthly from</span>
+              <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--text-primary)' }}>{rv.monthlyFrom}</span>
               <span style={{ fontSize: 'var(--text-lg)', fontWeight: 700, color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>€{monthlyTotal}/mo</span>
             </div>
           </div>
@@ -1226,7 +1236,7 @@ function StepReview({ website, pkg, bundle, addons, oneOffItems, monthlyItems, q
           display: 'flex', flexDirection: 'column', gap: 'var(--space-2)',
         }}>
           <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--color-accent-500)', margin: 0 }}>
-            Items requiring follow-up
+            {rv.quoteItems}
           </p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-1)' }}>
             {quoteItems.map(name => (
@@ -1236,7 +1246,7 @@ function StepReview({ website, pkg, bundle, addons, oneOffItems, monthlyItems, q
             ))}
           </div>
           <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', fontStyle: 'italic', margin: 0 }}>
-            We'll review your quote items and confirm pricing before proceeding.
+            {rv.quoteNote}
           </p>
         </div>
       )}
@@ -1248,7 +1258,7 @@ function StepReview({ website, pkg, bundle, addons, oneOffItems, monthlyItems, q
           onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--text-primary)'; e.currentTarget.style.borderColor = 'var(--border-strong)' }}
           onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--text-secondary)'; e.currentTarget.style.borderColor = 'var(--border-default)' }}
         >
-          ← Back
+          {t.buttons.back}
         </button>
 
         {/* Request Proposal — primary when quote items present */}
@@ -1283,7 +1293,7 @@ function StepReview({ website, pkg, bundle, addons, oneOffItems, monthlyItems, q
             }
           }}
         >
-          Request Proposal
+          {t.buttons.requestProposal}
         </button>
 
         {/* Pay Securely — primary when only fixed items */}
@@ -1305,12 +1315,12 @@ function StepReview({ website, pkg, bundle, addons, oneOffItems, monthlyItems, q
             onMouseEnter={(e) => { e.currentTarget.style.filter = 'brightness(1.1)'; e.currentTarget.style.boxShadow = '0 0 40px rgba(118,39,239,0.55)' }}
             onMouseLeave={(e) => { e.currentTarget.style.filter = 'brightness(1)'; e.currentTarget.style.boxShadow = '0 0 28px rgba(118,39,239,0.4)' }}
           >
-            <Lock size={14} /> Pay Securely
+            <Lock size={14} /> {t.buttons.paySecurely}
           </button>
         )}
       </div>
       <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', fontStyle: 'italic', marginTop: 'var(--space-4)' }}>
-        All prices exclude Greek VAT (24%). Fixed prices confirmed on enquiry based on final scope.
+        {t.forms.vatNoteReview}
       </p>
     </div>
   )
@@ -1319,6 +1329,7 @@ function StepReview({ website, pkg, bundle, addons, oneOffItems, monthlyItems, q
 // ─── Payment step ──────────────────────────────────────────────────────────────
 
 function PaySuccessScreen({ hasMonthly }) {
+  const t = useTranslations()
   return (
     <div style={{ textAlign: 'center', padding: 'var(--space-16) var(--space-8)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'var(--space-6)' }}>
       <div style={{
@@ -1330,12 +1341,10 @@ function PaySuccessScreen({ hasMonthly }) {
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)', maxWidth: '44ch' }}>
         <h2 style={{ fontSize: 'clamp(var(--text-md), 2.5vw, var(--text-lg))', fontWeight: 700, color: 'var(--text-primary)', lineHeight: 1.2 }}>
-          Payment received
+          {t.success.paymentTitle}
         </h2>
         <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', lineHeight: 1.7 }}>
-          {hasMonthly
-            ? 'Payment received. Your recurring services have been set up. We\'ll be in touch shortly with your onboarding details.'
-            : 'Payment received — your order has been submitted. We\'ll be in touch shortly.'}
+          {hasMonthly ? t.success.paymentRecurring : t.success.paymentOneOff}
         </p>
       </div>
     </div>
@@ -1359,6 +1368,7 @@ function FormField({ label, error, children }) {
 }
 
 function StepPayment({ oneOffItems, monthlyItems, oneOffTotal, monthlyTotal, hasMonthlyItems, onBack }) {
+  const t = useTranslations()
   const [form, setForm] = useState({ name: '', card: '', expiry: '', cvv: '', postcode: '', email: '', agreed: false })
   const [errors, setErrors] = useState({})
   const [submitted, setSubmitted] = useState(false)
@@ -1416,8 +1426,8 @@ function StepPayment({ oneOffItems, monthlyItems, oneOffTotal, monthlyTotal, has
     <div>
       <StepHeader
         stepNum={6}
-        title="Payment Details"
-        description="Enter your payment details to complete your order."
+        title={t.journey.steps.payment.title}
+        description={t.journey.steps.payment.desc}
       />
 
       {/* Compact order summary */}
@@ -1427,7 +1437,7 @@ function StepPayment({ oneOffItems, monthlyItems, oneOffTotal, monthlyTotal, has
         marginBottom: 'var(--space-6)', display: 'flex', flexDirection: 'column', gap: 'var(--space-2)',
       }}>
         <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.05em', textTransform: 'uppercase', color: 'var(--text-tertiary)', marginBottom: 'var(--space-1)' }}>
-          Order summary
+          {t.journey.paymentLabels.orderSummary}
         </p>
         {oneOffItems.map(item => (
           <div key={item.name} style={{ display: 'flex', justifyContent: 'space-between', gap: 'var(--space-4)', fontSize: 'var(--text-sm)', color: 'var(--text-secondary)' }}>
@@ -1444,13 +1454,13 @@ function StepPayment({ oneOffItems, monthlyItems, oneOffTotal, monthlyTotal, has
         <div style={{ borderTop: '1px solid var(--border-default)', paddingTop: 'var(--space-3)', marginTop: 'var(--space-1)', display: 'flex', flexDirection: 'column', gap: 'var(--space-1)' }}>
           {oneOffTotal > 0 && (
             <div style={{ display: 'flex', justifyContent: 'space-between', gap: 'var(--space-4)', alignItems: 'baseline' }}>
-              <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--text-primary)' }}>Total due today</span>
+              <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--text-primary)' }}>{rv.totalDueToday}</span>
               <span style={{ fontSize: 'var(--text-lg)', fontWeight: 700, color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>€{oneOffTotal.toLocaleString('en-IE')}</span>
             </div>
           )}
           {monthlyTotal > 0 && (
             <div style={{ display: 'flex', justifyContent: 'space-between', gap: 'var(--space-4)' }}>
-              <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)' }}>Then monthly from</span>
+              <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)' }}>{t.journey.paymentLabels.thenMonthlyFrom}</span>
               <span style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-tertiary)' }}>€{monthlyTotal}/mo</span>
             </div>
           )}
@@ -1467,7 +1477,7 @@ function StepPayment({ oneOffItems, monthlyItems, oneOffTotal, monthlyTotal, has
         }}>
           <AlertCircle size={15} style={{ color: 'var(--color-accent-500)', flexShrink: 0, marginTop: 1 }} />
           <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-secondary)', lineHeight: 1.65, margin: 0 }}>
-            Your order includes recurring monthly services. By continuing, you agree the monthly amount shown will be collected automatically until cancelled.
+            {t.journey.paymentLabels.recurringNotice}
           </p>
         </div>
       )}
@@ -1475,7 +1485,7 @@ function StepPayment({ oneOffItems, monthlyItems, oneOffTotal, monthlyTotal, has
       {/* Payment form */}
       <form onSubmit={handleSubmit} noValidate style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-5)' }}>
 
-        <FormField label="Cardholder name" error={errors.name}>
+        <FormField label={t.forms.cardholderName} error={errors.name}>
           <input
             type="text" value={form.name}
             onChange={e => update('name', e.target.value)}
@@ -1486,7 +1496,7 @@ function StepPayment({ oneOffItems, monthlyItems, oneOffTotal, monthlyTotal, has
           />
         </FormField>
 
-        <FormField label="Card number" error={errors.card}>
+        <FormField label={t.forms.cardNumber} error={errors.card}>
           <div style={{ position: 'relative' }}>
             <input
               type="text" value={form.card}
@@ -1502,7 +1512,7 @@ function StepPayment({ oneOffItems, monthlyItems, oneOffTotal, monthlyTotal, has
         </FormField>
 
         <div className="journey-payment-grid">
-          <FormField label="Expiry date" error={errors.expiry}>
+          <FormField label={t.forms.expiryDate} error={errors.expiry}>
             <input
               type="text" value={form.expiry}
               onChange={e => update('expiry', formatExpiry(e.target.value))}
@@ -1512,7 +1522,7 @@ function StepPayment({ oneOffItems, monthlyItems, oneOffTotal, monthlyTotal, has
               onBlur={e => { e.target.style.borderColor = errors.expiry ? '#dc2626' : 'var(--border-default)' }}
             />
           </FormField>
-          <FormField label="Security code" error={errors.cvv}>
+          <FormField label={t.forms.securityCode} error={errors.cvv}>
             <input
               type="password" value={form.cvv}
               onChange={e => update('cvv', e.target.value.replace(/\D/g, '').slice(0, 4))}
@@ -1525,7 +1535,7 @@ function StepPayment({ oneOffItems, monthlyItems, oneOffTotal, monthlyTotal, has
         </div>
 
         <div className="journey-payment-grid">
-          <FormField label="Billing postcode" error={errors.postcode}>
+          <FormField label={t.forms.billingPostcode} error={errors.postcode}>
             <input
               type="text" value={form.postcode}
               onChange={e => update('postcode', e.target.value.toUpperCase())}
@@ -1535,7 +1545,7 @@ function StepPayment({ oneOffItems, monthlyItems, oneOffTotal, monthlyTotal, has
               onBlur={e => { e.target.style.borderColor = errors.postcode ? '#dc2626' : 'var(--border-default)' }}
             />
           </FormField>
-          <FormField label="Email for receipt" error={errors.email}>
+          <FormField label={t.forms.emailReceipt} error={errors.email}>
             <input
               type="email" value={form.email}
               onChange={e => update('email', e.target.value)}
@@ -1556,7 +1566,7 @@ function StepPayment({ oneOffItems, monthlyItems, oneOffTotal, monthlyTotal, has
           />
           <div>
             <label htmlFor="pay-terms" style={{ fontSize: 'var(--text-xs)', color: 'var(--text-secondary)', lineHeight: 1.6, cursor: 'pointer' }}>
-              I agree to the service terms and conditions
+              {t.forms.agreeTerms}
             </label>
             {errors.agreed && (
               <p style={{ fontSize: '0.68rem', color: '#dc2626', margin: 'var(--space-1) 0 0', display: 'flex', alignItems: 'center', gap: 4 }}>
@@ -1576,7 +1586,7 @@ function StepPayment({ oneOffItems, monthlyItems, oneOffTotal, monthlyTotal, has
             onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--text-primary)'; e.currentTarget.style.borderColor = 'var(--border-strong)' }}
             onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--text-secondary)'; e.currentTarget.style.borderColor = 'var(--border-default)' }}
           >
-            ← Back
+            {t.buttons.back}
           </button>
           <button
             type="submit"
@@ -1593,12 +1603,12 @@ function StepPayment({ oneOffItems, monthlyItems, oneOffTotal, monthlyTotal, has
             onMouseEnter={(e) => { e.currentTarget.style.filter = 'brightness(1.1)'; e.currentTarget.style.boxShadow = '0 0 40px rgba(118,39,239,0.55)' }}
             onMouseLeave={(e) => { e.currentTarget.style.filter = 'brightness(1)'; e.currentTarget.style.boxShadow = '0 0 28px rgba(118,39,239,0.4)' }}
           >
-            <Lock size={14} /> Pay securely now
+            <Lock size={14} /> {t.buttons.paySecurelyNow}
           </button>
         </div>
 
         <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', fontStyle: 'italic' }}>
-          All prices exclude Greek VAT (24%). Your card details are not stored.
+          {t.forms.vatNote}
         </p>
       </form>
     </div>
@@ -1775,6 +1785,7 @@ function JourneyWizard() {
 
 export default function Journey() {
   const reduceMotion = useReducedMotion()
+  const t = useTranslations()
 
   const stagger = {
     hidden: {},
@@ -1824,14 +1835,14 @@ export default function Journey() {
               letterSpacing: '0.06em', textTransform: 'uppercase',
               color: 'var(--goai-violet)', marginBottom: 'var(--space-3)',
             }}>
-              Quick reference
+              {t.strip.quickRef}
             </p>
             <h2 style={{
               fontSize: 'clamp(var(--text-md), 2.5vw, var(--text-lg))',
               fontWeight: 700, letterSpacing: '-0.01em',
               color: 'var(--text-primary)', lineHeight: 1.2,
             }}>
-              What's the difference?
+              {t.strip.heading}
             </h2>
           </motion.div>
 
@@ -1848,9 +1859,10 @@ export default function Journey() {
           >
             {differenceItems.map((item) => {
               const Icon = item.icon
+              const card = t.strip.cards[item.id] || { term: item.term, subtitle: item.subtitle, description: item.description }
               return (
                 <motion.div
-                  key={item.term}
+                  key={item.id}
                   variants={fadeUp}
                   style={{
                     background: 'var(--surface-raised)',
@@ -1873,15 +1885,15 @@ export default function Journey() {
                     </div>
                     <div>
                       <p style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--text-primary)', lineHeight: 1.2 }}>
-                        {item.term}
+                        {card.term}
                       </p>
                       <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', marginTop: 2 }}>
-                        {item.subtitle}
+                        {card.subtitle}
                       </p>
                     </div>
                   </div>
                   <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-secondary)', lineHeight: 1.65 }}>
-                    {item.description}
+                    {card.description}
                   </p>
                 </motion.div>
               )
