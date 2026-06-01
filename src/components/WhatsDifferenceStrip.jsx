@@ -59,8 +59,10 @@ export default function WhatsDifferenceStrip({ activePage = null, insideJourney 
     show: { opacity: 1, y: 0, transition: { duration: 0.2, ease: [0.16, 1, 0.3, 1] } },
   }
 
+  const Wrapper = insideJourney ? 'div' : 'section'
+
   return (
-    <section className="wds-strip">
+    <Wrapper className={insideJourney ? 'wds-strip-inner' : 'wds-strip'}>
       <div style={{ maxWidth: 'var(--width-xl)', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'var(--space-5)' }}>
 
         <motion.div
@@ -182,6 +184,9 @@ export default function WhatsDifferenceStrip({ activePage = null, insideJourney 
           background: var(--surface-base);
           border-bottom: 1px solid var(--border-default);
         }
+        .wds-strip-inner {
+          margin-bottom: var(--space-6);
+        }
         .wds-card-hover {
           transition: border-color 150ms ease, box-shadow 150ms ease;
         }
@@ -217,6 +222,6 @@ export default function WhatsDifferenceStrip({ activePage = null, insideJourney 
           }
         }
       `}</style>
-    </section>
+    </Wrapper>
   )
 }

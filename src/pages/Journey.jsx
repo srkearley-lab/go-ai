@@ -3,9 +3,10 @@ import { Link, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import {
   Globe, Package, Layers, PlusCircle, FileText,
-  ArrowRight, Check, X as XIcon, ShoppingCart, Pencil,
+  ArrowRight, Check, X as XIcon, ShoppingCart, Pencil, ChevronDown,
 } from 'lucide-react'
 import PageHero from '../components/PageHero'
+import WhatsDifferenceStrip from '../components/WhatsDifferenceStrip'
 import { useBasket } from '../context/BasketContext'
 
 // ─── Data ──────────────────────────────────────────────────────────────────────
@@ -466,9 +467,58 @@ function ProgressIndicator({ currentStep, onGoToStep }) {
   )
 }
 
+// ─── Inline info panel (shared by all card types) ───────────────────────────────
+
+function InlineInfoPanel({ bestFor, features }) {
+  return (
+    <div style={{ borderTop: '1px solid var(--border-default)', paddingTop: 'var(--space-4)', display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
+      <div>
+        <p style={{ fontSize: '0.6rem', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', marginBottom: 'var(--space-2)' }}>
+          Best for
+        </p>
+        <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
+          {bestFor}
+        </p>
+      </div>
+      {features.length > 0 && (
+        <div>
+          <p style={{ fontSize: '0.6rem', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', marginBottom: 'var(--space-2)' }}>
+            What's included
+          </p>
+          <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
+            {features.map(f => <FeatureItem key={f} text={f} />)}
+          </ul>
+        </div>
+      )}
+    </div>
+  )
+}
+
+function ShowDetailsBtn({ open, onToggle }) {
+  return (
+    <button
+      type="button"
+      onClick={onToggle}
+      style={{
+        display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-1)',
+        fontSize: 'var(--text-xs)', color: 'var(--color-brand-400)',
+        background: 'none', border: 'none', cursor: 'pointer',
+        padding: 'var(--space-1) 0', width: '100%', fontFamily: 'inherit',
+        transition: 'color 120ms ease',
+      }}
+    >
+      {open ? 'Hide details' : 'Show details'}
+      <motion.span animate={{ rotate: open ? 180 : 0 }} transition={{ duration: 0.15 }} style={{ display: 'flex' }}>
+        <ChevronDown size={11} />
+      </motion.span>
+    </button>
+  )
+}
+
 // ─── Selection cards ────────────────────────────────────────────────────────────
 
 function WebsiteSelectCard({ website, onToggle, isSelected }) {
+  const [showInfo, setShowInfo] = useState(false)
   const hl = website.highlighted
   return (
     <div style={{
@@ -503,6 +553,19 @@ function WebsiteSelectCard({ website, onToggle, isSelected }) {
       <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 'var(--space-2)', flex: 1 }}>
         {website.features.map(f => <FeatureItem key={f} text={f} />)}
       </ul>
+      <AnimatePresence>
+        {showInfo && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            style={{ overflow: 'hidden' }}
+          >
+            <InlineInfoPanel bestFor={website.bestFor} features={website.features} />
+          </motion.div>
+        )}
+      </AnimatePresence>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2)', marginTop: 'auto' }}>
         <button
           type="button"
@@ -513,18 +576,14 @@ function WebsiteSelectCard({ website, onToggle, isSelected }) {
         >
           {isSelected ? <><Check size={13} strokeWidth={2.5} /> Selected</> : 'Select this website'}
         </button>
-        <Link
-          to="/websites"
-          style={{ fontSize: 'var(--text-xs)', color: 'var(--color-brand-400)', textAlign: 'center', display: 'block', padding: 'var(--space-1)', transition: 'color 120ms ease', textDecoration: 'none' }}
-        >
-          Learn more ↗
-        </Link>
+        <ShowDetailsBtn open={showInfo} onToggle={() => setShowInfo(v => !v)} />
       </div>
     </div>
   )
 }
 
 function PackageSelectCard({ pkg, onToggle, isSelected }) {
+  const [showInfo, setShowInfo] = useState(false)
   return (
     <div style={{
       background: 'var(--surface-raised)',
@@ -560,6 +619,19 @@ function PackageSelectCard({ pkg, onToggle, isSelected }) {
           {pkg.features.map(f => <FeatureItem key={f} text={f} />)}
         </ul>
       )}
+      <AnimatePresence>
+        {showInfo && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            style={{ overflow: 'hidden' }}
+          >
+            <InlineInfoPanel bestFor={pkg.bestFor} features={pkg.features} />
+          </motion.div>
+        )}
+      </AnimatePresence>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2)', marginTop: 'auto', paddingTop: 'var(--space-1)' }}>
         <button
           type="button"
@@ -570,18 +642,14 @@ function PackageSelectCard({ pkg, onToggle, isSelected }) {
         >
           {isSelected ? <><Check size={11} strokeWidth={2.5} /> Selected</> : 'Select this package'}
         </button>
-        <Link
-          to="/packages"
-          style={{ fontSize: 'var(--text-xs)', color: 'var(--color-brand-400)', textAlign: 'center', display: 'block', padding: 'var(--space-1)', transition: 'color 120ms ease', textDecoration: 'none' }}
-        >
-          Learn more ↗
-        </Link>
+        <ShowDetailsBtn open={showInfo} onToggle={() => setShowInfo(v => !v)} />
       </div>
     </div>
   )
 }
 
 function BundleSelectCard({ bundle, onToggle, isSelected }) {
+  const [showInfo, setShowInfo] = useState(false)
   const hl = bundle.highlighted
   return (
     <div style={{
@@ -612,6 +680,19 @@ function BundleSelectCard({ bundle, onToggle, isSelected }) {
       <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 'var(--space-2)', flex: 1 }}>
         {bundle.features.map(f => <FeatureItem key={f} text={f} />)}
       </ul>
+      <AnimatePresence>
+        {showInfo && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            style={{ overflow: 'hidden' }}
+          >
+            <InlineInfoPanel bestFor={bundle.bestFor} features={bundle.features} />
+          </motion.div>
+        )}
+      </AnimatePresence>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2)', marginTop: 'auto' }}>
         <button
           type="button"
@@ -620,20 +701,31 @@ function BundleSelectCard({ bundle, onToggle, isSelected }) {
           onMouseEnter={(e) => { if (!isSelected) { e.currentTarget.style.filter = 'brightness(1.1)'; e.currentTarget.style.boxShadow = '0 0 30px rgba(118,39,239,0.45)' } }}
           onMouseLeave={(e) => { if (!isSelected) { e.currentTarget.style.filter = 'brightness(1)'; e.currentTarget.style.boxShadow = '0 0 20px rgba(118,39,239,0.3)' } }}
         >
-          {isSelected ? <><Check size={13} strokeWidth={2.5} /> Added</> : 'Add this bundle'}
+          {isSelected ? <><Check size={13} strokeWidth={2.5} /> Selected</> : 'Add this bundle'}
         </button>
-        <Link
-          to="/bundles"
-          style={{ fontSize: 'var(--text-xs)', color: 'var(--color-brand-400)', textAlign: 'center', display: 'block', padding: 'var(--space-1)', transition: 'color 120ms ease', textDecoration: 'none' }}
-        >
-          Learn more ↗
-        </Link>
+        <ShowDetailsBtn open={showInfo} onToggle={() => setShowInfo(v => !v)} />
       </div>
     </div>
   )
 }
 
 function AddonSelectCard({ addon, isSelected, onToggle }) {
+  const [showInfo, setShowInfo] = useState(false)
+  const [btnHover, setBtnHover] = useState(false)
+
+  const btnStyle = {
+    height: 36, padding: '0 var(--space-4)',
+    display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-2)',
+    fontSize: 'var(--text-xs)', fontWeight: 600,
+    borderRadius: 'var(--radius-md)', cursor: 'pointer',
+    transition: 'all 120ms ease', fontFamily: 'inherit',
+    ...(isSelected
+      ? (btnHover
+        ? { background: 'rgba(220,38,38,0.1)', color: '#dc2626', border: '1px solid rgba(220,38,38,0.3)', boxShadow: 'none' }
+        : { background: 'rgba(22,163,74,0.1)', color: 'var(--color-success)', border: '1px solid rgba(22,163,74,0.3)', boxShadow: 'none' })
+      : { background: 'linear-gradient(90deg, #293BFF 0%, #7627EF 100%)', color: '#FFFFFF', border: 'none', boxShadow: '0 0 16px rgba(118,39,239,0.3)' }),
+  }
+
   return (
     <div style={{
       background: isSelected ? 'rgba(118,39,239,0.04)' : 'var(--surface-raised)',
@@ -667,28 +759,34 @@ function AddonSelectCard({ addon, isSelected, onToggle }) {
           {addon.features.map(f => <FeatureItem key={f} text={f} />)}
         </ul>
       )}
-      <div style={{ marginTop: 'auto', paddingTop: 'var(--space-1)' }}>
+      <AnimatePresence>
+        {showInfo && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            style={{ overflow: 'hidden' }}
+          >
+            <InlineInfoPanel bestFor={addon.bestFor} features={addon.features} />
+          </motion.div>
+        )}
+      </AnimatePresence>
+      <div style={{ marginTop: 'auto', paddingTop: 'var(--space-1)', display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
         <button
           type="button"
           onClick={() => onToggle(addon)}
-          style={{
-            height: 36, padding: '0 var(--space-4)',
-            display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-2)',
-            fontSize: 'var(--text-xs)', fontWeight: 600,
-            background: isSelected ? 'rgba(22,163,74,0.1)' : 'linear-gradient(90deg, #293BFF 0%, #7627EF 100%)',
-            color: isSelected ? 'var(--color-success)' : '#FFFFFF',
-            border: isSelected ? '1px solid rgba(22,163,74,0.3)' : 'none',
-            borderRadius: 'var(--radius-md)', cursor: 'pointer',
-            boxShadow: isSelected ? 'none' : '0 0 16px rgba(118,39,239,0.3)',
-            transition: 'all 120ms ease', fontFamily: 'inherit',
-          }}
-          onMouseEnter={(e) => { if (!isSelected) e.currentTarget.style.filter = 'brightness(1.1)' }}
-          onMouseLeave={(e) => { if (!isSelected) e.currentTarget.style.filter = 'brightness(1)' }}
+          onMouseEnter={() => setBtnHover(true)}
+          onMouseLeave={() => setBtnHover(false)}
+          style={btnStyle}
         >
           {isSelected
-            ? <><Check size={11} strokeWidth={3} /> {addon.isQuote ? 'Quote added' : 'Added'}</>
-            : addon.isQuote ? 'Request a quote' : 'Add this add-on'}
+            ? (btnHover ? <><XIcon size={11} /> Remove</> : <><Check size={11} strokeWidth={3} /> {addon.isQuote ? 'Quote added' : 'Added'}</>)
+            : (addon.isQuote ? 'Request a quote' : 'Add to package')}
         </button>
+        {(addon.features.length > 0 || addon.bestFor) && (
+          <ShowDetailsBtn open={showInfo} onToggle={() => setShowInfo(v => !v)} />
+        )}
       </div>
     </div>
   )
@@ -714,7 +812,7 @@ function StepHeader({ stepNum, title, description }) {
   )
 }
 
-function StepWebsite({ onToggle, selected }) {
+function StepWebsite({ onToggle, selected, onSkip, onContinue }) {
   return (
     <div>
       <StepHeader
@@ -722,16 +820,47 @@ function StepWebsite({ onToggle, selected }) {
         title="Choose Your Website"
         description="Start with the right website tier for your business. Prices shown are one-off build costs."
       />
+      <WhatsDifferenceStrip activePage="websites" insideJourney={true} />
       <div className="journey-website-grid">
         {WEBSITES.map(ws => (
           <WebsiteSelectCard key={ws.id} website={ws} onToggle={onToggle} isSelected={selected?.id === ws.id} />
         ))}
       </div>
+      <div style={{
+        marginTop: 'var(--space-8)', paddingTop: 'var(--space-6)',
+        borderTop: '1px solid var(--border-default)',
+        display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+        gap: 'var(--space-3)', flexWrap: 'wrap',
+      }}>
+        <button
+          type="button" onClick={onSkip} style={secondaryBtn}
+          onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--surface-subtle)' }}
+          onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent' }}
+        >
+          Skip this step
+        </button>
+        <button
+          type="button"
+          onClick={onContinue}
+          disabled={!selected}
+          style={{
+            ...primaryBtn,
+            width: 'auto',
+            opacity: selected ? 1 : 0.45,
+            cursor: selected ? 'pointer' : 'not-allowed',
+            boxShadow: selected ? '0 0 20px rgba(118,39,239,0.3)' : 'none',
+          }}
+          onMouseEnter={(e) => { if (selected) { e.currentTarget.style.filter = 'brightness(1.1)'; e.currentTarget.style.boxShadow = '0 0 30px rgba(118,39,239,0.45)' } }}
+          onMouseLeave={(e) => { if (selected) { e.currentTarget.style.filter = 'brightness(1)'; e.currentTarget.style.boxShadow = '0 0 20px rgba(118,39,239,0.3)' } }}
+        >
+          Continue <ArrowRight size={14} />
+        </button>
+      </div>
     </div>
   )
 }
 
-function StepPackage({ onToggle, onSkip, onBack, selected }) {
+function StepPackage({ onToggle, onSkip, onBack, onContinue, selected }) {
   return (
     <div>
       <StepHeader
@@ -739,6 +868,7 @@ function StepPackage({ onToggle, onSkip, onBack, selected }) {
         title="Choose Your Package"
         description="Select an individual service to add to your build. This is optional — you can skip and choose later."
       />
+      <WhatsDifferenceStrip activePage="packages" insideJourney={true} />
       <div className="journey-package-grid">
         {PACKAGES.map(pkg => (
           <PackageSelectCard key={pkg.id} pkg={pkg} onToggle={onToggle} isSelected={selected?.id === pkg.id} />
@@ -758,9 +888,6 @@ function StepPackage({ onToggle, onSkip, onBack, selected }) {
           ← Back
         </button>
         <div style={{ display: 'flex', gap: 'var(--space-3)', alignItems: 'center', flexWrap: 'wrap' }}>
-          <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', fontStyle: 'italic', margin: 0 }}>
-            Not sure? <Link to="/packages" style={{ color: 'var(--color-brand-400)', textDecoration: 'none' }}>Browse all packages</Link>
-          </p>
           <button
             type="button" onClick={onSkip} style={secondaryBtn}
             onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--surface-subtle)' }}
@@ -768,13 +895,29 @@ function StepPackage({ onToggle, onSkip, onBack, selected }) {
           >
             Skip this step
           </button>
+          <button
+            type="button"
+            onClick={onContinue}
+            disabled={!selected}
+            style={{
+              ...primaryBtn,
+              width: 'auto',
+              opacity: selected ? 1 : 0.45,
+              cursor: selected ? 'pointer' : 'not-allowed',
+              boxShadow: selected ? '0 0 20px rgba(118,39,239,0.3)' : 'none',
+            }}
+            onMouseEnter={(e) => { if (selected) { e.currentTarget.style.filter = 'brightness(1.1)'; e.currentTarget.style.boxShadow = '0 0 30px rgba(118,39,239,0.45)' } }}
+            onMouseLeave={(e) => { if (selected) { e.currentTarget.style.filter = 'brightness(1)'; e.currentTarget.style.boxShadow = '0 0 20px rgba(118,39,239,0.3)' } }}
+          >
+            Continue to bundles <ArrowRight size={14} />
+          </button>
         </div>
       </div>
     </div>
   )
 }
 
-function StepBundle({ onToggle, onSkip, onBack, selected }) {
+function StepBundle({ onToggle, onSkip, onBack, onContinue, selected }) {
   return (
     <div>
       <StepHeader
@@ -782,6 +925,7 @@ function StepBundle({ onToggle, onSkip, onBack, selected }) {
         title="Add a Monthly Bundle"
         description="Monthly bundles combine ongoing support, hosting, content, and growth into one price. Optional — skip if not needed."
       />
+      <WhatsDifferenceStrip activePage="bundles" insideJourney={true} />
       <div className="journey-bundle-grid">
         {BUNDLES.map(bundle => (
           <BundleSelectCard key={bundle.id} bundle={bundle} onToggle={onToggle} isSelected={selected?.id === bundle.id} />
@@ -800,13 +944,31 @@ function StepBundle({ onToggle, onSkip, onBack, selected }) {
         >
           ← Back
         </button>
-        <button
-          type="button" onClick={onSkip} style={secondaryBtn}
-          onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--surface-subtle)' }}
-          onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent' }}
-        >
-          Skip monthly bundle
-        </button>
+        <div style={{ display: 'flex', gap: 'var(--space-3)', alignItems: 'center', flexWrap: 'wrap' }}>
+          <button
+            type="button" onClick={onSkip} style={secondaryBtn}
+            onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--surface-subtle)' }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent' }}
+          >
+            Skip this step
+          </button>
+          <button
+            type="button"
+            onClick={onContinue}
+            disabled={!selected}
+            style={{
+              ...primaryBtn,
+              width: 'auto',
+              opacity: selected ? 1 : 0.45,
+              cursor: selected ? 'pointer' : 'not-allowed',
+              boxShadow: selected ? '0 0 20px rgba(118,39,239,0.3)' : 'none',
+            }}
+            onMouseEnter={(e) => { if (selected) { e.currentTarget.style.filter = 'brightness(1.1)'; e.currentTarget.style.boxShadow = '0 0 30px rgba(118,39,239,0.45)' } }}
+            onMouseLeave={(e) => { if (selected) { e.currentTarget.style.filter = 'brightness(1)'; e.currentTarget.style.boxShadow = '0 0 20px rgba(118,39,239,0.3)' } }}
+          >
+            Continue to add-ons <ArrowRight size={14} />
+          </button>
+        </div>
       </div>
     </div>
   )
@@ -821,6 +983,7 @@ function StepAddons({ selectedAddons, onToggle, onContinue, onSkip, onBack }) {
         title="Add Optional Extras"
         description="Bolt on specific features or services to your setup. You can add as many as you need, or skip and continue to review."
       />
+      <WhatsDifferenceStrip activePage="addons" insideJourney={true} />
       {selectedAddons.length > 0 && (
         <div style={{
           background: 'rgba(118,39,239,0.06)', border: '1px solid rgba(118,39,239,0.2)',
@@ -918,7 +1081,7 @@ function StepAddons({ selectedAddons, onToggle, onContinue, onSkip, onBack }) {
   )
 }
 
-function ReviewRow({ label, value, onEdit, editLabel = 'Edit' }) {
+function ReviewRow({ label, value, onEdit, editLabel = 'Edit', placeholder = 'None selected' }) {
   return (
     <div style={{
       display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between',
@@ -930,7 +1093,7 @@ function ReviewRow({ label, value, onEdit, editLabel = 'Edit' }) {
           {label}
         </span>
         <span style={{ fontSize: 'var(--text-sm)', color: value ? 'var(--text-primary)' : 'var(--text-tertiary)', fontStyle: value ? 'normal' : 'italic' }}>
-          {value || 'None selected'}
+          {value || placeholder}
         </span>
       </div>
       <button
@@ -957,6 +1120,7 @@ function StepReview({ website, pkg, bundle, addons, oneOffItems, monthlyItems, q
         title="Review & Complete"
         description="Check your selections below, then proceed to checkout or request a quote."
       />
+      <WhatsDifferenceStrip activePage="quote" insideJourney={true} />
 
       {/* Summary */}
       <div style={{
@@ -971,6 +1135,7 @@ function StepReview({ website, pkg, bundle, addons, oneOffItems, monthlyItems, q
           value={website ? `${website.name} — ${website.price}${website.priceNote ? ' ' + website.priceNote : ''}` : null}
           onEdit={onEditWebsite}
           editLabel="Edit website"
+          placeholder="No website selected"
         />
         <ReviewRow
           label="Package"
@@ -1158,20 +1323,27 @@ function JourneyWizard() {
     window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' })
   }
 
+  // Website — select only, no auto-advance
   const toggleWebsite = (ws) => {
-    if (selectedWebsite?.id === ws.id) { setSelectedWebsite(null) }
-    else { setSelectedWebsite(ws); goToStep(1) }
+    setSelectedWebsite(prev => prev?.id === ws.id ? null : ws)
   }
+  const skipWebsite = () => { setSelectedWebsite(null); goToStep(1) }
+  const continueFromWebsite = () => goToStep(1)
+
+  // Package — select only, no auto-advance; allow replace by clicking another
   const togglePackage = (pkg) => {
-    if (selectedPackage?.id === pkg.id) { setSelectedPackage(null) }
-    else { setSelectedPackage(pkg); goToStep(2) }
+    setSelectedPackage(prev => prev?.id === pkg.id ? null : pkg)
   }
   const skipPackage = () => { setSelectedPackage(null); goToStep(2) }
+  const continueFromPackage = () => goToStep(2)
+
+  // Bundle — select only, no auto-advance; allow replace by clicking another
   const toggleBundle = (bundle) => {
-    if (selectedBundle?.id === bundle.id) { setSelectedBundle(null) }
-    else { setSelectedBundle(bundle); goToStep(3) }
+    setSelectedBundle(prev => prev?.id === bundle.id ? null : bundle)
   }
   const skipBundle = () => { setSelectedBundle(null); goToStep(3) }
+  const continueFromBundle = () => goToStep(3)
+
   const continueToReview = () => goToStep(4)
   const skipAddons = () => { setSelectedAddons([]); goToStep(4) }
 
@@ -1242,10 +1414,41 @@ function JourneyWizard() {
       <ProgressIndicator currentStep={step} onGoToStep={(s) => s < step && goToStep(s)} />
       <AnimatePresence mode="wait">
         <motion.div key={step} {...fade}>
-          {step === 0 && <StepWebsite onToggle={toggleWebsite} selected={selectedWebsite} />}
-          {step === 1 && <StepPackage onToggle={togglePackage} onSkip={skipPackage} onBack={() => goToStep(0)} selected={selectedPackage} />}
-          {step === 2 && <StepBundle onToggle={toggleBundle} onSkip={skipBundle} onBack={() => goToStep(1)} selected={selectedBundle} />}
-          {step === 3 && <StepAddons selectedAddons={selectedAddons} onToggle={toggleAddon} onContinue={continueToReview} onSkip={skipAddons} onBack={() => goToStep(2)} />}
+          {step === 0 && (
+            <StepWebsite
+              onToggle={toggleWebsite}
+              selected={selectedWebsite}
+              onSkip={skipWebsite}
+              onContinue={continueFromWebsite}
+            />
+          )}
+          {step === 1 && (
+            <StepPackage
+              onToggle={togglePackage}
+              onSkip={skipPackage}
+              onBack={() => goToStep(0)}
+              onContinue={continueFromPackage}
+              selected={selectedPackage}
+            />
+          )}
+          {step === 2 && (
+            <StepBundle
+              onToggle={toggleBundle}
+              onSkip={skipBundle}
+              onBack={() => goToStep(1)}
+              onContinue={continueFromBundle}
+              selected={selectedBundle}
+            />
+          )}
+          {step === 3 && (
+            <StepAddons
+              selectedAddons={selectedAddons}
+              onToggle={toggleAddon}
+              onContinue={continueToReview}
+              onSkip={skipAddons}
+              onBack={() => goToStep(2)}
+            />
+          )}
           {step === 4 && (
             <StepReview
               website={selectedWebsite}
