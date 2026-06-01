@@ -117,7 +117,7 @@ export default function Navbar() {
               {basketCount > 0 ? `Basket (${basketCount})` : 'Basket'}
             </Link>
 
-            {/* Choose Your Package */}
+            {/* Get a Quote Today */}
             <Link
               to="/quote"
               style={{

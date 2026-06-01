@@ -1,11 +1,14 @@
 import { Link, useLocation } from 'react-router-dom'
-import { Package, ShoppingCart, Mail } from 'lucide-react'
-import { useBasket } from '../context/BasketContext'
+import { Globe, FileText, Mail } from 'lucide-react'
 
 export default function MobileBottomBar() {
-  const { items } = useBasket()
   const { pathname } = useLocation()
-  const count = items.length
+
+  const items = [
+    { label: 'Websites',  icon: Globe,     href: '/websites' },
+    { label: 'Get Quote', icon: FileText,   href: '/quote' },
+    { label: 'Contact',   icon: Mail,       href: '/contact' },
+  ]
 
   return (
     <>
@@ -24,15 +27,11 @@ export default function MobileBottomBar() {
           borderTop: '1px solid var(--border-default)',
           backdropFilter: 'blur(12px)',
           WebkitBackdropFilter: 'blur(12px)',
-          paddingBottom: 'env(safe-area-inset-bottom)',
           display: 'flex',
+          paddingBottom: 'max(env(safe-area-inset-bottom), 8px)',
         }}
       >
-        {[
-          { label: 'Packages', icon: Package, href: '/packages' },
-          { label: count > 0 ? `Basket (${count})` : 'Basket', icon: ShoppingCart, href: '/order', highlight: count > 0 },
-          { label: 'Contact', icon: Mail, href: '/contact' },
-        ].map(({ label, icon: Icon, href, highlight }) => {
+        {items.map(({ label, icon: Icon, href }) => {
           const active = pathname === href
           return (
             <Link
@@ -47,28 +46,12 @@ export default function MobileBottomBar() {
                 gap: 4,
                 padding: 'var(--space-3) var(--space-2)',
                 textDecoration: 'none',
-                color: highlight
-                  ? 'var(--color-brand-400)'
-                  : active
-                  ? 'var(--text-primary)'
-                  : 'var(--text-tertiary)',
+                color: active ? 'var(--text-primary)' : 'var(--text-tertiary)',
                 transition: 'color 120ms ease',
-                position: 'relative',
               }}
             >
-              {highlight && (
-                <span style={{
-                  position: 'absolute',
-                  top: 6,
-                  right: '30%',
-                  width: 8,
-                  height: 8,
-                  borderRadius: '50%',
-                  background: 'var(--color-brand-500)',
-                }} />
-              )}
-              <Icon size={20} strokeWidth={active || highlight ? 2.2 : 1.8} />
-              <span style={{ fontSize: 'var(--text-xs)', fontWeight: active || highlight ? 600 : 400, lineHeight: 1 }}>
+              <Icon size={20} strokeWidth={active ? 2.2 : 1.8} />
+              <span style={{ fontSize: 'var(--text-xs)', fontWeight: active ? 600 : 400, lineHeight: 1 }}>
                 {label}
               </span>
             </Link>

@@ -12,47 +12,6 @@ export default function BasketPanel() {
 
   return (
     <>
-      {/* Floating trigger */}
-      <button
-        onClick={() => setOpen(true)}
-        style={{
-          position: 'fixed',
-          bottom: 'var(--space-8)',
-          right: 'var(--space-8)',
-          zIndex: 90,
-          height: 52,
-          padding: '0 var(--space-5)',
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: 'var(--space-2)',
-          fontSize: 'var(--text-sm)',
-          fontWeight: 600,
-          background: 'var(--color-brand-500)',
-          color: 'var(--color-neutral-0)',
-          border: '1px solid var(--color-brand-600)',
-          borderRadius: 'var(--radius-full)',
-          boxShadow: 'var(--shadow-xl)',
-          cursor: 'pointer',
-          transition: 'background 120ms ease, transform 80ms ease',
-          fontFamily: 'inherit',
-        }}
-        onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--color-brand-600)' }}
-        onMouseLeave={(e) => { e.currentTarget.style.background = 'var(--color-brand-500)' }}
-        onMouseDown={(e) => { e.currentTarget.style.transform = 'scale(0.97)' }}
-        onMouseUp={(e) => { e.currentTarget.style.transform = 'scale(1)' }}
-      >
-        <ShoppingCart size={16} />
-        View Basket
-        <span style={{
-          display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-          width: 20, height: 20, borderRadius: '50%',
-          background: 'var(--color-neutral-0)', color: 'var(--color-brand-600)',
-          fontSize: 'var(--text-xs)', fontWeight: 700,
-        }}>
-          {items.length}
-        </span>
-      </button>
-
       <AnimatePresence>
         {open && (
           <>

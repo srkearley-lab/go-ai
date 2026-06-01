@@ -106,18 +106,9 @@ export default function Footer() {
           <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)' }}>
             © {new Date().getFullYear()} GO AI. All rights reserved.
           </p>
-          <div style={{ display: 'flex', gap: 'var(--space-4)', alignItems: 'center' }}>
-            <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)' }}>
-              Built with AI. Powered by results.
-            </p>
-            <Link to="/control"
-              style={{ fontSize: 'var(--text-xs)', color: 'var(--text-disabled)', transition: 'color 120ms ease' }}
-              onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--text-tertiary)' }}
-              onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--text-disabled)' }}
-            >
-              Staff
-            </Link>
-          </div>
+          <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)' }}>
+            Built with AI. Powered by results.
+          </p>
         </div>
 
       </div>

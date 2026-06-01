@@ -350,48 +350,6 @@ export default function Contact() {
         </div>
       </section>
 
-      {/* ── Bottom strip ── */}
-      <section
-        style={{
-          padding: 'var(--space-12) var(--space-8)',
-          background: 'var(--surface-raised)',
-          borderTop: '1px solid var(--border-default)',
-        }}
-      >
-        <motion.div
-          initial={reduceMotion ? {} : { opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.2 }}
-          style={{
-            maxWidth: 'var(--width-xl)', margin: '0 auto',
-            display: 'flex', flexWrap: 'wrap', alignItems: 'center',
-            justifyContent: 'space-between', gap: 'var(--space-6)',
-          }}
-        >
-          <div>
-            <p style={{ fontSize: 'var(--text-sm)', fontWeight: 500, color: 'var(--text-primary)', marginBottom: 'var(--space-1)' }}>
-              GO AI
-            </p>
-            <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)' }}>
-              AI-powered websites and automation for businesses in Greece
-            </p>
-          </div>
-          <div style={{ display: 'flex', gap: 'var(--space-6)', flexWrap: 'wrap' }}>
-            {[
-              ['Websites live in 7 days', 'var(--color-brand-400)'],
-              ['Free plan included', 'var(--color-success)'],
-              ['WhatsApp-managed', 'var(--text-secondary)'],
-            ].map(([label, color]) => (
-              <span key={label} style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)' }}>
-                <span style={{ width: 6, height: 6, borderRadius: '50%', background: color, flexShrink: 0 }} />
-                {label}
-              </span>
-            ))}
-          </div>
-        </motion.div>
-      </section>
-
       <style>{`
         .contact-grid { grid-template-columns: 1fr 380px; }
         .faq-grid     { grid-template-columns: 280px 1fr; }
