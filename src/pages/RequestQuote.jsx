@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { Check, ChevronRight, Send, Upload, X as XIcon, ArrowRight } from 'lucide-react'
 import PageHero from '../components/PageHero'
@@ -917,6 +917,8 @@ function Confirmation({ reduceMotion }) {
 
 export default function RequestQuote() {
   const reduceMotion = useReducedMotion()
+  const location = useLocation()
+  const journeySummary = location.state?.journeySummary || null
   const [step, setStep] = useState(0)
   const [form, setForm] = useState(INIT)
   const [errors, setErrors] = useState({})
@@ -993,6 +995,25 @@ export default function RequestQuote() {
                 padding: 'var(--space-10)',
               }}
             >
+              {journeySummary && (
+                <div style={{
+                  background: 'rgba(118,39,239,0.06)',
+                  border: '1px solid rgba(118,39,239,0.2)',
+                  borderRadius: 'var(--radius-lg)',
+                  padding: 'var(--space-4) var(--space-5)',
+                  marginBottom: 'var(--space-8)',
+                  display: 'flex', flexDirection: 'column', gap: 'var(--space-2)',
+                }}>
+                  <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.05em', textTransform: 'uppercase', color: 'var(--goai-violet)', margin: 0 }}>
+                    Your journey selections
+                  </p>
+                  {journeySummary.website && <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', margin: 0 }}><strong style={{ color: 'var(--text-primary)' }}>Website:</strong> {journeySummary.website}</p>}
+                  {journeySummary.package && <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', margin: 0 }}><strong style={{ color: 'var(--text-primary)' }}>Package:</strong> {journeySummary.package}</p>}
+                  {journeySummary.bundle && <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', margin: 0 }}><strong style={{ color: 'var(--text-primary)' }}>Bundle:</strong> {journeySummary.bundle}</p>}
+                  {journeySummary.addons && <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', margin: 0 }}><strong style={{ color: 'var(--text-primary)' }}>Add-ons:</strong> {journeySummary.addons}</p>}
+                </div>
+              )}
+
               <ProgressBar current={step} />
 
               <AnimatePresence mode="wait">
