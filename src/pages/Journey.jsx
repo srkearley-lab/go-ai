@@ -587,14 +587,29 @@ function WebsiteSelectCard({ website, onToggle, isSelected }) {
 
 function PackageSelectCard({ pkg, onToggle, isSelected }) {
   const [showInfo, setShowInfo] = useState(false)
+  const [btnHover, setBtnHover] = useState(false)
+
+  const btnStyle = {
+    height: 36, padding: '0 var(--space-4)',
+    display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-2)',
+    fontSize: 'var(--text-xs)', fontWeight: 600,
+    borderRadius: 'var(--radius-md)', cursor: 'pointer',
+    transition: 'all 120ms ease', fontFamily: 'inherit',
+    ...(isSelected
+      ? (btnHover
+        ? { background: 'rgba(220,38,38,0.1)', color: '#dc2626', border: '1px solid rgba(220,38,38,0.3)', boxShadow: 'none' }
+        : { background: 'rgba(22,163,74,0.1)', color: 'var(--color-success)', border: '1px solid rgba(22,163,74,0.3)', boxShadow: 'none' })
+      : { background: 'linear-gradient(90deg, #293BFF 0%, #7627EF 100%)', color: '#FFFFFF', border: 'none', boxShadow: '0 0 16px rgba(118,39,239,0.3)' }),
+  }
+
   return (
     <div style={{
-      background: 'var(--surface-raised)',
-      border: `1px solid ${isSelected ? 'var(--color-success)' : 'var(--border-default)'}`,
+      background: isSelected ? 'rgba(118,39,239,0.04)' : 'var(--surface-raised)',
+      border: `1px solid ${isSelected ? 'var(--goai-violet)' : 'var(--border-default)'}`,
       borderRadius: 'var(--radius-lg)',
       padding: 'var(--space-5)',
       display: 'flex', flexDirection: 'column', gap: 'var(--space-3)',
-      transition: 'border-color 150ms ease, box-shadow 150ms ease',
+      transition: 'border-color 150ms ease, box-shadow 150ms ease, background 150ms ease',
     }}
       onMouseEnter={(e) => { if (!isSelected) { e.currentTarget.style.borderColor = 'var(--border-strong)'; e.currentTarget.style.boxShadow = 'var(--shadow-sm)' } }}
       onMouseLeave={(e) => { if (!isSelected) { e.currentTarget.style.borderColor = 'var(--border-default)'; e.currentTarget.style.boxShadow = 'none' } }}
@@ -639,11 +654,13 @@ function PackageSelectCard({ pkg, onToggle, isSelected }) {
         <button
           type="button"
           onClick={() => onToggle(pkg)}
-          style={isSelected ? { ...selectedBtn, height: 36, fontSize: 'var(--text-xs)' } : { ...primaryBtn, height: 36, fontSize: 'var(--text-xs)' }}
-          onMouseEnter={(e) => { if (!isSelected) { e.currentTarget.style.filter = 'brightness(1.1)' } }}
-          onMouseLeave={(e) => { if (!isSelected) { e.currentTarget.style.filter = 'brightness(1)' } }}
+          onMouseEnter={() => setBtnHover(true)}
+          onMouseLeave={() => setBtnHover(false)}
+          style={btnStyle}
         >
-          {isSelected ? <><Check size={11} strokeWidth={2.5} /> Selected</> : 'Select this package'}
+          {isSelected
+            ? (btnHover ? <><XIcon size={11} /> Remove</> : <><Check size={11} strokeWidth={2.5} /> Selected</>)
+            : 'Select this package'}
         </button>
         <ShowDetailsBtn open={showInfo} onToggle={() => setShowInfo(v => !v)} />
       </div>
@@ -653,7 +670,21 @@ function PackageSelectCard({ pkg, onToggle, isSelected }) {
 
 function BundleSelectCard({ bundle, onToggle, isSelected }) {
   const [showInfo, setShowInfo] = useState(false)
+  const [btnHover, setBtnHover] = useState(false)
   const hl = bundle.highlighted
+
+  const btnStyle = {
+    height: 40, padding: '0 var(--space-5)',
+    display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-2)',
+    fontSize: 'var(--text-sm)', fontWeight: 600,
+    borderRadius: 'var(--radius-md)', cursor: 'pointer',
+    transition: 'all 120ms ease', fontFamily: 'inherit', width: '100%',
+    ...(isSelected
+      ? (btnHover
+        ? { background: 'rgba(220,38,38,0.1)', color: '#dc2626', border: '1px solid rgba(220,38,38,0.3)', boxShadow: 'none' }
+        : { background: 'rgba(22,163,74,0.1)', color: 'var(--color-success)', border: '1px solid rgba(22,163,74,0.3)', boxShadow: 'none' })
+      : { background: 'linear-gradient(90deg, #293BFF 0%, #7627EF 100%)', color: '#FFFFFF', border: 'none', boxShadow: '0 0 20px rgba(118,39,239,0.3)' }),
+  }
   return (
     <div style={{
       background: hl ? 'var(--surface-overlay)' : 'var(--surface-raised)',
@@ -700,11 +731,13 @@ function BundleSelectCard({ bundle, onToggle, isSelected }) {
         <button
           type="button"
           onClick={() => onToggle(bundle)}
-          style={isSelected ? selectedBtn : primaryBtn}
-          onMouseEnter={(e) => { if (!isSelected) { e.currentTarget.style.filter = 'brightness(1.1)'; e.currentTarget.style.boxShadow = '0 0 30px rgba(118,39,239,0.45)' } }}
-          onMouseLeave={(e) => { if (!isSelected) { e.currentTarget.style.filter = 'brightness(1)'; e.currentTarget.style.boxShadow = '0 0 20px rgba(118,39,239,0.3)' } }}
+          onMouseEnter={() => setBtnHover(true)}
+          onMouseLeave={() => setBtnHover(false)}
+          style={btnStyle}
         >
-          {isSelected ? <><Check size={13} strokeWidth={2.5} /> Selected</> : 'Add this bundle'}
+          {isSelected
+            ? (btnHover ? <><XIcon size={13} /> Remove</> : <><Check size={13} strokeWidth={2.5} /> Selected</>)
+            : 'Add this bundle'}
         </button>
         <ShowDetailsBtn open={showInfo} onToggle={() => setShowInfo(v => !v)} />
       </div>
@@ -865,7 +898,7 @@ function StepWebsite({ onToggle, selected, onSkip, onContinue }) {
   )
 }
 
-function StepPackage({ onToggle, onSkip, onBack, onContinue, selected }) {
+function StepPackage({ onToggle, onSkip, onBack, onContinue, selectedItems }) {
   const t = useTranslations()
   return (
     <div>
@@ -875,9 +908,38 @@ function StepPackage({ onToggle, onSkip, onBack, onContinue, selected }) {
         description={t.journey.steps.package.desc}
       />
       <WhatsDifferenceStrip activePage="packages" insideJourney={true} />
+      {selectedItems.length > 0 && (
+        <div style={{
+          background: 'rgba(118,39,239,0.06)', border: '1px solid rgba(118,39,239,0.2)',
+          borderRadius: 'var(--radius-lg)', padding: 'var(--space-4) var(--space-5)',
+          marginBottom: 'var(--space-6)',
+          display: 'flex', flexWrap: 'wrap', gap: 'var(--space-2)', alignItems: 'center',
+        }}>
+          <span style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--goai-violet)', flexShrink: 0 }}>
+            {t.labels.added}
+          </span>
+          {selectedItems.map(p => (
+            <span key={p.id} style={{
+              display: 'inline-flex', alignItems: 'center', gap: 'var(--space-1)',
+              fontSize: 'var(--text-xs)', color: 'var(--text-primary)',
+              background: 'var(--surface-overlay)', border: '1px solid var(--border-strong)',
+              borderRadius: 'var(--radius-full)', padding: '2px var(--space-3)',
+            }}>
+              {p.name}
+              <button
+                type="button"
+                onClick={() => onToggle(p)}
+                style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-tertiary)', display: 'flex', padding: 1, lineHeight: 0 }}
+              >
+                <XIcon size={10} />
+              </button>
+            </span>
+          ))}
+        </div>
+      )}
       <div className="journey-package-grid">
         {PACKAGES.map(pkg => (
-          <PackageSelectCard key={pkg.id} pkg={pkg} onToggle={onToggle} isSelected={selected?.id === pkg.id} />
+          <PackageSelectCard key={pkg.id} pkg={pkg} onToggle={onToggle} isSelected={selectedItems.some(p => p.id === pkg.id)} />
         ))}
       </div>
       <div style={{
@@ -894,26 +956,21 @@ function StepPackage({ onToggle, onSkip, onBack, onContinue, selected }) {
           {t.buttons.back}
         </button>
         <div style={{ display: 'flex', gap: 'var(--space-3)', alignItems: 'center', flexWrap: 'wrap' }}>
-          <button
-            type="button" onClick={onSkip} style={secondaryBtn}
-            onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--surface-subtle)' }}
-            onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent' }}
-          >
-            {t.buttons.skipStep}
-          </button>
+          {selectedItems.length === 0 && (
+            <button
+              type="button" onClick={onSkip} style={secondaryBtn}
+              onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--surface-subtle)' }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent' }}
+            >
+              {t.buttons.skipStep}
+            </button>
+          )}
           <button
             type="button"
             onClick={onContinue}
-            disabled={!selected}
-            style={{
-              ...primaryBtn,
-              width: 'auto',
-              opacity: selected ? 1 : 0.45,
-              cursor: selected ? 'pointer' : 'not-allowed',
-              boxShadow: selected ? '0 0 20px rgba(118,39,239,0.3)' : 'none',
-            }}
-            onMouseEnter={(e) => { if (selected) { e.currentTarget.style.filter = 'brightness(1.1)'; e.currentTarget.style.boxShadow = '0 0 30px rgba(118,39,239,0.45)' } }}
-            onMouseLeave={(e) => { if (selected) { e.currentTarget.style.filter = 'brightness(1)'; e.currentTarget.style.boxShadow = '0 0 20px rgba(118,39,239,0.3)' } }}
+            style={{ ...primaryBtn, width: 'auto' }}
+            onMouseEnter={(e) => { e.currentTarget.style.filter = 'brightness(1.1)'; e.currentTarget.style.boxShadow = '0 0 30px rgba(118,39,239,0.45)' }}
+            onMouseLeave={(e) => { e.currentTarget.style.filter = 'brightness(1)'; e.currentTarget.style.boxShadow = '0 0 20px rgba(118,39,239,0.3)' }}
           >
             {t.buttons.continueToBundles} <ArrowRight size={14} />
           </button>
@@ -923,7 +980,7 @@ function StepPackage({ onToggle, onSkip, onBack, onContinue, selected }) {
   )
 }
 
-function StepBundle({ onToggle, onSkip, onBack, onContinue, selected }) {
+function StepBundle({ onToggle, onSkip, onBack, onContinue, selectedItems }) {
   const t = useTranslations()
   return (
     <div>
@@ -933,9 +990,38 @@ function StepBundle({ onToggle, onSkip, onBack, onContinue, selected }) {
         description={t.journey.steps.bundle.desc}
       />
       <WhatsDifferenceStrip activePage="bundles" insideJourney={true} />
+      {selectedItems.length > 0 && (
+        <div style={{
+          background: 'rgba(118,39,239,0.06)', border: '1px solid rgba(118,39,239,0.2)',
+          borderRadius: 'var(--radius-lg)', padding: 'var(--space-4) var(--space-5)',
+          marginBottom: 'var(--space-6)',
+          display: 'flex', flexWrap: 'wrap', gap: 'var(--space-2)', alignItems: 'center',
+        }}>
+          <span style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--goai-violet)', flexShrink: 0 }}>
+            {t.labels.added}
+          </span>
+          {selectedItems.map(b => (
+            <span key={b.id} style={{
+              display: 'inline-flex', alignItems: 'center', gap: 'var(--space-1)',
+              fontSize: 'var(--text-xs)', color: 'var(--text-primary)',
+              background: 'var(--surface-overlay)', border: '1px solid var(--border-strong)',
+              borderRadius: 'var(--radius-full)', padding: '2px var(--space-3)',
+            }}>
+              {b.name}
+              <button
+                type="button"
+                onClick={() => onToggle(b)}
+                style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-tertiary)', display: 'flex', padding: 1, lineHeight: 0 }}
+              >
+                <XIcon size={10} />
+              </button>
+            </span>
+          ))}
+        </div>
+      )}
       <div className="journey-bundle-grid">
         {BUNDLES.map(bundle => (
-          <BundleSelectCard key={bundle.id} bundle={bundle} onToggle={onToggle} isSelected={selected?.id === bundle.id} />
+          <BundleSelectCard key={bundle.id} bundle={bundle} onToggle={onToggle} isSelected={selectedItems.some(b => b.id === bundle.id)} />
         ))}
       </div>
       <div style={{
@@ -952,26 +1038,21 @@ function StepBundle({ onToggle, onSkip, onBack, onContinue, selected }) {
           {t.buttons.back}
         </button>
         <div style={{ display: 'flex', gap: 'var(--space-3)', alignItems: 'center', flexWrap: 'wrap' }}>
-          <button
-            type="button" onClick={onSkip} style={secondaryBtn}
-            onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--surface-subtle)' }}
-            onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent' }}
-          >
-            {t.buttons.skipStep}
-          </button>
+          {selectedItems.length === 0 && (
+            <button
+              type="button" onClick={onSkip} style={secondaryBtn}
+              onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--surface-subtle)' }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent' }}
+            >
+              {t.buttons.skipStep}
+            </button>
+          )}
           <button
             type="button"
             onClick={onContinue}
-            disabled={!selected}
-            style={{
-              ...primaryBtn,
-              width: 'auto',
-              opacity: selected ? 1 : 0.45,
-              cursor: selected ? 'pointer' : 'not-allowed',
-              boxShadow: selected ? '0 0 20px rgba(118,39,239,0.3)' : 'none',
-            }}
-            onMouseEnter={(e) => { if (selected) { e.currentTarget.style.filter = 'brightness(1.1)'; e.currentTarget.style.boxShadow = '0 0 30px rgba(118,39,239,0.45)' } }}
-            onMouseLeave={(e) => { if (selected) { e.currentTarget.style.filter = 'brightness(1)'; e.currentTarget.style.boxShadow = '0 0 20px rgba(118,39,239,0.3)' } }}
+            style={{ ...primaryBtn, width: 'auto' }}
+            onMouseEnter={(e) => { e.currentTarget.style.filter = 'brightness(1.1)'; e.currentTarget.style.boxShadow = '0 0 30px rgba(118,39,239,0.45)' }}
+            onMouseLeave={(e) => { e.currentTarget.style.filter = 'brightness(1)'; e.currentTarget.style.boxShadow = '0 0 20px rgba(118,39,239,0.3)' }}
           >
             {t.buttons.continueToAddons} <ArrowRight size={14} />
           </button>
@@ -1129,7 +1210,7 @@ function ReviewRow({ label, value, lines, onEdit, editLabel = 'Edit', placeholde
   )
 }
 
-function StepReview({ website, pkg, bundle, addons, oneOffItems, monthlyItems, quoteItems, oneOffTotal, monthlyTotal, hasQuoteItems, hasFixedItems, onEditWebsite, onEditPackage, onEditBundle, onEditAddons, onPaySecurely, onRequestProposal, onBack }) {
+function StepReview({ website, packages, bundles, addons, oneOffItems, monthlyItems, quoteItems, oneOffTotal, monthlyTotal, hasQuoteItems, hasFixedItems, onEditWebsite, onEditPackage, onEditBundle, onEditAddons, onPaySecurely, onRequestProposal, onBack }) {
   const t = useTranslations()
   const rv = t.journey.reviewRows
   return (
@@ -1158,14 +1239,22 @@ function StepReview({ website, pkg, bundle, addons, oneOffItems, monthlyItems, q
         />
         <ReviewRow
           label={rv.packageLabel}
-          value={pkg ? `${pkg.name} — ${pkg.price}${pkg.priceNote ? ' ' + pkg.priceNote : ''}` : null}
+          lines={packages.length ? packages.map(p =>
+            p.isQuote
+              ? `${p.name} — ${rv.quoteRequired}`
+              : `${p.name} — ${p.price}${p.priceNote ? ' ' + p.priceNote : ''}`
+          ) : undefined}
           onEdit={onEditPackage}
           editLabel={rv.editPackage}
           placeholder={rv.noPackage}
         />
         <ReviewRow
           label={rv.bundleLabel}
-          value={bundle ? `${bundle.name} — ${bundle.price}${bundle.priceNote}` : null}
+          lines={bundles.length ? bundles.map(b =>
+            b.isQuote
+              ? `${b.name} — ${rv.quoteRequired}`
+              : `${b.name} — ${b.price}${b.priceNote ? ' ' + b.priceNote : ''}`
+          ) : undefined}
           onEdit={onEditBundle}
           editLabel={rv.editBundle}
           placeholder={rv.noBundle}
@@ -1622,8 +1711,8 @@ function JourneyWizard() {
   const reduceMotion = useReducedMotion()
   const [step, setStep] = useState(0)
   const [selectedWebsite, setSelectedWebsite] = useState(null)
-  const [selectedPackage, setSelectedPackage] = useState(null)
-  const [selectedBundle, setSelectedBundle] = useState(null)
+  const [selectedPackages, setSelectedPackages] = useState([])
+  const [selectedBundles, setSelectedBundles] = useState([])
   const [selectedAddons, setSelectedAddons] = useState([])
 
   const goToStep = (s) => {
@@ -1638,18 +1727,26 @@ function JourneyWizard() {
   const skipWebsite = () => { setSelectedWebsite(null); goToStep(1) }
   const continueFromWebsite = () => goToStep(1)
 
-  // Package — select only, no auto-advance; allow replace by clicking another
+  // Packages — multi-select, no auto-advance
   const togglePackage = (pkg) => {
-    setSelectedPackage(prev => prev?.id === pkg.id ? null : pkg)
+    setSelectedPackages(prev =>
+      prev.find(p => p.id === pkg.id)
+        ? prev.filter(p => p.id !== pkg.id)
+        : [...prev, pkg]
+    )
   }
-  const skipPackage = () => { setSelectedPackage(null); goToStep(2) }
+  const skipPackage = () => { setSelectedPackages([]); goToStep(2) }
   const continueFromPackage = () => goToStep(2)
 
-  // Bundle — select only, no auto-advance; allow replace by clicking another
+  // Bundles — multi-select, no auto-advance
   const toggleBundle = (bundle) => {
-    setSelectedBundle(prev => prev?.id === bundle.id ? null : bundle)
+    setSelectedBundles(prev =>
+      prev.find(b => b.id === bundle.id)
+        ? prev.filter(b => b.id !== bundle.id)
+        : [...prev, bundle]
+    )
   }
-  const skipBundle = () => { setSelectedBundle(null); goToStep(3) }
+  const skipBundle = () => { setSelectedBundles([]); goToStep(3) }
   const continueFromBundle = () => goToStep(3)
 
   const continueToReview = () => goToStep(4)
@@ -1665,20 +1762,21 @@ function JourneyWizard() {
 
   const oneOffItems = [
     selectedWebsite && !selectedWebsite.isQuote ? { name: selectedWebsite.name, amount: selectedWebsite.oneOff } : null,
-    selectedPackage && !selectedPackage.isQuote && selectedPackage.oneOff > 0 ? { name: `${selectedPackage.name} (setup)`, amount: selectedPackage.oneOff } : null,
+    ...selectedPackages.filter(p => !p.isQuote && p.oneOff > 0).map(p => ({ name: p.oneOff > 0 && p.monthly > 0 ? `${p.name} (setup)` : p.name, amount: p.oneOff })),
+    ...selectedBundles.filter(b => !b.isQuote && b.oneOff > 0).map(b => ({ name: `${b.name} (setup)`, amount: b.oneOff })),
     ...selectedAddons.filter(a => !a.isQuote && a.oneOff > 0).map(a => ({ name: a.name, amount: a.oneOff })),
   ].filter(Boolean)
 
   const monthlyItems = [
-    selectedPackage && !selectedPackage.isQuote && selectedPackage.monthly > 0 ? { name: selectedPackage.name, amount: selectedPackage.monthly } : null,
-    selectedBundle && !selectedBundle.isQuote ? { name: selectedBundle.name, amount: selectedBundle.monthly } : null,
+    ...selectedPackages.filter(p => !p.isQuote && p.monthly > 0).map(p => ({ name: p.name, amount: p.monthly })),
+    ...selectedBundles.filter(b => !b.isQuote).map(b => ({ name: b.name, amount: b.monthly })),
     ...selectedAddons.filter(a => !a.isQuote && a.monthly > 0).map(a => ({ name: a.name, amount: a.monthly })),
   ].filter(Boolean)
 
   const quoteItems = [
     selectedWebsite?.isQuote ? selectedWebsite.name : null,
-    selectedPackage?.isQuote ? selectedPackage.name : null,
-    selectedBundle?.isQuote ? selectedBundle.name : null,
+    ...selectedPackages.filter(p => p.isQuote).map(p => p.name),
+    ...selectedBundles.filter(b => b.isQuote).map(b => b.name),
     ...selectedAddons.filter(a => a.isQuote).map(a => a.name),
   ].filter(Boolean)
 
@@ -1691,10 +1789,10 @@ function JourneyWizard() {
 
   const handleRequestQuote = () => {
     const summary = {
-      website: selectedWebsite ? `${selectedWebsite.name} — ${selectedWebsite.price}${selectedWebsite.priceNote ? ' ' + selectedWebsite.priceNote : ''}` : null,
-      package: selectedPackage ? `${selectedPackage.name} — ${selectedPackage.price}${selectedPackage.priceNote ? ' ' + selectedPackage.priceNote : ''}` : null,
-      bundle: selectedBundle ? `${selectedBundle.name} — ${selectedBundle.price}${selectedBundle.priceNote}` : null,
-      addons: selectedAddons.length ? selectedAddons.map(a => `${a.name} (${a.price})`).join(', ') : null,
+      website:  selectedWebsite ? `${selectedWebsite.name} — ${selectedWebsite.price}${selectedWebsite.priceNote ? ' ' + selectedWebsite.priceNote : ''}` : null,
+      packages: selectedPackages.length ? selectedPackages.map(p => `${p.name} — ${p.price}${p.priceNote ? ' ' + p.priceNote : ''}`).join(', ') : null,
+      bundles:  selectedBundles.length ? selectedBundles.map(b => `${b.name} — ${b.price}${b.priceNote ? ' ' + b.priceNote : ''}`).join(', ') : null,
+      addons:   selectedAddons.length ? selectedAddons.map(a => `${a.name} (${a.price})`).join(', ') : null,
     }
     navigate('/request-quote', { state: { journeySummary: summary } })
   }
@@ -1722,7 +1820,7 @@ function JourneyWizard() {
               onSkip={skipPackage}
               onBack={() => goToStep(0)}
               onContinue={continueFromPackage}
-              selected={selectedPackage}
+              selectedItems={selectedPackages}
             />
           )}
           {step === 2 && (
@@ -1731,7 +1829,7 @@ function JourneyWizard() {
               onSkip={skipBundle}
               onBack={() => goToStep(1)}
               onContinue={continueFromBundle}
-              selected={selectedBundle}
+              selectedItems={selectedBundles}
             />
           )}
           {step === 3 && (
@@ -1746,8 +1844,8 @@ function JourneyWizard() {
           {step === 4 && (
             <StepReview
               website={selectedWebsite}
-              pkg={selectedPackage}
-              bundle={selectedBundle}
+              packages={selectedPackages}
+              bundles={selectedBundles}
               addons={selectedAddons}
               oneOffItems={oneOffItems}
               monthlyItems={monthlyItems}

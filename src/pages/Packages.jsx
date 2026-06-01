@@ -357,23 +357,6 @@ export default function Packages() {
       <section style={{ padding: 'var(--space-16) var(--space-8)', background: 'var(--surface-base)' }}>
         <div style={{ maxWidth: 'var(--width-xl)', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'var(--space-10)' }}>
 
-          {/* Packages vs Add-ons clarity */}
-          <div style={{
-            background: 'var(--surface-raised)',
-            border: '1px solid var(--goai-violet)',
-            borderLeft: '3px solid var(--goai-violet)',
-            borderRadius: 'var(--radius-lg)',
-            padding: 'var(--space-5) var(--space-6)',
-            display: 'flex', flexDirection: 'column', gap: 'var(--space-2)',
-          }}>
-            <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--goai-violet)', margin: 0 }}>
-              Packages vs Add-ons
-            </p>
-            <p style={{ fontSize: 'var(--text-sm)', lineHeight: 1.7, color: 'var(--text-secondary)', margin: 0 }}>
-              Packages are fixed-price website and service options with a clear scope. If you only need a smaller extra — such as hosting care, extra storage, forms, tracking, WhatsApp setup, or content support — <Link to="/addons" style={{ color: 'var(--goai-violet)', fontWeight: 500 }}>visit Add-ons</Link>.
-            </p>
-          </div>
-
           <motion.div
             variants={stagger}
             initial="hidden"
