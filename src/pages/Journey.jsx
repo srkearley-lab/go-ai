@@ -918,7 +918,7 @@ function StepAddons({ selectedAddons, onToggle, onContinue, onSkip, onBack }) {
   )
 }
 
-function ReviewRow({ label, value, onEdit }) {
+function ReviewRow({ label, value, onEdit, editLabel = 'Edit' }) {
   return (
     <div style={{
       display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between',
@@ -943,7 +943,7 @@ function ReviewRow({ label, value, onEdit }) {
         onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--text-primary)'; e.currentTarget.style.borderColor = 'var(--border-strong)' }}
         onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--text-secondary)'; e.currentTarget.style.borderColor = 'var(--border-default)' }}
       >
-        <Pencil size={10} /> Edit
+        <Pencil size={10} /> {editLabel}
       </button>
     </div>
   )
@@ -970,21 +970,29 @@ function StepReview({ website, pkg, bundle, addons, oneOffItems, monthlyItems, q
           label="Website"
           value={website ? `${website.name} — ${website.price}${website.priceNote ? ' ' + website.priceNote : ''}` : null}
           onEdit={onEditWebsite}
+          editLabel="Edit website"
         />
         <ReviewRow
           label="Package"
           value={pkg ? `${pkg.name} — ${pkg.price}${pkg.priceNote ? ' ' + pkg.priceNote : ''}` : null}
           onEdit={onEditPackage}
+          editLabel="Edit package"
         />
         <ReviewRow
           label="Monthly bundle"
           value={bundle ? `${bundle.name} — ${bundle.price}${bundle.priceNote}` : null}
           onEdit={onEditBundle}
+          editLabel="Edit bundle"
         />
         <ReviewRow
           label="Add-ons"
-          value={addons.length ? addons.map(a => `${a.name} (${a.price}${a.priceNote ? ' ' + a.priceNote : ''})`).join(', ') : null}
+          value={addons.length ? addons.map(a =>
+            a.isQuote
+              ? `${a.name} — Quote requested`
+              : `${a.name} (${a.price}${a.priceNote ? ' ' + a.priceNote : ''})`
+          ).join(', ') : null}
           onEdit={onEditAddons}
+          editLabel="Edit add-ons"
         />
       </div>
 
@@ -1043,12 +1051,20 @@ function StepReview({ website, pkg, bundle, addons, oneOffItems, monthlyItems, q
           background: 'rgba(245,158,11,0.06)', border: '1px solid rgba(245,158,11,0.2)',
           borderRadius: 'var(--radius-lg)', padding: 'var(--space-4) var(--space-5)',
           marginBottom: 'var(--space-6)',
+          display: 'flex', flexDirection: 'column', gap: 'var(--space-2)',
         }}>
-          <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--color-accent-500)', marginBottom: 'var(--space-1)' }}>
+          <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--color-accent-500)', margin: 0 }}>
             Items requiring a quote
           </p>
-          <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
-            {quoteItems.join(', ')}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-1)' }}>
+            {quoteItems.map(name => (
+              <p key={name} style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', lineHeight: 1.5, margin: 0 }}>
+                {name} — <span style={{ color: 'var(--color-accent-500)', fontWeight: 500 }}>Quote requested</span>
+              </p>
+            ))}
+          </div>
+          <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', fontStyle: 'italic', margin: 0 }}>
+            Quote items will be confirmed after submission.
           </p>
         </div>
       )}

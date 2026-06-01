@@ -412,7 +412,7 @@ function AddonCard({ addon, variants }) {
 
         {addon.cta === 'quote' && (
           <Link
-            to="/quote"
+            to="/request-quote"
             style={{
               height: 36, padding: '0 var(--space-4)',
               display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-2)',
@@ -522,7 +522,7 @@ export default function Addons() {
           </div>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-3)', justifyContent: 'center' }}>
             <Link
-              to="/quote"
+              to="/request-quote"
               style={{
                 height: 44, padding: '0 var(--space-6)',
                 display: 'inline-flex', alignItems: 'center',
