@@ -56,8 +56,9 @@ export default function Footer() {
               ['/packages',  'Packages'],
               ['/bundles',   'Bundles'],
               ['/addons',    'Add-ons'],
-              ['/journey',   'Start Your Journey'],
-              ['/portfolio', 'Portfolio'],
+              ['/journey',                       'Start Your Journey'],
+              ['/journey#whats-the-difference', "What's the Difference?"],
+              ['/portfolio',                    'Portfolio'],
               ['/faq',       'FAQ'],
               ['/contact',   'Contact Us'],
             ].map(([href, label]) => (

@@ -6,13 +6,14 @@ import { GoAILogo } from './GoAILogo'
 import { useBasket } from '../context/BasketContext'
 
 const navLinks = [
-  { label: 'Websites',  href: '/websites' },
-  { label: 'Packages',  href: '/packages' },
-  { label: 'Bundles',   href: '/bundles' },
-  { label: 'Add-ons',   href: '/addons' },
-  { label: 'Portfolio', href: '/portfolio' },
-  { label: 'FAQ',       href: '/faq' },
-  { label: 'Contact',   href: '/contact' },
+  { label: 'Websites',             href: '/websites' },
+  { label: 'Packages',             href: '/packages' },
+  { label: 'Bundles',              href: '/bundles' },
+  { label: 'Add-ons',              href: '/addons' },
+  { label: "What's the Difference?", href: '/journey#whats-the-difference' },
+  { label: 'Portfolio',            href: '/portfolio' },
+  { label: 'FAQ',                  href: '/faq' },
+  { label: 'Contact',              href: '/contact' },
 ]
 
 export default function Navbar() {
@@ -31,7 +32,7 @@ export default function Navbar() {
 
   useEffect(() => { setMenuOpen(false) }, [location])
 
-  const isActive = (href) => location.pathname === href
+  const isActive = (href) => location.pathname === href.split('#')[0]
 
   return (
     <>
