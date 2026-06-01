@@ -391,11 +391,33 @@ const selectedBtn = {
 }
 
 const ghostBtn = {
-  height: 36, padding: '0 var(--space-4)',
+  height: 28, padding: '0 var(--space-3)',
   display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-2)',
-  fontSize: 'var(--text-xs)', fontWeight: 500,
+  fontSize: '0.65rem', fontWeight: 500,
   background: 'transparent', color: 'var(--text-secondary)',
   border: '1px solid var(--border-default)',
+  borderRadius: 'var(--radius-md)',
+  cursor: 'pointer', transition: 'all 120ms ease',
+  fontFamily: 'inherit',
+}
+
+const backBtn = {
+  height: 40, padding: '0 var(--space-5)',
+  display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-2)',
+  fontSize: 'var(--text-sm)', fontWeight: 500,
+  background: 'transparent', color: 'var(--text-secondary)',
+  border: '1px solid var(--border-default)',
+  borderRadius: 'var(--radius-md)',
+  cursor: 'pointer', transition: 'all 120ms ease',
+  fontFamily: 'inherit',
+}
+
+const secondaryBtn = {
+  height: 40, padding: '0 var(--space-5)',
+  display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-2)',
+  fontSize: 'var(--text-sm)', fontWeight: 500,
+  background: 'transparent', color: 'var(--text-primary)',
+  border: '1px solid var(--border-strong)',
   borderRadius: 'var(--radius-md)',
   cursor: 'pointer', transition: 'all 120ms ease',
   fontFamily: 'inherit',
@@ -446,7 +468,7 @@ function ProgressIndicator({ currentStep, onGoToStep }) {
 
 // ─── Selection cards ────────────────────────────────────────────────────────────
 
-function WebsiteSelectCard({ website, onSelect, isSelected }) {
+function WebsiteSelectCard({ website, onToggle, isSelected }) {
   const hl = website.highlighted
   return (
     <div style={{
@@ -484,7 +506,7 @@ function WebsiteSelectCard({ website, onSelect, isSelected }) {
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2)', marginTop: 'auto' }}>
         <button
           type="button"
-          onClick={() => onSelect(website)}
+          onClick={() => onToggle(website)}
           style={isSelected ? selectedBtn : primaryBtn}
           onMouseEnter={(e) => { if (!isSelected) { e.currentTarget.style.filter = 'brightness(1.1)'; e.currentTarget.style.boxShadow = '0 0 30px rgba(118,39,239,0.45)' } }}
           onMouseLeave={(e) => { if (!isSelected) { e.currentTarget.style.filter = 'brightness(1)'; e.currentTarget.style.boxShadow = '0 0 20px rgba(118,39,239,0.3)' } }}
@@ -502,7 +524,7 @@ function WebsiteSelectCard({ website, onSelect, isSelected }) {
   )
 }
 
-function PackageSelectCard({ pkg, onSelect, isSelected }) {
+function PackageSelectCard({ pkg, onToggle, isSelected }) {
   return (
     <div style={{
       background: 'var(--surface-raised)',
@@ -541,7 +563,7 @@ function PackageSelectCard({ pkg, onSelect, isSelected }) {
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2)', marginTop: 'auto', paddingTop: 'var(--space-1)' }}>
         <button
           type="button"
-          onClick={() => onSelect(pkg)}
+          onClick={() => onToggle(pkg)}
           style={isSelected ? { ...selectedBtn, height: 36, fontSize: 'var(--text-xs)' } : { ...primaryBtn, height: 36, fontSize: 'var(--text-xs)' }}
           onMouseEnter={(e) => { if (!isSelected) { e.currentTarget.style.filter = 'brightness(1.1)' } }}
           onMouseLeave={(e) => { if (!isSelected) { e.currentTarget.style.filter = 'brightness(1)' } }}
@@ -559,7 +581,7 @@ function PackageSelectCard({ pkg, onSelect, isSelected }) {
   )
 }
 
-function BundleSelectCard({ bundle, onSelect, isSelected }) {
+function BundleSelectCard({ bundle, onToggle, isSelected }) {
   const hl = bundle.highlighted
   return (
     <div style={{
@@ -593,7 +615,7 @@ function BundleSelectCard({ bundle, onSelect, isSelected }) {
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2)', marginTop: 'auto' }}>
         <button
           type="button"
-          onClick={() => onSelect(bundle)}
+          onClick={() => onToggle(bundle)}
           style={isSelected ? selectedBtn : primaryBtn}
           onMouseEnter={(e) => { if (!isSelected) { e.currentTarget.style.filter = 'brightness(1.1)'; e.currentTarget.style.boxShadow = '0 0 30px rgba(118,39,239,0.45)' } }}
           onMouseLeave={(e) => { if (!isSelected) { e.currentTarget.style.filter = 'brightness(1)'; e.currentTarget.style.boxShadow = '0 0 20px rgba(118,39,239,0.3)' } }}
@@ -646,41 +668,27 @@ function AddonSelectCard({ addon, isSelected, onToggle }) {
         </ul>
       )}
       <div style={{ marginTop: 'auto', paddingTop: 'var(--space-1)' }}>
-        {addon.isQuote ? (
-          <Link
-            to="/request-quote"
-            style={{
-              height: 34, padding: '0 var(--space-4)',
-              display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-2)',
-              fontSize: 'var(--text-xs)', fontWeight: 600,
-              background: 'linear-gradient(90deg, #293BFF 0%, #7627EF 100%)',
-              color: '#FFFFFF', border: 'none', borderRadius: 'var(--radius-md)',
-              boxShadow: '0 0 16px rgba(118,39,239,0.3)',
-              transition: 'filter 120ms ease', textDecoration: 'none',
-            }}
-            onMouseEnter={(e) => { e.currentTarget.style.filter = 'brightness(1.1)' }}
-            onMouseLeave={(e) => { e.currentTarget.style.filter = 'brightness(1)' }}
-          >
-            Request a Quote
-          </Link>
-        ) : (
-          <button
-            type="button"
-            onClick={() => onToggle(addon)}
-            style={{
-              height: 34, padding: '0 var(--space-4)',
-              display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-2)',
-              fontSize: 'var(--text-xs)', fontWeight: 600,
-              background: isSelected ? 'rgba(22,163,74,0.1)' : 'transparent',
-              color: isSelected ? 'var(--color-success)' : 'var(--text-secondary)',
-              border: `1px solid ${isSelected ? 'rgba(22,163,74,0.3)' : 'var(--border-default)'}`,
-              borderRadius: 'var(--radius-md)', cursor: 'pointer',
-              transition: 'all 120ms ease', fontFamily: 'inherit',
-            }}
-          >
-            {isSelected ? <><Check size={11} strokeWidth={3} /> Remove</> : 'Add this extra'}
-          </button>
-        )}
+        <button
+          type="button"
+          onClick={() => onToggle(addon)}
+          style={{
+            height: 36, padding: '0 var(--space-4)',
+            display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-2)',
+            fontSize: 'var(--text-xs)', fontWeight: 600,
+            background: isSelected ? 'rgba(22,163,74,0.1)' : 'linear-gradient(90deg, #293BFF 0%, #7627EF 100%)',
+            color: isSelected ? 'var(--color-success)' : '#FFFFFF',
+            border: isSelected ? '1px solid rgba(22,163,74,0.3)' : 'none',
+            borderRadius: 'var(--radius-md)', cursor: 'pointer',
+            boxShadow: isSelected ? 'none' : '0 0 16px rgba(118,39,239,0.3)',
+            transition: 'all 120ms ease', fontFamily: 'inherit',
+          }}
+          onMouseEnter={(e) => { if (!isSelected) e.currentTarget.style.filter = 'brightness(1.1)' }}
+          onMouseLeave={(e) => { if (!isSelected) e.currentTarget.style.filter = 'brightness(1)' }}
+        >
+          {isSelected
+            ? <><Check size={11} strokeWidth={3} /> {addon.isQuote ? 'Quote added' : 'Added'}</>
+            : addon.isQuote ? 'Request a quote' : 'Add this add-on'}
+        </button>
       </div>
     </div>
   )
@@ -706,7 +714,7 @@ function StepHeader({ stepNum, title, description }) {
   )
 }
 
-function StepWebsite({ onSelect, selected }) {
+function StepWebsite({ onToggle, selected }) {
   return (
     <div>
       <StepHeader
@@ -716,14 +724,14 @@ function StepWebsite({ onSelect, selected }) {
       />
       <div className="journey-website-grid">
         {WEBSITES.map(ws => (
-          <WebsiteSelectCard key={ws.id} website={ws} onSelect={onSelect} isSelected={selected?.id === ws.id} />
+          <WebsiteSelectCard key={ws.id} website={ws} onToggle={onToggle} isSelected={selected?.id === ws.id} />
         ))}
       </div>
     </div>
   )
 }
 
-function StepPackage({ onSelect, onSkip, selected }) {
+function StepPackage({ onToggle, onSkip, onBack, selected }) {
   return (
     <div>
       <StepHeader
@@ -733,28 +741,40 @@ function StepPackage({ onSelect, onSkip, selected }) {
       />
       <div className="journey-package-grid">
         {PACKAGES.map(pkg => (
-          <PackageSelectCard key={pkg.id} pkg={pkg} onSelect={onSelect} isSelected={selected?.id === pkg.id} />
+          <PackageSelectCard key={pkg.id} pkg={pkg} onToggle={onToggle} isSelected={selected?.id === pkg.id} />
         ))}
       </div>
-      <div style={{ marginTop: 'var(--space-6)', display: 'flex', justifyContent: 'center' }}>
+      <div style={{
+        marginTop: 'var(--space-8)', paddingTop: 'var(--space-6)',
+        borderTop: '1px solid var(--border-default)',
+        display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+        gap: 'var(--space-3)', flexWrap: 'wrap',
+      }}>
         <button
-          type="button"
-          onClick={onSkip}
-          style={{ ...ghostBtn, padding: '0 var(--space-6)' }}
+          type="button" onClick={onBack} style={backBtn}
           onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--text-primary)'; e.currentTarget.style.borderColor = 'var(--border-strong)' }}
           onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--text-secondary)'; e.currentTarget.style.borderColor = 'var(--border-default)' }}
         >
-          Skip this step — I don't need a package yet
+          ← Back
         </button>
+        <div style={{ display: 'flex', gap: 'var(--space-3)', alignItems: 'center', flexWrap: 'wrap' }}>
+          <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', fontStyle: 'italic', margin: 0 }}>
+            Not sure? <Link to="/packages" style={{ color: 'var(--color-brand-400)', textDecoration: 'none' }}>Browse all packages</Link>
+          </p>
+          <button
+            type="button" onClick={onSkip} style={secondaryBtn}
+            onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--surface-subtle)' }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent' }}
+          >
+            Skip this step
+          </button>
+        </div>
       </div>
-      <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', fontStyle: 'italic', textAlign: 'center', marginTop: 'var(--space-3)' }}>
-        Not sure? You can always <Link to="/packages" style={{ color: 'var(--color-brand-400)', textDecoration: 'none' }}>browse all packages</Link> in detail.
-      </p>
     </div>
   )
 }
 
-function StepBundle({ onSelect, onSkip, selected }) {
+function StepBundle({ onToggle, onSkip, onBack, selected }) {
   return (
     <div>
       <StepHeader
@@ -764,25 +784,35 @@ function StepBundle({ onSelect, onSkip, selected }) {
       />
       <div className="journey-bundle-grid">
         {BUNDLES.map(bundle => (
-          <BundleSelectCard key={bundle.id} bundle={bundle} onSelect={onSelect} isSelected={selected?.id === bundle.id} />
+          <BundleSelectCard key={bundle.id} bundle={bundle} onToggle={onToggle} isSelected={selected?.id === bundle.id} />
         ))}
       </div>
-      <div style={{ marginTop: 'var(--space-6)', display: 'flex', justifyContent: 'center' }}>
+      <div style={{
+        marginTop: 'var(--space-8)', paddingTop: 'var(--space-6)',
+        borderTop: '1px solid var(--border-default)',
+        display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+        gap: 'var(--space-3)', flexWrap: 'wrap',
+      }}>
         <button
-          type="button"
-          onClick={onSkip}
-          style={{ ...ghostBtn, padding: '0 var(--space-6)' }}
+          type="button" onClick={onBack} style={backBtn}
           onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--text-primary)'; e.currentTarget.style.borderColor = 'var(--border-strong)' }}
           onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--text-secondary)'; e.currentTarget.style.borderColor = 'var(--border-default)' }}
         >
-          Skip monthly bundle — I'll manage this separately
+          ← Back
+        </button>
+        <button
+          type="button" onClick={onSkip} style={secondaryBtn}
+          onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--surface-subtle)' }}
+          onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent' }}
+        >
+          Skip monthly bundle
         </button>
       </div>
     </div>
   )
 }
 
-function StepAddons({ selectedAddons, onToggle, onContinue, onSkip }) {
+function StepAddons({ selectedAddons, onToggle, onContinue, onSkip, onBack }) {
   const selectedIds = selectedAddons.map(a => a.id)
   return (
     <div>
@@ -841,36 +871,48 @@ function StepAddons({ selectedAddons, onToggle, onContinue, onSkip }) {
           </div>
         ))}
       </div>
-      <div style={{ marginTop: 'var(--space-8)', display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 'var(--space-3)' }}>
+      <div style={{
+        marginTop: 'var(--space-8)', paddingTop: 'var(--space-6)',
+        borderTop: '1px solid var(--border-default)',
+        display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+        gap: 'var(--space-3)', flexWrap: 'wrap',
+      }}>
         <button
-          type="button"
-          onClick={onContinue}
-          style={{
-            height: 44, padding: '0 var(--space-7)',
-            display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-2)',
-            fontSize: 'var(--text-sm)', fontWeight: 600,
-            background: 'linear-gradient(90deg, #293BFF 0%, #7627EF 100%)',
-            color: '#FFFFFF', border: 'none', borderRadius: 'var(--radius-md)',
-            boxShadow: '0 0 24px rgba(118,39,239,0.35)',
-            cursor: 'pointer', transition: 'filter 120ms ease, box-shadow 120ms ease',
-            fontFamily: 'inherit',
-          }}
-          onMouseEnter={(e) => { e.currentTarget.style.filter = 'brightness(1.1)'; e.currentTarget.style.boxShadow = '0 0 36px rgba(118,39,239,0.5)' }}
-          onMouseLeave={(e) => { e.currentTarget.style.filter = 'brightness(1)'; e.currentTarget.style.boxShadow = '0 0 24px rgba(118,39,239,0.35)' }}
+          type="button" onClick={onBack} style={backBtn}
+          onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--text-primary)'; e.currentTarget.style.borderColor = 'var(--border-strong)' }}
+          onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--text-secondary)'; e.currentTarget.style.borderColor = 'var(--border-default)' }}
         >
-          Continue to review <ArrowRight size={14} />
+          ← Back
         </button>
-        {selectedAddons.length === 0 && (
+        <div style={{ display: 'flex', gap: 'var(--space-3)', alignItems: 'center', flexWrap: 'wrap' }}>
+          {selectedAddons.length === 0 && (
+            <button
+              type="button" onClick={onSkip} style={secondaryBtn}
+              onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--surface-subtle)' }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent' }}
+            >
+              Skip add-ons
+            </button>
+          )}
           <button
             type="button"
-            onClick={onSkip}
-            style={{ ...ghostBtn, height: 44, padding: '0 var(--space-5)' }}
-            onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--text-primary)'; e.currentTarget.style.borderColor = 'var(--border-strong)' }}
-            onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--text-secondary)'; e.currentTarget.style.borderColor = 'var(--border-default)' }}
+            onClick={onContinue}
+            style={{
+              height: 40, padding: '0 var(--space-6)',
+              display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-2)',
+              fontSize: 'var(--text-sm)', fontWeight: 600,
+              background: 'linear-gradient(90deg, #293BFF 0%, #7627EF 100%)',
+              color: '#FFFFFF', border: 'none', borderRadius: 'var(--radius-md)',
+              boxShadow: '0 0 24px rgba(118,39,239,0.35)',
+              cursor: 'pointer', transition: 'filter 120ms ease, box-shadow 120ms ease',
+              fontFamily: 'inherit',
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.filter = 'brightness(1.1)'; e.currentTarget.style.boxShadow = '0 0 36px rgba(118,39,239,0.5)' }}
+            onMouseLeave={(e) => { e.currentTarget.style.filter = 'brightness(1)'; e.currentTarget.style.boxShadow = '0 0 24px rgba(118,39,239,0.35)' }}
           >
-            Skip add-ons
+            Continue to review <ArrowRight size={14} />
           </button>
-        )}
+        </div>
       </div>
     </div>
   )
@@ -907,7 +949,7 @@ function ReviewRow({ label, value, onEdit }) {
   )
 }
 
-function StepReview({ website, pkg, bundle, addons, oneOffItems, monthlyItems, quoteItems, oneOffTotal, monthlyTotal, hasQuoteItems, hasFixedItems, onEditWebsite, onEditPackage, onEditBundle, onEditAddons, onBuyNow, onRequestQuote }) {
+function StepReview({ website, pkg, bundle, addons, oneOffItems, monthlyItems, quoteItems, oneOffTotal, monthlyTotal, hasQuoteItems, hasFixedItems, onEditWebsite, onEditPackage, onEditBundle, onEditAddons, onBuyNow, onRequestQuote, onBack }) {
   return (
     <div>
       <StepHeader
@@ -1012,7 +1054,14 @@ function StepReview({ website, pkg, bundle, addons, oneOffItems, monthlyItems, q
       )}
 
       {/* Action buttons */}
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-3)' }}>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-3)', alignItems: 'center' }}>
+        <button
+          type="button" onClick={onBack} style={{ ...backBtn, marginRight: 'auto' }}
+          onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--text-primary)'; e.currentTarget.style.borderColor = 'var(--border-strong)' }}
+          onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--text-secondary)'; e.currentTarget.style.borderColor = 'var(--border-default)' }}
+        >
+          ← Back
+        </button>
         {hasFixedItems && (
           <button
             type="button"
@@ -1093,10 +1142,19 @@ function JourneyWizard() {
     window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' })
   }
 
-  const selectWebsite = (ws) => { setSelectedWebsite(ws); goToStep(1) }
-  const selectPackage = (pkg) => { setSelectedPackage(pkg); goToStep(2) }
+  const toggleWebsite = (ws) => {
+    if (selectedWebsite?.id === ws.id) { setSelectedWebsite(null) }
+    else { setSelectedWebsite(ws); goToStep(1) }
+  }
+  const togglePackage = (pkg) => {
+    if (selectedPackage?.id === pkg.id) { setSelectedPackage(null) }
+    else { setSelectedPackage(pkg); goToStep(2) }
+  }
   const skipPackage = () => { setSelectedPackage(null); goToStep(2) }
-  const selectBundle = (bundle) => { setSelectedBundle(bundle); goToStep(3) }
+  const toggleBundle = (bundle) => {
+    if (selectedBundle?.id === bundle.id) { setSelectedBundle(null) }
+    else { setSelectedBundle(bundle); goToStep(3) }
+  }
   const skipBundle = () => { setSelectedBundle(null); goToStep(3) }
   const continueToReview = () => goToStep(4)
   const skipAddons = () => { setSelectedAddons([]); goToStep(4) }
@@ -1166,23 +1224,12 @@ function JourneyWizard() {
   return (
     <div>
       <ProgressIndicator currentStep={step} onGoToStep={(s) => s < step && goToStep(s)} />
-      {step > 0 && (
-        <button
-          type="button"
-          onClick={() => goToStep(step - 1)}
-          style={{ ...ghostBtn, marginBottom: 'var(--space-6)', fontSize: 'var(--text-xs)' }}
-          onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--text-primary)'; e.currentTarget.style.borderColor = 'var(--border-strong)' }}
-          onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--text-secondary)'; e.currentTarget.style.borderColor = 'var(--border-default)' }}
-        >
-          ← Back
-        </button>
-      )}
       <AnimatePresence mode="wait">
         <motion.div key={step} {...fade}>
-          {step === 0 && <StepWebsite onSelect={selectWebsite} selected={selectedWebsite} />}
-          {step === 1 && <StepPackage onSelect={selectPackage} onSkip={skipPackage} selected={selectedPackage} />}
-          {step === 2 && <StepBundle onSelect={selectBundle} onSkip={skipBundle} selected={selectedBundle} />}
-          {step === 3 && <StepAddons selectedAddons={selectedAddons} onToggle={toggleAddon} onContinue={continueToReview} onSkip={skipAddons} />}
+          {step === 0 && <StepWebsite onToggle={toggleWebsite} selected={selectedWebsite} />}
+          {step === 1 && <StepPackage onToggle={togglePackage} onSkip={skipPackage} onBack={() => goToStep(0)} selected={selectedPackage} />}
+          {step === 2 && <StepBundle onToggle={toggleBundle} onSkip={skipBundle} onBack={() => goToStep(1)} selected={selectedBundle} />}
+          {step === 3 && <StepAddons selectedAddons={selectedAddons} onToggle={toggleAddon} onContinue={continueToReview} onSkip={skipAddons} onBack={() => goToStep(2)} />}
           {step === 4 && (
             <StepReview
               website={selectedWebsite}
@@ -1202,6 +1249,7 @@ function JourneyWizard() {
               onEditAddons={() => goToStep(3)}
               onBuyNow={handleBuyNow}
               onRequestQuote={handleRequestQuote}
+              onBack={() => goToStep(3)}
             />
           )}
         </motion.div>
