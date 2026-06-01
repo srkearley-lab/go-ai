@@ -287,8 +287,6 @@ function SmallBundleCard({ bundle, variants }) {
         <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)' }}>/month</span>
       </div>
 
-      <SavingsBadge yearly={bundle.savesYearly} upfront={bundle.savesUpfront} />
-
       <hr style={{ border: 'none', borderTop: '1px solid var(--border-default)', margin: 0 }} />
 
       <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
@@ -371,8 +369,6 @@ function RecommendedBundleCard({ bundle, variants }) {
           <span style={{ fontSize: 'var(--text-2xl)', fontWeight: 700, letterSpacing: '-0.03em', color: 'var(--text-primary)', lineHeight: 1 }}>€{bundle.monthly}</span>
           <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-tertiary)' }}>/month</span>
         </div>
-
-        <SavingsBadge yearly={bundle.savesYearly} upfront={bundle.savesUpfront} />
 
         <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-secondary)', fontStyle: 'italic' }}>
           Most growing businesses get better value from a bundle.

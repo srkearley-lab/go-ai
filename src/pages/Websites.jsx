@@ -12,7 +12,7 @@ const websitePackages = [
   {
     badge: 'Entry Level',
     name: 'Basic Launch Website',
-    price: 'From €450',
+    price: '€450',
     featured: false,
     bestFor: 'Side businesses, sole traders, early startups',
     features: [
@@ -28,7 +28,7 @@ const websitePackages = [
   {
     badge: 'Starter',
     name: 'Starter Business Website',
-    price: 'From €750',
+    price: '€750',
     featured: false,
     bestFor: 'New businesses wanting more credibility',
     features: [
@@ -44,7 +44,7 @@ const websitePackages = [
   {
     badge: 'Most Popular',
     name: 'Business Website',
-    price: 'From €1,200',
+    price: '€1,200',
     featured: true,
     bestFor: 'Established businesses, consultants, local service providers',
     features: [
@@ -60,7 +60,7 @@ const websitePackages = [
   {
     badge: 'Best for Growth',
     name: 'Growth Website',
-    price: 'From €1,750',
+    price: '€1,750',
     featured: false,
     bestFor: 'Businesses wanting a higher-converting website',
     features: [
@@ -76,7 +76,7 @@ const websitePackages = [
   {
     badge: 'Premium',
     name: 'Premium AI-Ready Website',
-    price: 'From €2,500+',
+    price: '€2,500+',
     featured: false,
     bestFor: 'Businesses wanting a premium website with AI-ready foundations',
     features: [

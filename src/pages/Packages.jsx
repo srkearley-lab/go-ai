@@ -14,7 +14,7 @@ const servicePackages = [
   {
     id: 'Website Design',
     name: 'Website Design',
-    priceDisplay: 'From €450',
+    priceDisplay: '€450',
     priceNote: 'one-off website build',
     description: 'GoAI builds modern, professional, mobile-friendly websites that help businesses look credible and generate enquiries.',
     features: ['Custom mobile-responsive design', 'Lead capture and contact forms', 'Basic SEO setup included', 'Google Analytics integration'],
@@ -22,7 +22,7 @@ const servicePackages = [
   {
     id: 'SEO',
     name: 'SEO',
-    priceDisplay: 'From €150/month',
+    priceDisplay: '€150/month',
     priceNote: 'ongoing SEO management',
     description: 'Basic SEO setup including page titles, meta descriptions, structure, keywords and visibility foundations.',
     features: ['Page titles and meta descriptions', 'Keyword research and targeting', 'Google Search Console setup', 'Monthly ranking monitoring'],
@@ -30,7 +30,7 @@ const servicePackages = [
   {
     id: 'WhatsApp Automation',
     name: 'WhatsApp Automation',
-    priceDisplay: 'From €250 setup + €150/mo',
+    priceDisplay: '€250 setup + €150/mo',
     priceNote: 'setup fee + monthly',
     description: 'Enquiry capture, WhatsApp lead routing, auto-replies, notifications and simple workflow automation.',
     features: ['Auto-reply to enquiries', 'Lead routing to your phone', 'Booking confirmation messages', 'Workflow automation'],
@@ -38,7 +38,7 @@ const servicePackages = [
   {
     id: 'Email Automation',
     name: 'Email Automation',
-    priceDisplay: 'From €150 setup + €100/mo',
+    priceDisplay: '€150 setup + €100/mo',
     priceNote: 'setup fee + monthly',
     description: 'Automated follow-ups, enquiry responses, lead nurturing, campaign emails and customer communication workflows.',
     features: ['Automated follow-up sequences', 'Enquiry response flows', 'Lead nurturing campaigns', 'Email platform setup included'],
@@ -46,7 +46,7 @@ const servicePackages = [
   {
     id: 'Video Websites',
     name: 'Video Websites',
-    priceDisplay: 'From €500',
+    priceDisplay: '€500',
     priceNote: 'one-off build',
     description: 'Video-led website sections, video landing pages, avatar/video content areas and video-first sales pages.',
     features: ['Video hero sections and backgrounds', 'Video landing page design', 'AI avatar content integration', 'Mobile-optimised video display'],
@@ -54,7 +54,7 @@ const servicePackages = [
   {
     id: 'AI Prompts',
     name: 'AI Prompts',
-    priceDisplay: 'From €200',
+    priceDisplay: '€200',
     priceNote: 'one-off prompt pack',
     description: 'Tailored AI prompts for business workflows, content creation, marketing, customer replies, admin tasks and sales support.',
     features: ['Custom AI prompt library', 'Content creation templates', 'Customer reply frameworks', 'Sales and admin support scripts'],
