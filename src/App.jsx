@@ -23,6 +23,7 @@ import FAQ from './pages/FAQ'
 import ThankYou from './pages/ThankYou'
 import ControlCentre from './pages/ControlCentre'
 import Quote from './pages/Quote'
+import Addons from './pages/Addons'
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/packages" element={<Packages />} />
           <Route path="/bundles" element={<Bundles />} />
+          <Route path="/addons" element={<Addons />} />
           <Route path="/websites" element={<Websites />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/quote" element={<Quote />} />

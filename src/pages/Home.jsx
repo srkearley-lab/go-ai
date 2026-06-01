@@ -151,12 +151,12 @@ function TopPackagesSection({ reduceMotion, stagger, cardVariants }) {
               variants={cardVariants}
               style={{
                 background: pkg.recommended ? 'var(--surface-overlay)' : 'var(--surface-raised)',
-                border: pkg.recommended ? '2px solid var(--color-brand-500)' : '1px solid var(--border-default)',
+                border: pkg.recommended ? '2px solid var(--goai-violet)' : '1px solid var(--border-default)',
                 borderRadius: 'var(--radius-lg)',
                 padding: 'var(--space-8)',
                 display: 'flex', flexDirection: 'column', gap: 'var(--space-5)',
                 position: 'relative',
-                boxShadow: pkg.recommended ? 'var(--shadow-lg)' : 'none',
+                boxShadow: pkg.recommended ? '0 0 30px rgba(118, 39, 239, 0.35)' : 'none',
                 transition: 'border-color 150ms ease, box-shadow 150ms ease',
               }}
               onMouseEnter={(e) => {
@@ -209,14 +209,15 @@ function TopPackagesSection({ reduceMotion, stagger, cardVariants }) {
                   height: 40, padding: '0 var(--space-5)',
                   display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-2)',
                   fontSize: 'var(--text-sm)', fontWeight: 600,
-                  background: pkg.recommended ? 'var(--color-brand-500)' : 'var(--color-brand-500)',
-                  color: 'var(--color-neutral-0)',
-                  border: '1px solid var(--color-brand-600)',
+                  background: 'linear-gradient(90deg, #293BFF 0%, #7627EF 100%)',
+                  color: '#FFFFFF',
+                  border: 'none',
                   borderRadius: 'var(--radius-md)',
-                  transition: 'background 120ms ease, transform 60ms ease',
+                  boxShadow: '0 0 20px rgba(118, 39, 239, 0.25)',
+                  transition: 'filter 120ms ease, box-shadow 120ms ease, transform 60ms ease',
                 }}
-                onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--color-brand-600)' }}
-                onMouseLeave={(e) => { e.currentTarget.style.background = 'var(--color-brand-500)' }}
+                onMouseEnter={(e) => { e.currentTarget.style.filter = 'brightness(1.1)'; e.currentTarget.style.boxShadow = '0 0 30px rgba(118, 39, 239, 0.45)' }}
+                onMouseLeave={(e) => { e.currentTarget.style.filter = 'brightness(1)'; e.currentTarget.style.boxShadow = '0 0 20px rgba(118, 39, 239, 0.25)' }}
                 onMouseDown={(e) => { e.currentTarget.style.transform = 'translateY(1px)' }}
                 onMouseUp={(e) => { e.currentTarget.style.transform = 'translateY(0)' }}
               >
@@ -309,7 +310,7 @@ export default function Home() {
               }}
             >
               AI-powered websites, content and automation for businesses that want to{' '}
-              <span style={{ color: 'var(--color-brand-400)' }}>grow online.</span>
+              <span style={{ background: 'linear-gradient(90deg, #293BFF 0%, #7627EF 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>grow online.</span>
             </h1>
             <p
               style={{
@@ -332,9 +333,9 @@ export default function Home() {
           >
             <Link
               to="/packages"
-              style={{ height: 44, padding: '0 var(--space-6)', display: 'inline-flex', alignItems: 'center', gap: 'var(--space-2)', fontSize: 'var(--text-sm)', fontWeight: 600, background: 'var(--color-brand-500)', color: 'var(--color-neutral-0)', border: '1px solid var(--color-brand-600)', borderRadius: 'var(--radius-md)', transition: 'background 120ms ease, transform 60ms ease' }}
-              onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--color-brand-600)' }}
-              onMouseLeave={(e) => { e.currentTarget.style.background = 'var(--color-brand-500)' }}
+              style={{ height: 44, padding: '0 var(--space-6)', display: 'inline-flex', alignItems: 'center', gap: 'var(--space-2)', fontSize: 'var(--text-sm)', fontWeight: 600, background: 'linear-gradient(90deg, #293BFF 0%, #7627EF 100%)', color: '#FFFFFF', border: 'none', borderRadius: 'var(--radius-md)', boxShadow: '0 0 30px rgba(118, 39, 239, 0.35)', transition: 'filter 120ms ease, box-shadow 120ms ease, transform 60ms ease' }}
+              onMouseEnter={(e) => { e.currentTarget.style.filter = 'brightness(1.1)'; e.currentTarget.style.boxShadow = '0 0 40px rgba(118, 39, 239, 0.5)' }}
+              onMouseLeave={(e) => { e.currentTarget.style.filter = 'brightness(1)'; e.currentTarget.style.boxShadow = '0 0 30px rgba(118, 39, 239, 0.35)' }}
               onMouseDown={(e) => { e.currentTarget.style.transform = 'translateY(1px)' }}
               onMouseUp={(e) => { e.currentTarget.style.transform = 'translateY(0)' }}
             >
@@ -342,9 +343,9 @@ export default function Home() {
             </Link>
             <Link
               to="/websites"
-              style={{ height: 44, padding: '0 var(--space-6)', display: 'inline-flex', alignItems: 'center', gap: 'var(--space-2)', fontSize: 'var(--text-sm)', fontWeight: 500, background: 'transparent', color: 'var(--text-primary)', border: '1px solid var(--border-strong)', borderRadius: 'var(--radius-md)', transition: 'background 120ms ease, transform 60ms ease' }}
-              onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--surface-raised)' }}
-              onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent' }}
+              style={{ height: 44, padding: '0 var(--space-6)', display: 'inline-flex', alignItems: 'center', gap: 'var(--space-2)', fontSize: 'var(--text-sm)', fontWeight: 500, background: 'transparent', color: 'var(--text-primary)', border: '1px solid var(--goai-violet)', borderRadius: 'var(--radius-md)', transition: 'background 120ms ease, transform 60ms ease' }}
+              onMouseEnter={(e) => { e.currentTarget.style.background = 'linear-gradient(90deg, #293BFF 0%, #7627EF 100%)'; e.currentTarget.style.color = '#FFFFFF'; e.currentTarget.style.border = 'none' }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--text-primary)'; e.currentTarget.style.border = '1px solid var(--goai-violet)' }}
               onMouseDown={(e) => { e.currentTarget.style.transform = 'translateY(1px)' }}
               onMouseUp={(e) => { e.currentTarget.style.transform = 'translateY(0)' }}
             >

@@ -141,15 +141,16 @@ function BasketButton({ item }) {
       style={{
         height: 36, padding: '0 var(--space-4)',
         display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-2)',
-        fontSize: 'var(--text-xs)', fontWeight: 500,
-        background: inBasket ? 'rgba(22,163,74,0.1)' : 'transparent',
-        color: inBasket ? 'var(--color-success)' : 'var(--text-secondary)',
-        border: `1px solid ${inBasket ? 'rgba(22,163,74,0.3)' : 'var(--border-default)'}`,
+        fontSize: 'var(--text-xs)', fontWeight: 600,
+        background: inBasket ? 'rgba(22,163,74,0.1)' : 'linear-gradient(90deg, #293BFF 0%, #7627EF 100%)',
+        color: inBasket ? 'var(--color-success)' : '#FFFFFF',
+        border: `1px solid ${inBasket ? 'rgba(22,163,74,0.3)' : 'transparent'}`,
+        boxShadow: inBasket ? 'none' : '0 0 20px rgba(118, 39, 239, 0.3)',
         borderRadius: 'var(--radius-md)', cursor: 'pointer',
         transition: 'all 120ms ease', fontFamily: 'inherit', flexShrink: 0,
       }}
-      onMouseEnter={(e) => { if (!inBasket) { e.currentTarget.style.color = 'var(--text-primary)'; e.currentTarget.style.borderColor = 'var(--border-strong)' } }}
-      onMouseLeave={(e) => { if (!inBasket) { e.currentTarget.style.color = 'var(--text-secondary)'; e.currentTarget.style.borderColor = 'var(--border-default)' } }}
+      onMouseEnter={(e) => { if (!inBasket) { e.currentTarget.style.filter = 'brightness(1.1)' } }}
+      onMouseLeave={(e) => { if (!inBasket) { e.currentTarget.style.filter = 'brightness(1)' } }}
     >
       {inBasket
         ? <><Check size={11} strokeWidth={3} /> In Basket</>
@@ -230,13 +231,14 @@ function FindOutMorePanel({ detailKey, item }) {
             height: 36, padding: '0 var(--space-5)',
             display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-2)',
             fontSize: 'var(--text-xs)', fontWeight: 600,
-            background: 'var(--color-brand-500)', color: 'var(--color-neutral-0)',
-            border: '1px solid var(--color-brand-600)',
+            background: 'linear-gradient(90deg, #293BFF 0%, #7627EF 100%)', color: '#FFFFFF',
+            border: 'none',
+            boxShadow: '0 0 20px rgba(118, 39, 239, 0.3)',
             borderRadius: 'var(--radius-md)',
-            transition: 'background 120ms ease',
+            transition: 'filter 120ms ease, box-shadow 120ms ease',
           }}
-          onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--color-brand-600)' }}
-          onMouseLeave={(e) => { e.currentTarget.style.background = 'var(--color-brand-500)' }}
+          onMouseEnter={(e) => { e.currentTarget.style.filter = 'brightness(1.1)'; e.currentTarget.style.boxShadow = '0 0 30px rgba(118, 39, 239, 0.45)' }}
+          onMouseLeave={(e) => { e.currentTarget.style.filter = 'brightness(1)'; e.currentTarget.style.boxShadow = '0 0 20px rgba(118, 39, 239, 0.3)' }}
         >
           Start This Service <ArrowRight size={12} />
         </Link>
@@ -393,17 +395,17 @@ export default function Packages() {
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-3)', justifyContent: 'center' }}>
             <Link
               to="/bundles"
-              style={{ height: 44, padding: '0 var(--space-6)', display: 'inline-flex', alignItems: 'center', fontSize: 'var(--text-sm)', fontWeight: 600, background: 'var(--color-brand-500)', color: 'var(--color-neutral-0)', border: '1px solid var(--color-brand-600)', borderRadius: 'var(--radius-md)', transition: 'background 120ms ease' }}
-              onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--color-brand-600)' }}
-              onMouseLeave={(e) => { e.currentTarget.style.background = 'var(--color-brand-500)' }}
+              style={{ height: 44, padding: '0 var(--space-6)', display: 'inline-flex', alignItems: 'center', fontSize: 'var(--text-sm)', fontWeight: 600, background: 'linear-gradient(90deg, #293BFF 0%, #7627EF 100%)', color: '#FFFFFF', border: 'none', borderRadius: 'var(--radius-md)', boxShadow: '0 0 30px rgba(118, 39, 239, 0.35)', transition: 'filter 120ms ease, box-shadow 120ms ease' }}
+              onMouseEnter={(e) => { e.currentTarget.style.filter = 'brightness(1.1)'; e.currentTarget.style.boxShadow = '0 0 40px rgba(118, 39, 239, 0.5)' }}
+              onMouseLeave={(e) => { e.currentTarget.style.filter = 'brightness(1)'; e.currentTarget.style.boxShadow = '0 0 30px rgba(118, 39, 239, 0.35)' }}
             >
               View Monthly Bundles
             </Link>
             <Link
               to="/contact"
-              style={{ height: 44, padding: '0 var(--space-6)', display: 'inline-flex', alignItems: 'center', fontSize: 'var(--text-sm)', fontWeight: 500, background: 'transparent', color: 'var(--text-primary)', border: '1px solid var(--border-strong)', borderRadius: 'var(--radius-md)', transition: 'background 120ms ease' }}
-              onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--surface-raised)' }}
-              onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent' }}
+              style={{ height: 44, padding: '0 var(--space-6)', display: 'inline-flex', alignItems: 'center', fontSize: 'var(--text-sm)', fontWeight: 500, background: 'transparent', color: 'var(--text-primary)', border: '1px solid var(--goai-violet)', borderRadius: 'var(--radius-md)', transition: 'background 120ms ease, color 120ms ease, border 120ms ease' }}
+              onMouseEnter={(e) => { e.currentTarget.style.background = 'linear-gradient(90deg, #293BFF 0%, #7627EF 100%)'; e.currentTarget.style.color = '#FFFFFF'; e.currentTarget.style.border = '1px solid transparent' }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--text-primary)'; e.currentTarget.style.border = '1px solid var(--goai-violet)' }}
             >
               Talk to Us
             </Link>

@@ -15,14 +15,14 @@ export default function PackageCard({ name, price, period, description, features
       style={{
         position: 'relative',
         background: 'var(--surface-raised)',
-        border: popular ? '1px solid var(--color-brand-500)' : '1px solid var(--border-default)',
-        borderLeft: popular ? '3px solid var(--color-brand-500)' : undefined,
+        border: popular ? '1px solid var(--goai-violet)' : '1px solid var(--border-default)',
+        borderLeft: popular ? '3px solid var(--goai-violet)' : undefined,
         borderRadius: 'var(--radius-lg)',
         padding: 'var(--space-8)',
         display: 'flex',
         flexDirection: 'column',
         gap: 'var(--space-6)',
-        boxShadow: popular ? 'var(--shadow-lg)' : 'none',
+        boxShadow: popular ? '0 0 30px rgba(118, 39, 239, 0.35)' : 'none',
         transition: 'box-shadow 150ms ease',
       }}
     >
@@ -96,19 +96,32 @@ export default function PackageCard({ name, price, period, description, features
         style={{
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           height: 40,
-          fontSize: 'var(--text-sm)', fontWeight: 500,
+          fontSize: 'var(--text-sm)', fontWeight: 600,
           borderRadius: 'var(--radius-md)',
-          border: popular ? '1px solid var(--color-brand-600)' : '1px solid var(--border-strong)',
-          background: popular ? 'var(--color-brand-500)' : 'transparent',
-          color: popular ? 'var(--color-neutral-0)' : 'var(--text-primary)',
-          transition: 'background 120ms ease, transform 60ms ease',
+          border: popular ? 'none' : '1px solid var(--goai-violet)',
+          background: popular ? 'linear-gradient(90deg, #293BFF 0%, #7627EF 100%)' : 'transparent',
+          color: popular ? '#FFFFFF' : 'var(--text-primary)',
+          boxShadow: popular ? '0 0 20px rgba(118, 39, 239, 0.3)' : 'none',
+          transition: 'filter 120ms ease, background 120ms ease, transform 60ms ease',
           marginTop: 'auto',
         }}
         onMouseEnter={(e) => {
-          e.currentTarget.style.background = popular ? 'var(--color-brand-600)' : 'var(--surface-subtle)'
+          if (popular) {
+            e.currentTarget.style.filter = 'brightness(1.1)'
+          } else {
+            e.currentTarget.style.background = 'linear-gradient(90deg, #293BFF 0%, #7627EF 100%)'
+            e.currentTarget.style.color = '#FFFFFF'
+            e.currentTarget.style.border = 'none'
+          }
         }}
         onMouseLeave={(e) => {
-          e.currentTarget.style.background = popular ? 'var(--color-brand-500)' : 'transparent'
+          if (popular) {
+            e.currentTarget.style.filter = 'brightness(1)'
+          } else {
+            e.currentTarget.style.background = 'transparent'
+            e.currentTarget.style.color = 'var(--text-primary)'
+            e.currentTarget.style.border = '1px solid var(--goai-violet)'
+          }
         }}
         onMouseDown={(e) => { e.currentTarget.style.transform = 'translateY(1px)' }}
         onMouseUp={(e) => { e.currentTarget.style.transform = 'translateY(0)' }}

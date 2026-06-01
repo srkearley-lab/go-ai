@@ -194,18 +194,20 @@ export default function ProposalRequestForm({ onSubmit }) {
         style={{
           height: 44,
           display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-2)',
-          fontSize: 'var(--text-sm)', fontWeight: 500,
-          background: 'var(--color-brand-500)',
-          color: 'var(--color-neutral-0)',
-          border: '1px solid var(--color-brand-600)',
+          fontSize: 'var(--text-sm)', fontWeight: 600,
+          background: 'linear-gradient(90deg, #293BFF 0%, #7627EF 100%)',
+          color: '#FFFFFF',
+          border: 'none',
           borderRadius: 'var(--radius-md)',
+          boxShadow: '0 0 30px rgba(118, 39, 239, 0.35)',
           cursor: 'pointer',
           alignSelf: 'flex-start',
           padding: '0 var(--space-6)',
-          transition: 'background 120ms ease, transform 60ms ease',
+          fontFamily: 'inherit',
+          transition: 'filter 120ms ease, box-shadow 120ms ease, transform 60ms ease',
         }}
-        onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--color-brand-600)' }}
-        onMouseLeave={(e) => { e.currentTarget.style.background = 'var(--color-brand-500)' }}
+        onMouseEnter={(e) => { e.currentTarget.style.filter = 'brightness(1.1)'; e.currentTarget.style.boxShadow = '0 0 40px rgba(118, 39, 239, 0.5)' }}
+        onMouseLeave={(e) => { e.currentTarget.style.filter = 'brightness(1)'; e.currentTarget.style.boxShadow = '0 0 30px rgba(118, 39, 239, 0.35)' }}
         onMouseDown={(e) => { e.currentTarget.style.transform = 'translateY(1px)' }}
         onMouseUp={(e) => { e.currentTarget.style.transform = 'translateY(0)' }}
       >

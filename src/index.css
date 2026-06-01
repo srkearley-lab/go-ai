@@ -90,10 +90,19 @@
   --text-disabled:  #334155;
   --text-inverse:   #080c18;
 
+  /* GoAI Brand Colours */
+  --goai-black:      #000000;
+  --goai-white:      #FFFFFF;
+  --goai-blue:       #293BFF;
+  --goai-royal-blue: #3B35F4;
+  --goai-violet:     #7627EF;
+  --goai-purple:     #9224E6;
+  --goai-gradient:   linear-gradient(90deg, #293BFF 0%, #3B35F4 35%, #7627EF 70%, #9224E6 100%);
+
   /* Borders */
   --border-default: #1b2236;
   --border-strong:  #28315a;
-  --border-focus:   var(--color-brand-500);
+  --border-focus:   var(--goai-violet);
 
   /* Shadows */
   --shadow-sm:    0 1px 2px 0 rgba(0,0,0,0.5);
@@ -136,3 +145,10 @@ img { display: block; }
 ::-webkit-scrollbar-track { background: var(--surface-base); }
 ::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: var(--radius-full); }
 ::-webkit-scrollbar-thumb:hover { background: var(--text-tertiary); }
+
+/* Global input / textarea / select focus */
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--goai-violet) !important;
+  box-shadow: 0 0 0 2px rgba(118, 39, 239, 0.25) !important;
+}

@@ -9,6 +9,7 @@ const navLinks = [
   { label: 'Websites',  href: '/websites' },
   { label: 'Packages',  href: '/packages' },
   { label: 'Bundles',   href: '/bundles' },
+  { label: 'Add-ons',   href: '/addons' },
   { label: 'Portfolio', href: '/portfolio' },
   { label: 'FAQ',       href: '/faq' },
   { label: 'Contact',   href: '/contact' },
@@ -126,15 +127,16 @@ export default function Navbar() {
                 alignItems: 'center',
                 fontSize: 'var(--text-xs)',
                 fontWeight: 600,
-                background: 'var(--color-brand-500)',
-                color: 'var(--color-neutral-0)',
-                border: '1px solid var(--color-brand-600)',
+                background: 'linear-gradient(90deg, #293BFF 0%, #7627EF 100%)',
+                color: '#FFFFFF',
+                border: 'none',
                 borderRadius: 'var(--radius-md)',
-                transition: 'background 120ms ease',
+                boxShadow: '0 0 30px rgba(118, 39, 239, 0.35)',
+                transition: 'filter 120ms ease, box-shadow 120ms ease',
                 whiteSpace: 'nowrap',
               }}
-              onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--color-brand-600)' }}
-              onMouseLeave={(e) => { e.currentTarget.style.background = 'var(--color-brand-500)' }}
+              onMouseEnter={(e) => { e.currentTarget.style.filter = 'brightness(1.12)'; e.currentTarget.style.boxShadow = '0 0 40px rgba(118, 39, 239, 0.5)' }}
+              onMouseLeave={(e) => { e.currentTarget.style.filter = 'brightness(1)'; e.currentTarget.style.boxShadow = '0 0 30px rgba(118, 39, 239, 0.35)' }}
             >
               Get a Quote Today
             </Link>
@@ -225,8 +227,9 @@ export default function Navbar() {
                   flex: 1, minWidth: 140,
                   height: 44, display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
                   fontSize: 'var(--text-sm)', fontWeight: 600,
-                  background: 'var(--color-brand-500)', color: 'var(--color-neutral-0)',
-                  border: '1px solid var(--color-brand-600)', borderRadius: 'var(--radius-md)',
+                  background: 'linear-gradient(90deg, #293BFF 0%, #7627EF 100%)', color: '#FFFFFF',
+                  border: 'none', borderRadius: 'var(--radius-md)',
+                  boxShadow: '0 0 24px rgba(118, 39, 239, 0.35)',
                   textDecoration: 'none',
                 }}
               >

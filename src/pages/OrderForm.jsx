@@ -558,9 +558,9 @@ function Confirmation({ hasRecurring, hasUploads, reduceMotion }) {
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-3)', justifyContent: 'center' }}>
           <Link
             to="/"
-            style={{ height: 44, padding: '0 var(--space-6)', display: 'inline-flex', alignItems: 'center', fontSize: 'var(--text-sm)', fontWeight: 600, background: 'var(--color-brand-500)', color: 'var(--color-neutral-0)', border: '1px solid var(--color-brand-600)', borderRadius: 'var(--radius-md)', textDecoration: 'none', transition: 'background 120ms ease' }}
-            onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--color-brand-600)' }}
-            onMouseLeave={(e) => { e.currentTarget.style.background = 'var(--color-brand-500)' }}
+            style={{ height: 44, padding: '0 var(--space-6)', display: 'inline-flex', alignItems: 'center', fontSize: 'var(--text-sm)', fontWeight: 600, background: 'linear-gradient(90deg, #293BFF 0%, #7627EF 100%)', color: '#FFFFFF', border: 'none', borderRadius: 'var(--radius-md)', boxShadow: '0 0 30px rgba(118, 39, 239, 0.35)', textDecoration: 'none', transition: 'filter 120ms ease' }}
+            onMouseEnter={(e) => { e.currentTarget.style.filter = 'brightness(1.1)' }}
+            onMouseLeave={(e) => { e.currentTarget.style.filter = 'brightness(1)' }}
           >
             Return to Homepage
           </Link>
@@ -754,18 +754,18 @@ export default function OrderForm() {
                 <button
                   type="button"
                   onClick={handleNext}
-                  style={{ height: 44, padding: '0 var(--space-6)', display: 'inline-flex', alignItems: 'center', gap: 'var(--space-2)', fontSize: 'var(--text-sm)', fontWeight: 500, background: 'var(--color-brand-500)', color: 'var(--color-neutral-0)', border: '1px solid var(--color-brand-600)', borderRadius: 'var(--radius-md)', cursor: 'pointer', fontFamily: 'inherit', transition: 'background 120ms ease' }}
-                  onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--color-brand-600)' }}
-                  onMouseLeave={(e) => { e.currentTarget.style.background = 'var(--color-brand-500)' }}
+                  style={{ height: 44, padding: '0 var(--space-6)', display: 'inline-flex', alignItems: 'center', gap: 'var(--space-2)', fontSize: 'var(--text-sm)', fontWeight: 600, background: 'linear-gradient(90deg, #293BFF 0%, #7627EF 100%)', color: '#FFFFFF', border: 'none', borderRadius: 'var(--radius-md)', boxShadow: '0 0 24px rgba(118, 39, 239, 0.35)', cursor: 'pointer', fontFamily: 'inherit', transition: 'filter 120ms ease' }}
+                  onMouseEnter={(e) => { e.currentTarget.style.filter = 'brightness(1.1)' }}
+                  onMouseLeave={(e) => { e.currentTarget.style.filter = 'brightness(1)' }}
                 >
                   {currentStep.id === 'review' ? reviewButtonLabel : 'Continue'} <ArrowRight size={14} />
                 </button>
               ) : (
                 <button
                   type="submit"
-                  style={{ height: 44, padding: '0 var(--space-6)', display: 'inline-flex', alignItems: 'center', gap: 'var(--space-2)', fontSize: 'var(--text-sm)', fontWeight: 600, background: 'var(--color-brand-500)', color: 'var(--color-neutral-0)', border: '1px solid var(--color-brand-600)', borderRadius: 'var(--radius-md)', cursor: 'pointer', fontFamily: 'inherit', transition: 'background 120ms ease' }}
-                  onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--color-brand-600)' }}
-                  onMouseLeave={(e) => { e.currentTarget.style.background = 'var(--color-brand-500)' }}
+                  style={{ height: 44, padding: '0 var(--space-6)', display: 'inline-flex', alignItems: 'center', gap: 'var(--space-2)', fontSize: 'var(--text-sm)', fontWeight: 600, background: 'linear-gradient(90deg, #293BFF 0%, #7627EF 100%)', color: '#FFFFFF', border: 'none', borderRadius: 'var(--radius-md)', boxShadow: '0 0 24px rgba(118, 39, 239, 0.35)', cursor: 'pointer', fontFamily: 'inherit', transition: 'filter 120ms ease' }}
+                  onMouseEnter={(e) => { e.currentTarget.style.filter = 'brightness(1.1)' }}
+                  onMouseLeave={(e) => { e.currentTarget.style.filter = 'brightness(1)' }}
                 >
                   <Send size={14} /> Submit Enquiry
                 </button>
