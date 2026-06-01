@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { motion, useReducedMotion } from 'framer-motion'
 import { Check, ShoppingCart, MessageCircle, Zap } from 'lucide-react'
 import PageHero from '../components/PageHero'
+import WhatsDifferenceStrip from '../components/WhatsDifferenceStrip'
 import { useBasket } from '../context/BasketContext'
 
 // ── Add-on data ───────────────────────────────────────────────────────────────
@@ -455,6 +456,8 @@ export default function Addons() {
         title="Add-ons"
         description="Need something extra without moving to a full bundle? Add-ons let you bolt extra support, hosting, storage, pages, updates, automation, or content services onto your website package."
       />
+
+      <WhatsDifferenceStrip activePage="addons" insideJourney={false} />
 
       <section style={{ padding: 'var(--space-12) var(--space-8)', background: 'var(--surface-base)' }}>
         <div style={{ maxWidth: 'var(--width-xl)', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'var(--space-16)' }}>

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { Check, ChevronDown, ShoppingCart, ArrowRight } from 'lucide-react'
 import PageHero from '../components/PageHero'
+import WhatsDifferenceStrip from '../components/WhatsDifferenceStrip'
 import { useBasket, PACKAGE_FORM_TYPES } from '../context/BasketContext'
 import { packageDetails } from '../data/packageDetails'
 
@@ -350,6 +351,8 @@ export default function Packages() {
         title="Service Packages"
         description="Choose individual services such as website design, SEO, automation, content, video and AI support."
       />
+
+      <WhatsDifferenceStrip activePage="packages" insideJourney={false} />
 
       <section style={{ padding: 'var(--space-16) var(--space-8)', background: 'var(--surface-base)' }}>
         <div style={{ maxWidth: 'var(--width-xl)', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'var(--space-10)' }}>

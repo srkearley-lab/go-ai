@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { Check, ChevronDown, ShoppingCart, MessageCircle } from 'lucide-react'
 import PageHero from '../components/PageHero'
+import WhatsDifferenceStrip from '../components/WhatsDifferenceStrip'
 import { useBasket, PACKAGE_FORM_TYPES } from '../context/BasketContext'
 import { packageDetails } from '../data/packageDetails'
 
@@ -449,6 +450,8 @@ export default function Bundles() {
         title="Monthly Bundles"
         description="Combine services into monthly support packages for websites, marketing, automation and growth."
       />
+
+      <WhatsDifferenceStrip activePage="bundles" insideJourney={false} />
 
       <section style={{ padding: 'var(--space-16) var(--space-8)', background: 'var(--surface-base)' }}>
         <div style={{ maxWidth: 'var(--width-xl)', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'var(--space-10)' }}>
