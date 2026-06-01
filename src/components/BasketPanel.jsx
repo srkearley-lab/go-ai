@@ -136,13 +136,14 @@ export default function BasketPanel() {
                   style={{
                     height: 48, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-2)',
                     fontSize: 'var(--text-sm)', fontWeight: 600,
-                    background: 'var(--color-brand-500)', color: 'var(--color-neutral-0)',
-                    border: '1px solid var(--color-brand-600)', borderRadius: 'var(--radius-md)',
-                    transition: 'background 120ms ease',
+                    background: 'linear-gradient(90deg, #293BFF 0%, #7627EF 100%)', color: '#FFFFFF',
+                    border: 'none', borderRadius: 'var(--radius-md)',
+                    boxShadow: '0 0 24px rgba(118, 39, 239, 0.35)',
+                    transition: 'filter 120ms ease, box-shadow 120ms ease',
                     textDecoration: 'none',
                   }}
-                  onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--color-brand-600)' }}
-                  onMouseLeave={(e) => { e.currentTarget.style.background = 'var(--color-brand-500)' }}
+                  onMouseEnter={(e) => { e.currentTarget.style.filter = 'brightness(1.1)'; e.currentTarget.style.boxShadow = '0 0 36px rgba(118, 39, 239, 0.5)' }}
+                  onMouseLeave={(e) => { e.currentTarget.style.filter = 'brightness(1)'; e.currentTarget.style.boxShadow = '0 0 24px rgba(118, 39, 239, 0.35)' }}
                 >
                   Proceed to Order Form <ArrowRight size={15} />
                 </Link>

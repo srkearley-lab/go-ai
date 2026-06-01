@@ -260,15 +260,15 @@ function WebsiteCard({ pkg, variants }) {
               {pkg.price}
             </span>
             <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-secondary)', fontStyle: 'italic', marginTop: 'var(--space-1)' }}>
-              Starting price for initial build only. Final quote based on scope.
+              One-off, fixed-price website build.
             </p>
           </div>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-3)', alignItems: 'center' }}>
             <Link
               to="/contact"
-              style={{ height: 40, padding: '0 var(--space-5)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: 'var(--text-sm)', fontWeight: 500, background: 'var(--color-brand-500)', color: 'var(--color-neutral-0)', border: '1px solid var(--color-brand-600)', borderRadius: 'var(--radius-md)', transition: 'background 120ms ease' }}
-              onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--color-brand-600)' }}
-              onMouseLeave={(e) => { e.currentTarget.style.background = 'var(--color-brand-500)' }}
+              style={{ height: 40, padding: '0 var(--space-5)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: 'var(--text-sm)', fontWeight: 600, background: 'linear-gradient(90deg, #293BFF 0%, #7627EF 100%)', color: '#FFFFFF', border: 'none', borderRadius: 'var(--radius-md)', boxShadow: '0 0 20px rgba(118, 39, 239, 0.3)', transition: 'filter 120ms ease, box-shadow 120ms ease' }}
+              onMouseEnter={(e) => { e.currentTarget.style.filter = 'brightness(1.1)'; e.currentTarget.style.boxShadow = '0 0 30px rgba(118, 39, 239, 0.45)' }}
+              onMouseLeave={(e) => { e.currentTarget.style.filter = 'brightness(1)'; e.currentTarget.style.boxShadow = '0 0 20px rgba(118, 39, 239, 0.3)' }}
             >{pkg.cta}</Link>
             <BasketButton item={basketItem} />
           </div>
@@ -400,14 +400,14 @@ export default function Websites() {
       <PageHero
         tag="Websites"
         title="Website Setup Packages"
-        description="Website setup prices start from €450. These are one-off prices for the initial website build only."
+        description="One-off website builds with fixed prices. Choose the right level for your business, starting with the Basic Launch Website at €450."
       />
 
       <section style={{ padding: 'var(--space-16) var(--space-8)', background: 'var(--surface-base)', borderBottom: '1px solid var(--border-default)' }}>
         <div style={{ maxWidth: 'var(--width-xl)', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'var(--space-10)' }}>
 
           <p style={{ fontSize: 'var(--text-sm)', lineHeight: 1.7, color: 'var(--text-secondary)', maxWidth: '62ch' }}>
-            Choose the right level of website for your business. These are starting prices for the initial build only — ongoing hosting, content and growth support are available separately through our <Link to="/packages" style={{ color: 'var(--color-brand-400)' }}>packages</Link> and <Link to="/bundles" style={{ color: 'var(--color-brand-400)' }}>bundles</Link>.
+            Choose the right level of website for your business. These are fixed prices for the initial website build only — ongoing hosting, content, growth support and optional extras are available separately through our <Link to="/packages" style={{ color: 'var(--color-brand-400)' }}>packages</Link>, <Link to="/bundles" style={{ color: 'var(--color-brand-400)' }}>bundles</Link> and <Link to="/addons" style={{ color: 'var(--color-brand-400)' }}>add-ons</Link>.
           </p>
 
           <motion.div
@@ -429,7 +429,7 @@ export default function Websites() {
           </motion.div>
 
           <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', fontStyle: 'italic', maxWidth: '72ch' }}>
-            All website prices are starting prices for the initial setup only. Final pricing depends on pages, content requirements, design complexity and integrations. All prices exclude Greek VAT (24%).
+            All website prices are fixed prices for the initial website build. Final price confirmed on enquiry based on pages and scope. All prices exclude Greek VAT (24%).
           </p>
         </div>
       </section>
@@ -457,9 +457,9 @@ export default function Websites() {
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-3)', justifyContent: 'center' }}>
             <Link
               to="/bundles"
-              style={{ height: 44, padding: '0 var(--space-6)', display: 'inline-flex', alignItems: 'center', fontSize: 'var(--text-sm)', fontWeight: 600, background: 'var(--color-brand-500)', color: 'var(--color-neutral-0)', border: '1px solid var(--color-brand-600)', borderRadius: 'var(--radius-md)', transition: 'background 120ms ease' }}
-              onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--color-brand-600)' }}
-              onMouseLeave={(e) => { e.currentTarget.style.background = 'var(--color-brand-500)' }}
+              style={{ height: 44, padding: '0 var(--space-6)', display: 'inline-flex', alignItems: 'center', fontSize: 'var(--text-sm)', fontWeight: 600, background: 'linear-gradient(90deg, #293BFF 0%, #7627EF 100%)', color: '#FFFFFF', border: 'none', borderRadius: 'var(--radius-md)', boxShadow: '0 0 30px rgba(118, 39, 239, 0.35)', transition: 'filter 120ms ease, box-shadow 120ms ease' }}
+              onMouseEnter={(e) => { e.currentTarget.style.filter = 'brightness(1.1)'; e.currentTarget.style.boxShadow = '0 0 40px rgba(118, 39, 239, 0.5)' }}
+              onMouseLeave={(e) => { e.currentTarget.style.filter = 'brightness(1)'; e.currentTarget.style.boxShadow = '0 0 30px rgba(118, 39, 239, 0.35)' }}
             >
               View Monthly Bundles
             </Link>

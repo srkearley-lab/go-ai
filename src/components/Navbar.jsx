@@ -6,14 +6,13 @@ import { GoAILogo } from './GoAILogo'
 import { useBasket } from '../context/BasketContext'
 
 const navLinks = [
-  { label: 'Websites',             href: '/websites' },
-  { label: 'Packages',             href: '/packages' },
-  { label: 'Bundles',              href: '/bundles' },
-  { label: 'Add-ons',              href: '/addons' },
-  { label: "What's the Difference?", href: '/journey#whats-the-difference' },
-  { label: 'Portfolio',            href: '/portfolio' },
-  { label: 'FAQ',                  href: '/faq' },
-  { label: 'Contact',              href: '/contact' },
+  { label: 'Websites',  href: '/websites' },
+  { label: 'Packages',  href: '/packages' },
+  { label: 'Bundles',   href: '/bundles' },
+  { label: 'Add-ons',   href: '/addons' },
+  { label: 'Portfolio', href: '/portfolio' },
+  { label: 'FAQ',       href: '/faq' },
+  { label: 'Contact',   href: '/contact' },
 ]
 
 export default function Navbar() {
@@ -118,9 +117,9 @@ export default function Navbar() {
               {basketCount > 0 ? `Basket (${basketCount})` : 'Basket'}
             </Link>
 
-            {/* Start Your Journey */}
+            {/* Get a Quote Today */}
             <Link
-              to="/journey"
+              to="/quote"
               style={{
                 height: 36,
                 padding: '0 var(--space-4)',
@@ -139,7 +138,7 @@ export default function Navbar() {
               onMouseEnter={(e) => { e.currentTarget.style.filter = 'brightness(1.12)'; e.currentTarget.style.boxShadow = '0 0 40px rgba(118, 39, 239, 0.5)' }}
               onMouseLeave={(e) => { e.currentTarget.style.filter = 'brightness(1)'; e.currentTarget.style.boxShadow = '0 0 30px rgba(118, 39, 239, 0.35)' }}
             >
-              Start Your Journey
+              Get a Quote Today
             </Link>
           </div>
 
@@ -223,7 +222,7 @@ export default function Navbar() {
             {/* Mobile CTA row */}
             <div style={{ display: 'flex', gap: 'var(--space-3)', marginTop: 'var(--space-5)', flexWrap: 'wrap' }}>
               <Link
-                to="/journey"
+                to="/quote"
                 style={{
                   flex: 1, minWidth: 140,
                   height: 44, display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
@@ -234,7 +233,7 @@ export default function Navbar() {
                   textDecoration: 'none',
                 }}
               >
-                Start Your Journey
+                Get a Quote Today
               </Link>
               <Link
                 to="/order"

@@ -178,9 +178,10 @@ function TopPackagesSection({ reduceMotion, stagger, cardVariants }) {
                   display: 'inline-flex', alignItems: 'center',
                   fontSize: 'var(--text-xs)', fontWeight: 600,
                   letterSpacing: '0.05em', textTransform: 'uppercase',
-                  background: 'var(--color-brand-500)', border: '1px solid var(--color-brand-600)',
-                  color: 'var(--color-neutral-0)',
+                  background: 'linear-gradient(90deg, #293BFF 0%, #7627EF 100%)',
+                  color: '#FFFFFF',
                   borderRadius: 'var(--radius-full)', padding: '3px var(--space-3)',
+                  boxShadow: '0 0 12px rgba(118, 39, 239, 0.4)',
                 }}>
                   Recommended
                 </span>
@@ -467,24 +468,24 @@ export default function Home() {
           </div>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-3)', justifyContent: 'center' }}>
             <Link
-              to="/packages"
-              style={{ height: 44, padding: '0 var(--space-6)', display: 'inline-flex', alignItems: 'center', fontSize: 'var(--text-sm)', fontWeight: 600, background: 'var(--color-brand-500)', color: 'var(--color-neutral-0)', border: '1px solid var(--color-brand-600)', borderRadius: 'var(--radius-md)', transition: 'background 120ms ease, transform 60ms ease' }}
-              onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--color-brand-600)' }}
-              onMouseLeave={(e) => { e.currentTarget.style.background = 'var(--color-brand-500)' }}
+              to="/quote"
+              style={{ height: 44, padding: '0 var(--space-6)', display: 'inline-flex', alignItems: 'center', fontSize: 'var(--text-sm)', fontWeight: 600, background: 'linear-gradient(90deg, #293BFF 0%, #7627EF 100%)', color: '#FFFFFF', border: 'none', borderRadius: 'var(--radius-md)', boxShadow: '0 0 30px rgba(118, 39, 239, 0.35)', transition: 'filter 120ms ease, box-shadow 120ms ease, transform 60ms ease' }}
+              onMouseEnter={(e) => { e.currentTarget.style.filter = 'brightness(1.1)'; e.currentTarget.style.boxShadow = '0 0 40px rgba(118, 39, 239, 0.5)' }}
+              onMouseLeave={(e) => { e.currentTarget.style.filter = 'brightness(1)'; e.currentTarget.style.boxShadow = '0 0 30px rgba(118, 39, 239, 0.35)' }}
               onMouseDown={(e) => { e.currentTarget.style.transform = 'translateY(1px)' }}
               onMouseUp={(e) => { e.currentTarget.style.transform = 'translateY(0)' }}
             >
-              Choose your package
+              Get a Quote Today
             </Link>
             <Link
               to="/contact"
-              style={{ height: 44, padding: '0 var(--space-6)', display: 'inline-flex', alignItems: 'center', fontSize: 'var(--text-sm)', fontWeight: 600, background: 'var(--color-brand-500)', color: 'var(--color-neutral-0)', border: '1px solid var(--color-brand-600)', borderRadius: 'var(--radius-md)', transition: 'background 120ms ease, transform 60ms ease' }}
-              onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--color-brand-600)' }}
-              onMouseLeave={(e) => { e.currentTarget.style.background = 'var(--color-brand-500)' }}
+              style={{ height: 44, padding: '0 var(--space-6)', display: 'inline-flex', alignItems: 'center', fontSize: 'var(--text-sm)', fontWeight: 500, background: 'transparent', color: 'var(--text-primary)', border: '1px solid var(--goai-violet)', borderRadius: 'var(--radius-md)', transition: 'background 120ms ease, color 120ms ease, border 120ms ease, transform 60ms ease' }}
+              onMouseEnter={(e) => { e.currentTarget.style.background = 'linear-gradient(90deg, #293BFF 0%, #7627EF 100%)'; e.currentTarget.style.color = '#FFFFFF'; e.currentTarget.style.border = '1px solid transparent' }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--text-primary)'; e.currentTarget.style.border = '1px solid var(--goai-violet)' }}
               onMouseDown={(e) => { e.currentTarget.style.transform = 'translateY(1px)' }}
               onMouseUp={(e) => { e.currentTarget.style.transform = 'translateY(0)' }}
             >
-              Send us an email
+              Contact Us
             </Link>
           </div>
         </motion.div>

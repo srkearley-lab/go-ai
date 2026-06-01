@@ -458,7 +458,7 @@ export default function Bundles() {
           </p>
 
           <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', fontStyle: 'italic' }}>
-            Website setup prices start from €450. These are one-off prices for the initial website build only.
+            Website setup prices are fixed starting at €450 one-off for the initial website build. Monthly prices shown are for ongoing support only.
           </p>
 
           <motion.div
