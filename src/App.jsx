@@ -46,6 +46,7 @@ function App() {
           <Route path="/websites" element={<Websites />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/quote" element={<Quote />} />
+          <Route path="/request-quote" element={<Quote />} />
           <Route path="/how-it-works" element={<HowItWorks />} />
           <Route path="/book" element={<Book />} />
           <Route path="/onboarding" element={<Onboarding />} />

@@ -52,15 +52,16 @@ export default function Footer() {
               Pages
             </p>
             {[
-              ['/websites',  'Websites'],
-              ['/packages',  'Packages'],
-              ['/bundles',   'Bundles'],
-              ['/addons',    'Add-ons'],
+              ['/websites',                      'Websites'],
+              ['/packages',                      'Packages'],
+              ['/bundles',                       'Bundles'],
+              ['/addons',                        'Add-ons'],
               ['/journey',                       'Start Your Journey'],
-              ['/journey#whats-the-difference', "What's the Difference?"],
-              ['/portfolio',                    'Portfolio'],
-              ['/faq',       'FAQ'],
-              ['/contact',   'Contact Us'],
+              ['/journey#whats-the-difference',  "What's the Difference?"],
+              ['/request-quote',                 'Request a Quote'],
+              ['/portfolio',                     'Portfolio'],
+              ['/faq',                           'FAQ'],
+              ['/contact',                       'Contact Us'],
             ].map(([href, label]) => (
               <Link key={href} to={href}
                 style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', transition: 'color 120ms ease' }}

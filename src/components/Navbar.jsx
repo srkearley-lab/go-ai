@@ -117,9 +117,9 @@ export default function Navbar() {
               {basketCount > 0 ? `Basket (${basketCount})` : 'Basket'}
             </Link>
 
-            {/* Get a Quote Today */}
+            {/* Start Your Journey */}
             <Link
-              to="/quote"
+              to="/journey"
               style={{
                 height: 36,
                 padding: '0 var(--space-4)',
@@ -138,7 +138,30 @@ export default function Navbar() {
               onMouseEnter={(e) => { e.currentTarget.style.filter = 'brightness(1.12)'; e.currentTarget.style.boxShadow = '0 0 40px rgba(118, 39, 239, 0.5)' }}
               onMouseLeave={(e) => { e.currentTarget.style.filter = 'brightness(1)'; e.currentTarget.style.boxShadow = '0 0 30px rgba(118, 39, 239, 0.35)' }}
             >
-              Get a Quote Today
+              Start Your Journey
+            </Link>
+
+            {/* Request a Quote */}
+            <Link
+              to="/request-quote"
+              style={{
+                height: 36,
+                padding: '0 var(--space-4)',
+                display: 'inline-flex',
+                alignItems: 'center',
+                fontSize: 'var(--text-xs)',
+                fontWeight: 600,
+                background: 'transparent',
+                color: 'var(--text-primary)',
+                border: '1px solid var(--goai-violet)',
+                borderRadius: 'var(--radius-md)',
+                transition: 'background 120ms ease, color 120ms ease, border-color 120ms ease',
+                whiteSpace: 'nowrap',
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.background = 'linear-gradient(90deg, #293BFF 0%, #7627EF 100%)'; e.currentTarget.style.color = '#FFFFFF'; e.currentTarget.style.borderColor = 'transparent' }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--text-primary)'; e.currentTarget.style.borderColor = 'var(--goai-violet)' }}
+            >
+              Request a Quote
             </Link>
           </div>
 
@@ -222,7 +245,7 @@ export default function Navbar() {
             {/* Mobile CTA row */}
             <div style={{ display: 'flex', gap: 'var(--space-3)', marginTop: 'var(--space-5)', flexWrap: 'wrap' }}>
               <Link
-                to="/quote"
+                to="/journey"
                 style={{
                   flex: 1, minWidth: 140,
                   height: 44, display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
@@ -233,7 +256,21 @@ export default function Navbar() {
                   textDecoration: 'none',
                 }}
               >
-                Get a Quote Today
+                Start Your Journey
+              </Link>
+              <Link
+                to="/request-quote"
+                style={{
+                  flex: 1, minWidth: 140,
+                  height: 44, display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                  fontSize: 'var(--text-sm)', fontWeight: 600,
+                  background: 'transparent', color: 'var(--text-primary)',
+                  border: '1px solid var(--goai-violet)',
+                  borderRadius: 'var(--radius-md)',
+                  textDecoration: 'none',
+                }}
+              >
+                Request a Quote
               </Link>
               <Link
                 to="/order"

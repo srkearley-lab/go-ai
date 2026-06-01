@@ -2,7 +2,7 @@ import { lazy, Suspense } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, useReducedMotion } from 'framer-motion'
 import {
-  Globe, Package, Layers, FileText,
+  Globe, Package, Layers, FileText, PlusCircle,
   Home as HomeIcon, Dumbbell, UtensilsCrossed, Coffee,
   Scissors, Map, Car, Anchor,
   MessageSquare, Zap, MessageCircle,
@@ -31,11 +31,11 @@ const industries = [
 ]
 
 const steps = [
-  { icon: FileText,      number: 1, title: 'Choose your package',        description: 'Browse our packages and pick the one that matches your goals and budget. Not sure? We\'ll help you choose.' },
-  { icon: MessageSquare, number: 2, title: 'Send us your details',        description: 'Complete a short onboarding form covering your business, branding and what you need. Takes around 10 minutes.' },
-  { icon: Zap,           number: 3, title: 'We build or set up the work', description: 'We design, build and configure everything based on your brief — website, content, automations and integrations.' },
-  { icon: MessageCircle, number: 4, title: 'Review and approve',          description: 'We share a preview for your feedback. We update until you\'re completely happy — no limits on revisions.' },
-  { icon: Globe,         number: 5, title: 'Launch or activate',          description: 'We publish your site, activate your automations and confirm everything is working. You\'re live and ready to grow.' },
+  { icon: Globe,        number: 1, title: 'Choose your website',    description: 'Start by selecting the type of website you need.' },
+  { icon: Package,      number: 2, title: 'Choose your package',    description: 'Pick the setup or service option that best fits your business.' },
+  { icon: Layers,       number: 3, title: 'Add a monthly bundle',   description: 'Add ongoing support, updates, hosting help or digital growth support if needed.' },
+  { icon: PlusCircle,   number: 4, title: 'Add optional extras',    description: 'Bolt on extra features such as storage, extra pages, forms, automation or additional functionality.' },
+  { icon: FileText,     number: 5, title: 'Review and complete',    description: 'Review your selections, then add fixed-price items to basket, buy online, or request a tailored quote if your setup needs a recommendation.' },
 ]
 
 const quickChoiceItems = [

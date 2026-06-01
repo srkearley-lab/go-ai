@@ -90,7 +90,7 @@ const groups = [
           'SSL and domain support',
         ],
         note: 'Domain renewals, third-party licences, major redesigns and advanced development work are not included.',
-        cta: 'contact',
+        cta: 'basket',
       },
       {
         id: 'addon-extra-storage',
@@ -104,7 +104,7 @@ const groups = [
           'Storage monitoring',
         ],
         note: 'Only needed if you exceed the storage included in Hosting & Website Care.',
-        cta: 'contact',
+        cta: 'basket',
       },
       {
         id: 'addon-priority-updates',
@@ -118,7 +118,7 @@ const groups = [
           'Text, image and price updates',
         ],
         note: null,
-        cta: 'contact',
+        cta: 'basket',
       },
       {
         id: 'addon-content-refresh',
@@ -132,7 +132,7 @@ const groups = [
           'Improvement notes',
         ],
         note: null,
-        cta: 'contact',
+        cta: 'basket',
       },
       {
         id: 'addon-seo-basics',
@@ -147,7 +147,7 @@ const groups = [
           'Local keyword alignment',
         ],
         note: null,
-        cta: 'contact',
+        cta: 'basket',
       },
       {
         id: 'addon-gbp-support',
@@ -161,7 +161,7 @@ const groups = [
           'Photo and service updates',
         ],
         note: null,
-        cta: 'contact',
+        cta: 'basket',
       },
     ],
   },
