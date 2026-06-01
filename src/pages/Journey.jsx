@@ -4,10 +4,10 @@ import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import {
   Globe, Package, Layers, PlusCircle, FileText,
   ArrowRight, Check, X as XIcon, ShoppingCart, Pencil, ChevronDown,
+  Lock, CreditCard, AlertCircle,
 } from 'lucide-react'
 import PageHero from '../components/PageHero'
 import WhatsDifferenceStrip from '../components/WhatsDifferenceStrip'
-import { useBasket } from '../context/BasketContext'
 
 // ─── Data ──────────────────────────────────────────────────────────────────────
 
@@ -426,7 +426,7 @@ const secondaryBtn = {
 
 // ─── Progress indicator ─────────────────────────────────────────────────────────
 
-const STEP_LABELS = ['Website', 'Package', 'Bundle', 'Add-ons', 'Review & Complete']
+const STEP_LABELS = ['Website', 'Package', 'Bundle', 'Add-ons', 'Review', 'Payment']
 
 function ProgressIndicator({ currentStep, onGoToStep }) {
   return (
@@ -798,7 +798,7 @@ function StepHeader({ stepNum, title, description }) {
   return (
     <div style={{ marginBottom: 'var(--space-6)' }}>
       <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--goai-violet)', marginBottom: 'var(--space-2)' }}>
-        Step {stepNum} of 5
+        Step {stepNum} of {STEP_LABELS.length}
       </p>
       <h2 style={{ fontSize: 'clamp(var(--text-md), 2.5vw, var(--text-lg))', fontWeight: 700, color: 'var(--text-primary)', letterSpacing: '-0.01em', lineHeight: 1.2, marginBottom: 'var(--space-2)' }}>
         {title}
@@ -1081,20 +1081,29 @@ function StepAddons({ selectedAddons, onToggle, onContinue, onSkip, onBack }) {
   )
 }
 
-function ReviewRow({ label, value, onEdit, editLabel = 'Edit', placeholder = 'None selected' }) {
+function ReviewRow({ label, value, lines, onEdit, editLabel = 'Edit', placeholder = 'None selected' }) {
+  const hasContent = value || (lines && lines.length > 0)
   return (
     <div style={{
       display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between',
       gap: 'var(--space-4)', padding: 'var(--space-4) 0',
       borderBottom: '1px solid var(--border-default)',
     }}>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-1)' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-1)', flex: 1, minWidth: 0 }}>
         <span style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.05em', textTransform: 'uppercase', color: 'var(--text-tertiary)' }}>
           {label}
         </span>
-        <span style={{ fontSize: 'var(--text-sm)', color: value ? 'var(--text-primary)' : 'var(--text-tertiary)', fontStyle: value ? 'normal' : 'italic' }}>
-          {value || placeholder}
-        </span>
+        {hasContent ? (
+          lines ? (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-1)' }}>
+              {lines.map((l, i) => <span key={i} style={{ fontSize: 'var(--text-sm)', color: 'var(--text-primary)', lineHeight: 1.5 }}>{l}</span>)}
+            </div>
+          ) : (
+            <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-primary)' }}>{value}</span>
+          )
+        ) : (
+          <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-tertiary)', fontStyle: 'italic' }}>{placeholder}</span>
+        )}
       </div>
       <button
         type="button"
@@ -1112,17 +1121,17 @@ function ReviewRow({ label, value, onEdit, editLabel = 'Edit', placeholder = 'No
   )
 }
 
-function StepReview({ website, pkg, bundle, addons, oneOffItems, monthlyItems, quoteItems, oneOffTotal, monthlyTotal, hasQuoteItems, hasFixedItems, onEditWebsite, onEditPackage, onEditBundle, onEditAddons, onBuyNow, onRequestQuote, onBack }) {
+function StepReview({ website, pkg, bundle, addons, oneOffItems, monthlyItems, quoteItems, oneOffTotal, monthlyTotal, hasQuoteItems, hasFixedItems, onEditWebsite, onEditPackage, onEditBundle, onEditAddons, onPaySecurely, onRequestProposal, onBack }) {
   return (
     <div>
       <StepHeader
         stepNum={5}
         title="Review & Complete"
-        description="Check your selections below, then proceed to checkout or request a quote."
+        description="Check your selections below, then choose how to proceed."
       />
       <WhatsDifferenceStrip activePage="quote" insideJourney={true} />
 
-      {/* Summary */}
+      {/* Selections summary */}
       <div style={{
         background: 'var(--surface-overlay)',
         border: '1px solid var(--border-default)',
@@ -1142,39 +1151,37 @@ function StepReview({ website, pkg, bundle, addons, oneOffItems, monthlyItems, q
           value={pkg ? `${pkg.name} — ${pkg.price}${pkg.priceNote ? ' ' + pkg.priceNote : ''}` : null}
           onEdit={onEditPackage}
           editLabel="Edit package"
+          placeholder="No package selected"
         />
         <ReviewRow
           label="Monthly bundle"
           value={bundle ? `${bundle.name} — ${bundle.price}${bundle.priceNote}` : null}
           onEdit={onEditBundle}
           editLabel="Edit bundle"
+          placeholder="No bundle selected"
         />
         <ReviewRow
           label="Add-ons"
-          value={addons.length ? addons.map(a =>
+          lines={addons.length ? addons.map(a =>
             a.isQuote
               ? `${a.name} — Quote requested`
-              : `${a.name} (${a.price}${a.priceNote ? ' ' + a.priceNote : ''})`
-          ).join(', ') : null}
+              : `${a.name} — ${a.price}${a.priceNote ? ' ' + a.priceNote : ''}`
+          ) : undefined}
           onEdit={onEditAddons}
           editLabel="Edit add-ons"
+          placeholder="No add-ons selected"
         />
       </div>
 
       {/* Totals */}
-      <div style={{
-        display: 'grid', gap: 'var(--space-4)',
-        marginBottom: 'var(--space-6)',
-      }}
-        className="journey-totals-grid"
-      >
+      <div style={{ display: 'grid', gap: 'var(--space-4)', marginBottom: 'var(--space-6)' }} className="journey-totals-grid">
         {oneOffItems.length > 0 && (
           <div style={{
             background: 'var(--surface-raised)', border: '1px solid var(--border-default)',
             borderRadius: 'var(--radius-lg)', padding: 'var(--space-5)',
           }}>
             <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.05em', textTransform: 'uppercase', color: 'var(--text-tertiary)', marginBottom: 'var(--space-3)' }}>
-              One-off costs
+              Due today
             </p>
             {oneOffItems.map(item => (
               <div key={item.name} style={{ display: 'flex', justifyContent: 'space-between', gap: 'var(--space-4)', padding: 'var(--space-1) 0', fontSize: 'var(--text-sm)', color: 'var(--text-secondary)' }}>
@@ -1182,9 +1189,9 @@ function StepReview({ website, pkg, bundle, addons, oneOffItems, monthlyItems, q
                 <span style={{ fontWeight: 600, color: 'var(--text-primary)', flexShrink: 0 }}>€{item.amount.toLocaleString('en-IE')}</span>
               </div>
             ))}
-            <div style={{ borderTop: '1px solid var(--border-default)', marginTop: 'var(--space-3)', paddingTop: 'var(--space-3)', display: 'flex', justifyContent: 'space-between' }}>
-              <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--text-primary)' }}>Total one-off</span>
-              <span style={{ fontSize: 'var(--text-md)', fontWeight: 700, color: 'var(--text-primary)' }}>€{oneOffTotal.toLocaleString('en-IE')}</span>
+            <div style={{ borderTop: '1px solid var(--border-default)', marginTop: 'var(--space-3)', paddingTop: 'var(--space-3)', display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
+              <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--text-primary)' }}>Total due today</span>
+              <span style={{ fontSize: 'var(--text-lg)', fontWeight: 700, color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>€{oneOffTotal.toLocaleString('en-IE')}</span>
             </div>
           </div>
         )}
@@ -1194,7 +1201,7 @@ function StepReview({ website, pkg, bundle, addons, oneOffItems, monthlyItems, q
             borderRadius: 'var(--radius-lg)', padding: 'var(--space-5)',
           }}>
             <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.05em', textTransform: 'uppercase', color: 'var(--text-tertiary)', marginBottom: 'var(--space-3)' }}>
-              Monthly costs
+              Monthly recurring
             </p>
             {monthlyItems.map(item => (
               <div key={item.name} style={{ display: 'flex', justifyContent: 'space-between', gap: 'var(--space-4)', padding: 'var(--space-1) 0', fontSize: 'var(--text-sm)', color: 'var(--text-secondary)' }}>
@@ -1202,9 +1209,9 @@ function StepReview({ website, pkg, bundle, addons, oneOffItems, monthlyItems, q
                 <span style={{ fontWeight: 600, color: 'var(--text-primary)', flexShrink: 0 }}>€{item.amount}/mo</span>
               </div>
             ))}
-            <div style={{ borderTop: '1px solid var(--border-default)', marginTop: 'var(--space-3)', paddingTop: 'var(--space-3)', display: 'flex', justifyContent: 'space-between' }}>
-              <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--text-primary)' }}>Total monthly</span>
-              <span style={{ fontSize: 'var(--text-md)', fontWeight: 700, color: 'var(--text-primary)' }}>€{monthlyTotal}/mo</span>
+            <div style={{ borderTop: '1px solid var(--border-default)', marginTop: 'var(--space-3)', paddingTop: 'var(--space-3)', display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
+              <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--text-primary)' }}>Monthly from</span>
+              <span style={{ fontSize: 'var(--text-lg)', fontWeight: 700, color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>€{monthlyTotal}/mo</span>
             </div>
           </div>
         )}
@@ -1219,7 +1226,7 @@ function StepReview({ website, pkg, bundle, addons, oneOffItems, monthlyItems, q
           display: 'flex', flexDirection: 'column', gap: 'var(--space-2)',
         }}>
           <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--color-accent-500)', margin: 0 }}>
-            Items requiring a quote
+            Items requiring follow-up
           </p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-1)' }}>
             {quoteItems.map(name => (
@@ -1229,7 +1236,7 @@ function StepReview({ website, pkg, bundle, addons, oneOffItems, monthlyItems, q
             ))}
           </div>
           <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', fontStyle: 'italic', margin: 0 }}>
-            Quote items will be confirmed after submission.
+            We'll review your quote items and confirm pricing before proceeding.
           </p>
         </div>
       )}
@@ -1243,30 +1250,11 @@ function StepReview({ website, pkg, bundle, addons, oneOffItems, monthlyItems, q
         >
           ← Back
         </button>
-        {hasFixedItems && (
-          <button
-            type="button"
-            onClick={onBuyNow}
-            style={{
-              height: 48, padding: '0 var(--space-8)',
-              display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-2)',
-              fontSize: 'var(--text-sm)', fontWeight: 600,
-              background: 'linear-gradient(90deg, #293BFF 0%, #7627EF 100%)',
-              color: '#FFFFFF', border: 'none', borderRadius: 'var(--radius-md)',
-              boxShadow: '0 0 28px rgba(118,39,239,0.4)',
-              cursor: 'pointer', transition: 'filter 120ms ease, box-shadow 120ms ease',
-              fontFamily: 'inherit',
-              order: hasQuoteItems ? 1 : 0,
-            }}
-            onMouseEnter={(e) => { e.currentTarget.style.filter = 'brightness(1.1)'; e.currentTarget.style.boxShadow = '0 0 40px rgba(118,39,239,0.55)' }}
-            onMouseLeave={(e) => { e.currentTarget.style.filter = 'brightness(1)'; e.currentTarget.style.boxShadow = '0 0 28px rgba(118,39,239,0.4)' }}
-          >
-            <ShoppingCart size={15} /> Buy Now / Checkout
-          </button>
-        )}
+
+        {/* Request Proposal — primary when quote items present */}
         <button
           type="button"
-          onClick={onRequestQuote}
+          onClick={onRequestProposal}
           style={{
             height: 48, padding: '0 var(--space-8)',
             display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-2)',
@@ -1295,12 +1283,324 @@ function StepReview({ website, pkg, bundle, addons, oneOffItems, monthlyItems, q
             }
           }}
         >
-          Request a Quote
+          Request Proposal
         </button>
+
+        {/* Pay Securely — primary when only fixed items */}
+        {hasFixedItems && (
+          <button
+            type="button"
+            onClick={onPaySecurely}
+            style={{
+              height: 48, padding: '0 var(--space-8)',
+              display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-2)',
+              fontSize: 'var(--text-sm)', fontWeight: 600,
+              background: 'linear-gradient(90deg, #293BFF 0%, #7627EF 100%)',
+              color: '#FFFFFF', border: 'none', borderRadius: 'var(--radius-md)',
+              boxShadow: '0 0 28px rgba(118,39,239,0.4)',
+              cursor: 'pointer', transition: 'filter 120ms ease, box-shadow 120ms ease',
+              fontFamily: 'inherit',
+              order: hasQuoteItems ? 1 : 0,
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.filter = 'brightness(1.1)'; e.currentTarget.style.boxShadow = '0 0 40px rgba(118,39,239,0.55)' }}
+            onMouseLeave={(e) => { e.currentTarget.style.filter = 'brightness(1)'; e.currentTarget.style.boxShadow = '0 0 28px rgba(118,39,239,0.4)' }}
+          >
+            <Lock size={14} /> Pay Securely
+          </button>
+        )}
       </div>
       <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', fontStyle: 'italic', marginTop: 'var(--space-4)' }}>
         All prices exclude Greek VAT (24%). Fixed prices confirmed on enquiry based on final scope.
       </p>
+    </div>
+  )
+}
+
+// ─── Payment step ──────────────────────────────────────────────────────────────
+
+function PaySuccessScreen({ hasMonthly }) {
+  return (
+    <div style={{ textAlign: 'center', padding: 'var(--space-16) var(--space-8)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'var(--space-6)' }}>
+      <div style={{
+        width: 64, height: 64, borderRadius: '50%',
+        background: 'rgba(22,163,74,0.12)', border: '1px solid rgba(22,163,74,0.3)',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+      }}>
+        <Check size={28} strokeWidth={2} style={{ color: 'var(--color-success)' }} />
+      </div>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)', maxWidth: '44ch' }}>
+        <h2 style={{ fontSize: 'clamp(var(--text-md), 2.5vw, var(--text-lg))', fontWeight: 700, color: 'var(--text-primary)', lineHeight: 1.2 }}>
+          Payment received
+        </h2>
+        <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', lineHeight: 1.7 }}>
+          {hasMonthly
+            ? 'Payment received. Your recurring services have been set up. We\'ll be in touch shortly with your onboarding details.'
+            : 'Payment received — your order has been submitted. We\'ll be in touch shortly.'}
+        </p>
+      </div>
+    </div>
+  )
+}
+
+function FormField({ label, error, children }) {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
+      <label style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-secondary)', letterSpacing: '0.03em' }}>
+        {label} <span style={{ color: '#dc2626' }}>*</span>
+      </label>
+      {children}
+      {error && (
+        <span style={{ fontSize: '0.68rem', color: '#dc2626', display: 'flex', alignItems: 'center', gap: 4 }}>
+          <AlertCircle size={11} /> {error}
+        </span>
+      )}
+    </div>
+  )
+}
+
+function StepPayment({ oneOffItems, monthlyItems, oneOffTotal, monthlyTotal, hasMonthlyItems, onBack }) {
+  const [form, setForm] = useState({ name: '', card: '', expiry: '', cvv: '', postcode: '', email: '', agreed: false })
+  const [errors, setErrors] = useState({})
+  const [submitted, setSubmitted] = useState(false)
+
+  const update = (field, val) => {
+    setForm(f => ({ ...f, [field]: val }))
+    if (errors[field]) setErrors(e => ({ ...e, [field]: undefined }))
+  }
+
+  const formatCard = (val) => {
+    const digits = val.replace(/\D/g, '').slice(0, 16)
+    return digits.replace(/(.{4})/g, '$1 ').trim()
+  }
+
+  const formatExpiry = (val) => {
+    const digits = val.replace(/\D/g, '').slice(0, 4)
+    return digits.length > 2 ? `${digits.slice(0, 2)}/${digits.slice(2)}` : digits
+  }
+
+  const validate = () => {
+    const e = {}
+    if (!form.name.trim()) e.name = 'Required'
+    if (form.card.replace(/\s/g, '').length < 16) e.card = 'Enter a valid 16-digit card number'
+    if (form.expiry.length < 5) e.expiry = 'Enter expiry as MM/YY'
+    if (form.cvv.length < 3) e.cvv = 'Enter your 3 or 4-digit security code'
+    if (!form.postcode.trim()) e.postcode = 'Required'
+    if (!/\S+@\S+\.\S+/.test(form.email)) e.email = 'Enter a valid email address'
+    if (!form.agreed) e.agreed = 'You must accept the terms to continue'
+    setErrors(e)
+    return Object.keys(e).length === 0
+  }
+
+  // TODO: Connect to Stripe or payment provider before launch.
+  // Card details are held in local component state for display only and are NOT sent to any backend.
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    if (validate()) setSubmitted(true)
+  }
+
+  const inputBase = (hasError) => ({
+    width: '100%', height: 44,
+    background: 'var(--surface-subtle)',
+    border: `1px solid ${hasError ? '#dc2626' : 'var(--border-default)'}`,
+    borderRadius: 'var(--radius-md)',
+    padding: '0 var(--space-4)',
+    color: 'var(--text-primary)',
+    fontSize: 'var(--text-sm)', fontFamily: 'inherit',
+    outline: 'none', boxSizing: 'border-box',
+    transition: 'border-color 120ms ease',
+  })
+
+  if (submitted) return <PaySuccessScreen hasMonthly={hasMonthlyItems} />
+
+  return (
+    <div>
+      <StepHeader
+        stepNum={6}
+        title="Payment Details"
+        description="Enter your payment details to complete your order."
+      />
+
+      {/* Compact order summary */}
+      <div style={{
+        background: 'var(--surface-overlay)', border: '1px solid var(--border-default)',
+        borderRadius: 'var(--radius-lg)', padding: 'var(--space-5)',
+        marginBottom: 'var(--space-6)', display: 'flex', flexDirection: 'column', gap: 'var(--space-2)',
+      }}>
+        <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.05em', textTransform: 'uppercase', color: 'var(--text-tertiary)', marginBottom: 'var(--space-1)' }}>
+          Order summary
+        </p>
+        {oneOffItems.map(item => (
+          <div key={item.name} style={{ display: 'flex', justifyContent: 'space-between', gap: 'var(--space-4)', fontSize: 'var(--text-sm)', color: 'var(--text-secondary)' }}>
+            <span>{item.name}</span>
+            <span style={{ fontWeight: 600, color: 'var(--text-primary)', flexShrink: 0 }}>€{item.amount.toLocaleString('en-IE')}</span>
+          </div>
+        ))}
+        {monthlyItems.map(item => (
+          <div key={item.name} style={{ display: 'flex', justifyContent: 'space-between', gap: 'var(--space-4)', fontSize: 'var(--text-sm)', color: 'var(--text-secondary)' }}>
+            <span>{item.name}</span>
+            <span style={{ fontWeight: 600, color: 'var(--text-primary)', flexShrink: 0 }}>€{item.amount}/mo</span>
+          </div>
+        ))}
+        <div style={{ borderTop: '1px solid var(--border-default)', paddingTop: 'var(--space-3)', marginTop: 'var(--space-1)', display: 'flex', flexDirection: 'column', gap: 'var(--space-1)' }}>
+          {oneOffTotal > 0 && (
+            <div style={{ display: 'flex', justifyContent: 'space-between', gap: 'var(--space-4)', alignItems: 'baseline' }}>
+              <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--text-primary)' }}>Total due today</span>
+              <span style={{ fontSize: 'var(--text-lg)', fontWeight: 700, color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>€{oneOffTotal.toLocaleString('en-IE')}</span>
+            </div>
+          )}
+          {monthlyTotal > 0 && (
+            <div style={{ display: 'flex', justifyContent: 'space-between', gap: 'var(--space-4)' }}>
+              <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)' }}>Then monthly from</span>
+              <span style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-tertiary)' }}>€{monthlyTotal}/mo</span>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Recurring services notice */}
+      {hasMonthlyItems && (
+        <div style={{
+          background: 'rgba(245,158,11,0.06)', border: '1px solid rgba(245,158,11,0.2)',
+          borderRadius: 'var(--radius-lg)', padding: 'var(--space-4) var(--space-5)',
+          marginBottom: 'var(--space-6)',
+          display: 'flex', gap: 'var(--space-3)', alignItems: 'flex-start',
+        }}>
+          <AlertCircle size={15} style={{ color: 'var(--color-accent-500)', flexShrink: 0, marginTop: 1 }} />
+          <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-secondary)', lineHeight: 1.65, margin: 0 }}>
+            Your order includes recurring monthly services. By continuing, you agree the monthly amount shown will be collected automatically until cancelled.
+          </p>
+        </div>
+      )}
+
+      {/* Payment form */}
+      <form onSubmit={handleSubmit} noValidate style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-5)' }}>
+
+        <FormField label="Cardholder name" error={errors.name}>
+          <input
+            type="text" value={form.name}
+            onChange={e => update('name', e.target.value)}
+            placeholder="Name as it appears on card"
+            style={inputBase(errors.name)}
+            onFocus={e => { e.target.style.borderColor = 'var(--goai-violet)' }}
+            onBlur={e => { e.target.style.borderColor = errors.name ? '#dc2626' : 'var(--border-default)' }}
+          />
+        </FormField>
+
+        <FormField label="Card number" error={errors.card}>
+          <div style={{ position: 'relative' }}>
+            <input
+              type="text" value={form.card}
+              onChange={e => update('card', formatCard(e.target.value))}
+              placeholder="1234 5678 9012 3456"
+              maxLength={19}
+              style={{ ...inputBase(errors.card), paddingRight: 44 }}
+              onFocus={e => { e.target.style.borderColor = 'var(--goai-violet)' }}
+              onBlur={e => { e.target.style.borderColor = errors.card ? '#dc2626' : 'var(--border-default)' }}
+            />
+            <CreditCard size={16} style={{ position: 'absolute', right: 14, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-tertiary)', pointerEvents: 'none' }} />
+          </div>
+        </FormField>
+
+        <div className="journey-payment-grid">
+          <FormField label="Expiry date" error={errors.expiry}>
+            <input
+              type="text" value={form.expiry}
+              onChange={e => update('expiry', formatExpiry(e.target.value))}
+              placeholder="MM/YY" maxLength={5}
+              style={inputBase(errors.expiry)}
+              onFocus={e => { e.target.style.borderColor = 'var(--goai-violet)' }}
+              onBlur={e => { e.target.style.borderColor = errors.expiry ? '#dc2626' : 'var(--border-default)' }}
+            />
+          </FormField>
+          <FormField label="Security code" error={errors.cvv}>
+            <input
+              type="password" value={form.cvv}
+              onChange={e => update('cvv', e.target.value.replace(/\D/g, '').slice(0, 4))}
+              placeholder="CVV" maxLength={4}
+              style={inputBase(errors.cvv)}
+              onFocus={e => { e.target.style.borderColor = 'var(--goai-violet)' }}
+              onBlur={e => { e.target.style.borderColor = errors.cvv ? '#dc2626' : 'var(--border-default)' }}
+            />
+          </FormField>
+        </div>
+
+        <div className="journey-payment-grid">
+          <FormField label="Billing postcode" error={errors.postcode}>
+            <input
+              type="text" value={form.postcode}
+              onChange={e => update('postcode', e.target.value.toUpperCase())}
+              placeholder="Postcode / ZIP"
+              style={inputBase(errors.postcode)}
+              onFocus={e => { e.target.style.borderColor = 'var(--goai-violet)' }}
+              onBlur={e => { e.target.style.borderColor = errors.postcode ? '#dc2626' : 'var(--border-default)' }}
+            />
+          </FormField>
+          <FormField label="Email for receipt" error={errors.email}>
+            <input
+              type="email" value={form.email}
+              onChange={e => update('email', e.target.value)}
+              placeholder="you@example.com"
+              style={inputBase(errors.email)}
+              onFocus={e => { e.target.style.borderColor = 'var(--goai-violet)' }}
+              onBlur={e => { e.target.style.borderColor = errors.email ? '#dc2626' : 'var(--border-default)' }}
+            />
+          </FormField>
+        </div>
+
+        <div style={{ display: 'flex', alignItems: 'flex-start', gap: 'var(--space-3)' }}>
+          <input
+            type="checkbox" id="pay-terms"
+            checked={form.agreed}
+            onChange={e => update('agreed', e.target.checked)}
+            style={{ marginTop: 3, flexShrink: 0, accentColor: 'var(--goai-violet)' }}
+          />
+          <div>
+            <label htmlFor="pay-terms" style={{ fontSize: 'var(--text-xs)', color: 'var(--text-secondary)', lineHeight: 1.6, cursor: 'pointer' }}>
+              I agree to the service terms and conditions
+            </label>
+            {errors.agreed && (
+              <p style={{ fontSize: '0.68rem', color: '#dc2626', margin: 'var(--space-1) 0 0', display: 'flex', alignItems: 'center', gap: 4 }}>
+                <AlertCircle size={11} /> {errors.agreed}
+              </p>
+            )}
+          </div>
+        </div>
+
+        <div style={{
+          paddingTop: 'var(--space-4)', borderTop: '1px solid var(--border-default)',
+          display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+          gap: 'var(--space-3)', flexWrap: 'wrap',
+        }}>
+          <button
+            type="button" onClick={onBack} style={backBtn}
+            onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--text-primary)'; e.currentTarget.style.borderColor = 'var(--border-strong)' }}
+            onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--text-secondary)'; e.currentTarget.style.borderColor = 'var(--border-default)' }}
+          >
+            ← Back
+          </button>
+          <button
+            type="submit"
+            style={{
+              height: 48, padding: '0 var(--space-8)',
+              display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-2)',
+              fontSize: 'var(--text-sm)', fontWeight: 600,
+              background: 'linear-gradient(90deg, #293BFF 0%, #7627EF 100%)',
+              color: '#FFFFFF', border: 'none', borderRadius: 'var(--radius-md)',
+              boxShadow: '0 0 28px rgba(118,39,239,0.4)',
+              cursor: 'pointer', transition: 'filter 120ms ease, box-shadow 120ms ease',
+              fontFamily: 'inherit',
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.filter = 'brightness(1.1)'; e.currentTarget.style.boxShadow = '0 0 40px rgba(118,39,239,0.55)' }}
+            onMouseLeave={(e) => { e.currentTarget.style.filter = 'brightness(1)'; e.currentTarget.style.boxShadow = '0 0 28px rgba(118,39,239,0.4)' }}
+          >
+            <Lock size={14} /> Pay securely now
+          </button>
+        </div>
+
+        <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', fontStyle: 'italic' }}>
+          All prices exclude Greek VAT (24%). Your card details are not stored.
+        </p>
+      </form>
     </div>
   )
 }
@@ -1310,8 +1610,6 @@ function StepReview({ website, pkg, bundle, addons, oneOffItems, monthlyItems, q
 function JourneyWizard() {
   const navigate = useNavigate()
   const reduceMotion = useReducedMotion()
-  const { addItem } = useBasket()
-
   const [step, setStep] = useState(0)
   const [selectedWebsite, setSelectedWebsite] = useState(null)
   const [selectedPackage, setSelectedPackage] = useState(null)
@@ -1379,21 +1677,7 @@ function JourneyWizard() {
   const hasQuoteItems = quoteItems.length > 0
   const hasFixedItems = oneOffItems.length > 0 || monthlyItems.length > 0
 
-  const handleBuyNow = () => {
-    if (selectedWebsite && !selectedWebsite.isQuote) {
-      addItem({ id: selectedWebsite.id, name: selectedWebsite.name, priceDisplay: `${selectedWebsite.price} one-off`, formTypes: ['website'] })
-    }
-    if (selectedPackage && !selectedPackage.isQuote) {
-      addItem({ id: selectedPackage.id, name: selectedPackage.name, priceDisplay: selectedPackage.priceNote ? `${selectedPackage.price} ${selectedPackage.priceNote}` : selectedPackage.price, formTypes: [] })
-    }
-    if (selectedBundle && !selectedBundle.isQuote) {
-      addItem({ id: selectedBundle.id, name: selectedBundle.name, priceDisplay: `${selectedBundle.price}${selectedBundle.priceNote}`, formTypes: [] })
-    }
-    selectedAddons.filter(a => !a.isQuote).forEach(a => {
-      addItem({ id: a.id, name: a.name, priceDisplay: a.priceNote ? `${a.price} ${a.priceNote}` : a.price, formTypes: [] })
-    })
-    navigate('/order')
-  }
+  const handlePaySecurely = () => goToStep(5)
 
   const handleRequestQuote = () => {
     const summary = {
@@ -1466,9 +1750,19 @@ function JourneyWizard() {
               onEditPackage={() => goToStep(1)}
               onEditBundle={() => goToStep(2)}
               onEditAddons={() => goToStep(3)}
-              onBuyNow={handleBuyNow}
-              onRequestQuote={handleRequestQuote}
+              onPaySecurely={handlePaySecurely}
+              onRequestProposal={handleRequestQuote}
               onBack={() => goToStep(3)}
+            />
+          )}
+          {step === 5 && (
+            <StepPayment
+              oneOffItems={oneOffItems}
+              monthlyItems={monthlyItems}
+              oneOffTotal={oneOffTotal}
+              monthlyTotal={monthlyTotal}
+              hasMonthlyItems={monthlyItems.length > 0}
+              onBack={() => goToStep(4)}
             />
           )}
         </motion.div>
@@ -1603,6 +1897,7 @@ export default function Journey() {
         .journey-bundle-grid  { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: var(--space-4); }
         .journey-addon-grid   { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: var(--space-4); }
         .journey-totals-grid  { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+        .journey-payment-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); }
         @media (max-width: 900px) {
           .journey-package-grid { grid-template-columns: repeat(2, 1fr); }
         }
@@ -1611,7 +1906,8 @@ export default function Journey() {
           .journey-package-grid,
           .journey-bundle-grid,
           .journey-addon-grid,
-          .journey-totals-grid { grid-template-columns: 1fr !important; }
+          .journey-totals-grid,
+          .journey-payment-grid { grid-template-columns: 1fr !important; }
         }
       `}</style>
     </main>
