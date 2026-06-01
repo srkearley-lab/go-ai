@@ -351,14 +351,16 @@ function AddonCard({ addon, variants }) {
         <h3 style={{ fontSize: 'var(--text-md)', fontWeight: 600, color: 'var(--text-primary)', lineHeight: 1.2 }}>
           {addon.name}
         </h3>
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', flexShrink: 0 }}>
-          <span style={{ fontSize: 'var(--text-lg)', fontWeight: 700, letterSpacing: '-0.02em', color: 'var(--text-primary)', lineHeight: 1 }}>
-            {addon.price}
-          </span>
-          {addon.priceNote && (
-            <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)' }}>{addon.priceNote}</span>
-          )}
-        </div>
+        {addon.cta !== 'quote' && (
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', flexShrink: 0 }}>
+            <span style={{ fontSize: 'var(--text-lg)', fontWeight: 700, letterSpacing: '-0.02em', color: 'var(--text-primary)', lineHeight: 1 }}>
+              {addon.price}
+            </span>
+            {addon.priceNote && (
+              <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)' }}>{addon.priceNote}</span>
+            )}
+          </div>
+        )}
       </div>
 
       <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-secondary)', lineHeight: 1.5 }}>

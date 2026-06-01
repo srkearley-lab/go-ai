@@ -24,6 +24,7 @@ import ThankYou from './pages/ThankYou'
 import ControlCentre from './pages/ControlCentre'
 import Quote from './pages/Quote'
 import Addons from './pages/Addons'
+import Journey from './pages/Journey'
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
           <Route path="/packages" element={<Packages />} />
           <Route path="/bundles" element={<Bundles />} />
           <Route path="/addons" element={<Addons />} />
+          <Route path="/journey" element={<Journey />} />
           <Route path="/websites" element={<Websites />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/quote" element={<Quote />} />

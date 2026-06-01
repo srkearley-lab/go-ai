@@ -55,6 +55,8 @@ export default function Footer() {
               ['/websites',  'Websites'],
               ['/packages',  'Packages'],
               ['/bundles',   'Bundles'],
+              ['/addons',    'Add-ons'],
+              ['/journey',   'Start Your Journey'],
               ['/portfolio', 'Portfolio'],
               ['/faq',       'FAQ'],
               ['/contact',   'Contact Us'],

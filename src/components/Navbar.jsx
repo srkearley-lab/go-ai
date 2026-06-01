@@ -117,9 +117,9 @@ export default function Navbar() {
               {basketCount > 0 ? `Basket (${basketCount})` : 'Basket'}
             </Link>
 
-            {/* Get a Quote Today */}
+            {/* Start Your Journey */}
             <Link
-              to="/quote"
+              to="/journey"
               style={{
                 height: 36,
                 padding: '0 var(--space-4)',
@@ -138,7 +138,7 @@ export default function Navbar() {
               onMouseEnter={(e) => { e.currentTarget.style.filter = 'brightness(1.12)'; e.currentTarget.style.boxShadow = '0 0 40px rgba(118, 39, 239, 0.5)' }}
               onMouseLeave={(e) => { e.currentTarget.style.filter = 'brightness(1)'; e.currentTarget.style.boxShadow = '0 0 30px rgba(118, 39, 239, 0.35)' }}
             >
-              Get a Quote Today
+              Start Your Journey
             </Link>
           </div>
 
@@ -222,7 +222,7 @@ export default function Navbar() {
             {/* Mobile CTA row */}
             <div style={{ display: 'flex', gap: 'var(--space-3)', marginTop: 'var(--space-5)', flexWrap: 'wrap' }}>
               <Link
-                to="/quote"
+                to="/journey"
                 style={{
                   flex: 1, minWidth: 140,
                   height: 44, display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
@@ -233,7 +233,7 @@ export default function Navbar() {
                   textDecoration: 'none',
                 }}
               >
-                Get a Quote Today
+                Start Your Journey
               </Link>
               <Link
                 to="/order"
