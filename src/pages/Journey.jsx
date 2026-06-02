@@ -343,6 +343,14 @@ const differenceItems = [
 
 // ─── Shared helpers ─────────────────────────────────────────────────────────────
 
+// Translate embedded /mo and setup in price strings (e.g. "€250 setup + €150/mo")
+function translatePrice(price, t) {
+  return price
+    .replace('/month', t.labels.perMonth)
+    .replace('/mo', t.labels.perMonth)
+    .replace(' setup', ` ${t.pricing?.setupLabel || 'setup'}`)
+}
+
 const BADGE_COLORS = {
   'Entry Level':     { bg: 'rgba(22,163,74,0.08)',   border: 'rgba(22,163,74,0.18)',   color: 'var(--color-success)' },
   'Starter':         { bg: 'rgba(99,102,241,0.1)',   border: 'rgba(99,102,241,0.2)',   color: 'var(--color-brand-400)' },
@@ -607,6 +615,7 @@ function PackageSelectCard({ pkg, onToggle, isSelected }) {
   const [showInfo, setShowInfo] = useState(false)
   const t = useTranslations()
   const tn = (note) => note === 'one-off' ? t.labels.oneOff : note === '/month' ? t.labels.perMonth : note
+  const tp = (price) => translatePrice(price, t)
 
   const btnStyle = {
     height: 36, padding: '0 var(--space-4)',
@@ -641,7 +650,7 @@ function PackageSelectCard({ pkg, onToggle, isSelected }) {
       </div>
       <div>
         <span style={{ fontSize: 'var(--text-md)', fontWeight: 700, letterSpacing: '-0.02em', color: 'var(--text-primary)', lineHeight: 1 }}>
-          {pkg.price}
+          {tp(pkg.price)}
         </span>
         {pkg.priceNote && (
           <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', marginLeft: 'var(--space-1)' }}>
@@ -1231,6 +1240,7 @@ function StepReview({ website, packages, bundles, addons, oneOffItems, monthlyIt
   const t = useTranslations()
   const rv = t.journey.reviewRows
   const pn = (note) => note === 'one-off' ? t.labels.oneOff : note === '/month' ? t.labels.perMonth : (note || '')
+  const tp = (price) => translatePrice(price, t)
   return (
     <div>
       <StepHeader
@@ -1260,7 +1270,7 @@ function StepReview({ website, packages, bundles, addons, oneOffItems, monthlyIt
           lines={packages.length ? packages.map(p =>
             p.isQuote
               ? `${p.name} — ${rv.quoteRequired}`
-              : `${p.name} — ${p.price}${p.priceNote ? ' ' + pn(p.priceNote) : ''}`
+              : `${p.name} — ${tp(p.price)}${p.priceNote ? ' ' + pn(p.priceNote) : ''}`
           ) : undefined}
           onEdit={onEditPackage}
           editLabel={rv.editPackage}
