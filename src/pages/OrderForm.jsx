@@ -26,7 +26,7 @@ function validateReview(consent) {
 }
 
 function hasRecurringCost(items) {
-  return items.some(i => /\/mo(nth)?/i.test(i.priceDisplay))
+  return items.some(i => /\/mo(nth)?|\/μήνα/i.test(i.priceDisplay))
 }
 
 function getReviewButtonLabel(items) {
@@ -389,8 +389,8 @@ function SummaryRow({ label, value }) {
 }
 
 function ReviewStep({ form, items, uploads, consent, setConsent, errors }) {
-  const recurring = items.filter(i => /\/mo(nth)?/i.test(i.priceDisplay))
-  const oneOff = items.filter(i => !/\/mo(nth)?/i.test(i.priceDisplay))
+  const recurring = items.filter(i => /\/mo(nth)?|\/μήνα/i.test(i.priceDisplay))
+  const oneOff = items.filter(i => !/\/mo(nth)?|\/μήνα/i.test(i.priceDisplay))
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-8)' }}>
@@ -476,7 +476,7 @@ function ReviewStep({ form, items, uploads, consent, setConsent, errors }) {
 
 function PaymentStep({ items }) {
   const recurring = hasRecurringCost(items)
-  const oneOff = items.some(i => !/\/mo(nth)?/i.test(i.priceDisplay) || /one-off|setup|From/i.test(i.priceDisplay))
+  const oneOff = items.some(i => !/\/mo(nth)?|\/μήνα/i.test(i.priceDisplay) || /one-off|setup|From|εφάπαξ|Ρύθμιση|Από/i.test(i.priceDisplay))
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-8)' }}>

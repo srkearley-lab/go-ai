@@ -3,6 +3,7 @@ import { motion, useReducedMotion } from 'framer-motion'
 import { Calendar, Clock, MessageCircle, Check, ExternalLink } from 'lucide-react'
 import PageHero from '../components/PageHero'
 import { useSEO } from '../lib/seo'
+import { useTranslations } from '../context/LanguageContext'
 
 const WHATSAPP  = '#'
 const CALENDLY  = import.meta.env.VITE_CALENDLY_URL || ''
@@ -17,6 +18,7 @@ const callIncludes = [
 
 export default function Book() {
   const reduceMotion = useReducedMotion()
+  const t = useTranslations()
   useSEO({
     title: 'Book a Free Consultation',
     description: 'Book a free 30-minute consultation with GO AI. We\'ll review your business, recommend the right package and send you a written plan within 24 hours.',
@@ -136,7 +138,7 @@ export default function Book() {
             {/* Call details */}
             <div style={{ background: 'var(--surface-raised)', border: '1px solid var(--border-default)', borderRadius: 'var(--radius-lg)', padding: 'var(--space-6)', display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
               <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--color-brand-400)' }}>
-                What's included
+                {t.journey.whatsIncluded}
               </p>
               <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', color: 'var(--text-secondary)', fontSize: 'var(--text-sm)' }}>
                 <Clock size={14} />

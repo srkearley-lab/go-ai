@@ -334,7 +334,7 @@ function AddonCard({ addon, variants }) {
   const basketItem = {
     id: addon.id,
     name: addon.name,
-    priceDisplay: addon.priceNote ? `${addon.price} ${addon.priceNote}` : addon.price,
+    priceDisplay: addon.priceNote ? `${addon.price} ${tn(addon.priceNote)}` : addon.price,
     formTypes: [],
   }
 

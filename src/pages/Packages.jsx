@@ -352,13 +352,18 @@ export default function Packages() {
   const localizedPackages = servicePackages.map((pkg, i) => {
     const td = t.packageServiceData?.[i]
     if (!td) return pkg
+    const display = pkg.priceDisplay
+      .replace('/month', t.labels.perMonth)
+      .replace('/mo', t.labels.perMonth)
+      .replace(' setup', ` ${t.pricing.setupLabel}`)
     return {
       ...pkg,
       name:        td.name,
-      displayName: td.name,   // override displayName so basket shows translated name
+      displayName: td.name,
       priceNote:   td.priceNote,
       description: td.description,
       features:    td.features,
+      priceDisplay: display,
     }
   })
 
