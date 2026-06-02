@@ -23,7 +23,7 @@ export function useLanguage() {
 // Usage: const t = useTranslations()  →  t.nav.websites, t.buttons.addToBasket, etc.
 export function useTranslations() {
   const { language } = useLanguage()
-  return translations[language]
+  return translations[language] || translations.gr
 }
 
 // Returns Greek journey product data overrides, or null when language is English.
