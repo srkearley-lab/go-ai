@@ -143,6 +143,7 @@ export const translations = {
       pagesLabel: 'Σελίδες',
       contactLabel: 'Επικοινωνία',
       brandTagline: 'Ιστοσελίδες και αυτοματισμός με ΑΙ για επιχειρήσεις που θέλουν να αναπτυχθούν Διαδικτυακά.',
+      logoTagline:  'Ιστοσελίδες με AI για την Ελλάδα',
       links: [
         ['/websites',                     'Ιστοσελίδες'],
         ['/packages',                     'Πακέτα'],
@@ -1437,6 +1438,7 @@ export const translations = {
       pagesLabel: 'Pages',
       contactLabel: 'Contact',
       brandTagline: 'AI-powered websites and automation for businesses that want to grow online.',
+      logoTagline:  'AI-powered websites for Greece',
       links: [
         ['/websites',                     'Websites'],
         ['/packages',                     'Packages'],
