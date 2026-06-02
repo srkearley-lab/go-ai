@@ -290,6 +290,8 @@ function BrowserMockup({ item }) {
 function PortfolioCard({ item, viewDemoLabel }) {
   const [hovered, setHovered] = useState(false)
   const reduceMotion = useReducedMotion()
+  const t = useTranslations()
+  const tp = t.portfolio
 
   return (
     <motion.div
@@ -362,7 +364,7 @@ function PortfolioCard({ item, viewDemoLabel }) {
               flexShrink: 0,
             }}
           >
-            {item.industry}
+            {tp.industryMap?.[item.industry] || item.industry}
           </span>
         </div>
 
@@ -374,7 +376,7 @@ function PortfolioCard({ item, viewDemoLabel }) {
           </span>
           <span style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-1)', fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)' }}>
             <Clock size={11} />
-            {item.deliveredIn}
+            {item.deliveredIn.split(' ')[0]} {tp.days}
           </span>
         </div>
 
@@ -392,7 +394,7 @@ function PortfolioCard({ item, viewDemoLabel }) {
                 padding: '2px 6px',
               }}
             >
-              {s}
+              {tp.serviceMap?.[s] || s}
             </span>
           ))}
         </div>

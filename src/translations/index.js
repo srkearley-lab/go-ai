@@ -266,6 +266,17 @@ export const translations = {
       quoteRequired:     'Απαιτείται προσφορά',
       youAreHere:        'Βρίσκεστε εδώ',
       added:             'Προστέθηκε:',
+      badgeLabels: {
+        'Recommended':    'Προτεινόμενο',
+        'Most Popular':   'Πιο Δημοφιλές',
+        'Peace of Mind':  'Αξιοπιστία',
+        'Growth':         'Ανάπτυξη',
+        'Automation':     'Αυτοματισμός',
+        'Premium':        'Premium',
+        'Entry Level':    'Εισαγωγικό',
+        'Starter':        'Βασικό',
+        'Best for Growth':'Καλύτερο για Ανάπτυξη',
+      },
       packagesVsAddons:  'Πακέτα έναντι Πρόσθετων',
       packagesVsAddonsDesc: 'Τα πακέτα είναι επιλογές σταθερής τιμής με σαφές αντικείμενο. Αν χρειάζεστε κάτι μικρότερο — όπως φιλοξενία, αποθηκευτικό χώρο, φόρμες ή υποστήριξη περιεχομένου —',
       visitAddons:       'επισκεφθείτε τα Πρόσθετα',
@@ -379,6 +390,24 @@ export const translations = {
       ctaBody: 'Πείτε μας για την επιχείρησή σας και θα δημιουργήσουμε εξατομικευμένο demo που δείχνει ακριβώς πώς θα μπορούσε να μοιάζει η ιστοσελίδα σας — πριν πληρώσετε οτιδήποτε.',
       ctaPrimary: 'Ζητήστε το δωρεάν demo μου',
       ctaWhatsApp: 'Ρωτήστε στο WhatsApp',
+      days: 'ημέρες',
+      serviceMap: {
+        'Website':             'Ιστοσελίδα',
+        'WhatsApp Bot':        'Ρομπότ WhatsApp',
+        'Email Automation':    'Αυτοματοποίηση Email',
+        'SEO':                 'SEO',
+        'Google SEO':          'Google SEO',
+        'Review Automation':   'Αυτοματοποίηση Κριτικών',
+        'WhatsApp Reminders':  'Υπενθυμίσεις WhatsApp',
+        'Rebooking Flow':      'Ροή Επανακρατήσεων',
+        'AI Proposals':        'Προτάσεις AI',
+        'Video Ads':           'Διαφημίσεις Βίντεο',
+        'Google Ads':          'Google Ads',
+        'WhatsApp Booking':    'Κράτηση WhatsApp',
+        'Google Business':     'Google Business',
+        'Instagram Content':   'Περιεχόμενο Instagram',
+        'Email Campaigns':     'Καμπάνιες Email',
+      },
     },
 
     contact: {
@@ -650,6 +679,72 @@ export const translations = {
         'addon-health-check':      { name: 'Website Health Check', bestFor: 'Επιχειρήσεις που θέλουν έλεγχο της ιστοσελίδας τους', features: ['Ταχύτητα και mobile', 'Broken links', 'SEO basics', 'Αναφορά'] },
       },
     },
+
+    bundleData: [
+      {
+        name: 'Ιστοσελίδα και Φροντίδα Φιλοξενίας',
+        description: null,
+        features: ['Επαγγελματική κατασκευή ιστοσελίδας', 'Αξιόπιστη managed φιλοξενία', 'Μηνιαία ασφάλεια και αντίγραφα ασφαλείας', 'Έως 2 ώρες ενημερώσεων/μήνα'],
+        cta: 'Αποκτήστε Ιστοσελίδα και Φιλοξενία',
+      },
+      {
+        name: 'Ιστοσελίδα και Κοινωνική Ανάπτυξη',
+        description: null,
+        features: ['Επαγγελματική κατασκευή ιστοσελίδας', 'Managed φιλοξενία συμπεριλαμβάνεται', '12 social posts/μήνα', 'Captions, hashtags, προγραμματισμός'],
+        cta: 'Αποκτήστε Ιστοσελίδα και Κοινωνική Ανάπτυξη',
+      },
+      {
+        name: 'Ιστοσελίδα και Μηχανή Marketing',
+        description: 'Το πλήρες πακέτο ανάπτυξης. Η ιστοσελίδα σας, SEO, περιεχόμενο και social media — όλα γίνονται για εσάς κάθε μήνα.',
+        features: ['Επαγγελματική κατασκευή ιστοσελίδας', 'Managed φιλοξενία συμπεριλαμβάνεται', 'Μηνιαία άρθρα blog SEO', 'Καμπάνιες email newsletter', '12 posts social media/μήνα', 'Παρακολούθηση κατάταξης Google'],
+        cta: 'Επιλέξτε Προτεινόμενη Δέσμη',
+      },
+      {
+        name: 'Ιστοσελίδα και Αυτοματισμός',
+        description: null,
+        features: ['Επαγγελματική κατασκευή ιστοσελίδας', 'Managed φιλοξενία συμπεριλαμβάνεται', 'Αυτοματοποίηση ερωτημάτων WhatsApp', 'Αλληλουχίες follow-up email', 'Παρακολούθηση leads CRM'],
+        cta: 'Αποκτήστε Ιστοσελίδα και Αυτοματισμό',
+      },
+      {
+        name: 'Πακέτο Ανάπτυξης AI',
+        description: null,
+        features: ['Επαγγελματική κατασκευή ιστοσελίδας', 'Όλα τα μηνιαία add-ons περιλαμβάνονται', 'Περιεχόμενο AI Avatar και Βίντεο', 'Προτάσεις AI και έγγραφα πωλήσεων', 'Αφοσιωμένος account manager'],
+        cta: 'Δημιουργήστε το Πακέτο Ανάπτυξης AI μου',
+      },
+    ],
+
+    websiteData: [
+      {
+        name: 'Βασική Ιστοσελίδα Εκκίνησης',
+        bestFor: 'Μικρές επιχειρήσεις, ελεύθεροι επαγγελματίες, πρώιμες startups',
+        features: ['Μία σελίδα', 'Mobile responsive', 'Φόρμα επικοινωνίας', 'Βασικό SEO', 'Placeholder analytics', 'Ρύθμιση εκκίνησης'],
+        cta: 'Ξεκινήστε με Βασική Ιστοσελίδα',
+      },
+      {
+        name: 'Starter Business Website',
+        bestFor: 'Νέες επιχειρήσεις που θέλουν περισσότερη αξιοπιστία',
+        features: ['Έως 3 σελίδες — Αρχική, Υπηρεσίες, Επικοινωνία', 'Mobile responsive', 'Φόρμα επικοινωνίας', 'Placeholder CTA κρατήσεων', 'Βασικό SEO', 'Σύνδεσμοι social'],
+        cta: 'Δημιουργήστε το Starter Website μου',
+      },
+      {
+        name: 'Business Website',
+        bestFor: 'Εδραιωμένες επιχειρήσεις, σύμβουλοι, τοπικοί πάροχοι υπηρεσιών',
+        features: ['Έως 5 σελίδες', 'Φόρμα καταγραφής leads', 'Placeholder κρατήσεων', 'Ενότητα FAQ', 'Έτοιμο για analytics', 'Υποστήριξη deployment'],
+        cta: 'Επιλέξτε Business Website',
+      },
+      {
+        name: 'Growth Website',
+        bestFor: 'Επιχειρήσεις που θέλουν ιστοσελίδα υψηλότερης μετατροπής',
+        features: ['Έως 7 σελίδες', 'Δομή funnel', 'Ενότητα σύγκρισης πακέτων', 'Placeholders πληρωμής/κράτησης', 'Placeholders Meta Pixel και GTM', 'Βελτιωμένο SEO και ισχυρότερες ενότητες μετατροπής'],
+        cta: 'Δημιουργήστε Growth Website',
+      },
+      {
+        name: 'Premium AI-Ready Website',
+        bestFor: 'Επιχειρήσεις που θέλουν premium ιστοσελίδα με AI-ready βάσεις',
+        features: ['Τα πάντα στο Growth Website', 'Premium σχεδιασμός', 'Ενότητες έτοιμες για AI', 'Journey πελάτη', 'Ροή καταγραφής leads', 'Τεκμηρίωση εκκίνησης και παράδοσης'],
+        cta: 'Αίτημα Quote για Premium Website',
+      },
+    ],
 
     addonGroups: [
       {
@@ -1028,6 +1123,17 @@ export const translations = {
       quoteRequired:     'Quote required',
       youAreHere:        'You are here',
       added:             'Added:',
+      badgeLabels: {
+        'Recommended':    'Recommended',
+        'Most Popular':   'Most Popular',
+        'Peace of Mind':  'Peace of Mind',
+        'Growth':         'Growth',
+        'Automation':     'Automation',
+        'Premium':        'Premium',
+        'Entry Level':    'Entry Level',
+        'Starter':        'Starter',
+        'Best for Growth':'Best for Growth',
+      },
       packagesVsAddons:  'Packages vs Add-ons',
       packagesVsAddonsDesc: 'Packages are fixed-price website and service options with a clear scope. If you only need a smaller extra — such as hosting care, extra storage, forms, tracking, WhatsApp setup, or content support —',
       visitAddons:       'visit Add-ons',
@@ -1132,6 +1238,24 @@ export const translations = {
       ctaBody: "Tell us about your business and we'll create a personalised demo showing exactly what your website could look like — before you pay anything.",
       ctaPrimary: 'Request my free demo',
       ctaWhatsApp: 'Ask on WhatsApp',
+      days: 'days',
+      serviceMap: {
+        'Website':             'Website',
+        'WhatsApp Bot':        'WhatsApp Bot',
+        'Email Automation':    'Email Automation',
+        'SEO':                 'SEO',
+        'Google SEO':          'Google SEO',
+        'Review Automation':   'Review Automation',
+        'WhatsApp Reminders':  'WhatsApp Reminders',
+        'Rebooking Flow':      'Rebooking Flow',
+        'AI Proposals':        'AI Proposals',
+        'Video Ads':           'Video Ads',
+        'Google Ads':          'Google Ads',
+        'WhatsApp Booking':    'WhatsApp Booking',
+        'Google Business':     'Google Business',
+        'Instagram Content':   'Instagram Content',
+        'Email Campaigns':     'Email Campaigns',
+      },
     },
 
     contact: {
@@ -1330,6 +1454,72 @@ export const translations = {
       summaryBundlesLabel:  'Bundles',
       summaryAddonsLabel:   'Add-ons',
     },
+
+    bundleData: [
+      {
+        name: 'Website and Hosting Care',
+        description: null,
+        features: ['Professional website build', 'Reliable managed hosting', 'Monthly security and backups', 'Up to 2 hours of updates/month'],
+        cta: 'Get Website and Hosting',
+      },
+      {
+        name: 'Website and Social Growth',
+        description: null,
+        features: ['Professional website build', 'Managed hosting included', '12 social posts/month', 'Captions, hashtags, scheduling'],
+        cta: 'Get Website and Social Growth',
+      },
+      {
+        name: 'Website and Marketing Engine',
+        description: 'The complete growth package. Your website, SEO, content and social media — all done for you every month.',
+        features: ['Professional website build', 'Managed hosting included', 'Monthly SEO blog posts', 'Email newsletter campaigns', '12 social media posts/month', 'Google ranking monitoring'],
+        cta: 'Choose Recommended Bundle',
+      },
+      {
+        name: 'Website and Automation',
+        description: null,
+        features: ['Professional website build', 'Managed hosting included', 'WhatsApp enquiry automation', 'Email follow-up sequences', 'CRM lead tracking'],
+        cta: 'Get Website and Automation',
+      },
+      {
+        name: 'AI Growth Package',
+        description: null,
+        features: ['Professional website build', 'All monthly add-ons included', 'AI Avatar and Video content', 'AI proposals and sales documents', 'Dedicated account manager'],
+        cta: 'Build My AI Growth Package',
+      },
+    ],
+
+    websiteData: [
+      {
+        name: 'Basic Launch Website',
+        bestFor: 'Side businesses, sole traders, early startups',
+        features: ['One-page site', 'Mobile responsive', 'Contact form', 'Basic SEO', 'Analytics placeholder', 'Launch setup'],
+        cta: 'Start With Basic Website',
+      },
+      {
+        name: 'Starter Business Website',
+        bestFor: 'New businesses wanting more credibility',
+        features: ['Up to 3 pages — Home, Services, Contact', 'Mobile responsive', 'Contact form', 'Booking CTA placeholder', 'Basic SEO', 'Social links'],
+        cta: 'Build My Starter Website',
+      },
+      {
+        name: 'Business Website',
+        bestFor: 'Established businesses, consultants, local service providers',
+        features: ['Up to 5 pages', 'Lead capture form', 'Booking placeholder', 'FAQ section', 'Analytics-ready', 'Deployment support'],
+        cta: 'Choose Business Website',
+      },
+      {
+        name: 'Growth Website',
+        bestFor: 'Businesses wanting a higher-converting website',
+        features: ['Up to 7 pages', 'Funnel structure', 'Package comparison section', 'Payment/booking placeholders', 'Meta Pixel and GTM placeholders', 'Enhanced SEO and stronger conversion sections'],
+        cta: 'Build Growth Website',
+      },
+      {
+        name: 'Premium AI-Ready Website',
+        bestFor: 'Businesses wanting a premium website with AI-ready foundations',
+        features: ['Everything in Growth Website', 'Premium design', 'AI-ready sections', 'Client enquiry journey', 'Lead capture workflow', 'Launch and handover documentation'],
+        cta: 'Request Premium Website Quote',
+      },
+    ],
 
     addonGroups: [
       {

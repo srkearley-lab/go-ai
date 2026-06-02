@@ -116,6 +116,7 @@ const badgeColors = {
 }
 
 function Badge({ label }) {
+  const t = useTranslations()
   const c = badgeColors[label] || badgeColors['Automation']
   return (
     <span style={{
@@ -125,7 +126,7 @@ function Badge({ label }) {
       background: c.bg, border: `1px solid ${c.border}`, color: c.color,
       borderRadius: 'var(--radius-full)', padding: '3px var(--space-3)',
     }}>
-      {label}
+      {t.labels.badgeLabels?.[label] || label}
     </span>
   )
 }
@@ -434,6 +435,13 @@ export default function Bundles() {
   const reduceMotion = useReducedMotion()
   const t = useTranslations()
 
+  // Merge structural data with translated text
+  const localizedBundles = bundles.map((bundle, i) => {
+    const td = t.bundleData?.[i]
+    if (!td) return bundle
+    return { ...bundle, name: td.name, description: td.description, features: td.features, cta: td.cta }
+  })
+
   const stagger = {
     hidden: {},
     show: { transition: { staggerChildren: reduceMotion ? 0 : 0.08, delayChildren: reduceMotion ? 0 : 0.05 } },
@@ -443,8 +451,8 @@ export default function Bundles() {
     show: { opacity: 1, y: 0, transition: { duration: 0.22, ease: [0.16, 1, 0.3, 1] } },
   }
 
-  const standard = bundles.filter(b => !b.recommended)
-  const recommended = bundles.find(b => b.recommended)
+  const standard = localizedBundles.filter(b => !b.recommended)
+  const recommended = localizedBundles.find(b => b.recommended)
   const before = standard.slice(0, 2)
   const after = standard.slice(2)
 

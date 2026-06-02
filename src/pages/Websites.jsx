@@ -103,6 +103,7 @@ const badgeColors = {
 }
 
 function Badge({ label }) {
+  const t = useTranslations()
   const c = badgeColors[label] || badgeColors['Starter']
   return (
     <span style={{
@@ -112,7 +113,7 @@ function Badge({ label }) {
       background: c.bg, border: `1px solid ${c.border}`, color: c.color,
       borderRadius: 'var(--radius-full)', padding: '3px var(--space-3)',
     }}>
-      {label}
+      {t.labels.badgeLabels?.[label] || label}
     </span>
   )
 }
@@ -257,7 +258,7 @@ function WebsiteCard({ pkg, variants }) {
           <Badge label={pkg.badge} />
           <div>
             <h3 style={{ fontSize: 'var(--text-xl)', fontWeight: 700, lineHeight: 1.1, letterSpacing: '-0.02em', color: 'var(--text-primary)', marginBottom: 'var(--space-2)' }}>{pkg.name}</h3>
-            <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', fontStyle: 'italic', marginBottom: 'var(--space-4)' }}>Best for: {pkg.bestFor}</p>
+            <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', fontStyle: 'italic', marginBottom: 'var(--space-4)' }}>{t.pages.websites.bestFor} {pkg.bestFor}</p>
           </div>
           <div>
             <span style={{ fontSize: 'var(--text-2xl)', fontWeight: 700, letterSpacing: '-0.03em', color: 'var(--text-primary)', lineHeight: 1 }}>
@@ -386,6 +387,13 @@ export default function Websites() {
   const reduceMotion = useReducedMotion()
   const t = useTranslations()
 
+  // Merge structural data with translated text
+  const localizedWebsites = websitePackages.map((pkg, i) => {
+    const td = t.websiteData?.[i]
+    if (!td) return pkg
+    return { ...pkg, name: td.name, bestFor: td.bestFor, features: td.features, cta: td.cta }
+  })
+
   const stagger = {
     hidden: {},
     show: { transition: { staggerChildren: reduceMotion ? 0 : 0.07, delayChildren: reduceMotion ? 0 : 0.05 } },
@@ -395,8 +403,8 @@ export default function Websites() {
     show: { opacity: 1, y: 0, transition: { duration: 0.22, ease: [0.16, 1, 0.3, 1] } },
   }
 
-  const featured = websitePackages.find(p => p.featured)
-  const nonFeatured = websitePackages.filter(p => !p.featured)
+  const featured = localizedWebsites.find(p => p.featured)
+  const nonFeatured = localizedWebsites.filter(p => !p.featured)
   const before = nonFeatured.slice(0, 2)
   const after = nonFeatured.slice(2)
 
