@@ -1021,6 +1021,17 @@ export const translations = {
     },
 
     book: {
+      tag:               'Δωρεάν διαβούλευση',
+      title:             'Κλείστε δωρεάν 30λεπτη διαβούλευση',
+      description:       'Χωρίς πίεση, χωρίς δέσμευση. Εξετάζουμε την επιχείρησή σας, προτείνουμε το κατάλληλο πακέτο και σας στέλνουμε γραπτό σχέδιο εντός 24 ωρών.',
+      durationLabel:     '30 λεπτά μέσω βίντεο ή τηλεφώνου',
+      preferMessage:     'Προτιμάτε να στείλετε μήνυμα;',
+      whatsappBody:      'Στείλτε μας μήνυμα WhatsApp και θα απαντήσουμε μέσα σε λίγες ώρες.',
+      openWhatsApp:      'Ανοίξτε WhatsApp',
+      sendMessageInstead:'Στείλτε μας μήνυμα αντ\' αυτού',
+      calendarComingSoon:'Ημερολόγιο κρατήσεων σύντομα',
+      bookDirectly:      'Εν τω μεταξύ, κλείστε απευθείας:',
+      openCalendly:      'Ανοίξτε Calendly',
       callIncludes: [
         '30 λεπτά, χωρίς δέσμευση',
         'Ελέγχουμε τη Διαδικτυακή σας παρουσία',
@@ -1962,6 +1973,17 @@ export const translations = {
     },
 
     book: {
+      tag:               'Free consultation',
+      title:             'Book a free 30-minute consultation',
+      description:       "No pressure, no obligation. We review your business, recommend the right package and send you a written plan within 24 hours.",
+      durationLabel:     '30 minutes via video or phone',
+      preferMessage:     'Prefer to message?',
+      whatsappBody:      "Send us a WhatsApp message and we'll reply within a few hours.",
+      openWhatsApp:      'Open WhatsApp',
+      sendMessageInstead:'Send us a message instead',
+      calendarComingSoon:'Booking calendar coming soon',
+      bookDirectly:      'In the meantime, book directly:',
+      openCalendly:      'Open Calendly',
       callIncludes: [
         '30 minutes, no obligation',
         'We review your current online presence',

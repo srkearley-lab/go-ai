@@ -11,7 +11,8 @@ const CALENDLY  = import.meta.env.VITE_CALENDLY_URL || ''
 export default function Book() {
   const reduceMotion = useReducedMotion()
   const t = useTranslations()
-  const callIncludes = t.book?.callIncludes || []
+  const tb = t.book || {}
+  const callIncludes = tb.callIncludes || []
   useSEO({
     title: 'Book a Free Consultation',
     description: 'Book a free 30-minute consultation with GO AI. We\'ll review your business, recommend the right package and send you a written plan within 24 hours.',
@@ -20,9 +21,9 @@ export default function Book() {
   return (
     <main style={{ paddingTop: 64 }}>
       <PageHero
-        tag="Free consultation"
-        title="Book a free 30-minute consultation"
-        description="No pressure, no obligation. We review your business, recommend the right package and send you a written plan within 24 hours."
+        tag={tb.tag}
+        title={tb.title}
+        description={tb.description}
       />
 
       <section style={{ padding: 'var(--space-16) var(--space-8)', background: 'var(--surface-base)' }}>
@@ -77,14 +78,14 @@ export default function Book() {
                 </div>
                 <div>
                   <h3 style={{ fontSize: 'var(--text-lg)', fontWeight: 600, color: 'var(--text-primary)', marginBottom: 'var(--space-3)' }}>
-                    Booking calendar coming soon
+                    {tb.calendarComingSoon}
                   </h3>
                   <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', lineHeight: 1.6, maxWidth: '36ch', margin: '0 auto' }}>
                     Set <code style={{ fontSize: 'var(--text-xs)', background: 'var(--surface-overlay)', padding: '2px 6px', borderRadius: 'var(--radius-sm)', color: 'var(--color-brand-400)' }}>VITE_CALENDLY_URL</code> in your <code style={{ fontSize: 'var(--text-xs)', background: 'var(--surface-overlay)', padding: '2px 6px', borderRadius: 'var(--radius-sm)', color: 'var(--color-brand-400)' }}>.env</code> file to embed your Calendly calendar here.
                   </p>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)', width: '100%', maxWidth: 320 }}>
-                  <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', textAlign: 'left' }}>In the meantime, book directly:</p>
+                  <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', textAlign: 'left' }}>{tb.bookDirectly}</p>
                   <a
                     href="https://calendly.com"
                     target="_blank"
@@ -100,7 +101,7 @@ export default function Book() {
                     onMouseLeave={(e) => { e.currentTarget.style.background = 'var(--color-brand-500)' }}
                   >
                     <ExternalLink size={14} />
-                    Open Calendly
+                    {tb.openCalendly}
                   </a>
                   <Link
                     to="/contact"
@@ -114,7 +115,7 @@ export default function Book() {
                     onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--surface-raised)' }}
                     onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent' }}
                   >
-                    Send us a message instead
+                    {tb.sendMessageInstead}
                   </Link>
                 </div>
               </div>
@@ -135,7 +136,7 @@ export default function Book() {
               </p>
               <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', color: 'var(--text-secondary)', fontSize: 'var(--text-sm)' }}>
                 <Clock size={14} />
-                30 minutes via video or phone
+                {tb.durationLabel}
               </div>
               <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
                 {callIncludes.map(item => (
@@ -152,10 +153,10 @@ export default function Book() {
             {/* WhatsApp alternative */}
             <div style={{ background: 'var(--surface-raised)', border: '1px solid var(--border-default)', borderRadius: 'var(--radius-lg)', padding: 'var(--space-6)', display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
               <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-tertiary)' }}>
-                Prefer to message?
+                {tb.preferMessage}
               </p>
               <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
-                Send us a WhatsApp message and we'll reply within a few hours.
+                {tb.whatsappBody}
               </p>
               <a
                 href={WHATSAPP}
@@ -173,7 +174,7 @@ export default function Book() {
                 onMouseLeave={(e) => { e.currentTarget.style.background = '#25d366' }}
               >
                 <MessageCircle size={15} />
-                Open WhatsApp
+                {tb.openWhatsApp}
               </a>
             </div>
           </motion.div>
