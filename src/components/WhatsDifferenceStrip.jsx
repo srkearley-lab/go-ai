@@ -96,7 +96,7 @@ export default function WhatsDifferenceStrip({ activePage = null, insideJourney 
                     {t.strip.youAreHere}
                   </span>
                 )}
-                <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)', marginTop: isActive ? 'var(--space-4)' : 0 }}>
                   <div style={{
                     width: 32, height: 32, flexShrink: 0,
                     display: 'flex', alignItems: 'center', justifyContent: 'center',

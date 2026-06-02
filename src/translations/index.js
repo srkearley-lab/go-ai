@@ -120,7 +120,7 @@ export const translations = {
       requestProposal:  'Αίτηση Πρότασης',
       paySecurely:      'Ασφαλής Πληρωμή',
       paySecurelyNow:   'Πληρωμή με ασφάλεια τώρα',
-      getQuote:         'Λήψη Προσφοράς',
+      getQuote:         'Ζητήστε προσφορά',
       viewPackages:     'Δείτε Πακέτα',
       viewWebsites:     'Δείτε Ιστοσελίδες',
       viewBundles:      'Δείτε Δέσμες',
@@ -268,7 +268,7 @@ export const translations = {
       oneOff:            'εφάπαξ',
       perMonth:          '/μήνα',
       quoteRequired:     'Απαιτείται προσφορά',
-      youAreHere:        'Βρίσκεστε εδώ',
+      youAreHere:        'Είστε εδώ',
       added:             'Προστέθηκε:',
       badgeLabels: {
         'Recommended':    'Προτεινόμενο',
@@ -300,9 +300,10 @@ export const translations = {
       landingPage:       'Σελίδα προορισμού',
       templates:         'Πρότυπα',
       setup:             'Ρύθμιση',
-      website:           'Ιστότοπος',
-      businessWebsite:   'Επαγγελματικός ιστότοπος',
-      growthWebsite:     'Ιστότοπος ανάπτυξης',
+      website:           'Ιστοσελίδα',
+      businessWebsite:   'Επαγγελματική ιστοσελίδα',
+      growthWebsite:     'Ιστοσελίδα ανάπτυξης',
+      premium:           'Προνομιακό',
       starter:           'Αρχικό πακέτο',
       bundle:            'Συνδυαστικό πακέτο',
       bundles:           'Συνδυαστικά πακέτα',
@@ -312,7 +313,7 @@ export const translations = {
     strip: {
       quickRef:   'Γρήγορη αναφορά',
       heading:    'Ποια είναι η διαφορά;',
-      youAreHere: 'Βρίσκεστε εδώ',
+      youAreHere: 'Είστε εδώ',
       cards: {
         websites: {
           term:        'Ιστοσελίδες',
@@ -1013,7 +1014,7 @@ export const translations = {
         vatNote:     'Όλες οι τιμές δεν περιλαμβάνουν ΦΠΑ (24%). Τα πρόσθετα είναι διαθέσιμα ως αυτόνομες υπηρεσίες ή μαζί με οποιοδήποτε πακέτο.',
         bestFor:     'Ιδανικό για:',
         contactUs:   'Επικοινωνία',
-        getAQuote:   'Λήψη Προσφοράς',
+        getAQuote:   'Ζητήστε προσφορά',
         ctaTag:      'Δεν είστε σίγουροι ποια πρόσθετα χρειάζεστε;',
         ctaTitle:    'Δεν είστε σίγουροι ποια πρόσθετα χρειάζεστε;',
         ctaBody:     'Πείτε μας τι θέλετε να βελτιώσετε και θα σας προτείνουμε το κατάλληλο πακέτο, δέσμη ή πρόσθετα.',
@@ -1365,6 +1366,7 @@ export const translations = {
       bundle:            'Bundle',
       bundles:           'Bundles',
       addons:            'Add-ons',
+      premium:           'Premium',
     },
 
     strip: {

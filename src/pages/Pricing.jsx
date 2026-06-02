@@ -5,7 +5,7 @@ import { Check, ArrowRight, MessageCircle, ShoppingCart, ChevronDown } from 'luc
 import PageHero from '../components/PageHero'
 import { useBasket, PACKAGE_FORM_TYPES } from '../context/BasketContext'
 import { packageDetails } from '../data/packageDetails'
-import { useTranslations } from '../context/LanguageContext'
+import { useTranslations, useLanguage } from '../context/LanguageContext'
 
 const WHATSAPP = '#'
 
@@ -14,6 +14,7 @@ const WHATSAPP = '#'
 const addOns = [
   {
     name: 'Hosting & Website Care',
+    detailKey: 'Hosting & Website Care',
     monthly: 100,
     setup: null,
     description: 'Your website stays fast, secure and up to date every month.',
@@ -21,6 +22,7 @@ const addOns = [
   },
   {
     name: 'Social Media Content',
+    detailKey: 'Social Media Content',
     monthly: 150,
     setup: null,
     description: 'Consistent social media presence without lifting a finger.',
@@ -28,6 +30,7 @@ const addOns = [
   },
   {
     name: 'AI Content & Marketing',
+    detailKey: 'AI Content & Marketing',
     monthly: 250,
     setup: null,
     description: 'Keep your website fresh and your Google ranking growing.',
@@ -35,6 +38,7 @@ const addOns = [
   },
   {
     name: 'AI Automation',
+    detailKey: 'AI Automation',
     monthly: 300,
     setup: 250,
     description: 'Turn enquiries into bookings automatically, 24/7.',
@@ -42,6 +46,7 @@ const addOns = [
   },
   {
     name: 'AI Avatar & Video Content',
+    detailKey: 'AI Avatar & Video Content',
     monthly: 300,
     setup: 250,
     description: 'Stand out on social media with AI-generated video content.',
@@ -49,6 +54,7 @@ const addOns = [
   },
   {
     name: 'Proposal & Sales Documents',
+    detailKey: 'Proposal & Sales Documents',
     monthly: 200,
     setup: 200,
     description: 'Send polished proposals to prospects in minutes, not hours.',
@@ -60,6 +66,7 @@ const bundles = [
   {
     badge: 'Peace of Mind',
     name: 'Website + Hosting Care',
+    detailKey: 'Website + Hosting Care',
     oneOffDisplay: 'from €450',
     monthly: 90,
     savesYearly: 120,
@@ -76,6 +83,7 @@ const bundles = [
   {
     badge: 'Growth',
     name: 'Website + Social Growth',
+    detailKey: 'Website + Social Growth',
     oneOffDisplay: 'from €450',
     monthly: 220,
     savesYearly: 360,
@@ -92,6 +100,7 @@ const bundles = [
   {
     badge: 'Recommended',
     name: 'Website + Marketing Engine',
+    detailKey: 'Website + Marketing Engine',
     oneOffDisplay: 'from €450',
     monthly: 300,
     savesYearly: 600,
@@ -111,6 +120,7 @@ const bundles = [
   {
     badge: 'Automation',
     name: 'Website + AI Automation',
+    detailKey: 'Website + AI Automation',
     oneOffDisplay: 'from €450',
     monthly: 350,
     savesYearly: 600,
@@ -128,6 +138,7 @@ const bundles = [
   {
     badge: 'Premium',
     name: 'Full AI Growth Package',
+    detailKey: 'Full AI Growth Package',
     oneOffDisplay: 'from €450',
     monthly: 950,
     savesYearly: 2400,
@@ -150,6 +161,7 @@ const websiteSetupPackages = [
   {
     badge: 'Entry Level',
     name: 'Basic Launch Website',
+    detailKey: 'Basic Launch Website',
     price: '€450',
     featured: false,
     bestFor: 'Side businesses, sole traders, early startups',
@@ -166,6 +178,7 @@ const websiteSetupPackages = [
   {
     badge: 'Starter',
     name: 'Starter Business Website',
+    detailKey: 'Starter Business Website',
     price: '€750',
     featured: false,
     bestFor: 'New businesses wanting more credibility',
@@ -182,6 +195,7 @@ const websiteSetupPackages = [
   {
     badge: 'Most Popular',
     name: 'Business Website',
+    detailKey: 'Business Website',
     price: '€1,200',
     featured: true,
     bestFor: 'Established businesses, consultants, local service providers',
@@ -198,6 +212,7 @@ const websiteSetupPackages = [
   {
     badge: 'Best for Growth',
     name: 'Growth Website',
+    detailKey: 'Growth Website',
     price: '€1,750',
     featured: false,
     bestFor: 'Businesses wanting a higher-converting website',
@@ -214,6 +229,7 @@ const websiteSetupPackages = [
   {
     badge: 'Premium',
     name: 'Premium AI-Ready Website',
+    detailKey: 'Premium AI-Ready Website',
     price: '€2,500+',
     featured: false,
     bestFor: 'Businesses wanting a premium website with AI-ready foundations',
@@ -347,19 +363,21 @@ function BasketButton({ item }) {
 
 // ── Find Out More panel ───────────────────────────────────────────────────────
 
-function FindOutMorePanel({ name, item }) {
-  const details = packageDetails[name]
+function FindOutMorePanel({ detailKey, item }) {
+  const details = packageDetails[detailKey]
+  const { language } = useLanguage()
   const t = useTranslations()
   if (!details) return null
+  const d = language === 'gr' && details.el ? details.el : details
 
   return (
     <div style={{ borderTop: '1px solid var(--border-default)', paddingTop: 'var(--space-6)', marginTop: 'var(--space-4)', display: 'flex', flexDirection: 'column', gap: 'var(--space-6)' }}>
       <div>
         <h4 style={{ fontSize: 'var(--text-md)', fontWeight: 700, color: 'var(--text-primary)', lineHeight: 1.2, marginBottom: 'var(--space-3)' }}>
-          {details.headline}
+          {d.headline}
         </h4>
         <p style={{ fontSize: 'var(--text-sm)', lineHeight: 1.7, color: 'var(--text-secondary)' }}>
-          {details.overview}
+          {d.overview}
         </p>
       </div>
 
@@ -367,17 +385,17 @@ function FindOutMorePanel({ name, item }) {
         {/* Who this is for */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
           <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', margin: 0 }}>{t.findOutMore.whoFor}</p>
-          <p style={{ fontSize: 'var(--text-sm)', lineHeight: 1.6, color: 'var(--text-secondary)', margin: 0 }}>{details.whoFor}</p>
+          <p style={{ fontSize: 'var(--text-sm)', lineHeight: 1.6, color: 'var(--text-secondary)', margin: 0 }}>{d.whoFor}</p>
         </div>
 
         {/* What we need from you */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
           <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', margin: 0 }}>{t.findOutMore.weNeed}</p>
           <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
-            {details.youNeed.map(item => (
-              <li key={item} style={{ display: 'flex', alignItems: 'flex-start', gap: 'var(--space-2)', fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
+            {d.youNeed.map((need, ni) => (
+              <li key={ni} style={{ display: 'flex', alignItems: 'flex-start', gap: 'var(--space-2)', fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
                 <span style={{ color: 'var(--color-brand-400)', flexShrink: 0, marginTop: 2 }}>→</span>
-                {item}
+                {need}
               </li>
             ))}
           </ul>
@@ -387,12 +405,12 @@ function FindOutMorePanel({ name, item }) {
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
           <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', margin: 0 }}>{t.findOutMore.included}</p>
           <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
-            {details.included.map(i => (
-              <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 'var(--space-2)' }}>
+            {d.included.map((inc, ii) => (
+              <li key={ii} style={{ display: 'flex', alignItems: 'flex-start', gap: 'var(--space-2)' }}>
                 <span style={{ width: 14, height: 14, borderRadius: '50%', background: 'rgba(99,102,241,0.1)', border: '1px solid rgba(99,102,241,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-brand-400)', flexShrink: 0, marginTop: 2 }}>
                   <Check size={8} strokeWidth={3} />
                 </span>
-                <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-primary)', lineHeight: 1.5 }}>{i}</span>
+                <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-primary)', lineHeight: 1.5 }}>{inc}</span>
               </li>
             ))}
           </ul>
@@ -402,7 +420,7 @@ function FindOutMorePanel({ name, item }) {
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
           <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', margin: 0 }}>{t.findOutMore.howItWorks}</p>
           <ol style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
-            {details.steps.map((step, i) => (
+            {d.steps.map((step, i) => (
               <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 'var(--space-3)' }}>
                 <span style={{ width: 20, height: 20, borderRadius: '50%', background: 'var(--surface-overlay)', border: '1px solid var(--border-strong)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--color-brand-400)', flexShrink: 0, marginTop: 1 }}>
                   {i + 1}
@@ -429,10 +447,10 @@ function AddOnCard({ addon, variants }) {
   const t = useTranslations()
   const tp = t.pricing
   const basketItem = {
-    id: addon.name,
+    id: addon.detailKey,
     name: addon.name,
     priceDisplay: `€${addon.monthly}${t.labels.perMonth}${addon.setup ? ` + €${addon.setup} ${t.pricing.setupLabel}` : ''}`,
-    formTypes: PACKAGE_FORM_TYPES[addon.name] || [],
+    formTypes: PACKAGE_FORM_TYPES[addon.detailKey] || [],
   }
   return (
     <motion.div
@@ -473,7 +491,7 @@ function AddOnCard({ addon, variants }) {
       <hr style={{ border: 'none', borderTop: '1px solid var(--border-default)', margin: 0 }} />
 
       <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
-        {addon.features.map(f => <FeatureItem key={f} text={f} />)}
+        {addon.features.map((f, i) => <FeatureItem key={i} text={f} />)}
       </ul>
 
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 'var(--space-2)', paddingTop: 'var(--space-2)', borderTop: '1px solid var(--border-default)' }}>
@@ -493,14 +511,14 @@ function AddOnCard({ addon, variants }) {
       <AnimatePresence>
         {showDetails && (
           <motion.div
-            key={`fom-${addon.name}`}
+            key={`fom-${addon.detailKey}`}
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
             style={{ overflow: 'hidden' }}
           >
-            <FindOutMorePanel name={addon.name} item={basketItem} />
+            <FindOutMorePanel detailKey={addon.detailKey} item={basketItem} />
           </motion.div>
         )}
       </AnimatePresence>
@@ -538,7 +556,7 @@ function AddOnsSection({ reduceMotion, localizedAddOns, tp }) {
           viewport={{ once: true, margin: '-60px' }}
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
         >
-          {localizedAddOns.map(addon => <AddOnCard key={addon.name} addon={addon} variants={cardVariants} />)}
+          {localizedAddOns.map(addon => <AddOnCard key={addon.detailKey} addon={addon} variants={cardVariants} />)}
         </motion.div>
       </div>
     </section>
@@ -581,10 +599,10 @@ function SmallBundleCard({ bundle, variants }) {
   const [showDetails, setShowDetails] = useState(false)
   const t = useTranslations()
   const basketItem = {
-    id: bundle.name,
+    id: bundle.detailKey,
     name: bundle.name,
     priceDisplay: `${t.journey.website} ${bundle.oneOffDisplay} + €${bundle.monthly}${t.labels.perMonth}`,
-    formTypes: PACKAGE_FORM_TYPES[bundle.name] || [],
+    formTypes: PACKAGE_FORM_TYPES[bundle.detailKey] || [],
   }
   return (
     <motion.div
@@ -622,7 +640,7 @@ function SmallBundleCard({ bundle, variants }) {
       <hr style={{ border: 'none', borderTop: '1px solid var(--border-default)', margin: 0 }} />
 
       <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
-        {bundle.features.map(f => <FeatureItem key={f} text={f} />)}
+        {bundle.features.map((f, i) => <FeatureItem key={i} text={f} />)}
       </ul>
 
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 'var(--space-2)' }}>
@@ -643,14 +661,14 @@ function SmallBundleCard({ bundle, variants }) {
       <AnimatePresence>
         {showDetails && (
           <motion.div
-            key={`fom-${bundle.name}`}
+            key={`fom-${bundle.detailKey}`}
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
             style={{ overflow: 'hidden' }}
           >
-            <FindOutMorePanel name={bundle.name} item={basketItem} />
+            <FindOutMorePanel detailKey={bundle.detailKey} item={basketItem} />
           </motion.div>
         )}
       </AnimatePresence>
@@ -662,10 +680,10 @@ function RecommendedBundleCard({ bundle, variants }) {
   const [showDetails, setShowDetails] = useState(false)
   const t = useTranslations()
   const basketItem = {
-    id: bundle.name,
+    id: bundle.detailKey,
     name: bundle.name,
     priceDisplay: `${t.journey.website} ${bundle.oneOffDisplay} + €${bundle.monthly}${t.labels.perMonth}`,
-    formTypes: PACKAGE_FORM_TYPES[bundle.name] || [],
+    formTypes: PACKAGE_FORM_TYPES[bundle.detailKey] || [],
   }
   return (
     <motion.div
@@ -733,7 +751,7 @@ function RecommendedBundleCard({ bundle, variants }) {
           {t.pricing?.everythingIncluded || 'Everything included'}
         </p>
         <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
-          {bundle.features.map(f => <FeatureItem key={f} text={f} accent />)}
+          {bundle.features.map((f, i) => <FeatureItem key={i} text={f} accent />)}
         </ul>
       </div>
 
@@ -741,14 +759,14 @@ function RecommendedBundleCard({ bundle, variants }) {
       <AnimatePresence>
         {showDetails && (
           <motion.div
-            key={`fom-rec-${bundle.name}`}
+            key={`fom-rec-${bundle.detailKey}`}
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
             style={{ overflow: 'hidden', gridColumn: '1 / -1' }}
           >
-            <FindOutMorePanel name={bundle.name} item={basketItem} />
+            <FindOutMorePanel detailKey={bundle.detailKey} item={basketItem} />
           </motion.div>
         )}
       </AnimatePresence>
@@ -793,7 +811,7 @@ function BundlesSection({ reduceMotion, localizedBundles, tp }) {
         >
           {/* Top two bundles */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {before.map(b => <SmallBundleCard key={b.name} bundle={b} variants={cardVariants} />)}
+            {before.map(b => <SmallBundleCard key={b.detailKey} bundle={b} variants={cardVariants} />)}
           </div>
 
           {/* Recommended — full width */}
@@ -801,7 +819,7 @@ function BundlesSection({ reduceMotion, localizedBundles, tp }) {
 
           {/* Bottom two bundles */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {after.map(b => <SmallBundleCard key={b.name} bundle={b} variants={cardVariants} />)}
+            {after.map(b => <SmallBundleCard key={b.detailKey} bundle={b} variants={cardVariants} />)}
           </div>
         </motion.div>
       </div>
@@ -871,10 +889,10 @@ function WebsiteSetupCard({ pkg, variants }) {
   const [showDetails, setShowDetails] = useState(false)
   const t = useTranslations()
   const basketItem = {
-    id: pkg.name,
+    id: pkg.detailKey,
     name: pkg.name,
     priceDisplay: `${t.labels.from} ${pkg.price} ${t.labels.oneOff}`,
-    formTypes: PACKAGE_FORM_TYPES[pkg.name] || ['website'],
+    formTypes: PACKAGE_FORM_TYPES[pkg.detailKey] || ['website'],
   }
 
   if (pkg.featured) {
@@ -935,21 +953,21 @@ function WebsiteSetupCard({ pkg, variants }) {
             {t.journey.whatsIncluded}
           </p>
           <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
-            {pkg.features.map(f => <FeatureItem key={f} text={f} accent />)}
+            {pkg.features.map((f, i) => <FeatureItem key={i} text={f} accent />)}
           </ul>
         </div>
 
         <AnimatePresence>
           {showDetails && (
             <motion.div
-              key={`fom-ws-${pkg.name}`}
+              key={`fom-ws-${pkg.detailKey}`}
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
               style={{ overflow: 'hidden', gridColumn: '1 / -1' }}
             >
-              <FindOutMorePanel name={pkg.name} item={basketItem} />
+              <FindOutMorePanel detailKey={pkg.detailKey} item={basketItem} />
             </motion.div>
           )}
         </AnimatePresence>
@@ -991,7 +1009,7 @@ function WebsiteSetupCard({ pkg, variants }) {
       <hr style={{ border: 'none', borderTop: '1px solid var(--border-default)', margin: 0 }} />
 
       <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
-        {pkg.features.map(f => <FeatureItem key={f} text={f} />)}
+        {pkg.features.map((f, i) => <FeatureItem key={i} text={f} />)}
       </ul>
 
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 'var(--space-2)', paddingTop: 'var(--space-2)', borderTop: '1px solid var(--border-default)' }}>
@@ -1012,7 +1030,7 @@ function WebsiteSetupCard({ pkg, variants }) {
       <AnimatePresence>
         {showDetails && (
           <motion.div
-            key={`fom-ws-std-${pkg.name}`}
+            key={`fom-ws-std-${pkg.detailKey}`}
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
@@ -1063,13 +1081,13 @@ function WebsiteSetupSection({ reduceMotion, localizedWebsites, tp }) {
           style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-5)' }}
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {before.map(p => <WebsiteSetupCard key={p.name} pkg={p} variants={cardVariants} />)}
+            {before.map(p => <WebsiteSetupCard key={p.detailKey} pkg={p} variants={cardVariants} />)}
           </div>
 
           <WebsiteSetupCard pkg={featured} variants={cardVariants} />
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {after.map(p => <WebsiteSetupCard key={p.name} pkg={p} variants={cardVariants} />)}
+            {after.map(p => <WebsiteSetupCard key={p.detailKey} pkg={p} variants={cardVariants} />)}
           </div>
         </motion.div>
 
