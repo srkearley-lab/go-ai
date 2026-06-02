@@ -8,7 +8,13 @@ import {
 } from 'lucide-react'
 import PageHero from '../components/PageHero'
 import WhatsDifferenceStrip from '../components/WhatsDifferenceStrip'
-import { useTranslations } from '../context/LanguageContext'
+import { useTranslations, useJourneyLocale } from '../context/LanguageContext'
+
+// Merge base English data with locale overrides (used for non-English languages)
+function tItem(locale, key, id, base) {
+  const override = locale?.[key]?.[id]
+  return override ? { ...base, ...override } : base
+}
 
 // ─── Data ──────────────────────────────────────────────────────────────────────
 
@@ -587,7 +593,6 @@ function WebsiteSelectCard({ website, onToggle, isSelected }) {
 
 function PackageSelectCard({ pkg, onToggle, isSelected }) {
   const [showInfo, setShowInfo] = useState(false)
-  const [btnHover, setBtnHover] = useState(false)
 
   const btnStyle = {
     height: 36, padding: '0 var(--space-4)',
@@ -596,9 +601,7 @@ function PackageSelectCard({ pkg, onToggle, isSelected }) {
     borderRadius: 'var(--radius-md)', cursor: 'pointer',
     transition: 'all 120ms ease', fontFamily: 'inherit',
     ...(isSelected
-      ? (btnHover
-        ? { background: 'rgba(220,38,38,0.1)', color: '#dc2626', border: '1px solid rgba(220,38,38,0.3)', boxShadow: 'none' }
-        : { background: 'rgba(22,163,74,0.1)', color: 'var(--color-success)', border: '1px solid rgba(22,163,74,0.3)', boxShadow: 'none' })
+      ? { background: 'rgba(22,163,74,0.1)', color: 'var(--color-success)', border: '1px solid rgba(22,163,74,0.3)', boxShadow: 'none' }
       : { background: 'linear-gradient(90deg, #293BFF 0%, #7627EF 100%)', color: '#FFFFFF', border: 'none', boxShadow: '0 0 16px rgba(118,39,239,0.3)' }),
   }
 
@@ -654,13 +657,9 @@ function PackageSelectCard({ pkg, onToggle, isSelected }) {
         <button
           type="button"
           onClick={() => onToggle(pkg)}
-          onMouseEnter={() => setBtnHover(true)}
-          onMouseLeave={() => setBtnHover(false)}
           style={btnStyle}
         >
-          {isSelected
-            ? (btnHover ? <><XIcon size={11} /> Remove</> : <><Check size={11} strokeWidth={2.5} /> Selected</>)
-            : 'Select this package'}
+          {isSelected ? <><Check size={11} strokeWidth={2.5} /> Selected</> : 'Select this package'}
         </button>
         <ShowDetailsBtn open={showInfo} onToggle={() => setShowInfo(v => !v)} />
       </div>
@@ -670,7 +669,6 @@ function PackageSelectCard({ pkg, onToggle, isSelected }) {
 
 function BundleSelectCard({ bundle, onToggle, isSelected }) {
   const [showInfo, setShowInfo] = useState(false)
-  const [btnHover, setBtnHover] = useState(false)
   const hl = bundle.highlighted
 
   const btnStyle = {
@@ -680,9 +678,7 @@ function BundleSelectCard({ bundle, onToggle, isSelected }) {
     borderRadius: 'var(--radius-md)', cursor: 'pointer',
     transition: 'all 120ms ease', fontFamily: 'inherit', width: '100%',
     ...(isSelected
-      ? (btnHover
-        ? { background: 'rgba(220,38,38,0.1)', color: '#dc2626', border: '1px solid rgba(220,38,38,0.3)', boxShadow: 'none' }
-        : { background: 'rgba(22,163,74,0.1)', color: 'var(--color-success)', border: '1px solid rgba(22,163,74,0.3)', boxShadow: 'none' })
+      ? { background: 'rgba(22,163,74,0.1)', color: 'var(--color-success)', border: '1px solid rgba(22,163,74,0.3)', boxShadow: 'none' }
       : { background: 'linear-gradient(90deg, #293BFF 0%, #7627EF 100%)', color: '#FFFFFF', border: 'none', boxShadow: '0 0 20px rgba(118,39,239,0.3)' }),
   }
   return (
@@ -731,13 +727,9 @@ function BundleSelectCard({ bundle, onToggle, isSelected }) {
         <button
           type="button"
           onClick={() => onToggle(bundle)}
-          onMouseEnter={() => setBtnHover(true)}
-          onMouseLeave={() => setBtnHover(false)}
           style={btnStyle}
         >
-          {isSelected
-            ? (btnHover ? <><XIcon size={13} /> Remove</> : <><Check size={13} strokeWidth={2.5} /> Selected</>)
-            : 'Add this bundle'}
+          {isSelected ? <><Check size={13} strokeWidth={2.5} /> Selected</> : 'Add this bundle'}
         </button>
         <ShowDetailsBtn open={showInfo} onToggle={() => setShowInfo(v => !v)} />
       </div>
@@ -747,7 +739,6 @@ function BundleSelectCard({ bundle, onToggle, isSelected }) {
 
 function AddonSelectCard({ addon, isSelected, onToggle }) {
   const [showInfo, setShowInfo] = useState(false)
-  const [btnHover, setBtnHover] = useState(false)
 
   const btnStyle = {
     height: 36, padding: '0 var(--space-4)',
@@ -756,9 +747,7 @@ function AddonSelectCard({ addon, isSelected, onToggle }) {
     borderRadius: 'var(--radius-md)', cursor: 'pointer',
     transition: 'all 120ms ease', fontFamily: 'inherit',
     ...(isSelected
-      ? (btnHover
-        ? { background: 'rgba(220,38,38,0.1)', color: '#dc2626', border: '1px solid rgba(220,38,38,0.3)', boxShadow: 'none' }
-        : { background: 'rgba(22,163,74,0.1)', color: 'var(--color-success)', border: '1px solid rgba(22,163,74,0.3)', boxShadow: 'none' })
+      ? { background: 'rgba(22,163,74,0.1)', color: 'var(--color-success)', border: '1px solid rgba(22,163,74,0.3)', boxShadow: 'none' }
       : { background: 'linear-gradient(90deg, #293BFF 0%, #7627EF 100%)', color: '#FFFFFF', border: 'none', boxShadow: '0 0 16px rgba(118,39,239,0.3)' }),
   }
 
@@ -812,12 +801,10 @@ function AddonSelectCard({ addon, isSelected, onToggle }) {
         <button
           type="button"
           onClick={() => onToggle(addon)}
-          onMouseEnter={() => setBtnHover(true)}
-          onMouseLeave={() => setBtnHover(false)}
           style={btnStyle}
         >
           {isSelected
-            ? (btnHover ? <><XIcon size={11} /> Remove</> : <><Check size={11} strokeWidth={3} /> {addon.isQuote ? 'Quote added' : 'Added'}</>)
+            ? <><Check size={11} strokeWidth={3} /> {addon.isQuote ? 'Quote added' : 'Added'}</>
             : (addon.isQuote ? 'Request a quote' : 'Add to package')}
         </button>
         {(addon.features.length > 0 || addon.bestFor) && (
@@ -851,6 +838,7 @@ function StepHeader({ stepNum, title, description }) {
 
 function StepWebsite({ onToggle, selected, onSkip, onContinue }) {
   const t = useTranslations()
+  const jl = useJourneyLocale()
   return (
     <div>
       <StepHeader
@@ -861,7 +849,7 @@ function StepWebsite({ onToggle, selected, onSkip, onContinue }) {
       <WhatsDifferenceStrip activePage="websites" insideJourney={true} />
       <div className="journey-website-grid">
         {WEBSITES.map(ws => (
-          <WebsiteSelectCard key={ws.id} website={ws} onToggle={onToggle} isSelected={selected?.id === ws.id} />
+          <WebsiteSelectCard key={ws.id} website={tItem(jl, 'websites', ws.id, ws)} onToggle={onToggle} isSelected={selected?.id === ws.id} />
         ))}
       </div>
       <div style={{
@@ -900,6 +888,7 @@ function StepWebsite({ onToggle, selected, onSkip, onContinue }) {
 
 function StepPackage({ onToggle, onSkip, onBack, onContinue, selectedItems }) {
   const t = useTranslations()
+  const jl = useJourneyLocale()
   return (
     <div>
       <StepHeader
@@ -939,7 +928,7 @@ function StepPackage({ onToggle, onSkip, onBack, onContinue, selectedItems }) {
       )}
       <div className="journey-package-grid">
         {PACKAGES.map(pkg => (
-          <PackageSelectCard key={pkg.id} pkg={pkg} onToggle={onToggle} isSelected={selectedItems.some(p => p.id === pkg.id)} />
+          <PackageSelectCard key={pkg.id} pkg={tItem(jl, 'packages', pkg.id, pkg)} onToggle={onToggle} isSelected={selectedItems.some(p => p.id === pkg.id)} />
         ))}
       </div>
       <div style={{
@@ -982,6 +971,7 @@ function StepPackage({ onToggle, onSkip, onBack, onContinue, selectedItems }) {
 
 function StepBundle({ onToggle, onSkip, onBack, onContinue, selectedItems }) {
   const t = useTranslations()
+  const jl = useJourneyLocale()
   return (
     <div>
       <StepHeader
@@ -1021,7 +1011,7 @@ function StepBundle({ onToggle, onSkip, onBack, onContinue, selectedItems }) {
       )}
       <div className="journey-bundle-grid">
         {BUNDLES.map(bundle => (
-          <BundleSelectCard key={bundle.id} bundle={bundle} onToggle={onToggle} isSelected={selectedItems.some(b => b.id === bundle.id)} />
+          <BundleSelectCard key={bundle.id} bundle={tItem(jl, 'bundles', bundle.id, bundle)} onToggle={onToggle} isSelected={selectedItems.some(b => b.id === bundle.id)} />
         ))}
       </div>
       <div style={{
@@ -1064,7 +1054,16 @@ function StepBundle({ onToggle, onSkip, onBack, onContinue, selectedItems }) {
 
 function StepAddons({ selectedAddons, onToggle, onContinue, onSkip, onBack }) {
   const t = useTranslations()
+  const jl = useJourneyLocale()
   const selectedIds = selectedAddons.map(a => a.id)
+
+  const localizedGroups = ADDON_GROUPS.map((group, gi) => ({
+    ...group,
+    title: jl?.addonGroupTitles?.[gi] || group.title,
+    subtitle: jl?.addonGroupSubtitles?.[gi] !== undefined ? jl.addonGroupSubtitles[gi] : group.subtitle,
+    addons: group.addons.map(addon => tItem(jl, 'addons', addon.id, addon)),
+  }))
+
   return (
     <div>
       <StepHeader
