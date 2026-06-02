@@ -5,6 +5,7 @@ import { Check, ArrowRight, MessageCircle, ShoppingCart, ChevronDown } from 'luc
 import PageHero from '../components/PageHero'
 import { useBasket, PACKAGE_FORM_TYPES } from '../context/BasketContext'
 import { packageDetails } from '../data/packageDetails'
+import { useTranslations } from '../context/LanguageContext'
 
 const WHATSAPP = '#'
 
@@ -500,7 +501,7 @@ function AddOnCard({ addon, variants }) {
   )
 }
 
-function AddOnsSection({ reduceMotion }) {
+function AddOnsSection({ reduceMotion, localizedAddOns, tp }) {
   const stagger = {
     hidden: {},
     show: { transition: { staggerChildren: reduceMotion ? 0 : 0.06, delayChildren: reduceMotion ? 0 : 0.05 } },
@@ -514,12 +515,12 @@ function AddOnsSection({ reduceMotion }) {
     <section id="packages" style={{ padding: 'var(--space-16) var(--space-8)', background: 'var(--surface-subtle)', borderTop: '1px solid var(--border-default)', borderBottom: '1px solid var(--border-default)' }}>
       <div style={{ maxWidth: 'var(--width-xl)', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'var(--space-10)' }}>
         <div>
-          <SectionLabel>Monthly Add-Ons</SectionLabel>
+          <SectionLabel>{tp.addOnsLabel}</SectionLabel>
           <h2 style={{ fontSize: 'clamp(var(--text-lg), 2.5vw, var(--text-xl))', fontWeight: 700, lineHeight: 1.15, letterSpacing: '-0.02em', color: 'var(--text-primary)', marginBottom: 'var(--space-3)' }}>
-            Add the services you need
+            {tp.addOnsTitle}
           </h2>
           <p style={{ fontSize: 'var(--text-sm)', lineHeight: 1.7, color: 'var(--text-secondary)', maxWidth: '58ch' }}>
-            A website gets you online. Ongoing content and automation help you grow. Add any combination of monthly services to your website package.
+            {tp.addOnsBody}
           </p>
         </div>
 
@@ -530,7 +531,7 @@ function AddOnsSection({ reduceMotion }) {
           viewport={{ once: true, margin: '-60px' }}
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
         >
-          {addOns.map(addon => <AddOnCard key={addon.name} addon={addon} variants={cardVariants} />)}
+          {localizedAddOns.map(addon => <AddOnCard key={addon.name} addon={addon} variants={cardVariants} />)}
         </motion.div>
       </div>
     </section>
@@ -697,7 +698,7 @@ function RecommendedBundleCard({ bundle, variants }) {
         <SavingsBadge yearly={bundle.savesYearly} upfront={bundle.savesUpfront} />
 
         <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-secondary)', fontStyle: 'italic' }}>
-          Most growing businesses get better value from a bundle.
+          {tp?.bundleValueNote || 'Most growing businesses get better value from a bundle.'}
         </p>
 
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-3)', alignItems: 'center' }}>
@@ -719,7 +720,7 @@ function RecommendedBundleCard({ bundle, variants }) {
       {/* Right — features */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-5)' }}>
         <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)' }}>
-          Everything included
+          {tp?.everythingIncluded || 'Everything included'}
         </p>
         <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
           {bundle.features.map(f => <FeatureItem key={f} text={f} accent />)}
@@ -745,7 +746,7 @@ function RecommendedBundleCard({ bundle, variants }) {
   )
 }
 
-function BundlesSection({ reduceMotion }) {
+function BundlesSection({ reduceMotion, localizedBundles, tp }) {
   const stagger = {
     hidden: {},
     show: { transition: { staggerChildren: reduceMotion ? 0 : 0.08, delayChildren: reduceMotion ? 0 : 0.05 } },
@@ -755,8 +756,8 @@ function BundlesSection({ reduceMotion }) {
     show: { opacity: 1, y: 0, transition: { duration: 0.22, ease: [0.16, 1, 0.3, 1] } },
   }
 
-  const standard = bundles.filter(b => !b.recommended)
-  const recommended = bundles.find(b => b.recommended)
+  const standard = localizedBundles.filter(b => !b.recommended)
+  const recommended = localizedBundles.find(b => b.recommended)
   const before = standard.slice(0, 2)
   const after = standard.slice(2)
 
@@ -764,12 +765,12 @@ function BundlesSection({ reduceMotion }) {
     <section id="bundles" style={{ padding: 'var(--space-16) var(--space-8)', background: 'var(--surface-base)' }}>
       <div style={{ maxWidth: 'var(--width-xl)', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'var(--space-10)' }}>
         <div>
-          <SectionLabel>Recommended Bundles</SectionLabel>
+          <SectionLabel>{tp.bundlesLabel}</SectionLabel>
           <h2 style={{ fontSize: 'clamp(var(--text-lg), 2.5vw, var(--text-xl))', fontWeight: 700, lineHeight: 1.15, letterSpacing: '-0.02em', color: 'var(--text-primary)', marginBottom: 'var(--space-3)' }}>
-            Recommended bundles
+            {tp.bundlesTitle}
           </h2>
           <p style={{ fontSize: 'var(--text-sm)', lineHeight: 1.7, color: 'var(--text-secondary)', maxWidth: '56ch' }}>
-            Save time, look professional, and stay consistent online. Bundling your website with monthly support gives you better value and a single point of contact.
+            {tp.bundlesBody}
           </p>
         </div>
 
@@ -805,7 +806,7 @@ function BundlesSection({ reduceMotion }) {
 
 // ── Final CTA ─────────────────────────────────────────────────────────────────
 
-function FinalCTA({ reduceMotion }) {
+function FinalCTA({ reduceMotion, tp }) {
   return (
     <section style={{ padding: 'var(--space-20) var(--space-8)', background: 'var(--surface-raised)', borderTop: '1px solid var(--border-default)' }}>
       <motion.div
@@ -817,20 +818,18 @@ function FinalCTA({ reduceMotion }) {
       >
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
           <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--color-accent-500)' }}>
-            Free consultation
+            {tp?.ctaTag || 'Free consultation'}
           </p>
           <h2 style={{ fontSize: 'clamp(var(--text-lg), 3vw, var(--text-xl))', fontWeight: 700, lineHeight: 1.15, letterSpacing: '-0.02em', color: 'var(--text-primary)' }}>
-            Not sure what you need?
+            {tp?.ctaTitle || 'Not sure what you need?'}
           </h2>
           <p style={{ fontSize: 'var(--text-base)', lineHeight: 1.6, color: 'var(--text-secondary)', maxWidth: '46ch' }}>
-            Start with a professional website, then choose the monthly support package that helps your business grow.
+            {tp?.ctaBody || 'Start with a professional website, then choose the monthly support package that helps your business grow.'}
           </p>
         </div>
 
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-3)', justifyContent: 'center' }}>
-          <CTAButton to="/contact" label="Start with Website Only" />
-          <CTAButton to="/contact" label="Choose Recommended Bundle" primary />
-          <CTAButton to="/contact" label="Build My AI Growth Package" />
+          <CTAButton to="/contact" label={tp?.ctaPrimary || 'Get my free plan'} primary />
         </div>
 
         <a
@@ -849,7 +848,7 @@ function FinalCTA({ reduceMotion }) {
           onMouseLeave={(e) => { e.currentTarget.style.background = '#25d366' }}
         >
           <MessageCircle size={15} />
-          Ask us on WhatsApp
+          {tp?.ctaWhatsApp || 'Ask on WhatsApp'}
         </a>
       </motion.div>
     </section>
@@ -1017,7 +1016,7 @@ function WebsiteSetupCard({ pkg, variants }) {
   )
 }
 
-function WebsiteSetupSection({ reduceMotion }) {
+function WebsiteSetupSection({ reduceMotion, localizedWebsites, tp }) {
   const stagger = {
     hidden: {},
     show: { transition: { staggerChildren: reduceMotion ? 0 : 0.07, delayChildren: reduceMotion ? 0 : 0.05 } },
@@ -1027,21 +1026,21 @@ function WebsiteSetupSection({ reduceMotion }) {
     show: { opacity: 1, y: 0, transition: { duration: 0.22, ease: [0.16, 1, 0.3, 1] } },
   }
 
-  const featured = websiteSetupPackages.find(p => p.featured)
-  const before = websiteSetupPackages.filter(p => !p.featured).slice(0, 2)
-  const after = websiteSetupPackages.filter(p => !p.featured).slice(2)
+  const featured = localizedWebsites.find(p => p.featured)
+  const before = localizedWebsites.filter(p => !p.featured).slice(0, 2)
+  const after = localizedWebsites.filter(p => !p.featured).slice(2)
 
   return (
     <section id="websites" style={{ padding: 'var(--space-16) var(--space-8)', background: 'var(--surface-subtle)', borderTop: '1px solid var(--border-default)', borderBottom: '1px solid var(--border-default)' }}>
       <div style={{ maxWidth: 'var(--width-xl)', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'var(--space-10)' }}>
 
         <div>
-          <SectionLabel>One-Off Website Setup Pricing</SectionLabel>
+          <SectionLabel>{tp?.websitesLabel || 'One-Off Website Setup Pricing'}</SectionLabel>
           <h2 style={{ fontSize: 'clamp(var(--text-lg), 2.5vw, var(--text-xl))', fontWeight: 700, lineHeight: 1.15, letterSpacing: '-0.02em', color: 'var(--text-primary)', marginBottom: 'var(--space-3)' }}>
-            Choose the level of website your business needs
+            {tp?.websitesTitle || 'Choose the level of website your business needs'}
           </h2>
           <p style={{ fontSize: 'var(--text-sm)', lineHeight: 1.7, color: 'var(--text-secondary)', maxWidth: '62ch' }}>
-            These are one-off starting prices for the initial website build only. Ongoing support, bundles and monthly services are separate.
+            {tp?.websitesBody || 'These are one-off starting prices for the initial website build only. Ongoing support, bundles and monthly services are separate.'}
           </p>
         </div>
 
@@ -1064,7 +1063,7 @@ function WebsiteSetupSection({ reduceMotion }) {
         </motion.div>
 
         <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', fontStyle: 'italic', maxWidth: '72ch' }}>
-          All website prices are starting prices for the initial setup only. Final pricing depends on pages, content requirements, design complexity and integrations.
+          {tp?.websiteVatNote || 'All website prices are starting prices for the initial setup only. Final pricing depends on pages, content requirements, design complexity and integrations.'}
         </p>
       </div>
 
@@ -1080,18 +1079,40 @@ function WebsiteSetupSection({ reduceMotion }) {
 
 export default function Pricing() {
   const reduceMotion = useReducedMotion()
+  const t = useTranslations()
+  const tp = t.pricing
+
+  // Localize add-ons data
+  const localizedAddOns = addOns.map((a, i) => {
+    const td = t.pricingAddons?.[i]
+    if (!td) return a
+    return { ...a, name: td.name, description: td.description, features: td.features }
+  })
+
+  // Reuse existing bundle + website translations
+  const localizedBundles = bundles.map((b, i) => {
+    const td = t.bundleData?.[i]
+    if (!td) return b
+    return { ...b, name: td.name, description: td.description, features: td.features, cta: td.cta }
+  })
+
+  const localizedWebsites = websiteSetupPackages.map((p, i) => {
+    const td = t.websiteData?.[i]
+    if (!td) return p
+    return { ...p, name: td.name, bestFor: td.bestFor, features: td.features, cta: td.cta }
+  })
 
   return (
     <main style={{ paddingTop: 64 }}>
       <PageHero
-        tag="Pricing"
-        title="Simple Website & AI Growth Packages"
-        description="Start with a professional website for a one-off cost, then add monthly support to help your business grow, stay visible, and save time."
+        tag={tp.tag}
+        title={tp.title}
+        description={tp.description}
       />
-      <AddOnsSection reduceMotion={reduceMotion} />
-      <BundlesSection reduceMotion={reduceMotion} />
-      <WebsiteSetupSection reduceMotion={reduceMotion} />
-      <FinalCTA reduceMotion={reduceMotion} />
+      <AddOnsSection reduceMotion={reduceMotion} localizedAddOns={localizedAddOns} tp={tp} />
+      <BundlesSection reduceMotion={reduceMotion} localizedBundles={localizedBundles} tp={tp} />
+      <WebsiteSetupSection reduceMotion={reduceMotion} localizedWebsites={localizedWebsites} tp={tp} />
+      <FinalCTA reduceMotion={reduceMotion} tp={tp} />
     </main>
   )
 }

@@ -348,6 +348,19 @@ export default function Packages() {
   const reduceMotion = useReducedMotion()
   const t = useTranslations()
 
+  // Merge structural data (id, priceDisplay) with translated text
+  const localizedPackages = servicePackages.map((pkg, i) => {
+    const td = t.packageServiceData?.[i]
+    if (!td) return pkg
+    return {
+      ...pkg,
+      name:        td.name,
+      priceNote:   td.priceNote,
+      description: td.description,
+      features:    td.features,
+    }
+  })
+
   const stagger = {
     hidden: {},
     show: { transition: { staggerChildren: reduceMotion ? 0 : 0.06, delayChildren: reduceMotion ? 0 : 0.05 } },
@@ -377,7 +390,7 @@ export default function Packages() {
             viewport={{ once: true, margin: '-60px' }}
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
           >
-            {servicePackages.map(pkg => (
+            {localizedPackages.map(pkg => (
               <PackageCard key={pkg.id} pkg={pkg} variants={cardVariants} />
             ))}
           </motion.div>
