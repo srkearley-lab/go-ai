@@ -355,6 +355,7 @@ export default function Packages() {
     return {
       ...pkg,
       name:        td.name,
+      displayName: td.name,   // override displayName so basket shows translated name
       priceNote:   td.priceNote,
       description: td.description,
       features:    td.features,

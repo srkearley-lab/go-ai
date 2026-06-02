@@ -318,7 +318,7 @@ export const translations = {
     },
 
     faq: {
-      tag: 'FAQ',
+      tag: 'Συχνές Ερωτήσεις',
       title: 'Συχνές Ερωτήσεις με Απαντήσεις',
       description: 'Όλα όσα χρειάζεστε για ιστοσελίδες, πακέτα, αυτοματισμό και πώς λειτουργεί το GO AI.',
       stillHave: 'Έχετε ακόμα ερωτήσεις;',
@@ -810,11 +810,13 @@ export const translations = {
       bundleValueNote: 'Οι περισσότερες αναπτυσσόμενες επιχειρήσεις αποκτούν καλύτερη αξία από μια δέσμη.',
       everythingIncluded: 'Τα πάντα περιλαμβάνονται',
       setupLabel:  'Ρύθμιση',
-      ctaTag:      'Δεν είστε σίγουροι τι χρειάζεστε;',
-      ctaTitle:    'Ξεκινήστε με ένα δωρεάν σχέδιο',
-      ctaBody:     'Πείτε μας για την επιχείρησή σας και θα σας στείλουμε εξατομικευμένη σύσταση — ποια ιστοσελίδα, ποιες υπηρεσίες και τι θα κόστιζε. Δωρεάν, χωρίς δέσμευση.',
-      ctaPrimary:  'Ζητήστε δωρεάν σχέδιο',
-      ctaWhatsApp: 'Ρωτήστε στο WhatsApp',
+      ctaTag:        'Δεν είστε σίγουροι τι χρειάζεστε;',
+      ctaTitle:      'Ξεκινήστε με ένα δωρεάν σχέδιο',
+      ctaBody:       'Πείτε μας για την επιχείρησή σας και θα σας στείλουμε εξατομικευμένη σύσταση — ποια ιστοσελίδα, ποιες υπηρεσίες και τι θα κόστιζε. Δωρεάν, χωρίς δέσμευση.',
+      ctaPrimary:    'Ζητήστε δωρεάν σχέδιο',
+      ctaWhatsApp:   'Ρωτήστε στο WhatsApp',
+      setupFee:      '+ €{amount} εφάπαξ ρύθμιση',
+      setupIncluded: 'Ρύθμιση: Συμπεριλαμβάνεται με το πακέτο ιστοσελίδας',
     },
 
     pricingAddons: [
@@ -1720,11 +1722,13 @@ export const translations = {
       bundleValueNote: 'Most growing businesses get better value from a bundle.',
       everythingIncluded: 'Everything included',
       setupLabel:  'Setup',
-      ctaTag:      'Not sure what you need?',
-      ctaTitle:    'Start with a free plan',
-      ctaBody:     "Tell us about your business and we'll send a personalised recommendation — which website, which services and what it would cost. Free, no commitment.",
-      ctaPrimary:  'Get my free plan',
-      ctaWhatsApp: 'Ask on WhatsApp',
+      ctaTag:        'Not sure what you need?',
+      ctaTitle:      'Start with a free plan',
+      ctaBody:       "Tell us about your business and we'll send a personalised recommendation — which website, which services and what it would cost. Free, no commitment.",
+      ctaPrimary:    'Get my free plan',
+      ctaWhatsApp:   'Ask on WhatsApp',
+      setupFee:      '+ €{amount} one-off setup',
+      setupIncluded: 'Setup: included with your website package',
     },
 
     pricingAddons: [

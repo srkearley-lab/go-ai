@@ -352,6 +352,13 @@ const BADGE_COLORS = {
   'Peace of Mind':   { bg: 'rgba(22,163,74,0.1)',    border: 'rgba(22,163,74,0.2)',    color: 'var(--color-success)' },
   'Growth':          { bg: 'rgba(245,158,11,0.1)',   border: 'rgba(245,158,11,0.2)',   color: 'var(--color-accent-500)' },
   'Automation':      { bg: 'rgba(99,102,241,0.1)',   border: 'rgba(99,102,241,0.2)',   color: 'var(--color-brand-400)' },
+  // Greek aliases for translated badge values
+  'Αρχάριοι':               { bg: 'rgba(22,163,74,0.08)',   border: 'rgba(22,163,74,0.18)',   color: 'var(--color-success)' },
+  'Συνιστώμενο':            { bg: 'var(--color-brand-500)', border: 'var(--color-brand-600)', color: 'var(--color-neutral-0)' },
+  'Καλύτερο για Ανάπτυξη': { bg: 'rgba(245,158,11,0.1)',   border: 'rgba(245,158,11,0.2)',   color: 'var(--color-accent-400)' },
+  'Αξιοπιστία':             { bg: 'rgba(22,163,74,0.1)',    border: 'rgba(22,163,74,0.2)',    color: 'var(--color-success)' },
+  'Ανάπτυξη':               { bg: 'rgba(245,158,11,0.1)',   border: 'rgba(245,158,11,0.2)',   color: 'var(--color-accent-500)' },
+  'Αυτοματισμός':           { bg: 'rgba(99,102,241,0.1)',   border: 'rgba(99,102,241,0.2)',   color: 'var(--color-brand-400)' },
 }
 
 function Badge({ label }) {

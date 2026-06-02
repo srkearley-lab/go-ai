@@ -244,6 +244,7 @@ const badgeColors = {
 }
 
 function Badge({ label }) {
+  const t = useTranslations()
   const c = badgeColors[label] || badgeColors['Starter']
   return (
     <span style={{
@@ -253,7 +254,7 @@ function Badge({ label }) {
       background: c.bg, border: `1px solid ${c.border}`, color: c.color,
       borderRadius: 'var(--radius-full)', padding: '3px var(--space-3)',
     }}>
-      {label}
+      {t.labels.badgeLabels?.[label] || label}
     </span>
   )
 }
@@ -318,6 +319,7 @@ function CTAButton({ to, label, primary = false }) {
 
 function BasketButton({ item }) {
   const { addItem, removeItem, isInBasket } = useBasket()
+  const t = useTranslations()
   const inBasket = isInBasket(item.id)
   return (
     <button
@@ -337,8 +339,8 @@ function BasketButton({ item }) {
       onMouseLeave={(e) => { if (!inBasket) { e.currentTarget.style.color = 'var(--text-secondary)'; e.currentTarget.style.borderColor = 'var(--border-default)' } }}
     >
       {inBasket
-        ? <><Check size={11} strokeWidth={3} /> In Basket</>
-        : <><ShoppingCart size={11} /> Add to Basket</>}
+        ? <><Check size={11} strokeWidth={3} /> {t.buttons.inBasket}</>
+        : <><ShoppingCart size={11} /> {t.buttons.addToBasket}</>}
     </button>
   )
 }
@@ -423,6 +425,8 @@ function FindOutMorePanel({ name, item }) {
 
 function AddOnCard({ addon, variants }) {
   const [showDetails, setShowDetails] = useState(false)
+  const t = useTranslations()
+  const tp = t.pricing
   const basketItem = {
     id: addon.name,
     name: addon.name,
@@ -456,11 +460,13 @@ function AddOnCard({ addon, variants }) {
         <span style={{ fontSize: 'var(--text-xl)', fontWeight: 700, letterSpacing: '-0.02em', color: 'var(--text-primary)', lineHeight: 1 }}>
           €{addon.monthly}
         </span>
-        <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)' }}>/month</span>
+        <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)' }}>{t.labels.perMonth}</span>
       </div>
 
       <p style={{ fontSize: 'var(--text-xs)', color: addon.setup ? 'var(--color-accent-500)' : 'var(--text-tertiary)' }}>
-        {addon.setup ? `+ €${addon.setup} one-off setup` : 'Setup: Included with your website package'}
+        {addon.setup
+          ? tp.setupFee.replace('{amount}', addon.setup)
+          : tp.setupIncluded}
       </p>
 
       <hr style={{ border: 'none', borderTop: '1px solid var(--border-default)', margin: 0 }} />
@@ -476,7 +482,7 @@ function AddOnCard({ addon, variants }) {
           onClick={() => setShowDetails(v => !v)}
           style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-1)', background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-brand-400)', fontSize: 'var(--text-xs)', fontWeight: 500, padding: 0, fontFamily: 'inherit' }}
         >
-          {showDetails ? 'Hide' : 'Find Out More'}
+          {showDetails ? t.buttons.hideDetails : t.buttons.findOutMore}
           <motion.span animate={{ rotate: showDetails ? 180 : 0 }} transition={{ duration: 0.15 }} style={{ display: 'flex' }}>
             <ChevronDown size={12} />
           </motion.span>
@@ -541,6 +547,7 @@ function AddOnsSection({ reduceMotion, localizedAddOns, tp }) {
 // ── Section 3 — Bundles ───────────────────────────────────────────────────────
 
 function SavingsBadge({ yearly, upfront }) {
+  const t = useTranslations()
   return (
     <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-2)' }}>
       {upfront && (
@@ -551,7 +558,7 @@ function SavingsBadge({ yearly, upfront }) {
           background: 'rgba(245,158,11,0.1)', border: '1px solid rgba(245,158,11,0.2)',
           borderRadius: 'var(--radius-sm)', padding: '2px var(--space-2)',
         }}>
-          Save €{upfront} upfront
+          {t.pages.bundles.saveUpfront.replace('{amount}', upfront)}
         </span>
       )}
       {yearly && (
@@ -562,7 +569,7 @@ function SavingsBadge({ yearly, upfront }) {
           background: 'rgba(245,158,11,0.1)', border: '1px solid rgba(245,158,11,0.2)',
           borderRadius: 'var(--radius-sm)', padding: '2px var(--space-2)',
         }}>
-          Save €{yearly}/year
+          {t.pages.bundles.savePerYear.replace('{amount}', yearly)}
         </span>
       )}
     </div>
@@ -571,6 +578,7 @@ function SavingsBadge({ yearly, upfront }) {
 
 function SmallBundleCard({ bundle, variants }) {
   const [showDetails, setShowDetails] = useState(false)
+  const t = useTranslations()
   const basketItem = {
     id: bundle.name,
     name: bundle.name,
@@ -604,7 +612,7 @@ function SmallBundleCard({ bundle, variants }) {
         </div>
         <div>
           <span style={{ fontSize: 'var(--text-lg)', fontWeight: 700, letterSpacing: '-0.02em', color: 'var(--text-primary)', lineHeight: 1 }}>€{bundle.monthly}</span>
-          <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)' }}>/mo</span>
+          <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)' }}>{t.labels.perMonth}</span>
         </div>
       </div>
 
@@ -625,7 +633,7 @@ function SmallBundleCard({ bundle, variants }) {
         onClick={() => setShowDetails(v => !v)}
         style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-1)', background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-brand-400)', fontSize: 'var(--text-xs)', fontWeight: 500, padding: 0, fontFamily: 'inherit' }}
       >
-        {showDetails ? 'Hide details' : 'Find Out More'}
+        {showDetails ? t.buttons.hideDetails : t.buttons.findOutMore}
         <motion.span animate={{ rotate: showDetails ? 180 : 0 }} transition={{ duration: 0.15 }} style={{ display: 'flex' }}>
           <ChevronDown size={12} />
         </motion.span>
@@ -651,6 +659,7 @@ function SmallBundleCard({ bundle, variants }) {
 
 function RecommendedBundleCard({ bundle, variants }) {
   const [showDetails, setShowDetails] = useState(false)
+  const t = useTranslations()
   const basketItem = {
     id: bundle.name,
     name: bundle.name,
@@ -691,7 +700,7 @@ function RecommendedBundleCard({ bundle, variants }) {
           </div>
           <div>
             <span style={{ fontSize: 'var(--text-2xl)', fontWeight: 700, letterSpacing: '-0.03em', color: 'var(--text-primary)', lineHeight: 1 }}>€{bundle.monthly}</span>
-            <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-tertiary)' }}>/month</span>
+            <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-tertiary)' }}>{t.labels.perMonth}</span>
           </div>
         </div>
 
@@ -710,7 +719,7 @@ function RecommendedBundleCard({ bundle, variants }) {
           onClick={() => setShowDetails(v => !v)}
           style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-1)', background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-brand-400)', fontSize: 'var(--text-xs)', fontWeight: 500, padding: 0, fontFamily: 'inherit' }}
         >
-          {showDetails ? 'Hide details' : 'Find Out More'}
+          {showDetails ? t.buttons.hideDetails : t.buttons.findOutMore}
           <motion.span animate={{ rotate: showDetails ? 180 : 0 }} transition={{ duration: 0.15 }} style={{ display: 'flex' }}>
             <ChevronDown size={12} />
           </motion.span>
@@ -859,6 +868,7 @@ function FinalCTA({ reduceMotion, tp }) {
 
 function WebsiteSetupCard({ pkg, variants }) {
   const [showDetails, setShowDetails] = useState(false)
+  const t = useTranslations()
   const basketItem = {
     id: pkg.name,
     name: pkg.name,
@@ -911,7 +921,7 @@ function WebsiteSetupCard({ pkg, variants }) {
             onClick={() => setShowDetails(v => !v)}
             style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-1)', background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-brand-400)', fontSize: 'var(--text-xs)', fontWeight: 500, padding: 0, fontFamily: 'inherit' }}
           >
-            {showDetails ? 'Hide details' : 'Find Out More'}
+            {showDetails ? t.buttons.hideDetails : t.buttons.findOutMore}
             <motion.span animate={{ rotate: showDetails ? 180 : 0 }} transition={{ duration: 0.15 }} style={{ display: 'flex' }}>
               <ChevronDown size={12} />
             </motion.span>
@@ -992,7 +1002,7 @@ function WebsiteSetupCard({ pkg, variants }) {
         onClick={() => setShowDetails(v => !v)}
         style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-1)', background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-brand-400)', fontSize: 'var(--text-xs)', fontWeight: 500, padding: 0, fontFamily: 'inherit' }}
       >
-        {showDetails ? 'Hide details' : 'Find Out More'}
+        {showDetails ? t.buttons.hideDetails : t.buttons.findOutMore}
         <motion.span animate={{ rotate: showDetails ? 180 : 0 }} transition={{ duration: 0.15 }} style={{ display: 'flex' }}>
           <ChevronDown size={12} />
         </motion.span>
