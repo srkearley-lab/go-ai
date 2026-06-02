@@ -65,7 +65,7 @@ export default function Navbar() {
         >
           {/* Logo */}
           <Link to="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', flexShrink: 0 }}>
-            <img src="/logo.jpeg" alt="GO AI" className="h-10 w-auto object-contain" onError={(e) => { e.target.style.display = 'none' }} />
+            <img src="/logo.jpeg" alt="GO AI" className="h-10 md:h-14 w-auto object-contain mr-6" onError={(e) => { e.target.style.display = 'none' }} />
           </Link>
 
           {/* Desktop nav */}
@@ -231,7 +231,7 @@ export default function Navbar() {
             {/* Drawer logo */}
             <div style={{ paddingBottom: 'var(--space-4)', borderBottom: '1px solid var(--border-default)', marginBottom: 'var(--space-2)' }}>
               <Link to="/" onClick={() => setMenuOpen(false)} style={{ display: 'inline-flex', alignItems: 'center', textDecoration: 'none' }}>
-                <img src="/logo.jpeg" alt="GO AI" className="h-10 w-auto object-contain" onError={(e) => { e.target.style.display = 'none' }} />
+                <img src="/logo.jpeg" alt="GO AI" className="h-14 w-auto object-contain" onError={(e) => { e.target.style.display = 'none' }} />
               </Link>
             </div>
 
