@@ -349,6 +349,7 @@ function BasketButton({ item }) {
 
 function FindOutMorePanel({ name, item }) {
   const details = packageDetails[name]
+  const t = useTranslations()
   if (!details) return null
 
   return (
@@ -365,13 +366,13 @@ function FindOutMorePanel({ name, item }) {
       <div className="fom-grid grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Who this is for */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
-          <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', margin: 0 }}>Who this is for</p>
+          <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', margin: 0 }}>{t.findOutMore.whoFor}</p>
           <p style={{ fontSize: 'var(--text-sm)', lineHeight: 1.6, color: 'var(--text-secondary)', margin: 0 }}>{details.whoFor}</p>
         </div>
 
         {/* What we need from you */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
-          <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', margin: 0 }}>What we need from you</p>
+          <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', margin: 0 }}>{t.findOutMore.weNeed}</p>
           <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
             {details.youNeed.map(item => (
               <li key={item} style={{ display: 'flex', alignItems: 'flex-start', gap: 'var(--space-2)', fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
@@ -384,7 +385,7 @@ function FindOutMorePanel({ name, item }) {
 
         {/* What's included */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
-          <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', margin: 0 }}>What's included</p>
+          <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', margin: 0 }}>{t.findOutMore.included}</p>
           <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
             {details.included.map(i => (
               <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 'var(--space-2)' }}>
@@ -399,7 +400,7 @@ function FindOutMorePanel({ name, item }) {
 
         {/* How it works */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
-          <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', margin: 0 }}>How it works</p>
+          <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', margin: 0 }}>{t.findOutMore.howItWorks}</p>
           <ol style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
             {details.steps.map((step, i) => (
               <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 'var(--space-3)' }}>
@@ -430,7 +431,7 @@ function AddOnCard({ addon, variants }) {
   const basketItem = {
     id: addon.name,
     name: addon.name,
-    priceDisplay: `€${addon.monthly}/month${addon.setup ? ` + €${addon.setup} setup` : ''}`,
+    priceDisplay: `€${addon.monthly}${t.labels.perMonth}${addon.setup ? ` + €${addon.setup} ${t.pricing.setupLabel}` : ''}`,
     formTypes: PACKAGE_FORM_TYPES[addon.name] || [],
   }
   return (
@@ -582,7 +583,7 @@ function SmallBundleCard({ bundle, variants }) {
   const basketItem = {
     id: bundle.name,
     name: bundle.name,
-    priceDisplay: `Website ${bundle.oneOffDisplay} + €${bundle.monthly}/month`,
+    priceDisplay: `${t.journey.website} ${bundle.oneOffDisplay} + €${bundle.monthly}${t.labels.perMonth}`,
     formTypes: PACKAGE_FORM_TYPES[bundle.name] || [],
   }
   return (
@@ -608,7 +609,7 @@ function SmallBundleCard({ bundle, variants }) {
 
       <div style={{ display: 'flex', alignItems: 'baseline', gap: 'var(--space-4)' }}>
         <div>
-          <span style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--text-secondary)', lineHeight: 1 }}>Website {bundle.oneOffDisplay}</span>
+          <span style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--text-secondary)', lineHeight: 1 }}>{t.journey.website} {bundle.oneOffDisplay}</span>
         </div>
         <div>
           <span style={{ fontSize: 'var(--text-lg)', fontWeight: 700, letterSpacing: '-0.02em', color: 'var(--text-primary)', lineHeight: 1 }}>€{bundle.monthly}</span>
@@ -663,7 +664,7 @@ function RecommendedBundleCard({ bundle, variants }) {
   const basketItem = {
     id: bundle.name,
     name: bundle.name,
-    priceDisplay: `Website ${bundle.oneOffDisplay} + €${bundle.monthly}/month`,
+    priceDisplay: `${t.journey.website} ${bundle.oneOffDisplay} + €${bundle.monthly}${t.labels.perMonth}`,
     formTypes: PACKAGE_FORM_TYPES[bundle.name] || [],
   }
   return (
@@ -696,7 +697,7 @@ function RecommendedBundleCard({ bundle, variants }) {
 
         <div style={{ display: 'flex', alignItems: 'baseline', flexWrap: 'wrap', gap: 'var(--space-5)' }}>
           <div>
-            <span style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--text-secondary)', lineHeight: 1 }}>Website {bundle.oneOffDisplay}</span>
+            <span style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--text-secondary)', lineHeight: 1 }}>{t.journey.website} {bundle.oneOffDisplay}</span>
           </div>
           <div>
             <span style={{ fontSize: 'var(--text-2xl)', fontWeight: 700, letterSpacing: '-0.03em', color: 'var(--text-primary)', lineHeight: 1 }}>€{bundle.monthly}</span>
@@ -872,7 +873,7 @@ function WebsiteSetupCard({ pkg, variants }) {
   const basketItem = {
     id: pkg.name,
     name: pkg.name,
-    priceDisplay: `From ${pkg.price} one-off`,
+    priceDisplay: `${t.labels.from} ${pkg.price} ${t.labels.oneOff}`,
     formTypes: PACKAGE_FORM_TYPES[pkg.name] || ['website'],
   }
 
@@ -901,16 +902,16 @@ function WebsiteSetupCard({ pkg, variants }) {
               {pkg.name}
             </h3>
             <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', fontStyle: 'italic', marginBottom: 'var(--space-4)' }}>
-              Best for: {pkg.bestFor}
+              {t.pages.websites.bestFor} {pkg.bestFor}
             </p>
           </div>
           <div style={{ display: 'flex', alignItems: 'baseline', gap: 'var(--space-1)' }}>
             <span style={{ fontSize: 'var(--text-2xl)', fontWeight: 700, letterSpacing: '-0.03em', color: 'var(--text-primary)', lineHeight: 1 }}>
-              From {pkg.price}
+              {t.labels.from} {pkg.price}
             </span>
           </div>
           <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-secondary)', fontStyle: 'italic' }}>
-            Starting price for initial build only. Final quote based on scope.
+            {t.pricing.websiteVatNote}
           </p>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-3)', alignItems: 'center' }}>
             <CTAButton to="/contact" label={pkg.cta} primary />
@@ -931,7 +932,7 @@ function WebsiteSetupCard({ pkg, variants }) {
         {/* Right */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-5)' }}>
           <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)' }}>
-            What's included
+            {t.journey.whatsIncluded}
           </p>
           <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
             {pkg.features.map(f => <FeatureItem key={f} text={f} accent />)}
@@ -979,12 +980,12 @@ function WebsiteSetupCard({ pkg, variants }) {
 
       <div style={{ display: 'flex', alignItems: 'baseline', gap: 'var(--space-1)' }}>
         <span style={{ fontSize: 'var(--text-xl)', fontWeight: 700, letterSpacing: '-0.02em', color: 'var(--text-primary)', lineHeight: 1 }}>
-          From {pkg.price}
+          {t.labels.from} {pkg.price}
         </span>
       </div>
 
       <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', fontStyle: 'italic' }}>
-        Best for: {pkg.bestFor}
+        {t.pages.websites.bestFor} {pkg.bestFor}
       </p>
 
       <hr style={{ border: 'none', borderTop: '1px solid var(--border-default)', margin: 0 }} />

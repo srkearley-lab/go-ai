@@ -291,6 +291,7 @@ export const translations = {
       mobileResponsive:  'Βελτιστοποιημένη για κινητά',
       oneOffBuildNote:   'Εφάπαξ κατασκευή σταθερής τιμής.',
       oneOffFixedBuild:  'Εφάπαξ κατασκευή με σταθερή τιμή',
+      from:              'Από',
     },
 
     strip: {
@@ -1299,6 +1300,7 @@ export const translations = {
       mobileResponsive:  'Mobile responsive',
       oneOffBuildNote:   'One-off, fixed-price website build.',
       oneOffFixedBuild:  'One-off fixed price build',
+      from:              'From',
     },
 
     strip: {

@@ -486,11 +486,12 @@ function ProgressIndicator({ currentStep, onGoToStep }) {
 // ─── Inline info panel (shared by all card types) ───────────────────────────────
 
 function InlineInfoPanel({ bestFor, features }) {
+  const t = useTranslations()
   return (
     <div style={{ borderTop: '1px solid var(--border-default)', paddingTop: 'var(--space-4)', display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
       <div>
         <p style={{ fontSize: '0.6rem', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', marginBottom: 'var(--space-2)' }}>
-          Best for
+          {t.journey.bestFor}
         </p>
         <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
           {bestFor}
@@ -499,7 +500,7 @@ function InlineInfoPanel({ bestFor, features }) {
       {features.length > 0 && (
         <div>
           <p style={{ fontSize: '0.6rem', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', marginBottom: 'var(--space-2)' }}>
-            What's included
+            {t.journey.whatsIncluded}
           </p>
           <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
             {features.map(f => <FeatureItem key={f} text={f} />)}
@@ -1118,7 +1119,7 @@ function StepAddons({ selectedAddons, onToggle, onContinue, onSkip, onBack }) {
         </div>
       )}
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-10)' }}>
-        {ADDON_GROUPS.map(group => (
+        {localizedGroups.map(group => (
           <div key={group.title}>
             <div style={{ marginBottom: 'var(--space-4)' }}>
               <h3 style={{ fontSize: 'var(--text-md)', fontWeight: 700, color: 'var(--text-primary)', lineHeight: 1.2, marginBottom: group.subtitle ? 'var(--space-2)' : 0 }}>
@@ -1321,12 +1322,12 @@ function StepReview({ website, packages, bundles, addons, oneOffItems, monthlyIt
             {monthlyItems.map(item => (
               <div key={item.name} style={{ display: 'flex', justifyContent: 'space-between', gap: 'var(--space-4)', padding: 'var(--space-1) 0', fontSize: 'var(--text-sm)', color: 'var(--text-secondary)' }}>
                 <span>{item.name}</span>
-                <span style={{ fontWeight: 600, color: 'var(--text-primary)', flexShrink: 0 }}>€{item.amount}/mo</span>
+                <span style={{ fontWeight: 600, color: 'var(--text-primary)', flexShrink: 0 }}>€{item.amount}{t.labels.perMonth}</span>
               </div>
             ))}
             <div style={{ borderTop: '1px solid var(--border-default)', marginTop: 'var(--space-3)', paddingTop: 'var(--space-3)', display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
               <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--text-primary)' }}>{rv.monthlyFrom}</span>
-              <span style={{ fontSize: 'var(--text-lg)', fontWeight: 700, color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>€{monthlyTotal}/mo</span>
+              <span style={{ fontSize: 'var(--text-lg)', fontWeight: 700, color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>€{monthlyTotal}{t.labels.perMonth}</span>
             </div>
           </div>
         )}
@@ -1346,7 +1347,7 @@ function StepReview({ website, packages, bundles, addons, oneOffItems, monthlyIt
           <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-1)' }}>
             {quoteItems.map(name => (
               <p key={name} style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', lineHeight: 1.5, margin: 0 }}>
-                {name} — <span style={{ color: 'var(--color-accent-500)', fontWeight: 500 }}>Quote requested</span>
+                {name} — <span style={{ color: 'var(--color-accent-500)', fontWeight: 500 }}>{rv.quoteRequired}</span>
               </p>
             ))}
           </div>
@@ -1554,20 +1555,20 @@ function StepPayment({ oneOffItems, monthlyItems, oneOffTotal, monthlyTotal, has
         {monthlyItems.map(item => (
           <div key={item.name} style={{ display: 'flex', justifyContent: 'space-between', gap: 'var(--space-4)', fontSize: 'var(--text-sm)', color: 'var(--text-secondary)' }}>
             <span>{item.name}</span>
-            <span style={{ fontWeight: 600, color: 'var(--text-primary)', flexShrink: 0 }}>€{item.amount}/mo</span>
+            <span style={{ fontWeight: 600, color: 'var(--text-primary)', flexShrink: 0 }}>€{item.amount}{t.labels.perMonth}</span>
           </div>
         ))}
         <div style={{ borderTop: '1px solid var(--border-default)', paddingTop: 'var(--space-3)', marginTop: 'var(--space-1)', display: 'flex', flexDirection: 'column', gap: 'var(--space-1)' }}>
           {oneOffTotal > 0 && (
             <div style={{ display: 'flex', justifyContent: 'space-between', gap: 'var(--space-4)', alignItems: 'baseline' }}>
-              <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--text-primary)' }}>{rv.totalDueToday}</span>
+              <span style={{ fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--text-primary)' }}>{t.journey.reviewRows.totalDueToday}</span>
               <span style={{ fontSize: 'var(--text-lg)', fontWeight: 700, color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>€{oneOffTotal.toLocaleString('en-IE')}</span>
             </div>
           )}
           {monthlyTotal > 0 && (
             <div style={{ display: 'flex', justifyContent: 'space-between', gap: 'var(--space-4)' }}>
               <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)' }}>{t.journey.paymentLabels.thenMonthlyFrom}</span>
-              <span style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-tertiary)' }}>€{monthlyTotal}/mo</span>
+              <span style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-tertiary)' }}>€{monthlyTotal}{t.labels.perMonth}</span>
             </div>
           )}
         </div>
@@ -1726,6 +1727,7 @@ function StepPayment({ oneOffItems, monthlyItems, oneOffTotal, monthlyTotal, has
 function JourneyWizard() {
   const navigate = useNavigate()
   const reduceMotion = useReducedMotion()
+  const t = useTranslations()
   const [step, setStep] = useState(0)
   const [selectedWebsite, setSelectedWebsite] = useState(null)
   const [selectedPackages, setSelectedPackages] = useState([])
@@ -1779,8 +1781,8 @@ function JourneyWizard() {
 
   const oneOffItems = [
     selectedWebsite && !selectedWebsite.isQuote ? { name: selectedWebsite.name, amount: selectedWebsite.oneOff } : null,
-    ...selectedPackages.filter(p => !p.isQuote && p.oneOff > 0).map(p => ({ name: p.oneOff > 0 && p.monthly > 0 ? `${p.name} (setup)` : p.name, amount: p.oneOff })),
-    ...selectedBundles.filter(b => !b.isQuote && b.oneOff > 0).map(b => ({ name: `${b.name} (setup)`, amount: b.oneOff })),
+    ...selectedPackages.filter(p => !p.isQuote && p.oneOff > 0).map(p => ({ name: p.oneOff > 0 && p.monthly > 0 ? `${p.name} (${t.pricing.setupLabel})` : p.name, amount: p.oneOff })),
+    ...selectedBundles.filter(b => !b.isQuote && b.oneOff > 0).map(b => ({ name: `${b.name} (${t.pricing.setupLabel})`, amount: b.oneOff })),
     ...selectedAddons.filter(a => !a.isQuote && a.oneOff > 0).map(a => ({ name: a.name, amount: a.oneOff })),
   ].filter(Boolean)
 

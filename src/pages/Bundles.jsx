@@ -283,7 +283,7 @@ function SmallBundleCard({ bundle, variants }) {
   const basketItem = {
     id: bundle.name,
     name: bundle.name,
-    priceDisplay: `€${bundle.monthly}/month`,
+    priceDisplay: `€${bundle.monthly}${t.labels.perMonth}`,
     formTypes: PACKAGE_FORM_TYPES[bundle.detailKey] || [],
   }
   return (
@@ -349,7 +349,7 @@ function RecommendedBundleCard({ bundle, variants }) {
   const basketItem = {
     id: bundle.name,
     name: bundle.name,
-    priceDisplay: `€${bundle.monthly}/month`,
+    priceDisplay: `€${bundle.monthly}${t.labels.perMonth}`,
     formTypes: PACKAGE_FORM_TYPES[bundle.detailKey] || [],
   }
   return (
