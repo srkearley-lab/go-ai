@@ -707,7 +707,7 @@ function RecommendedBundleCard({ bundle, variants }) {
         <SavingsBadge yearly={bundle.savesYearly} upfront={bundle.savesUpfront} />
 
         <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-secondary)', fontStyle: 'italic' }}>
-          {tp?.bundleValueNote || 'Most growing businesses get better value from a bundle.'}
+          {t.pricing?.bundleValueNote || 'Most growing businesses get better value from a bundle.'}
         </p>
 
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-3)', alignItems: 'center' }}>
@@ -729,7 +729,7 @@ function RecommendedBundleCard({ bundle, variants }) {
       {/* Right — features */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-5)' }}>
         <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)' }}>
-          {tp?.everythingIncluded || 'Everything included'}
+          {t.pricing?.everythingIncluded || 'Everything included'}
         </p>
         <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
           {bundle.features.map(f => <FeatureItem key={f} text={f} accent />)}

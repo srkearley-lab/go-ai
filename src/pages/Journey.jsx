@@ -561,7 +561,7 @@ function WebsiteSelectCard({ website, onToggle, isSelected }) {
       </div>
       <div>
         <span style={{ fontSize: 'var(--text-xl)', fontWeight: 700, letterSpacing: '-0.02em', color: 'var(--text-primary)', lineHeight: 1 }}>
-          {website.price}
+          {website.isQuote ? t.labels.quoteRequired : website.price}
         </span>
         {website.priceNote && (
           <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', marginLeft: 'var(--space-2)' }}>
@@ -1248,7 +1248,7 @@ function StepReview({ website, packages, bundles, addons, oneOffItems, monthlyIt
       }}>
         <ReviewRow
           label={rv.websiteLabel}
-          value={website ? `${website.name} — ${website.price}${website.priceNote ? ' ' + pn(website.priceNote) : ''}` : null}
+          value={website ? `${website.name} — ${website.isQuote ? t.labels.quoteRequired : website.price}${website.priceNote ? ' ' + pn(website.priceNote) : ''}` : null}
           onEdit={onEditWebsite}
           editLabel={rv.editWebsite}
           placeholder={rv.noWebsite}
