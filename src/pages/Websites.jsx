@@ -5,7 +5,7 @@ import { Check, ChevronDown, ShoppingCart, ArrowRight } from 'lucide-react'
 import PageHero from '../components/PageHero'
 import { useBasket, PACKAGE_FORM_TYPES } from '../context/BasketContext'
 import { packageDetails } from '../data/packageDetails'
-import { useTranslations } from '../context/LanguageContext'
+import { useTranslations, useLanguage } from '../context/LanguageContext'
 
 // ── Website packages data ─────────────────────────────────────────────────────
 
@@ -13,6 +13,7 @@ const websitePackages = [
   {
     badge: 'Entry Level',
     name: 'Basic Launch Website',
+    detailKey: 'Basic Launch Website',
     price: '€450',
     featured: false,
     bestFor: 'Side businesses, sole traders, early startups',
@@ -29,6 +30,7 @@ const websitePackages = [
   {
     badge: 'Starter',
     name: 'Starter Business Website',
+    detailKey: 'Starter Business Website',
     price: '€750',
     featured: false,
     bestFor: 'New businesses wanting more credibility',
@@ -45,6 +47,7 @@ const websitePackages = [
   {
     badge: 'Most Popular',
     name: 'Business Website',
+    detailKey: 'Business Website',
     price: '€1,200',
     featured: true,
     bestFor: 'Established businesses, consultants, local service providers',
@@ -61,6 +64,7 @@ const websitePackages = [
   {
     badge: 'Best for Growth',
     name: 'Growth Website',
+    detailKey: 'Growth Website',
     price: '€1,750',
     featured: false,
     bestFor: 'Businesses wanting a higher-converting website',
@@ -77,6 +81,7 @@ const websitePackages = [
   {
     badge: 'Premium',
     name: 'Premium AI-Ready Website',
+    detailKey: 'Premium AI-Ready Website',
     price: '€2,500+',
     featured: false,
     bestFor: 'Businesses wanting a premium website with AI-ready foundations',
@@ -168,25 +173,27 @@ function BasketButton({ item }) {
 
 // ── Find Out More panel ───────────────────────────────────────────────────────
 
-function FindOutMorePanel({ name, item }) {
-  const details = packageDetails[name]
+function FindOutMorePanel({ detailKey, item }) {
+  const details = packageDetails[detailKey]
   const t = useTranslations()
+  const { language } = useLanguage()
   if (!details) return null
+  const d = language === 'gr' && details.el ? details.el : details
   return (
     <div style={{ borderTop: '1px solid var(--border-default)', paddingTop: 'var(--space-6)', marginTop: 'var(--space-4)', display: 'flex', flexDirection: 'column', gap: 'var(--space-6)' }}>
       <div>
-        <h4 style={{ fontSize: 'var(--text-md)', fontWeight: 700, color: 'var(--text-primary)', lineHeight: 1.2, marginBottom: 'var(--space-3)' }}>{details.headline}</h4>
-        <p style={{ fontSize: 'var(--text-sm)', lineHeight: 1.7, color: 'var(--text-secondary)' }}>{details.overview}</p>
+        <h4 style={{ fontSize: 'var(--text-md)', fontWeight: 700, color: 'var(--text-primary)', lineHeight: 1.2, marginBottom: 'var(--space-3)' }}>{d.headline}</h4>
+        <p style={{ fontSize: 'var(--text-sm)', lineHeight: 1.7, color: 'var(--text-secondary)' }}>{d.overview}</p>
       </div>
       <div className="fom-grid grid grid-cols-1 md:grid-cols-2 gap-6">
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
           <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', margin: 0 }}>{t.findOutMore.whoFor}</p>
-          <p style={{ fontSize: 'var(--text-sm)', lineHeight: 1.6, color: 'var(--text-secondary)', margin: 0 }}>{details.whoFor}</p>
+          <p style={{ fontSize: 'var(--text-sm)', lineHeight: 1.6, color: 'var(--text-secondary)', margin: 0 }}>{d.whoFor}</p>
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
           <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', margin: 0 }}>{t.findOutMore.weNeed}</p>
           <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
-            {details.youNeed.map(i => (
+            {d.youNeed.map(i => (
               <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 'var(--space-2)', fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
                 <span style={{ color: 'var(--color-brand-400)', flexShrink: 0, marginTop: 2 }}>→</span>{i}
               </li>
@@ -196,7 +203,7 @@ function FindOutMorePanel({ name, item }) {
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
           <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', margin: 0 }}>{t.findOutMore.included}</p>
           <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
-            {details.included.map(i => (
+            {d.included.map(i => (
               <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 'var(--space-2)' }}>
                 <span style={{ width: 14, height: 14, borderRadius: '50%', background: 'rgba(99,102,241,0.1)', border: '1px solid rgba(99,102,241,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-brand-400)', flexShrink: 0, marginTop: 2 }}>
                   <Check size={8} strokeWidth={3} />
@@ -209,7 +216,7 @@ function FindOutMorePanel({ name, item }) {
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
           <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', margin: 0 }}>{t.findOutMore.howItWorks}</p>
           <ol style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
-            {details.steps.map((step, i) => (
+            {d.steps.map((step, i) => (
               <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 'var(--space-3)' }}>
                 <span style={{ width: 20, height: 20, borderRadius: '50%', background: 'var(--surface-overlay)', border: '1px solid var(--border-strong)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--color-brand-400)', flexShrink: 0, marginTop: 1 }}>{i + 1}</span>
                 <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', lineHeight: 1.5 }}>{step}</span>
@@ -306,7 +313,7 @@ function WebsiteCard({ pkg, variants }) {
               transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
               style={{ overflow: 'hidden', gridColumn: '1 / -1' }}
             >
-              <FindOutMorePanel name={pkg.name} item={basketItem} />
+              <FindOutMorePanel detailKey={pkg.detailKey} item={basketItem} />
             </motion.div>
           )}
         </AnimatePresence>
