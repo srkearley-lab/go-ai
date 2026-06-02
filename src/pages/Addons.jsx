@@ -330,6 +330,7 @@ function BasketButton({ item }) {
 
 function AddonCard({ addon, variants }) {
   const t = useTranslations()
+  const tn = (note) => note === 'one-off' ? t.labels.oneOff : note === '/month' ? t.labels.perMonth : note
   const basketItem = {
     id: addon.id,
     name: addon.name,
@@ -361,7 +362,7 @@ function AddonCard({ addon, variants }) {
               {addon.price}
             </span>
             {addon.priceNote && (
-              <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)' }}>{addon.priceNote}</span>
+              <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)' }}>{tn(addon.priceNote)}</span>
             )}
           </div>
         )}

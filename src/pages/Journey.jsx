@@ -504,6 +504,7 @@ function InlineInfoPanel({ bestFor, features }) {
 }
 
 function ShowDetailsBtn({ open, onToggle }) {
+  const t = useTranslations()
   return (
     <button
       type="button"
@@ -516,7 +517,7 @@ function ShowDetailsBtn({ open, onToggle }) {
         transition: 'color 120ms ease',
       }}
     >
-      {open ? 'Hide details' : 'Show details'}
+      {open ? t.buttons.hideDetails : t.buttons.showDetails}
       <motion.span animate={{ rotate: open ? 180 : 0 }} transition={{ duration: 0.15 }} style={{ display: 'flex' }}>
         <ChevronDown size={11} />
       </motion.span>
@@ -528,7 +529,9 @@ function ShowDetailsBtn({ open, onToggle }) {
 
 function WebsiteSelectCard({ website, onToggle, isSelected }) {
   const [showInfo, setShowInfo] = useState(false)
+  const t = useTranslations()
   const hl = website.highlighted
+  const tn = (note) => note === 'one-off' ? t.labels.oneOff : note === '/month' ? t.labels.perMonth : note
   return (
     <div style={{
       background: hl ? 'var(--surface-overlay)' : 'var(--surface-raised)',
@@ -546,7 +549,7 @@ function WebsiteSelectCard({ website, onToggle, isSelected }) {
           {website.name}
         </h3>
         <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', fontStyle: 'italic' }}>
-          Best for: {website.bestFor}
+          {t.journey.bestFor}: {website.bestFor}
         </p>
       </div>
       <div>
@@ -555,7 +558,7 @@ function WebsiteSelectCard({ website, onToggle, isSelected }) {
         </span>
         {website.priceNote && (
           <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', marginLeft: 'var(--space-2)' }}>
-            {website.priceNote}
+            {tn(website.priceNote)}
           </span>
         )}
       </div>
@@ -583,7 +586,7 @@ function WebsiteSelectCard({ website, onToggle, isSelected }) {
           onMouseEnter={(e) => { if (!isSelected) { e.currentTarget.style.filter = 'brightness(1.1)'; e.currentTarget.style.boxShadow = '0 0 30px rgba(118,39,239,0.45)' } }}
           onMouseLeave={(e) => { if (!isSelected) { e.currentTarget.style.filter = 'brightness(1)'; e.currentTarget.style.boxShadow = '0 0 20px rgba(118,39,239,0.3)' } }}
         >
-          {isSelected ? <><Check size={13} strokeWidth={2.5} /> Selected</> : 'Select this website'}
+          {isSelected ? <><Check size={13} strokeWidth={2.5} /> {t.buttons.selected}</> : t.buttons.selectWebsite}
         </button>
         <ShowDetailsBtn open={showInfo} onToggle={() => setShowInfo(v => !v)} />
       </div>
@@ -593,6 +596,8 @@ function WebsiteSelectCard({ website, onToggle, isSelected }) {
 
 function PackageSelectCard({ pkg, onToggle, isSelected }) {
   const [showInfo, setShowInfo] = useState(false)
+  const t = useTranslations()
+  const tn = (note) => note === 'one-off' ? t.labels.oneOff : note === '/month' ? t.labels.perMonth : note
 
   const btnStyle = {
     height: 36, padding: '0 var(--space-4)',
@@ -631,7 +636,7 @@ function PackageSelectCard({ pkg, onToggle, isSelected }) {
         </span>
         {pkg.priceNote && (
           <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', marginLeft: 'var(--space-1)' }}>
-            {pkg.priceNote}
+            {tn(pkg.priceNote)}
           </span>
         )}
       </div>
@@ -659,7 +664,7 @@ function PackageSelectCard({ pkg, onToggle, isSelected }) {
           onClick={() => onToggle(pkg)}
           style={btnStyle}
         >
-          {isSelected ? <><Check size={11} strokeWidth={2.5} /> Selected</> : 'Select this package'}
+          {isSelected ? <><Check size={11} strokeWidth={2.5} /> {t.buttons.selected}</> : t.buttons.selectPackage}
         </button>
         <ShowDetailsBtn open={showInfo} onToggle={() => setShowInfo(v => !v)} />
       </div>
@@ -669,7 +674,9 @@ function PackageSelectCard({ pkg, onToggle, isSelected }) {
 
 function BundleSelectCard({ bundle, onToggle, isSelected }) {
   const [showInfo, setShowInfo] = useState(false)
+  const t = useTranslations()
   const hl = bundle.highlighted
+  const tn = (note) => note === 'one-off' ? t.labels.oneOff : note === '/month' ? t.labels.perMonth : note
 
   const btnStyle = {
     height: 40, padding: '0 var(--space-5)',
@@ -699,13 +706,13 @@ function BundleSelectCard({ bundle, onToggle, isSelected }) {
         <Badge label={bundle.badge} />
       </div>
       <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', fontStyle: 'italic' }}>
-        Best for: {bundle.bestFor}
+        {t.journey.bestFor}: {bundle.bestFor}
       </p>
       <div style={{ display: 'flex', alignItems: 'baseline', gap: 'var(--space-1)' }}>
         <span style={{ fontSize: 'var(--text-xl)', fontWeight: 700, letterSpacing: '-0.02em', color: 'var(--text-primary)', lineHeight: 1 }}>
           {bundle.price}
         </span>
-        <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)' }}>{bundle.priceNote}</span>
+        <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)' }}>{tn(bundle.priceNote)}</span>
       </div>
       <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 'var(--space-2)', flex: 1 }}>
         {bundle.features.map(f => <FeatureItem key={f} text={f} />)}
@@ -729,7 +736,7 @@ function BundleSelectCard({ bundle, onToggle, isSelected }) {
           onClick={() => onToggle(bundle)}
           style={btnStyle}
         >
-          {isSelected ? <><Check size={13} strokeWidth={2.5} /> Selected</> : 'Add this bundle'}
+          {isSelected ? <><Check size={13} strokeWidth={2.5} /> {t.buttons.selected}</> : t.buttons.addBundle}
         </button>
         <ShowDetailsBtn open={showInfo} onToggle={() => setShowInfo(v => !v)} />
       </div>
@@ -739,6 +746,8 @@ function BundleSelectCard({ bundle, onToggle, isSelected }) {
 
 function AddonSelectCard({ addon, isSelected, onToggle }) {
   const [showInfo, setShowInfo] = useState(false)
+  const t = useTranslations()
+  const tn = (note) => note === 'one-off' ? t.labels.oneOff : note === '/month' ? t.labels.perMonth : note
 
   const btnStyle = {
     height: 36, padding: '0 var(--space-4)',
@@ -770,13 +779,13 @@ function AddonSelectCard({ addon, isSelected, onToggle }) {
               {addon.price}
             </span>
             {addon.priceNote && (
-              <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)' }}>{addon.priceNote}</span>
+              <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)' }}>{tn(addon.priceNote)}</span>
             )}
           </div>
         )}
       </div>
       <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
-        <span style={{ fontWeight: 600, color: 'var(--text-tertiary)', textTransform: 'uppercase', letterSpacing: '0.04em', fontSize: '0.58rem' }}>Best for: </span>
+        <span style={{ fontWeight: 600, color: 'var(--text-tertiary)', textTransform: 'uppercase', letterSpacing: '0.04em', fontSize: '0.58rem' }}>{t.journey.bestFor}: </span>
         {addon.bestFor}
       </p>
       {addon.features.length > 0 && (
@@ -804,8 +813,8 @@ function AddonSelectCard({ addon, isSelected, onToggle }) {
           style={btnStyle}
         >
           {isSelected
-            ? <><Check size={11} strokeWidth={3} /> {addon.isQuote ? 'Quote added' : 'Added'}</>
-            : (addon.isQuote ? 'Request a quote' : 'Add to package')}
+            ? <><Check size={11} strokeWidth={3} /> {addon.isQuote ? t.buttons.quoteAdded : t.buttons.added}</>
+            : (addon.isQuote ? t.buttons.requestAQuote : t.buttons.addToPackage)}
         </button>
         {(addon.features.length > 0 || addon.bestFor) && (
           <ShowDetailsBtn open={showInfo} onToggle={() => setShowInfo(v => !v)} />
@@ -1212,6 +1221,7 @@ function ReviewRow({ label, value, lines, onEdit, editLabel = 'Edit', placeholde
 function StepReview({ website, packages, bundles, addons, oneOffItems, monthlyItems, quoteItems, oneOffTotal, monthlyTotal, hasQuoteItems, hasFixedItems, onEditWebsite, onEditPackage, onEditBundle, onEditAddons, onPaySecurely, onRequestProposal, onBack }) {
   const t = useTranslations()
   const rv = t.journey.reviewRows
+  const pn = (note) => note === 'one-off' ? t.labels.oneOff : note === '/month' ? t.labels.perMonth : (note || '')
   return (
     <div>
       <StepHeader
@@ -1231,7 +1241,7 @@ function StepReview({ website, packages, bundles, addons, oneOffItems, monthlyIt
       }}>
         <ReviewRow
           label={rv.websiteLabel}
-          value={website ? `${website.name} — ${website.price}${website.priceNote ? ' ' + website.priceNote : ''}` : null}
+          value={website ? `${website.name} — ${website.price}${website.priceNote ? ' ' + pn(website.priceNote) : ''}` : null}
           onEdit={onEditWebsite}
           editLabel={rv.editWebsite}
           placeholder={rv.noWebsite}
@@ -1241,7 +1251,7 @@ function StepReview({ website, packages, bundles, addons, oneOffItems, monthlyIt
           lines={packages.length ? packages.map(p =>
             p.isQuote
               ? `${p.name} — ${rv.quoteRequired}`
-              : `${p.name} — ${p.price}${p.priceNote ? ' ' + p.priceNote : ''}`
+              : `${p.name} — ${p.price}${p.priceNote ? ' ' + pn(p.priceNote) : ''}`
           ) : undefined}
           onEdit={onEditPackage}
           editLabel={rv.editPackage}
@@ -1252,7 +1262,7 @@ function StepReview({ website, packages, bundles, addons, oneOffItems, monthlyIt
           lines={bundles.length ? bundles.map(b =>
             b.isQuote
               ? `${b.name} — ${rv.quoteRequired}`
-              : `${b.name} — ${b.price}${b.priceNote ? ' ' + b.priceNote : ''}`
+              : `${b.name} — ${b.price}${b.priceNote ? ' ' + pn(b.priceNote) : ''}`
           ) : undefined}
           onEdit={onEditBundle}
           editLabel={rv.editBundle}
@@ -1263,7 +1273,7 @@ function StepReview({ website, packages, bundles, addons, oneOffItems, monthlyIt
           lines={addons.length ? addons.map(a =>
             a.isQuote
               ? `${a.name} — ${rv.quoteRequired}`
-              : `${a.name} — ${a.price}${a.priceNote ? ' ' + a.priceNote : ''}`
+              : `${a.name} — ${a.price}${a.priceNote ? ' ' + pn(a.priceNote) : ''}`
           ) : undefined}
           onEdit={onEditAddons}
           editLabel={rv.editAddons}
@@ -1578,7 +1588,7 @@ function StepPayment({ oneOffItems, monthlyItems, oneOffTotal, monthlyTotal, has
           <input
             type="text" value={form.name}
             onChange={e => update('name', e.target.value)}
-            placeholder="Name as it appears on card"
+            placeholder={t.forms.cardNamePlaceholder}
             style={inputBase(errors.name)}
             onFocus={e => { e.target.style.borderColor = 'var(--goai-violet)' }}
             onBlur={e => { e.target.style.borderColor = errors.name ? '#dc2626' : 'var(--border-default)' }}
@@ -1628,7 +1638,7 @@ function StepPayment({ oneOffItems, monthlyItems, oneOffTotal, monthlyTotal, has
             <input
               type="text" value={form.postcode}
               onChange={e => update('postcode', e.target.value.toUpperCase())}
-              placeholder="Postcode / ZIP"
+              placeholder={t.forms.postcodePlaceholder}
               style={inputBase(errors.postcode)}
               onFocus={e => { e.target.style.borderColor = 'var(--goai-violet)' }}
               onBlur={e => { e.target.style.borderColor = errors.postcode ? '#dc2626' : 'var(--border-default)' }}
