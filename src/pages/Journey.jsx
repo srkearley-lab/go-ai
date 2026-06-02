@@ -362,6 +362,7 @@ const BADGE_COLORS = {
 }
 
 function Badge({ label }) {
+  const t = useTranslations()
   const c = BADGE_COLORS[label] || { bg: 'rgba(99,102,241,0.1)', border: 'rgba(99,102,241,0.2)', color: 'var(--color-brand-400)' }
   return (
     <span style={{
@@ -371,7 +372,7 @@ function Badge({ label }) {
       background: c.bg, border: `1px solid ${c.border}`, color: c.color,
       borderRadius: 'var(--radius-full)', padding: '3px var(--space-3)',
     }}>
-      {label}
+      {t.labels.badgeLabels?.[label] || label}
     </span>
   )
 }

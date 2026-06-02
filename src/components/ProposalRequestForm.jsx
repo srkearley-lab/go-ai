@@ -171,15 +171,15 @@ export default function ProposalRequestForm({ onSubmit }) {
       }}
     >
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-        <Field label={pf.businessName} id="businessName" placeholder="Santorini Villas" value={form.businessName} onChange={set('businessName')} required />
+        <Field label={pf.businessName} id="businessName" placeholder={pf.businessNamePlaceholder} value={form.businessName} onChange={set('businessName')} required />
         <SelectField
           label={pf.businessType} id="businessType"
           options={pf.businessTypes}
           value={form.businessType} onChange={set('businessType')} required
           placeholder={pf.selectPlaceholder}
         />
-        <Field label={pf.location} id="location" placeholder="Santorini, Greece" value={form.location} onChange={set('location')} required />
-        <Field label={pf.currentWebsite} id="currentWebsite" placeholder="www.example.gr (or none)" value={form.currentWebsite} onChange={set('currentWebsite')} />
+        <Field label={pf.location} id="location" placeholder={pf.locationPlaceholder} value={form.location} onChange={set('location')} required />
+        <Field label={pf.currentWebsite} id="currentWebsite" placeholder={pf.websitePlaceholder} value={form.currentWebsite} onChange={set('currentWebsite')} />
         <Field label={pf.email} id="email" type="email" placeholder="you@example.gr" value={form.email} onChange={set('email')} required />
         <Field label={pf.whatsapp} id="whatsapp" type="tel" placeholder="+30 6900 000000" value={form.whatsapp} onChange={set('whatsapp')} required />
       </div>
