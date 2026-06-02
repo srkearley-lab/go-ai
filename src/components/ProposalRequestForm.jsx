@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Send } from 'lucide-react'
+import { useTranslations } from '../context/LanguageContext'
 
 const inputStyle = {
   width: '100%',
@@ -46,7 +47,7 @@ function Field({ label, id, type = 'text', placeholder, value, onChange, require
   )
 }
 
-function SelectField({ label, id, options, value, onChange, required }) {
+function SelectField({ label, id, options, value, onChange, required, placeholder }) {
   const [focused, setFocused] = useState(false)
   return (
     <div>
@@ -66,7 +67,7 @@ function SelectField({ label, id, options, value, onChange, required }) {
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
       >
-        <option value="" disabled>Select...</option>
+        <option value="" disabled>{placeholder}</option>
         {options.map((o) => <option key={o} value={o}>{o}</option>)}
       </select>
     </div>
@@ -100,6 +101,9 @@ function TextareaField({ label, id, placeholder, value, onChange, rows = 4, requ
 }
 
 export default function ProposalRequestForm({ onSubmit }) {
+  const t = useTranslations()
+  const pf = t.contact.proposalForm
+
   const [form, setForm] = useState({
     businessName: '',
     businessType: '',
@@ -148,10 +152,10 @@ export default function ProposalRequestForm({ onSubmit }) {
           <Send size={20} />
         </div>
         <h3 style={{ fontSize: 'var(--text-lg)', fontWeight: 600, color: 'var(--text-primary)' }}>
-          Request received
+          {pf.successTitle}
         </h3>
         <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', maxWidth: '40ch' }}>
-          We'll review your details and send your free digital improvement plan via WhatsApp within 24 hours.
+          {pf.successBody}
         </p>
       </div>
     )
@@ -167,22 +171,23 @@ export default function ProposalRequestForm({ onSubmit }) {
       }}
     >
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-        <Field label="Business name" id="businessName" placeholder="Santorini Villas" value={form.businessName} onChange={set('businessName')} required />
+        <Field label={pf.businessName} id="businessName" placeholder="Santorini Villas" value={form.businessName} onChange={set('businessName')} required />
         <SelectField
-          label="Business type" id="businessType"
-          options={['Villa / Holiday Rental', 'Restaurant / Café', 'Gym / Fitness', 'Hair & Beauty Salon', 'Tourism Company', 'Car / Boat Hire', 'Other']}
+          label={pf.businessType} id="businessType"
+          options={pf.businessTypes}
           value={form.businessType} onChange={set('businessType')} required
+          placeholder={pf.selectPlaceholder}
         />
-        <Field label="Location" id="location" placeholder="Santorini, Greece" value={form.location} onChange={set('location')} required />
-        <Field label="Current website" id="currentWebsite" placeholder="www.example.gr (or none)" value={form.currentWebsite} onChange={set('currentWebsite')} />
-        <Field label="Email address" id="email" type="email" placeholder="you@example.gr" value={form.email} onChange={set('email')} required />
-        <Field label="WhatsApp number" id="whatsapp" type="tel" placeholder="+30 6900 000000" value={form.whatsapp} onChange={set('whatsapp')} required />
+        <Field label={pf.location} id="location" placeholder="Santorini, Greece" value={form.location} onChange={set('location')} required />
+        <Field label={pf.currentWebsite} id="currentWebsite" placeholder="www.example.gr (or none)" value={form.currentWebsite} onChange={set('currentWebsite')} />
+        <Field label={pf.email} id="email" type="email" placeholder="you@example.gr" value={form.email} onChange={set('email')} required />
+        <Field label={pf.whatsapp} id="whatsapp" type="tel" placeholder="+30 6900 000000" value={form.whatsapp} onChange={set('whatsapp')} required />
       </div>
 
       <TextareaField
-        label="What do you need help with?"
+        label={pf.needs}
         id="needs"
-        placeholder="Tell us about your business goals, what you'd like to improve, or any specific requests..."
+        placeholder={pf.needsPlaceholder}
         value={form.needs}
         onChange={set('needs')}
         rows={4}
@@ -212,7 +217,7 @@ export default function ProposalRequestForm({ onSubmit }) {
         onMouseUp={(e) => { e.currentTarget.style.transform = 'translateY(0)' }}
       >
         <Send size={15} />
-        Send my request
+        {pf.submit}
       </button>
     </form>
   )

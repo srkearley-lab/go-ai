@@ -25,3 +25,11 @@ export function useTranslations() {
   const { language } = useLanguage()
   return translations[language]
 }
+
+// Returns Greek journey product data overrides, or null when language is English.
+// Journey.jsx uses this to merge translated names/descriptions with the base English data.
+export function useJourneyLocale() {
+  const { language } = useLanguage()
+  const t = useTranslations()
+  return language === 'en' ? null : (t.journeyData || null)
+}

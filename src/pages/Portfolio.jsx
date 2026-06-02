@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { MapPin, Clock, ArrowUpRight, MessageCircle } from 'lucide-react'
 import PageHero from '../components/PageHero'
+import { useTranslations } from '../context/LanguageContext'
 
 const WHATSAPP = '#'
 
@@ -286,7 +287,7 @@ function BrowserMockup({ item }) {
 
 // ── Portfolio card ────────────────────────────────────────────────────────────
 
-function PortfolioCard({ item }) {
+function PortfolioCard({ item, viewDemoLabel }) {
   const [hovered, setHovered] = useState(false)
   const reduceMotion = useReducedMotion()
 
@@ -336,7 +337,7 @@ function PortfolioCard({ item }) {
               borderRadius: 'var(--radius-md)',
             }}
           >
-            View demo site
+            viewDemoLabel
             <ArrowUpRight size={14} />
           </div>
         </motion.div>
@@ -402,7 +403,7 @@ function PortfolioCard({ item }) {
 
 // ── Filter bar ────────────────────────────────────────────────────────────────
 
-function FilterBar({ active, onChange }) {
+function FilterBar({ active, onChange, industries, industryMap, allLabel }) {
   return (
     <div
       style={{
@@ -412,8 +413,9 @@ function FilterBar({ active, onChange }) {
       }}
     >
       <div style={{ display: 'flex', gap: 'var(--space-2)', minWidth: 'max-content' }}>
-        {allIndustries.map((ind) => {
+        {industries.map((ind) => {
           const isActive = active === ind
+          const displayLabel = ind === 'All' ? allLabel : (industryMap?.[ind] || ind)
           return (
             <button
               key={ind}
@@ -443,7 +445,7 @@ function FilterBar({ active, onChange }) {
                 }
               }}
             >
-              {ind}
+              {displayLabel}
             </button>
           )
         })}
@@ -457,6 +459,11 @@ function FilterBar({ active, onChange }) {
 export default function Portfolio() {
   const [activeFilter, setActiveFilter] = useState('All')
   const reduceMotion = useReducedMotion()
+  const t = useTranslations()
+  const tp = t.portfolio
+
+  const allFilter = tp.all
+  const allIndustriesTranslated = ['All', ...Array.from(new Set(items.map((i) => i.industry)))]
 
   const filtered = useMemo(
     () => (activeFilter === 'All' ? items : items.filter((i) => i.industry === activeFilter)),
@@ -468,12 +475,15 @@ export default function Portfolio() {
     show: { transition: { staggerChildren: reduceMotion ? 0 : 0.05, delayChildren: 0 } },
   }
 
+  const projectCount = filtered.length
+  const projectLabel = projectCount === 1 ? tp.projectSingular : tp.projectPlural
+
   return (
     <main style={{ paddingTop: 64 }}>
       <PageHero
-        tag="Portfolio"
-        title="Demo sites built for businesses across Greece"
-        description="Every project is built from scratch for the industry, location and goals of that specific business. Browse by industry to see what we'd build for you."
+        tag={tp.tag}
+        title={tp.title}
+        description={tp.description}
       />
 
       {/* ── Grid section ── */}
@@ -482,9 +492,9 @@ export default function Portfolio() {
 
           {/* Filter + count row */}
           <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-4)' }}>
-            <FilterBar active={activeFilter} onChange={setActiveFilter} />
+            <FilterBar active={activeFilter} onChange={setActiveFilter} industries={allIndustriesTranslated} industryMap={tp.industryMap} allLabel={allFilter} />
             <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', flexShrink: 0 }}>
-              {filtered.length} project{filtered.length !== 1 ? 's' : ''}
+              {projectCount} {projectLabel}
             </span>
           </div>
 
@@ -498,7 +508,7 @@ export default function Portfolio() {
           >
             <AnimatePresence mode="popLayout">
               {filtered.map((item) => (
-                <PortfolioCard key={item.id} item={item} />
+                <PortfolioCard key={item.id} item={item} viewDemoLabel={tp.viewDemo} />
               ))}
             </AnimatePresence>
           </motion.div>
@@ -523,12 +533,7 @@ export default function Portfolio() {
             gap: 'var(--space-8)',
           }}
         >
-          {[
-            { stat: '7 days', label: 'Average time from brief to live site' },
-            { stat: '12+',    label: 'Industries served across Greece' },
-            { stat: '100%',   label: 'Custom-built — no templates used' },
-            { stat: '1 msg',  label: 'All updates and reports via WhatsApp' },
-          ].map(({ stat, label }) => (
+          {tp.stats.map(({ stat, label }) => (
             <motion.div
               key={stat}
               initial={reduceMotion ? {} : { opacity: 0, y: 6 }}
@@ -565,13 +570,13 @@ export default function Portfolio() {
         >
           <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
             <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--color-accent-500)' }}>
-              Want to see yours?
+              {tp.ctaTag}
             </p>
             <h2 style={{ fontSize: 'clamp(var(--text-lg), 3vw, var(--text-xl))', fontWeight: 700, lineHeight: 1.15, letterSpacing: '-0.02em', color: 'var(--text-primary)' }}>
-              We'll build a free demo for your business
+              {tp.ctaTitle}
             </h2>
             <p style={{ fontSize: 'var(--text-base)', lineHeight: 1.6, color: 'var(--text-secondary)', maxWidth: '46ch' }}>
-              Tell us about your business and we'll create a personalised demo showing exactly what your website could look like — before you pay anything.
+              {tp.ctaBody}
             </p>
           </div>
 
@@ -593,7 +598,7 @@ export default function Portfolio() {
               onMouseDown={(e) => { e.currentTarget.style.transform = 'translateY(1px)' }}
               onMouseUp={(e) => { e.currentTarget.style.transform = 'translateY(0)' }}
             >
-              Request my free demo
+              {tp.ctaPrimary}
             </Link>
             <a
               href={WHATSAPP}
@@ -613,7 +618,7 @@ export default function Portfolio() {
               onMouseUp={(e) => { e.currentTarget.style.transform = 'translateY(0)' }}
             >
               <MessageCircle size={16} />
-              Ask on WhatsApp
+              {tp.ctaWhatsApp}
             </a>
           </div>
         </motion.div>

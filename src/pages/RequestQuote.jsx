@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { Check, ChevronRight, Send, Upload, X as XIcon, ArrowRight } from 'lucide-react'
 import PageHero from '../components/PageHero'
+import { useTranslations } from '../context/LanguageContext'
 
 // ── Shared styles ─────────────────────────────────────────────────────────────
 
@@ -257,7 +258,7 @@ function CardSelect({ label, options, values, onChange, helper }) {
   )
 }
 
-function FileUpload({ files, onChange }) {
+function FileUpload({ files, onChange, uploadButton, uploadFormats }) {
   // TODO: No file upload backend is configured.
   // Files are stored in local component state only and will not be sent to any server.
   // To enable actual file uploads, integrate a storage service (e.g. AWS S3,
@@ -289,10 +290,10 @@ function FileUpload({ files, onChange }) {
       >
         <Upload size={24} style={{ color: 'var(--text-tertiary)', margin: '0 auto var(--space-3)' }} />
         <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', margin: '0 0 var(--space-1)' }}>
-          Click to upload files
+          {uploadButton || 'Click to upload files'}
         </p>
         <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', margin: 0 }}>
-          JPG, PNG, WEBP, PDF, DOC, DOCX — multiple files allowed
+          {uploadFormats || 'JPG, PNG, WEBP, PDF, DOC, DOCX — multiple files allowed'}
         </p>
         <input
           ref={inputRef} type="file" multiple
@@ -414,33 +415,31 @@ const INIT = {
 
 // ── Validation ────────────────────────────────────────────────────────────────
 
-function validate(step, form) {
+function validate(step, form, msgs) {
+  const m = msgs || {}
   const err = {}
 
   if (step === 0) {
-    if (!form.fullName.trim())    err.fullName    = 'Full name is required.'
-    if (!form.businessName.trim()) err.businessName = 'Business name is required.'
-    if (!form.email.trim())       err.email       = 'Email address is required.'
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) err.email = 'Enter a valid email address.'
-    if (!form.phone.trim())       err.phone       = 'Phone number is required.'
-    if (!form.businessType)       err.businessType = 'Please select your business type.'
-    if (!form.preferredContact)   err.preferredContact = 'Please select a preferred contact method.'
+    if (!form.fullName.trim())     err.fullName    = m.fullNameRequired      || 'Full name is required.'
+    if (!form.businessName.trim()) err.businessName = m.businessNameRequired  || 'Business name is required.'
+    if (!form.email.trim())        err.email       = m.emailRequired         || 'Email address is required.'
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) err.email = m.emailInvalid || 'Enter a valid email address.'
+    if (!form.phone.trim())        err.phone       = m.phoneRequired         || 'Phone number is required.'
+    if (!form.businessType)        err.businessType = m.businessTypeRequired  || 'Please select your business type.'
+    if (!form.preferredContact)    err.preferredContact = m.contactMethodRequired || 'Please select a preferred contact method.'
   }
 
   if (step === 1) {
-    if (!form.hasWebsite) err.hasWebsite = 'Please select Yes or No.'
+    if (!form.hasWebsite) err.hasWebsite = m.hasWebsiteRequired || 'Please select Yes or No.'
     if (form.hasWebsite === 'Yes' && form.currentWebsiteUrl && !isValidUrl(form.currentWebsiteUrl)) {
-      err.currentWebsiteUrl = 'Enter a valid URL (e.g. https://example.com).'
+      err.currentWebsiteUrl = m.websiteUrlInvalid || 'Enter a valid URL (e.g. https://example.com).'
     }
-    if (!form.lookingFor) err.lookingFor = 'Please select what you are looking for.'
+    if (!form.lookingFor) err.lookingFor = m.lookingForRequired || 'Please select what you are looking for.'
   }
 
   if (step === 2) {
-    if (!form.helpNeeded.length) err.helpNeeded = 'Please select at least one option.'
+    if (!form.helpNeeded.length) err.helpNeeded = m.helpNeededRequired || 'Please select at least one option.'
   }
-
-  // Step 3 (Your Setup) — toggles are optional, conditional fields validated if parent is Yes
-  // No blocking validation for step 3
 
   if (step === 4) {
     const urlFields = [
@@ -450,18 +449,18 @@ function validate(step, form) {
       'linkExample1', 'linkExample2', 'linkExample3',
     ]
     urlFields.forEach(f => {
-      if (form[f] && !isValidUrl(form[f])) err[f] = 'Enter a valid URL.'
+      if (form[f] && !isValidUrl(form[f])) err[f] = m.urlInvalid || 'Enter a valid URL.'
     })
-    if (!form.budget)  err.budget  = 'Please select a budget range.'
-    if (!form.urgency) err.urgency = 'Please select urgency.'
+    if (!form.budget)  err.budget  = m.budgetRequired  || 'Please select a budget range.'
+    if (!form.urgency) err.urgency = m.urgencyRequired || 'Please select urgency.'
   }
 
   if (step === 5) {
-    if (!form.projectDetails.trim()) err.projectDetails = 'Please tell us about your project.'
+    if (!form.projectDetails.trim()) err.projectDetails = m.projectDetailsRequired || 'Please tell us about your project.'
   }
 
   if (step === 6) {
-    if (!form.consent) err.consent = 'You must agree to be contacted before submitting.'
+    if (!form.consent) err.consent = m.consentRequired || 'You must agree to be contacted before submitting.'
   }
 
   return err
@@ -469,19 +468,14 @@ function validate(step, form) {
 
 // ── Progress bar ──────────────────────────────────────────────────────────────
 
-const STEP_LABELS = [
-  'Your Details', 'Your Website', 'What You Need',
-  'Your Setup', 'Links & Budget', 'Project Details', 'Review & Submit',
-]
-
-function ProgressBar({ current }) {
+function ProgressBar({ current, stepLabels, stepCounter, stepOf }) {
   return (
     <div style={{ marginBottom: 'var(--space-10)' }}>
 
       {/* Desktop: 7 labelled segments */}
       <div className="rq-progress-desktop">
         <div style={{ display: 'flex', gap: 'var(--space-1)', marginBottom: 'var(--space-3)' }}>
-          {STEP_LABELS.map((label, i) => {
+          {stepLabels.map((label, i) => {
             const done = i < current
             const active = i === current
             return (
@@ -504,18 +498,18 @@ function ProgressBar({ current }) {
           })}
         </div>
         <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', margin: 0 }}>
-          Step {current + 1} of {STEP_LABELS.length}
+          {stepCounter} {current + 1} {stepOf} {stepLabels.length}
         </p>
       </div>
 
       {/* Mobile: compact "Step X of 7 — Name" + single progress bar */}
       <div className="rq-progress-mobile">
         <p style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--text-primary)', margin: '0 0 var(--space-2)' }}>
-          Step {current + 1} of {STEP_LABELS.length}
-          <span style={{ fontWeight: 400, color: 'var(--text-secondary)' }}> — {STEP_LABELS[current]}</span>
+          {stepCounter} {current + 1} {stepOf} {stepLabels.length}
+          <span style={{ fontWeight: 400, color: 'var(--text-secondary)' }}> — {stepLabels[current]}</span>
         </p>
         <div style={{ display: 'flex', gap: 3 }}>
-          {STEP_LABELS.map((_, i) => (
+          {stepLabels.map((_, i) => (
             <div
               key={i}
               style={{
@@ -534,24 +528,24 @@ function ProgressBar({ current }) {
 
 // ── Step 1 — Your Details ─────────────────────────────────────────────────────
 
-function Step1({ form, set, errors }) {
+function Step1({ form, set, errors, tr }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-5)' }}>
-      <span style={sectionLabel}>Contact information</span>
+      <span style={sectionLabel}>{tr.contactInfoLabel}</span>
       <div className="rq-grid-2">
-        <Field label="Full name" id="fullName" value={form.fullName} onChange={set('fullName')} required error={errors.fullName} />
-        <Field label="Business name" id="businessName" value={form.businessName} onChange={set('businessName')} required error={errors.businessName} />
-        <Field label="Email address" id="email" type="email" value={form.email} onChange={set('email')} required error={errors.email} />
-        <Field label="Phone number" id="phone" type="tel" placeholder="+30 6900 000000" value={form.phone} onChange={set('phone')} required error={errors.phone} />
+        <Field label={tr.fullName} id="fullName" value={form.fullName} onChange={set('fullName')} required error={errors.fullName} />
+        <Field label={tr.businessName} id="businessName" value={form.businessName} onChange={set('businessName')} required error={errors.businessName} />
+        <Field label={tr.emailAddress} id="email" type="email" value={form.email} onChange={set('email')} required error={errors.email} />
+        <Field label={tr.phoneNumber} id="phone" type="tel" placeholder={tr.phonePlaceholder} value={form.phone} onChange={set('phone')} required error={errors.phone} />
       </div>
       <SelectField
-        label="Business type / Industry" id="businessType"
-        options={BUSINESS_TYPES} value={form.businessType} onChange={set('businessType')}
+        label={tr.businessTypeLabel} id="businessType"
+        options={tr.businessTypes} value={form.businessType} onChange={set('businessType')}
         required error={errors.businessType}
       />
       <ToggleGroup
-        label="Preferred contact method"
-        options={CONTACT_OPTIONS}
+        label={tr.preferredContact}
+        options={tr.contactOptions}
         value={form.preferredContact}
         onChange={(v) => set('preferredContact')({ target: { value: v } })}
         required error={errors.preferredContact}
@@ -562,32 +556,33 @@ function Step1({ form, set, errors }) {
 
 // ── Step 2 — Your Website ─────────────────────────────────────────────────────
 
-function Step2({ form, set, setArr, errors }) {
+function Step2({ form, set, setArr, errors, tr }) {
   const reduceMotion = useReducedMotion()
   const fade = { initial: reduceMotion ? {} : { height: 0, opacity: 0 }, animate: { height: 'auto', opacity: 1 }, exit: { height: 0, opacity: 0 }, transition: { duration: 0.18, ease: [0.16, 1, 0.3, 1] }, style: { overflow: 'hidden' } }
+  const yesVal = tr.yesNo[0]
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-6)' }}>
       <ToggleGroup
-        label="Do you currently have a website?"
-        options={YN} value={form.hasWebsite}
+        label={tr.hasWebsite}
+        options={tr.yesNo} value={form.hasWebsite}
         onChange={(v) => set('hasWebsite')({ target: { value: v } })}
         required error={errors.hasWebsite}
       />
 
       <AnimatePresence>
-        {form.hasWebsite === 'Yes' && (
+        {form.hasWebsite === yesVal && (
           <motion.div key="ws-yes" {...fade}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-5)' }}>
               <Field
-                label="Current website URL" id="currentWebsiteUrl" type="url"
+                label={tr.currentWebsiteUrl} id="currentWebsiteUrl" type="url"
                 placeholder="https://www.yoursite.com"
                 value={form.currentWebsiteUrl} onChange={set('currentWebsiteUrl')}
                 error={errors.currentWebsiteUrl}
               />
               <TextareaField
-                label="What do you like or dislike about it?" id="websiteLikeDislike"
-                placeholder="Tell us what works well and what you'd like to change…"
+                label={tr.websiteLikeDislike} id="websiteLikeDislike"
+                placeholder={tr.websiteLikeDislikePlaceholder}
                 value={form.websiteLikeDislike} onChange={set('websiteLikeDislike')} rows={3}
               />
             </div>
@@ -596,16 +591,16 @@ function Step2({ form, set, setArr, errors }) {
       </AnimatePresence>
 
       <ToggleGroup
-        label="Are you looking for…"
-        options={LOOKING_FOR} value={form.lookingFor}
+        label={tr.lookingFor}
+        options={tr.lookingForOptions} value={form.lookingFor}
         onChange={(v) => set('lookingFor')({ target: { value: v } })}
         required error={errors.lookingFor}
       />
 
       <CardSelect
-        label="What type of website? (select all that apply)"
-        helper="You can choose more than one."
-        options={WEBSITE_TYPES}
+        label={tr.websiteType}
+        helper={tr.websiteTypeHelper}
+        options={tr.websiteTypes}
         values={form.websiteType}
         onChange={(v) => setArr('websiteType')(v)}
       />
@@ -615,12 +610,12 @@ function Step2({ form, set, setArr, errors }) {
 
 // ── Step 3 — What You Need ────────────────────────────────────────────────────
 
-function Step3({ form, setArr, errors }) {
+function Step3({ form, setArr, errors, tr }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-6)' }}>
       <MultiCheckbox
-        label="What do you need help with? (select all that apply)"
-        options={HELP_OPTIONS}
+        label={tr.helpNeeded}
+        options={tr.helpOptions}
         values={form.helpNeeded}
         onChange={setArr('helpNeeded')}
         required error={errors.helpNeeded}
@@ -632,77 +627,78 @@ function Step3({ form, setArr, errors }) {
 
 // ── Step 4 — Your Setup ───────────────────────────────────────────────────────
 
-function Step4({ form, set }) {
+function Step4({ form, set, tr }) {
   const reduceMotion = useReducedMotion()
   const fade = { initial: reduceMotion ? {} : { height: 0, opacity: 0 }, animate: { height: 'auto', opacity: 1 }, exit: { height: 0, opacity: 0 }, transition: { duration: 0.18, ease: [0.16, 1, 0.3, 1] }, style: { overflow: 'hidden' } }
   const tog = (key) => (v) => set(key)({ target: { value: v } })
+  const noVal = tr.yesNo[1]
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-6)' }}>
-      <span style={sectionLabel}>Tell us about your current setup</span>
+      <span style={sectionLabel}>{tr.setupSectionLabel}</span>
 
-      <ToggleGroup label="Do you already have a domain?" options={YN} value={form.hasDomain} onChange={tog('hasDomain')} />
+      <ToggleGroup label={tr.hasDomain} options={tr.yesNo} value={form.hasDomain} onChange={tog('hasDomain')} />
       <AnimatePresence>
-        {form.hasDomain === 'No' && (
+        {form.hasDomain === noVal && (
           <motion.div key="nd" {...fade}>
-            <ToggleGroup label="Do you need help buying a domain?" options={YN} value={form.needsDomain} onChange={tog('needsDomain')} />
+            <ToggleGroup label={tr.needsDomain} options={tr.yesNo} value={form.needsDomain} onChange={tog('needsDomain')} />
           </motion.div>
         )}
       </AnimatePresence>
 
-      <ToggleGroup label="Do you need hosting?" options={YN} value={form.needsHosting} onChange={tog('needsHosting')} />
-      <ToggleGroup label="Do you have a logo?" options={YN} value={form.hasLogo} onChange={tog('hasLogo')} />
-      <ToggleGroup label="Do you have brand colours?" options={YN} value={form.hasBrandColours} onChange={tog('hasBrandColours')} />
-      <ToggleGroup label="Do you have photos or images ready?" options={YN} value={form.hasPhotos} onChange={tog('hasPhotos')} />
-      <ToggleGroup label="Do you need SEO support?" options={YN} value={form.needsSEO} onChange={tog('needsSEO')} />
+      <ToggleGroup label={tr.needsHosting} options={tr.yesNo} value={form.needsHosting} onChange={tog('needsHosting')} />
+      <ToggleGroup label={tr.hasLogo} options={tr.yesNo} value={form.hasLogo} onChange={tog('hasLogo')} />
+      <ToggleGroup label={tr.hasBrandColours} options={tr.yesNo} value={form.hasBrandColours} onChange={tog('hasBrandColours')} />
+      <ToggleGroup label={tr.hasPhotos} options={tr.yesNo} value={form.hasPhotos} onChange={tog('hasPhotos')} />
+      <ToggleGroup label={tr.needsSEO} options={tr.yesNo} value={form.needsSEO} onChange={tog('needsSEO')} />
 
-      <ToggleGroup label="Do you sell products online?" options={YN} value={form.sellsProducts} onChange={tog('sellsProducts')} />
+      <ToggleGroup label={tr.sellsProducts} options={tr.yesNo} value={form.sellsProducts} onChange={tog('sellsProducts')} />
       <AnimatePresence>
-        {form.sellsProducts === 'Yes' && (
+        {form.sellsProducts === tr.yesNo[0] && (
           <motion.div key="sp" {...fade}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-5)' }}>
-              <Field label="Approximate number of products" id="productCount" placeholder="e.g. 50" value={form.productCount} onChange={set('productCount')} />
-              <ToggleGroup label="Do you need payment processing on the website?" options={YN} value={form.paymentNeeded} onChange={tog('paymentNeeded')} />
+              <Field label={tr.productCount} id="productCount" placeholder={tr.productCountPlaceholder} value={form.productCount} onChange={set('productCount')} />
+              <ToggleGroup label={tr.paymentNeeded} options={tr.yesNo} value={form.paymentNeeded} onChange={tog('paymentNeeded')} />
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      <ToggleGroup label="Do you take bookings online?" options={YN} value={form.takesBookings} onChange={tog('takesBookings')} />
+      <ToggleGroup label={tr.takesBookings} options={tr.yesNo} value={form.takesBookings} onChange={tog('takesBookings')} />
       <AnimatePresence>
-        {form.takesBookings === 'Yes' && (
+        {form.takesBookings === tr.yesNo[0] && (
           <motion.div key="tb" {...fade}>
-            <Field label="What booking system do you use (if any)?" id="bookingSystem" placeholder="e.g. Calendly, Booksy, none" value={form.bookingSystem} onChange={set('bookingSystem')} />
+            <Field label={tr.bookingSystem} id="bookingSystem" placeholder={tr.bookingSystemPlaceholder} value={form.bookingSystem} onChange={set('bookingSystem')} />
           </motion.div>
         )}
       </AnimatePresence>
 
-      <ToggleGroup label="Do you need automation or integrations?" options={YN} value={form.needsAutomation} onChange={tog('needsAutomation')} />
+      <ToggleGroup label={tr.needsAutomation} options={tr.yesNo} value={form.needsAutomation} onChange={tog('needsAutomation')} />
       <AnimatePresence>
-        {form.needsAutomation === 'Yes' && (
+        {form.needsAutomation === tr.yesNo[0] && (
           <motion.div key="na" {...fade}>
-            <Field label="What tools or systems do you use?" id="automationTools" placeholder="e.g. Mailchimp, WhatsApp, Zapier, CRM name…" value={form.automationTools} onChange={set('automationTools')} />
+            <Field label={tr.automationTools} id="automationTools" placeholder={tr.automationToolsPlaceholder} value={form.automationTools} onChange={set('automationTools')} />
           </motion.div>
         )}
       </AnimatePresence>
 
-      <ToggleGroup label="Do you want GoAI to recommend the best setup for you?" options={YN} value={form.wantsRecommendation} onChange={tog('wantsRecommendation')} />
+      <ToggleGroup label={tr.wantsRecommendation} options={tr.yesNo} value={form.wantsRecommendation} onChange={tog('wantsRecommendation')} />
     </div>
   )
 }
 
 // ── Step 5 — Links & Budget ───────────────────────────────────────────────────
 
-function Step5({ form, set, errors }) {
+function Step5({ form, set, errors, tr }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-8)' }}>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-5)' }}>
-        <span style={sectionLabel}>Links and inspiration</span>
+        <span style={sectionLabel}>{tr.linksSectionLabel}</span>
         <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', lineHeight: 1.6, margin: 0 }}>
-          Share links to help us understand your business and inspiration. All fields are optional.
+          {tr.linksHelper}
         </p>
         <div className="rq-grid-2">
-          <Field label="Current website" id="lCW" type="url" placeholder="https://" value={form.linkCurrentWebsite} onChange={set('linkCurrentWebsite')} error={errors.linkCurrentWebsite} />
+          <Field label={tr.currentWebsite} id="lCW" type="url" placeholder="https://" value={form.linkCurrentWebsite} onChange={set('linkCurrentWebsite')} error={errors.linkCurrentWebsite} />
           <Field label="Instagram" id="lIG" type="url" placeholder="https://instagram.com/…" value={form.linkInstagram} onChange={set('linkInstagram')} error={errors.linkInstagram} />
           <Field label="Facebook" id="lFB" type="url" placeholder="https://facebook.com/…" value={form.linkFacebook} onChange={set('linkFacebook')} error={errors.linkFacebook} />
           <Field label="LinkedIn" id="lLI" type="url" placeholder="https://linkedin.com/…" value={form.linkLinkedIn} onChange={set('linkLinkedIn')} error={errors.linkLinkedIn} />
@@ -721,12 +717,12 @@ function Step5({ form, set, errors }) {
       </div>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-5)' }}>
-        <span style={sectionLabel}>Budget and timeline</span>
+        <span style={sectionLabel}>{tr.budgetSectionLabel}</span>
         <div className="rq-grid-2">
-          <SelectField label="Budget range" id="budget" options={BUDGET_OPTIONS} value={form.budget} onChange={set('budget')} required error={errors.budget} />
-          <SelectField label="How urgent is this?" id="urgency" options={URGENCY_OPTIONS} value={form.urgency} onChange={set('urgency')} required error={errors.urgency} />
+          <SelectField label={tr.budgetRange} id="budget" options={tr.budgetOptions} value={form.budget} onChange={set('budget')} required error={errors.budget} />
+          <SelectField label={tr.urgency} id="urgency" options={tr.urgencyOptions} value={form.urgency} onChange={set('urgency')} required error={errors.urgency} />
         </div>
-        <Field label="Preferred start date" id="startDate" type="date" value={form.startDate} onChange={set('startDate')} helper="Optional — leave blank if flexible." />
+        <Field label={tr.startDate} id="startDate" type="date" value={form.startDate} onChange={set('startDate')} helper={tr.startDateHelper} />
       </div>
     </div>
   )
@@ -734,30 +730,30 @@ function Step5({ form, set, errors }) {
 
 // ── Step 6 — Project Details ──────────────────────────────────────────────────
 
-function Step6({ form, set, errors }) {
+function Step6({ form, set, errors, tr }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-6)' }}>
-      <span style={sectionLabel}>Tell us about your project</span>
+      <span style={sectionLabel}>{tr.projectSectionLabel}</span>
       <TextareaField
-        label="Tell us about your project" id="projectDetails" rows={6}
-        placeholder="Tell us what you are trying to build or achieve. What does success look like for you?"
+        label={tr.projectDetails} id="projectDetails" rows={6}
+        placeholder={tr.projectDetailsPlaceholder}
         value={form.projectDetails} onChange={set('projectDetails')}
-        helper="The more detail you share, the better we can tailor our recommendation."
+        helper={tr.projectDetailsHelper}
         required error={errors.projectDetails}
       />
       <TextareaField
-        label="Tell us about your business" id="businessDetails" rows={4}
-        placeholder="What do you do, who are your customers, where do you operate?"
+        label={tr.businessDetails} id="businessDetails" rows={4}
+        placeholder={tr.businessDetailsPlaceholder}
         value={form.businessDetails} onChange={set('businessDetails')}
       />
       <TextareaField
-        label="Must-have features" id="mustHaveFeatures" rows={3}
-        placeholder="List anything that must be included — booking forms, payment, specific pages, integrations…"
+        label={tr.mustHave} id="mustHaveFeatures" rows={3}
+        placeholder={tr.mustHavePlaceholder}
         value={form.mustHaveFeatures} onChange={set('mustHaveFeatures')}
       />
       <TextareaField
-        label="Anything else we should know?" id="anythingElse" rows={3}
-        placeholder="Timelines, constraints, previous bad experiences, budget notes, anything at all…"
+        label={tr.anythingElse} id="anythingElse" rows={3}
+        placeholder={tr.anythingElsePlaceholder}
         value={form.anythingElse} onChange={set('anythingElse')}
       />
     </div>
@@ -778,56 +774,59 @@ function SummaryRow({ label, value }) {
   )
 }
 
-function Step7({ form, set, setFiles, errors }) {
+function Step7({ form, set, setFiles, errors, tr }) {
   const shortText = (s, max = 120) => s && s.length > max ? s.slice(0, max) + '…' : s
+  const filesLabel = form.files.length === 1
+    ? tr.summaryFilesAttachedSingular
+    : tr.summaryFilesAttachedPlural.replace('{n}', form.files.length)
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-8)' }}>
 
       {/* File upload */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
-        <span style={sectionLabel}>Upload files, photos or inspiration</span>
+        <span style={sectionLabel}>{tr.uploadSectionLabel}</span>
         <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', margin: 0 }}>
-          Upload logos, photos, screenshots, brochures, or inspiration. Optional.
+          {tr.uploadHelper}
         </p>
-        <FileUpload files={form.files} onChange={setFiles} />
+        <FileUpload files={form.files} onChange={setFiles} uploadButton={tr.uploadButton} uploadFormats={tr.uploadFormats} />
       </div>
 
       {/* Review summary */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
-        <span style={sectionLabel}>Review your request</span>
+        <span style={sectionLabel}>{tr.reviewSectionLabel}</span>
         <div style={{
           background: 'var(--surface-overlay)',
           border: '1px solid var(--border-default)',
           borderRadius: 'var(--radius-lg)',
           padding: 'var(--space-5) var(--space-6)',
         }}>
-          <SummaryRow label="Name" value={form.fullName} />
-          <SummaryRow label="Business" value={form.businessName} />
-          <SummaryRow label="Email" value={form.email} />
-          <SummaryRow label="Phone" value={form.phone} />
-          <SummaryRow label="Business type" value={form.businessType} />
-          <SummaryRow label="Contact via" value={form.preferredContact} />
-          <SummaryRow label="Has website" value={form.hasWebsite} />
-          <SummaryRow label="Current URL" value={form.currentWebsiteUrl} />
-          <SummaryRow label="Looking for" value={form.lookingFor} />
-          <SummaryRow label="Website type" value={form.websiteType} />
-          <SummaryRow label="Help needed" value={form.helpNeeded} />
-          <SummaryRow label="Has domain" value={form.hasDomain} />
-          <SummaryRow label="Needs hosting" value={form.needsHosting} />
-          <SummaryRow label="Has logo" value={form.hasLogo} />
-          <SummaryRow label="Has brand colours" value={form.hasBrandColours} />
-          <SummaryRow label="Has photos" value={form.hasPhotos} />
-          <SummaryRow label="Sells products" value={form.sellsProducts} />
-          <SummaryRow label="Takes bookings" value={form.takesBookings} />
-          <SummaryRow label="Needs automation" value={form.needsAutomation} />
-          <SummaryRow label="Budget" value={form.budget} />
-          <SummaryRow label="Urgency" value={form.urgency} />
-          <SummaryRow label="Start date" value={form.startDate} />
-          <SummaryRow label="Project details" value={shortText(form.projectDetails)} />
-          <SummaryRow label="Must-have features" value={shortText(form.mustHaveFeatures)} />
+          <SummaryRow label={tr.summaryName} value={form.fullName} />
+          <SummaryRow label={tr.summaryBusiness} value={form.businessName} />
+          <SummaryRow label={tr.summaryEmail} value={form.email} />
+          <SummaryRow label={tr.summaryPhone} value={form.phone} />
+          <SummaryRow label={tr.summaryBusinessType} value={form.businessType} />
+          <SummaryRow label={tr.summaryContactVia} value={form.preferredContact} />
+          <SummaryRow label={tr.summaryHasWebsite} value={form.hasWebsite} />
+          <SummaryRow label={tr.summaryCurrentUrl} value={form.currentWebsiteUrl} />
+          <SummaryRow label={tr.summaryLookingFor} value={form.lookingFor} />
+          <SummaryRow label={tr.summaryWebsiteType} value={form.websiteType} />
+          <SummaryRow label={tr.summaryHelpNeeded} value={form.helpNeeded} />
+          <SummaryRow label={tr.summaryHasDomain} value={form.hasDomain} />
+          <SummaryRow label={tr.summaryNeedsHosting} value={form.needsHosting} />
+          <SummaryRow label={tr.summaryHasLogo} value={form.hasLogo} />
+          <SummaryRow label={tr.summaryBrandColours} value={form.hasBrandColours} />
+          <SummaryRow label={tr.summaryHasPhotos} value={form.hasPhotos} />
+          <SummaryRow label={tr.summarySellsProducts} value={form.sellsProducts} />
+          <SummaryRow label={tr.summaryTakesBookings} value={form.takesBookings} />
+          <SummaryRow label={tr.summaryNeedsAuto} value={form.needsAutomation} />
+          <SummaryRow label={tr.summaryBudget} value={form.budget} />
+          <SummaryRow label={tr.summaryUrgency} value={form.urgency} />
+          <SummaryRow label={tr.summaryStartDate} value={form.startDate} />
+          <SummaryRow label={tr.summaryProjectDetails} value={shortText(form.projectDetails)} />
+          <SummaryRow label={tr.summaryMustHave} value={shortText(form.mustHaveFeatures)} />
           {form.files.length > 0 && (
-            <SummaryRow label="Files attached" value={`${form.files.length} file${form.files.length > 1 ? 's' : ''}`} />
+            <SummaryRow label="Files" value={filesLabel} />
           )}
         </div>
       </div>
@@ -860,7 +859,7 @@ function Step7({ form, set, setFiles, errors }) {
           style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', lineHeight: 1.5, userSelect: 'none' }}
           onClick={() => set('consent')({ target: { value: !form.consent } })}
         >
-          I agree for GoAI to contact me about my quote request.
+          {tr.consent}
           <span style={{ color: 'var(--goai-violet)', marginLeft: 4 }}>*</span>
         </span>
       </label>
@@ -871,7 +870,7 @@ function Step7({ form, set, setFiles, errors }) {
 
 // ── Confirmation ──────────────────────────────────────────────────────────────
 
-function Confirmation({ reduceMotion }) {
+function Confirmation({ reduceMotion, tr }) {
   return (
     <motion.div
       initial={reduceMotion ? {} : { opacity: 0, scale: 0.97 }}
@@ -895,10 +894,10 @@ function Confirmation({ reduceMotion }) {
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)', maxWidth: '48ch' }}>
         <h2 style={{ fontSize: 'var(--text-xl)', fontWeight: 700, letterSpacing: '-0.02em', color: 'var(--text-primary)', lineHeight: 1.15, margin: 0 }}>
-          Thanks — your quote request has been submitted.
+          {tr.confirmTitle}
         </h2>
         <p style={{ fontSize: 'var(--text-base)', color: 'var(--text-secondary)', lineHeight: 1.6, margin: 0 }}>
-          We'll review your details and come back with a tailored recommendation.
+          {tr.confirmBody}
         </p>
       </div>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-3)', justifyContent: 'center' }}>
@@ -916,7 +915,7 @@ function Confirmation({ reduceMotion }) {
           onMouseEnter={(e) => { e.currentTarget.style.filter = 'brightness(1.1)'; e.currentTarget.style.boxShadow = '0 0 40px rgba(118,39,239,0.5)' }}
           onMouseLeave={(e) => { e.currentTarget.style.filter = 'brightness(1)'; e.currentTarget.style.boxShadow = '0 0 30px rgba(118,39,239,0.35)' }}
         >
-          Return to Homepage
+          {tr.returnHome}
         </Link>
         <Link
           to="/journey"
@@ -931,7 +930,7 @@ function Confirmation({ reduceMotion }) {
           onMouseEnter={(e) => { e.currentTarget.style.background = 'linear-gradient(90deg,#293BFF 0%,#7627EF 100%)'; e.currentTarget.style.color = '#FFFFFF'; e.currentTarget.style.borderColor = 'transparent' }}
           onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--text-primary)'; e.currentTarget.style.borderColor = 'var(--goai-violet)' }}
         >
-          Start Your Journey <ArrowRight size={14} />
+          {tr.startJourney} <ArrowRight size={14} />
         </Link>
       </div>
     </motion.div>
@@ -944,6 +943,10 @@ export default function RequestQuote() {
   const reduceMotion = useReducedMotion()
   const location = useLocation()
   const journeySummary = location.state?.journeySummary || null
+  const t = useTranslations()
+  const tr = t.requestQuote
+  const stepLabels = tr.stepLabels
+
   const [step, setStep] = useState(0)
   const [form, setForm] = useState(INIT)
   const [errors, setErrors] = useState({})
@@ -965,10 +968,10 @@ export default function RequestQuote() {
   }
 
   const advance = () => {
-    const errs = validate(step, form)
+    const errs = validate(step, form, tr.errors)
     if (Object.keys(errs).length) { setErrors(errs); window.scrollTo({ top: 0, behavior: 'smooth' }); return }
     setErrors({})
-    if (step < STEP_LABELS.length - 1) {
+    if (step < stepLabels.length - 1) {
       setStep(step + 1)
       window.scrollTo({ top: 0, behavior: 'smooth' })
     } else {
@@ -986,16 +989,16 @@ export default function RequestQuote() {
     }
   }
 
-  const stepProps = { form, set, setArr, errors }
+  const stepProps = { form, set, setArr, errors, tr }
 
-  const isFinalStep = step === STEP_LABELS.length - 1
+  const isFinalStep = step === stepLabels.length - 1
 
   return (
     <main style={{ paddingTop: 64 }}>
       <PageHero
-        tag="Request a Quote"
-        title="Request a Quote"
-        description="Tell us about your project and we'll come back with a tailored recommendation."
+        tag={tr.tag}
+        title={tr.title}
+        description={tr.description}
       />
 
       <section className="rq-section" style={{ padding: 'var(--space-16) var(--space-8) var(--space-24)', background: 'var(--surface-base)' }}>
@@ -1006,7 +1009,7 @@ export default function RequestQuote() {
               border: '1px solid var(--border-default)',
               borderRadius: 'var(--radius-xl)',
             }}>
-              <Confirmation reduceMotion={reduceMotion} />
+              <Confirmation reduceMotion={reduceMotion} tr={tr} />
             </div>
           ) : (
             <motion.div
@@ -1031,16 +1034,16 @@ export default function RequestQuote() {
                   display: 'flex', flexDirection: 'column', gap: 'var(--space-2)',
                 }}>
                   <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.05em', textTransform: 'uppercase', color: 'var(--goai-violet)', margin: 0 }}>
-                    Your journey selections
+                    {tr.journeySelectionsLabel}
                   </p>
                   {journeySummary.website && <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', margin: 0 }}><strong style={{ color: 'var(--text-primary)' }}>Website:</strong> {journeySummary.website}</p>}
-                  {journeySummary.package && <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', margin: 0 }}><strong style={{ color: 'var(--text-primary)' }}>Package:</strong> {journeySummary.package}</p>}
-                  {journeySummary.bundle && <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', margin: 0 }}><strong style={{ color: 'var(--text-primary)' }}>Bundle:</strong> {journeySummary.bundle}</p>}
+                  {journeySummary.packages && <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', margin: 0 }}><strong style={{ color: 'var(--text-primary)' }}>Packages:</strong> {journeySummary.packages}</p>}
+                  {journeySummary.bundles && <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', margin: 0 }}><strong style={{ color: 'var(--text-primary)' }}>Bundles:</strong> {journeySummary.bundles}</p>}
                   {journeySummary.addons && <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', margin: 0 }}><strong style={{ color: 'var(--text-primary)' }}>Add-ons:</strong> {journeySummary.addons}</p>}
                 </div>
               )}
 
-              <ProgressBar current={step} />
+              <ProgressBar current={step} stepLabels={stepLabels} stepCounter={tr.stepCounter} stepOf={tr.stepOf} />
 
               <AnimatePresence mode="wait">
                 <motion.div
@@ -1051,16 +1054,16 @@ export default function RequestQuote() {
                   transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
                 >
                   <h2 style={{ fontSize: 'var(--text-lg)', fontWeight: 700, color: 'var(--text-primary)', letterSpacing: '-0.01em', marginBottom: 'var(--space-6)', margin: '0 0 var(--space-6)' }}>
-                    {STEP_LABELS[step]}
+                    {stepLabels[step]}
                   </h2>
 
                   {step === 0 && <Step1 {...stepProps} />}
                   {step === 1 && <Step2 {...stepProps} />}
                   {step === 2 && <Step3 {...stepProps} />}
-                  {step === 3 && <Step4 {...stepProps} />}
+                  {step === 3 && <Step4 form={form} set={set} tr={tr} />}
                   {step === 4 && <Step5 {...stepProps} />}
                   {step === 5 && <Step6 {...stepProps} />}
-                  {step === 6 && <Step7 form={form} set={set} setFiles={setFiles} errors={errors} />}
+                  {step === 6 && <Step7 form={form} set={set} setFiles={setFiles} errors={errors} tr={tr} />}
                 </motion.div>
               </AnimatePresence>
 
@@ -1086,7 +1089,7 @@ export default function RequestQuote() {
                   onMouseEnter={(e) => { if (step > 0) e.currentTarget.style.background = 'var(--surface-subtle)' }}
                   onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent' }}
                 >
-                  Back
+                  {tr.back}
                 </button>
 
                 <button
@@ -1109,8 +1112,8 @@ export default function RequestQuote() {
                   onMouseUp={(e) => { e.currentTarget.style.transform = 'translateY(0)' }}
                 >
                   {isFinalStep
-                    ? <><Send size={14} /><span>Request My Quote</span></>
-                    : <><span>Continue</span><ChevronRight size={15} /></>}
+                    ? <><Send size={14} /><span>{tr.submit}</span></>
+                    : <><span>{tr.next}</span><ChevronRight size={15} /></>}
                 </button>
               </div>
             </motion.div>

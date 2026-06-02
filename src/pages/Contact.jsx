@@ -6,63 +6,11 @@ import {
 } from 'lucide-react'
 import PageHero from '../components/PageHero'
 import ProposalRequestForm from '../components/ProposalRequestForm'
+import { useTranslations } from '../context/LanguageContext'
 
 const WHATSAPP = '#'
 
-// ── What happens next ─────────────────────────────────────────────────────────
-
-const nextSteps = [
-  {
-    icon: ClipboardList,
-    title: 'We review your details',
-    body: 'We look at your business type, location, current website and goals — usually within a few hours of receiving your form.',
-  },
-  {
-    icon: Zap,
-    title: 'We build your free plan',
-    body: 'A personalised document outlining exactly what we\'d build for your business, which services we\'d recommend, and what it would cost.',
-  },
-  {
-    icon: Send,
-    title: 'You receive it on WhatsApp',
-    body: 'Your plan arrives as a PDF via WhatsApp within 24 hours. No sales call required. No commitment to proceed.',
-  },
-]
-
-// ── FAQ data ──────────────────────────────────────────────────────────────────
-
-const faqs = [
-  {
-    q: 'How long does it take to build my website?',
-    a: 'Most websites go live within 7 days of you confirming the brief. Simpler sites — 3 pages, no booking integration — can be live in 4 days. Complex builds with automation and multiple languages take up to 10 days.',
-  },
-  {
-    q: 'Do I need to provide photos or write any content?',
-    a: 'No. We handle all content writing using AI, tailored to your specific business and industry. For photos we use high-quality licensed stock images that match your brand. If you have existing photos you\'re happy with, we\'ll use those instead. Professional photography is available as an add-on.',
-  },
-  {
-    q: 'What if I want changes after the website goes live?',
-    a: 'Growth and Premium plan clients get unlimited updates via WhatsApp — just message us and it\'s done, usually the same day. Starter plan clients receive one revision round at launch; further changes are available at an hourly rate.',
-  },
-  {
-    q: 'Do I need any technical knowledge to manage things?',
-    a: 'None at all. You manage every aspect of your digital presence — website updates, campaign reports, automation changes — through a single WhatsApp message to our team. No dashboards to log into, no software to learn.',
-  },
-  {
-    q: 'Is there a minimum contract length?',
-    a: 'Monthly plans (Growth and Premium) have no minimum contract. You can cancel any time with 30 days\' notice and keep everything we\'ve built. The Starter plan is a one-time payment with no ongoing obligation.',
-  },
-  {
-    q: 'Can you improve my existing website instead of building a new one?',
-    a: 'Yes — if your current site has good bones, we can rebuild or redesign it rather than start from scratch. We\'ll assess it as part of your free plan and give you an honest recommendation either way.',
-  },
-  {
-    q: 'Do you only work with businesses in Greece?',
-    a: 'Our primary focus is businesses operating in Greece — particularly those serving tourists or local Greek customers. If you\'re based elsewhere but have strong operations in Greece, get in touch and we\'ll see if we\'re a good fit.',
-  },
-]
-
-// ── FAQ item ──────────────────────────────────────────────────────────────────
+const STEP_ICONS = [ClipboardList, Zap, Send]
 
 function FaqItem({ q, a }) {
   const [open, setOpen] = useState(false)
@@ -116,22 +64,21 @@ function FaqItem({ q, a }) {
   )
 }
 
-// ── Page ─────────────────────────────────────────────────────────────────────
-
 export default function Contact() {
   const reduceMotion = useReducedMotion()
+  const t = useTranslations()
+  const tc = t.contact
 
   const handleSubmit = (form) => {
-    // In production: POST to your backend / CRM / n8n webhook
     console.log('Proposal request:', form)
   }
 
   return (
     <main style={{ paddingTop: 64 }}>
       <PageHero
-        tag="Free proposal"
-        title="Request your free digital improvement plan"
-        description="Tell us about your business and we'll send a personalised plan showing exactly what we'd build — and what it would cost. No commitment, no sales call."
+        tag={tc.tag}
+        title={tc.title}
+        description={tc.description}
       />
 
       {/* ── Main two-column section ── */}
@@ -154,10 +101,10 @@ export default function Contact() {
           >
             <div style={{ marginBottom: 'var(--space-8)' }}>
               <h2 style={{ fontSize: 'var(--text-lg)', fontWeight: 700, color: 'var(--text-primary)', letterSpacing: '-0.01em', marginBottom: 'var(--space-2)' }}>
-                Tell us about your business
+                {tc.formTitle}
               </h2>
               <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
-                Fill in the form below and we'll have your free plan ready within 24 hours.
+                {tc.formSubtitle}
               </p>
             </div>
             <ProposalRequestForm onSubmit={handleSubmit} />
@@ -180,31 +127,32 @@ export default function Contact() {
               }}
             >
               <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--color-brand-400)', marginBottom: 'var(--space-5)' }}>
-                What happens next
+                {tc.whatHappensNext}
               </p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
-                {nextSteps.map((step, i) => (
-                  <div key={i} style={{ display: 'flex', gap: 'var(--space-4)', alignItems: 'flex-start' }}>
-                    {/* Spine */}
-                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flexShrink: 0 }}>
-                      <div style={{ width: 36, height: 36, borderRadius: 'var(--radius-md)', background: 'rgba(99,102,241,0.1)', border: '1px solid rgba(99,102,241,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-brand-400)', flexShrink: 0 }}>
-                        <step.icon size={16} />
+                {tc.nextSteps.map((step, i) => {
+                  const Icon = STEP_ICONS[i]
+                  return (
+                    <div key={i} style={{ display: 'flex', gap: 'var(--space-4)', alignItems: 'flex-start' }}>
+                      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flexShrink: 0 }}>
+                        <div style={{ width: 36, height: 36, borderRadius: 'var(--radius-md)', background: 'rgba(99,102,241,0.1)', border: '1px solid rgba(99,102,241,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-brand-400)', flexShrink: 0 }}>
+                          <Icon size={16} />
+                        </div>
+                        {i < tc.nextSteps.length - 1 && (
+                          <div style={{ width: 1, height: 24, background: 'var(--border-default)', margin: '4px 0' }} />
+                        )}
                       </div>
-                      {i < nextSteps.length - 1 && (
-                        <div style={{ width: 1, height: 24, background: 'var(--border-default)', margin: '4px 0' }} />
-                      )}
+                      <div style={{ paddingBottom: i < tc.nextSteps.length - 1 ? 'var(--space-5)' : 0 }}>
+                        <p style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--text-primary)', marginBottom: 'var(--space-1)', lineHeight: 1.3 }}>
+                          {step.title}
+                        </p>
+                        <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
+                          {step.body}
+                        </p>
+                      </div>
                     </div>
-                    {/* Text */}
-                    <div style={{ paddingBottom: i < nextSteps.length - 1 ? 'var(--space-5)' : 0 }}>
-                      <p style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--text-primary)', marginBottom: 'var(--space-1)', lineHeight: 1.3 }}>
-                        {step.title}
-                      </p>
-                      <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
-                        {step.body}
-                      </p>
-                    </div>
-                  </div>
-                ))}
+                  )
+                })}
               </div>
             </div>
 
@@ -220,13 +168,7 @@ export default function Contact() {
                 gap: 'var(--space-3)',
               }}
             >
-              {[
-                'Free plan — no payment required',
-                'Response within 24 hours',
-                'Plan delivered via WhatsApp',
-                'No sales call, no obligation',
-                'Custom to your specific business',
-              ].map((item) => (
+              {tc.trustSignals.map((item) => (
                 <div key={item} style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)' }}>
                   <span style={{ width: 18, height: 18, borderRadius: '50%', background: 'rgba(22,163,74,0.12)', border: '1px solid rgba(22,163,74,0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-success)', flexShrink: 0 }}>
                     <Check size={10} strokeWidth={3} />
@@ -249,7 +191,7 @@ export default function Contact() {
               }}
             >
               <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-tertiary)' }}>
-                Prefer to message directly?
+                {tc.preferDirect}
               </p>
 
               <a
@@ -276,7 +218,7 @@ export default function Contact() {
                     WhatsApp
                   </p>
                   <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', margin: 0 }}>
-                    Fastest response — usually under 1 hour
+                    {tc.whatsappSpeed}
                   </p>
                 </div>
               </a>
@@ -308,10 +250,10 @@ export default function Contact() {
               FAQ
             </p>
             <h2 style={{ fontSize: 'clamp(var(--text-lg), 2.5vw, var(--text-xl))', fontWeight: 700, lineHeight: 1.15, letterSpacing: '-0.02em', color: 'var(--text-primary)' }}>
-              Common questions
+              {tc.faqHeading}
             </h2>
             <p style={{ fontSize: 'var(--text-sm)', lineHeight: 1.7, color: 'var(--text-secondary)', maxWidth: '32ch' }}>
-              Still unsure? Message us on WhatsApp and we'll answer in plain language, no jargon.
+              {tc.faqSubtitle}
             </p>
             <a
               href={WHATSAPP}
@@ -329,7 +271,7 @@ export default function Contact() {
               onMouseLeave={(e) => { e.currentTarget.style.background = '#25d366' }}
             >
               <MessageCircle size={15} />
-              Ask us anything
+              {tc.askUsAnything}
             </a>
           </motion.div>
 
@@ -340,9 +282,8 @@ export default function Contact() {
             viewport={{ once: true, margin: '-60px' }}
             transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
           >
-            {/* First item has top border too */}
             <div style={{ borderTop: '1px solid var(--border-default)' }}>
-              {faqs.map((faq) => (
+              {tc.faqs.map((faq) => (
                 <FaqItem key={faq.q} q={faq.q} a={faq.a} />
               ))}
             </div>
