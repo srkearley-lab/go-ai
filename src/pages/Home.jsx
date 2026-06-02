@@ -80,9 +80,9 @@ function TopPackagesSection({ reduceMotion, stagger, cardVariants, t }) {
           viewport={{ once: true, margin: '-60px' }}
           className="grid grid-cols-1 md:grid-cols-3 gap-5 w-full"
         >
-          {pkgs.map((pkg) => (
+          {pkgs.map((pkg, i) => (
             <motion.div
-              key={pkg.name}
+              key={i}
               variants={cardVariants}
               style={{
                 background: pkg.recommended ? 'var(--surface-overlay)' : 'var(--surface-raised)',
@@ -342,7 +342,7 @@ export default function Home() {
               const Icon = QUICK_CHOICE_ICONS[i]
               return (
                 <motion.div
-                  key={item.category}
+                  key={i}
                   variants={cardVariants}
                   style={{
                     background: 'var(--surface-raised)',

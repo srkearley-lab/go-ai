@@ -154,15 +154,16 @@ function BasketButton({ item }) {
       style={{
         height: 36, padding: '0 var(--space-4)',
         display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-2)',
-        fontSize: 'var(--text-xs)', fontWeight: 500,
-        background: inBasket ? 'rgba(22,163,74,0.1)' : 'transparent',
-        color: inBasket ? 'var(--color-success)' : 'var(--text-secondary)',
-        border: `1px solid ${inBasket ? 'rgba(22,163,74,0.3)' : 'var(--border-default)'}`,
+        fontSize: 'var(--text-xs)', fontWeight: 600,
+        background: inBasket ? 'rgba(22,163,74,0.1)' : 'linear-gradient(90deg, #293BFF 0%, #7627EF 100%)',
+        color: inBasket ? 'var(--color-success)' : '#FFFFFF',
+        border: `1px solid ${inBasket ? 'rgba(22,163,74,0.3)' : 'transparent'}`,
+        boxShadow: inBasket ? 'none' : '0 0 20px rgba(118, 39, 239, 0.3)',
         borderRadius: 'var(--radius-md)', cursor: 'pointer',
         transition: 'all 120ms ease', fontFamily: 'inherit', flexShrink: 0,
       }}
-      onMouseEnter={(e) => { if (!inBasket) { e.currentTarget.style.color = 'var(--text-primary)'; e.currentTarget.style.borderColor = 'var(--border-strong)' } }}
-      onMouseLeave={(e) => { if (!inBasket) { e.currentTarget.style.color = 'var(--text-secondary)'; e.currentTarget.style.borderColor = 'var(--border-default)' } }}
+      onMouseEnter={(e) => { if (!inBasket) { e.currentTarget.style.filter = 'brightness(1.1)' } }}
+      onMouseLeave={(e) => { if (!inBasket) { e.currentTarget.style.filter = 'brightness(1)' } }}
     >
       {inBasket
         ? <><Check size={11} strokeWidth={3} /> {t.buttons.inBasket}</>

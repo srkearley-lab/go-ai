@@ -355,8 +355,7 @@ export default function Packages() {
     const td = t.packageServiceData?.[i]
     if (!td) return pkg
     const display = pkg.priceDisplay
-      .replace('/month', t.labels.perMonth)
-      .replace('/mo', t.labels.perMonth)
+      .replace(/\/mo(?:nth)?/g, t.labels.perMonth)
       .replace(' setup', ` ${t.pricing.setupLabel}`)
     return {
       ...pkg,
