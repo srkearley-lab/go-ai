@@ -283,7 +283,7 @@ function SmallBundleCard({ bundle, variants }) {
   const [showDetails, setShowDetails] = useState(false)
   const t = useTranslations()
   const basketItem = {
-    id: bundle.name,
+    id: bundle.detailKey,
     name: bundle.name,
     priceDisplay: `€${bundle.monthly}${t.labels.perMonth}`,
     formTypes: PACKAGE_FORM_TYPES[bundle.detailKey] || [],
@@ -315,7 +315,7 @@ function SmallBundleCard({ bundle, variants }) {
       <hr style={{ border: 'none', borderTop: '1px solid var(--border-default)', margin: 0 }} />
 
       <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
-        {bundle.features.map(f => <FeatureItem key={f} text={f} />)}
+        {bundle.features.map((f, i) => <FeatureItem key={i} text={f} />)}
       </ul>
 
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 'var(--space-2)' }}>
@@ -330,7 +330,7 @@ function SmallBundleCard({ bundle, variants }) {
       <AnimatePresence>
         {showDetails && (
           <motion.div
-            key={`fom-${bundle.name}`}
+            key={`fom-${bundle.detailKey}`}
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
@@ -349,7 +349,7 @@ function RecommendedBundleCard({ bundle, variants }) {
   const [showDetails, setShowDetails] = useState(false)
   const t = useTranslations()
   const basketItem = {
-    id: bundle.name,
+    id: bundle.detailKey,
     name: bundle.name,
     priceDisplay: `€${bundle.monthly}${t.labels.perMonth}`,
     formTypes: PACKAGE_FORM_TYPES[bundle.detailKey] || [],
@@ -409,14 +409,14 @@ function RecommendedBundleCard({ bundle, variants }) {
           {t.pages.bundles.everythingIncluded}
         </p>
         <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
-          {bundle.features.map(f => <FeatureItem key={f} text={f} accent />)}
+          {bundle.features.map((f, i) => <FeatureItem key={i} text={f} accent />)}
         </ul>
       </div>
 
       <AnimatePresence>
         {showDetails && (
           <motion.div
-            key={`fom-rec-${bundle.name}`}
+            key={`fom-rec-${bundle.detailKey}`}
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
@@ -487,13 +487,13 @@ export default function Bundles() {
             style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-5)' }}
           >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              {before.map(b => <SmallBundleCard key={b.name} bundle={b} variants={cardVariants} />)}
+              {before.map(b => <SmallBundleCard key={b.detailKey} bundle={b} variants={cardVariants} />)}
             </div>
 
             <RecommendedBundleCard bundle={recommended} variants={cardVariants} />
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              {after.map(b => <SmallBundleCard key={b.name} bundle={b} variants={cardVariants} />)}
+              {after.map(b => <SmallBundleCard key={b.detailKey} bundle={b} variants={cardVariants} />)}
             </div>
           </motion.div>
 

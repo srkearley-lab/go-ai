@@ -454,7 +454,7 @@ function ProgressIndicator({ currentStep, onGoToStep }) {
           const active = i === currentStep
           return (
             <div
-              key={label}
+              key={i}
               onClick={() => done && onGoToStep(i)}
               style={{ flex: 1, minWidth: 52, display: 'flex', flexDirection: 'column', gap: 'var(--space-1)', cursor: done ? 'pointer' : 'default' }}
             >
@@ -504,7 +504,7 @@ function InlineInfoPanel({ bestFor, features }) {
             {t.journey.whatsIncluded}
           </p>
           <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
-            {features.map(f => <FeatureItem key={f} text={f} />)}
+            {features.map((f, i) => <FeatureItem key={i} text={f} />)}
           </ul>
         </div>
       )}
@@ -651,7 +651,7 @@ function PackageSelectCard({ pkg, onToggle, isSelected }) {
       </div>
       {pkg.features.length > 0 && (
         <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 'var(--space-1)', flex: 1 }}>
-          {pkg.features.map(f => <FeatureItem key={f} text={f} />)}
+          {pkg.features.map((f, i) => <FeatureItem key={i} text={f} />)}
         </ul>
       )}
       <AnimatePresence>
@@ -724,7 +724,7 @@ function BundleSelectCard({ bundle, onToggle, isSelected }) {
         <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)' }}>{tn(bundle.priceNote)}</span>
       </div>
       <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 'var(--space-2)', flex: 1 }}>
-        {bundle.features.map(f => <FeatureItem key={f} text={f} />)}
+        {bundle.features.map((f, i) => <FeatureItem key={i} text={f} />)}
       </ul>
       <AnimatePresence>
         {showInfo && (
@@ -799,7 +799,7 @@ function AddonSelectCard({ addon, isSelected, onToggle }) {
       </p>
       {addon.features.length > 0 && (
         <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 'var(--space-1)', flex: 1 }}>
-          {addon.features.map(f => <FeatureItem key={f} text={f} />)}
+          {addon.features.map((f, i) => <FeatureItem key={i} text={f} />)}
         </ul>
       )}
       <AnimatePresence>
@@ -1120,8 +1120,8 @@ function StepAddons({ selectedAddons, onToggle, onContinue, onSkip, onBack }) {
         </div>
       )}
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-10)' }}>
-        {localizedGroups.map(group => (
-          <div key={group.title}>
+        {localizedGroups.map((group, gi) => (
+          <div key={gi}>
             <div style={{ marginBottom: 'var(--space-4)' }}>
               <h3 style={{ fontSize: 'var(--text-md)', fontWeight: 700, color: 'var(--text-primary)', lineHeight: 1.2, marginBottom: group.subtitle ? 'var(--space-2)' : 0 }}>
                 {group.title}
@@ -1300,8 +1300,8 @@ function StepReview({ website, packages, bundles, addons, oneOffItems, monthlyIt
             <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.05em', textTransform: 'uppercase', color: 'var(--text-tertiary)', marginBottom: 'var(--space-3)' }}>
               {rv.dueToday}
             </p>
-            {oneOffItems.map(item => (
-              <div key={item.name} style={{ display: 'flex', justifyContent: 'space-between', gap: 'var(--space-4)', padding: 'var(--space-1) 0', fontSize: 'var(--text-sm)', color: 'var(--text-secondary)' }}>
+            {oneOffItems.map((item, i) => (
+              <div key={i} style={{ display: 'flex', justifyContent: 'space-between', gap: 'var(--space-4)', padding: 'var(--space-1) 0', fontSize: 'var(--text-sm)', color: 'var(--text-secondary)' }}>
                 <span>{item.name}</span>
                 <span style={{ fontWeight: 600, color: 'var(--text-primary)', flexShrink: 0 }}>€{item.amount.toLocaleString('en-IE')}</span>
               </div>
@@ -1320,8 +1320,8 @@ function StepReview({ website, packages, bundles, addons, oneOffItems, monthlyIt
             <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.05em', textTransform: 'uppercase', color: 'var(--text-tertiary)', marginBottom: 'var(--space-3)' }}>
               {rv.monthly}
             </p>
-            {monthlyItems.map(item => (
-              <div key={item.name} style={{ display: 'flex', justifyContent: 'space-between', gap: 'var(--space-4)', padding: 'var(--space-1) 0', fontSize: 'var(--text-sm)', color: 'var(--text-secondary)' }}>
+            {monthlyItems.map((item, i) => (
+              <div key={i} style={{ display: 'flex', justifyContent: 'space-between', gap: 'var(--space-4)', padding: 'var(--space-1) 0', fontSize: 'var(--text-sm)', color: 'var(--text-secondary)' }}>
                 <span>{item.name}</span>
                 <span style={{ fontWeight: 600, color: 'var(--text-primary)', flexShrink: 0 }}>€{item.amount}{t.labels.perMonth}</span>
               </div>
@@ -1346,8 +1346,8 @@ function StepReview({ website, packages, bundles, addons, oneOffItems, monthlyIt
             {rv.quoteItems}
           </p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-1)' }}>
-            {quoteItems.map(name => (
-              <p key={name} style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', lineHeight: 1.5, margin: 0 }}>
+            {quoteItems.map((name, i) => (
+              <p key={i} style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', lineHeight: 1.5, margin: 0 }}>
                 {name} — <span style={{ color: 'var(--color-accent-500)', fontWeight: 500 }}>{rv.quoteRequired}</span>
               </p>
             ))}
@@ -1547,14 +1547,14 @@ function StepPayment({ oneOffItems, monthlyItems, oneOffTotal, monthlyTotal, has
         <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.05em', textTransform: 'uppercase', color: 'var(--text-tertiary)', marginBottom: 'var(--space-1)' }}>
           {t.journey.paymentLabels.orderSummary}
         </p>
-        {oneOffItems.map(item => (
-          <div key={item.name} style={{ display: 'flex', justifyContent: 'space-between', gap: 'var(--space-4)', fontSize: 'var(--text-sm)', color: 'var(--text-secondary)' }}>
+        {oneOffItems.map((item, i) => (
+          <div key={i} style={{ display: 'flex', justifyContent: 'space-between', gap: 'var(--space-4)', fontSize: 'var(--text-sm)', color: 'var(--text-secondary)' }}>
             <span>{item.name}</span>
             <span style={{ fontWeight: 600, color: 'var(--text-primary)', flexShrink: 0 }}>€{item.amount.toLocaleString('en-IE')}</span>
           </div>
         ))}
-        {monthlyItems.map(item => (
-          <div key={item.name} style={{ display: 'flex', justifyContent: 'space-between', gap: 'var(--space-4)', fontSize: 'var(--text-sm)', color: 'var(--text-secondary)' }}>
+        {monthlyItems.map((item, i) => (
+          <div key={i} style={{ display: 'flex', justifyContent: 'space-between', gap: 'var(--space-4)', fontSize: 'var(--text-sm)', color: 'var(--text-secondary)' }}>
             <span>{item.name}</span>
             <span style={{ fontWeight: 600, color: 'var(--text-primary)', flexShrink: 0 }}>€{item.amount}{t.labels.perMonth}</span>
           </div>
@@ -1729,11 +1729,32 @@ function JourneyWizard() {
   const navigate = useNavigate()
   const reduceMotion = useReducedMotion()
   const t = useTranslations()
+  const jl = useJourneyLocale()
+
+  // State stores stable IDs only — never translated text
   const [step, setStep] = useState(0)
-  const [selectedWebsite, setSelectedWebsite] = useState(null)
-  const [selectedPackages, setSelectedPackages] = useState([])
-  const [selectedBundles, setSelectedBundles] = useState([])
-  const [selectedAddons, setSelectedAddons] = useState([])
+  const [selectedWebsiteId, setSelectedWebsiteId] = useState(null)
+  const [selectedPackageIds, setSelectedPackageIds] = useState([])
+  const [selectedBundleIds, setSelectedBundleIds] = useState([])
+  const [selectedAddonIds, setSelectedAddonIds] = useState([])
+
+  // Flat addon list for ID lookups
+  const allAddonsFlat = ADDON_GROUPS.flatMap(g => g.addons)
+
+  // Derive current-language objects from IDs on every render
+  // so display names always match the active language
+  const selectedWebsite = selectedWebsiteId
+    ? tItem(jl, 'websites', selectedWebsiteId, WEBSITES.find(w => w.id === selectedWebsiteId))
+    : null
+  const selectedPackages = selectedPackageIds
+    .map(id => tItem(jl, 'packages', id, PACKAGES.find(p => p.id === id)))
+    .filter(Boolean)
+  const selectedBundles = selectedBundleIds
+    .map(id => tItem(jl, 'bundles', id, BUNDLES.find(b => b.id === id)))
+    .filter(Boolean)
+  const selectedAddons = selectedAddonIds
+    .map(id => tItem(jl, 'addons', id, allAddonsFlat.find(a => a.id === id)))
+    .filter(Boolean)
 
   const goToStep = (s) => {
     setStep(s)
@@ -1741,45 +1762,33 @@ function JourneyWizard() {
   }
 
   // Website — select only, no auto-advance
-  const toggleWebsite = (ws) => {
-    setSelectedWebsite(prev => prev?.id === ws.id ? null : ws)
-  }
-  const skipWebsite = () => { setSelectedWebsite(null); goToStep(1) }
+  const toggleWebsite = (ws) => setSelectedWebsiteId(prev => prev === ws.id ? null : ws.id)
+  const skipWebsite = () => { setSelectedWebsiteId(null); goToStep(1) }
   const continueFromWebsite = () => goToStep(1)
 
   // Packages — multi-select, no auto-advance
-  const togglePackage = (pkg) => {
-    setSelectedPackages(prev =>
-      prev.find(p => p.id === pkg.id)
-        ? prev.filter(p => p.id !== pkg.id)
-        : [...prev, pkg]
-    )
-  }
-  const skipPackage = () => { setSelectedPackages([]); goToStep(2) }
+  const togglePackage = (pkg) => setSelectedPackageIds(prev =>
+    prev.includes(pkg.id) ? prev.filter(id => id !== pkg.id) : [...prev, pkg.id]
+  )
+  const skipPackage = () => { setSelectedPackageIds([]); goToStep(2) }
   const continueFromPackage = () => goToStep(2)
 
   // Bundles — multi-select, no auto-advance
-  const toggleBundle = (bundle) => {
-    setSelectedBundles(prev =>
-      prev.find(b => b.id === bundle.id)
-        ? prev.filter(b => b.id !== bundle.id)
-        : [...prev, bundle]
-    )
-  }
-  const skipBundle = () => { setSelectedBundles([]); goToStep(3) }
+  const toggleBundle = (bundle) => setSelectedBundleIds(prev =>
+    prev.includes(bundle.id) ? prev.filter(id => id !== bundle.id) : [...prev, bundle.id]
+  )
+  const skipBundle = () => { setSelectedBundleIds([]); goToStep(3) }
   const continueFromBundle = () => goToStep(3)
 
   const continueToReview = () => goToStep(4)
-  const skipAddons = () => { setSelectedAddons([]); goToStep(4) }
+  const skipAddons = () => { setSelectedAddonIds([]); goToStep(4) }
 
-  const toggleAddon = (addon) => {
-    setSelectedAddons(prev =>
-      prev.find(a => a.id === addon.id)
-        ? prev.filter(a => a.id !== addon.id)
-        : [...prev, addon]
-    )
-  }
+  const toggleAddon = (addon) => setSelectedAddonIds(prev =>
+    prev.includes(addon.id) ? prev.filter(id => id !== addon.id) : [...prev, addon.id]
+  )
 
+  // Derived display data — uses current-language names since selectedWebsite/Packages/etc.
+  // are freshly computed from the current jl locale on each render
   const oneOffItems = [
     selectedWebsite && !selectedWebsite.isQuote ? { name: selectedWebsite.name, amount: selectedWebsite.oneOff } : null,
     ...selectedPackages.filter(p => !p.isQuote && p.oneOff > 0).map(p => ({ name: p.oneOff > 0 && p.monthly > 0 ? `${p.name} (${t.pricing.setupLabel})` : p.name, amount: p.oneOff })),

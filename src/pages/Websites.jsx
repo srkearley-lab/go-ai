@@ -238,10 +238,10 @@ function WebsiteCard({ pkg, variants }) {
   const [showDetails, setShowDetails] = useState(false)
   const t = useTranslations()
   const basketItem = {
-    id: pkg.name,
+    id: pkg.detailKey,
     name: pkg.name,
     priceDisplay: `${pkg.price} ${t.labels.oneOff}`,
-    formTypes: PACKAGE_FORM_TYPES[pkg.name] || ['website'],
+    formTypes: PACKAGE_FORM_TYPES[pkg.detailKey] || ['website'],
   }
 
   if (pkg.featured) {
@@ -299,14 +299,14 @@ function WebsiteCard({ pkg, variants }) {
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-5)' }}>
           <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)' }}>{t.journey.whatsIncluded}</p>
           <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
-            {pkg.features.map(f => <FeatureItem key={f} text={f} accent />)}
+            {pkg.features.map((f, i) => <FeatureItem key={i} text={f} accent />)}
           </ul>
         </div>
 
         <AnimatePresence>
           {showDetails && (
             <motion.div
-              key={`fom-ws-${pkg.name}`}
+              key={`fom-ws-${pkg.detailKey}`}
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
@@ -349,7 +349,7 @@ function WebsiteCard({ pkg, variants }) {
       <hr style={{ border: 'none', borderTop: '1px solid var(--border-default)', margin: 0 }} />
 
       <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
-        {pkg.features.map(f => <FeatureItem key={f} text={f} />)}
+        {pkg.features.map((f, i) => <FeatureItem key={i} text={f} />)}
       </ul>
 
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 'var(--space-2)', paddingTop: 'var(--space-2)', borderTop: '1px solid var(--border-default)' }}>
@@ -373,14 +373,14 @@ function WebsiteCard({ pkg, variants }) {
       <AnimatePresence>
         {showDetails && (
           <motion.div
-            key={`fom-ws-std-${pkg.name}`}
+            key={`fom-ws-std-${pkg.detailKey}`}
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
             style={{ overflow: 'hidden' }}
           >
-            <FindOutMorePanel name={pkg.name} item={basketItem} />
+            <FindOutMorePanel detailKey={pkg.detailKey} item={basketItem} />
           </motion.div>
         )}
       </AnimatePresence>
@@ -438,13 +438,13 @@ export default function Websites() {
             style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-5)' }}
           >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              {before.map(p => <WebsiteCard key={p.name} pkg={p} variants={cardVariants} />)}
+              {before.map(p => <WebsiteCard key={p.detailKey} pkg={p} variants={cardVariants} />)}
             </div>
 
             <WebsiteCard pkg={featured} variants={cardVariants} />
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              {after.map(p => <WebsiteCard key={p.name} pkg={p} variants={cardVariants} />)}
+              {after.map(p => <WebsiteCard key={p.detailKey} pkg={p} variants={cardVariants} />)}
             </div>
           </motion.div>
 
