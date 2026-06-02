@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { Menu, X, ShoppingCart } from 'lucide-react'
-import { GoAILogo } from './GoAILogo'
 import { useBasket } from '../context/BasketContext'
 import { useTranslations } from '../context/LanguageContext'
 import LanguageToggle from './LanguageToggle'
@@ -66,7 +65,7 @@ export default function Navbar() {
         >
           {/* Logo */}
           <Link to="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', flexShrink: 0 }}>
-            <GoAILogo size="md" />
+            <img src="/logo" alt="GO AI" className="h-8 w-auto" />
           </Link>
 
           {/* Desktop nav */}

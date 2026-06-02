@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom'
 import { MessageCircle, Mail, Phone, MapPin } from 'lucide-react'
-import { GoAILogo } from './GoAILogo'
 import { useTranslations } from '../context/LanguageContext'
 
 const WHATSAPP = '#'
@@ -24,7 +23,7 @@ export default function Footer() {
           {/* Brand */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
-              <GoAILogo size="sm" />
+              <img src="/logo" alt="GO AI" className="h-7 w-auto" />
             </div>
             <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', lineHeight: 1.6, maxWidth: '26ch' }}>
               {t.footer.brandTagline}
