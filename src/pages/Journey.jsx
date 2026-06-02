@@ -1478,13 +1478,14 @@ function StepPayment({ oneOffItems, monthlyItems, oneOffTotal, monthlyTotal, has
 
   const validate = () => {
     const e = {}
-    if (!form.name.trim()) e.name = 'Required'
-    if (form.card.replace(/\s/g, '').length < 16) e.card = 'Enter a valid 16-digit card number'
-    if (form.expiry.length < 5) e.expiry = 'Enter expiry as MM/YY'
-    if (form.cvv.length < 3) e.cvv = 'Enter your 3 or 4-digit security code'
-    if (!form.postcode.trim()) e.postcode = 'Required'
-    if (!/\S+@\S+\.\S+/.test(form.email)) e.email = 'Enter a valid email address'
-    if (!form.agreed) e.agreed = 'You must accept the terms to continue'
+    const pl = t.journey.paymentLabels
+    if (!form.name.trim()) e.name = pl.errRequired
+    if (form.card.replace(/\s/g, '').length < 16) e.card = pl.errCardInvalid
+    if (form.expiry.length < 5) e.expiry = pl.errExpiryInvalid
+    if (form.cvv.length < 3) e.cvv = pl.errCvvInvalid
+    if (!form.postcode.trim()) e.postcode = pl.errRequired
+    if (!/\S+@\S+\.\S+/.test(form.email)) e.email = pl.errEmailInvalid
+    if (!form.agreed) e.agreed = pl.errTermsRequired
     setErrors(e)
     return Object.keys(e).length === 0
   }
@@ -1896,9 +1897,9 @@ export default function Journey() {
   return (
     <main style={{ paddingTop: 64 }}>
       <PageHero
-        tag="Start Your Journey"
-        title="Start Your GoAI Journey"
-        description="Build your perfect setup step by step. Choose your website, add services, and review your full package before committing."
+        tag={t.journey.heroTag}
+        title={t.journey.heroTitle}
+        description={t.journey.heroDesc}
       />
 
       {/* ── Journey wizard ── */}

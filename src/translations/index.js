@@ -217,6 +217,12 @@ export const translations = {
         thenMonthlyFrom:  'Στη συνέχεια μηνιαίως από',
         recurringNotice:  'Η παραγγελία σας περιλαμβάνει μηνιαίες υπηρεσίες. Με τη συνέχεια συμφωνείτε να χρεώνεται το μηνιαίο ποσό αυτόματα έως ότου ακυρωθεί.',
         cardNotStored:    'Τα στοιχεία της κάρτας σας δεν αποθηκεύονται.',
+        errRequired:      'Υποχρεωτικό',
+        errCardInvalid:   'Εισαγάγετε έγκυρο αριθμό κάρτας 16 ψηφίων',
+        errExpiryInvalid: 'Εισαγάγετε ημερομηνία λήξης ως ΜΜ/ΕΕ',
+        errCvvInvalid:    'Εισαγάγετε τον 3 ή 4-ψήφιο κωδικό ασφαλείας',
+        errEmailInvalid:  'Εισαγάγετε έγκυρη διεύθυνση email',
+        errTermsRequired: 'Πρέπει να αποδεχθείτε τους όρους για να συνεχίσετε',
       },
     },
 
@@ -562,6 +568,11 @@ export const translations = {
       confirmBody:    'Θα ελέγξουμε τα στοιχεία σας και θα επιστρέψουμε με εξατομικευμένη σύσταση.',
       returnHome:     'Επιστροφή στην αρχική',
       startJourney:   'Ξεκινήστε το Ταξίδι σας',
+      summaryFiles:         'Αρχεία',
+      summaryWebsiteLabel:  'Ιστοσελίδα',
+      summaryPackagesLabel: 'Πακέτα',
+      summaryBundlesLabel:  'Δέσμες',
+      summaryAddonsLabel:   'Πρόσθετα',
     },
 
     journeyData: {
@@ -830,6 +841,9 @@ export const translations = {
       addons:    'Add-ons',
       reviewLabel:  'Review',
       paymentLabel: 'Payment',
+      heroTag:   'Start Your Journey',
+      heroTitle: 'Start Your GoAI Journey',
+      heroDesc:  'Build your perfect setup step by step. Choose your website, add services, and review your full package before committing.',
       step:      'Step',
       of:        'of',
       steps: {
@@ -884,6 +898,12 @@ export const translations = {
         thenMonthlyFrom:  'Then monthly from',
         recurringNotice:  'Your order includes recurring monthly services. By continuing, you agree the monthly amount shown will be collected automatically until cancelled.',
         cardNotStored:    'Your card details are not stored.',
+        errRequired:      'Required',
+        errCardInvalid:   'Enter a valid 16-digit card number',
+        errExpiryInvalid: 'Enter expiry as MM/YY',
+        errCvvInvalid:    'Enter your 3 or 4-digit security code',
+        errEmailInvalid:  'Enter a valid email address',
+        errTermsRequired: 'You must accept the terms to continue',
       },
     },
 
@@ -1200,6 +1220,11 @@ export const translations = {
       confirmBody:    "We'll review your details and come back with a tailored recommendation.",
       returnHome:     'Return to Homepage',
       startJourney:   'Start Your Journey',
+      summaryFiles:         'Files',
+      summaryWebsiteLabel:  'Website',
+      summaryPackagesLabel: 'Packages',
+      summaryBundlesLabel:  'Bundles',
+      summaryAddonsLabel:   'Add-ons',
     },
 
     findOutMore: {

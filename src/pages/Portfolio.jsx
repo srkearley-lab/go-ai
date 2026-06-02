@@ -337,7 +337,7 @@ function PortfolioCard({ item, viewDemoLabel }) {
               borderRadius: 'var(--radius-md)',
             }}
           >
-            viewDemoLabel
+            {viewDemoLabel}
             <ArrowUpRight size={14} />
           </div>
         </motion.div>

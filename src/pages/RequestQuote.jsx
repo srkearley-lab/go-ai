@@ -87,6 +87,7 @@ function Field({ label, id, type = 'text', placeholder, value, onChange, require
 
 function SelectField({ label, id, options, value, onChange, required, helper, error }) {
   const [focused, setFocused] = useState(false)
+  const t = useTranslations()
   return (
     <div>
       <label htmlFor={id} style={labelBase}>
@@ -103,7 +104,7 @@ function SelectField({ label, id, options, value, onChange, required, helper, er
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
       >
-        <option value="">Select…</option>
+        <option value="">{t.requestQuote.selectPlaceholder}</option>
         {options.map((o) => <option key={o} value={o}>{o}</option>)}
       </select>
       {helper && !error && <span style={helperBase}>{helper}</span>}
@@ -826,7 +827,7 @@ function Step7({ form, set, setFiles, errors, tr }) {
           <SummaryRow label={tr.summaryProjectDetails} value={shortText(form.projectDetails)} />
           <SummaryRow label={tr.summaryMustHave} value={shortText(form.mustHaveFeatures)} />
           {form.files.length > 0 && (
-            <SummaryRow label="Files" value={filesLabel} />
+            <SummaryRow label={tr.summaryFiles} value={filesLabel} />
           )}
         </div>
       </div>
@@ -1036,10 +1037,10 @@ export default function RequestQuote() {
                   <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.05em', textTransform: 'uppercase', color: 'var(--goai-violet)', margin: 0 }}>
                     {tr.journeySelectionsLabel}
                   </p>
-                  {journeySummary.website && <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', margin: 0 }}><strong style={{ color: 'var(--text-primary)' }}>Website:</strong> {journeySummary.website}</p>}
-                  {journeySummary.packages && <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', margin: 0 }}><strong style={{ color: 'var(--text-primary)' }}>Packages:</strong> {journeySummary.packages}</p>}
-                  {journeySummary.bundles && <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', margin: 0 }}><strong style={{ color: 'var(--text-primary)' }}>Bundles:</strong> {journeySummary.bundles}</p>}
-                  {journeySummary.addons && <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', margin: 0 }}><strong style={{ color: 'var(--text-primary)' }}>Add-ons:</strong> {journeySummary.addons}</p>}
+                  {journeySummary.website && <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', margin: 0 }}><strong style={{ color: 'var(--text-primary)' }}>{tr.summaryWebsiteLabel}:</strong> {journeySummary.website}</p>}
+                  {journeySummary.packages && <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', margin: 0 }}><strong style={{ color: 'var(--text-primary)' }}>{tr.summaryPackagesLabel}:</strong> {journeySummary.packages}</p>}
+                  {journeySummary.bundles && <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', margin: 0 }}><strong style={{ color: 'var(--text-primary)' }}>{tr.summaryBundlesLabel}:</strong> {journeySummary.bundles}</p>}
+                  {journeySummary.addons && <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', margin: 0 }}><strong style={{ color: 'var(--text-primary)' }}>{tr.summaryAddonsLabel}:</strong> {journeySummary.addons}</p>}
                 </div>
               )}
 
