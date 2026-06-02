@@ -65,7 +65,7 @@ export default function Navbar() {
         >
           {/* Logo */}
           <Link to="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', flexShrink: 0 }}>
-            <img src="/logo" alt="GO AI" className="h-8 w-auto" />
+            <img src="/logo.jpeg" alt="GO AI" className="h-8 w-auto" onError={(e) => { e.target.style.display = 'none' }} />
           </Link>
 
           {/* Desktop nav */}

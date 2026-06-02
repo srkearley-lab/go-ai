@@ -23,7 +23,7 @@ export default function Footer() {
           {/* Brand */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
-              <img src="/logo" alt="GO AI" className="h-7 w-auto" />
+              <img src="/logo.jpeg" alt="GO AI" className="h-7 w-auto" onError={(e) => { e.target.style.display = 'none' }} />
             </div>
             <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', lineHeight: 1.6, maxWidth: '26ch' }}>
               {t.footer.brandTagline}
