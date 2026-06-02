@@ -6,6 +6,7 @@ import PageHero from '../components/PageHero'
 import WhatsDifferenceStrip from '../components/WhatsDifferenceStrip'
 import { useBasket, PACKAGE_FORM_TYPES } from '../context/BasketContext'
 import { packageDetails } from '../data/packageDetails'
+import { useTranslations } from '../context/LanguageContext'
 
 const WHATSAPP = '#'
 
@@ -134,6 +135,7 @@ function FeatureItem({ text }) {
 
 function BasketButton({ item }) {
   const { addItem, removeItem, isInBasket } = useBasket()
+  const t = useTranslations()
   const inBasket = isInBasket(item.id)
   return (
     <button
@@ -154,8 +156,8 @@ function BasketButton({ item }) {
       onMouseLeave={(e) => { if (!inBasket) { e.currentTarget.style.filter = 'brightness(1)' } }}
     >
       {inBasket
-        ? <><Check size={11} strokeWidth={3} /> In Basket</>
-        : <><ShoppingCart size={11} /> Add to Basket</>}
+        ? <><Check size={11} strokeWidth={3} /> {t.buttons.inBasket}</>
+        : <><ShoppingCart size={11} /> {t.buttons.addToBasket}</>}
     </button>
   )
 }
@@ -164,6 +166,7 @@ function BasketButton({ item }) {
 
 function FindOutMorePanel({ detailKey, item }) {
   const details = packageDetails[detailKey]
+  const t = useTranslations()
   if (!details) return null
 
   return (
@@ -179,12 +182,12 @@ function FindOutMorePanel({ detailKey, item }) {
 
       <div className="fom-grid grid grid-cols-1 md:grid-cols-2 gap-6">
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
-          <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', margin: 0 }}>Who this is for</p>
+          <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', margin: 0 }}>{t.findOutMore.whoFor}</p>
           <p style={{ fontSize: 'var(--text-sm)', lineHeight: 1.6, color: 'var(--text-secondary)', margin: 0 }}>{details.whoFor}</p>
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
-          <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', margin: 0 }}>What we need from you</p>
+          <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', margin: 0 }}>{t.findOutMore.weNeed}</p>
           <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
             {details.youNeed.map(i => (
               <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 'var(--space-2)', fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
@@ -196,7 +199,7 @@ function FindOutMorePanel({ detailKey, item }) {
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
-          <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', margin: 0 }}>What's included</p>
+          <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', margin: 0 }}>{t.findOutMore.included}</p>
           <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
             {details.included.map(i => (
               <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 'var(--space-2)' }}>
@@ -210,7 +213,7 @@ function FindOutMorePanel({ detailKey, item }) {
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
-          <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', margin: 0 }}>How it works</p>
+          <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', margin: 0 }}>{t.findOutMore.howItWorks}</p>
           <ol style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
             {details.steps.map((step, i) => (
               <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 'var(--space-3)' }}>
@@ -241,10 +244,28 @@ function FindOutMorePanel({ detailKey, item }) {
           onMouseEnter={(e) => { e.currentTarget.style.filter = 'brightness(1.1)'; e.currentTarget.style.boxShadow = '0 0 30px rgba(118, 39, 239, 0.45)' }}
           onMouseLeave={(e) => { e.currentTarget.style.filter = 'brightness(1)'; e.currentTarget.style.boxShadow = '0 0 20px rgba(118, 39, 239, 0.3)' }}
         >
-          Start This Service <ArrowRight size={12} />
+          {t.buttons.startService} <ArrowRight size={12} />
         </Link>
       </div>
     </div>
+  )
+}
+
+// ── Toggle button ─────────────────────────────────────────────────────────────
+
+function PackageToggleBtn({ showDetails, onToggle }) {
+  const t = useTranslations()
+  return (
+    <button
+      type="button"
+      onClick={onToggle}
+      style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-1)', background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-brand-400)', fontSize: 'var(--text-xs)', fontWeight: 500, padding: 0, fontFamily: 'inherit' }}
+    >
+      {showDetails ? t.buttons.hideDetails : t.buttons.findOutMore}
+      <motion.span animate={{ rotate: showDetails ? 180 : 0 }} transition={{ duration: 0.15 }} style={{ display: 'flex' }}>
+        <ChevronDown size={12} />
+      </motion.span>
+    </button>
   )
 }
 
@@ -300,16 +321,7 @@ function PackageCard({ pkg, variants }) {
 
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 'var(--space-2)', paddingTop: 'var(--space-2)', borderTop: '1px solid var(--border-default)' }}>
         <BasketButton item={basketItem} />
-        <button
-          type="button"
-          onClick={() => setShowDetails(v => !v)}
-          style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-1)', background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-brand-400)', fontSize: 'var(--text-xs)', fontWeight: 500, padding: 0, fontFamily: 'inherit' }}
-        >
-          {showDetails ? 'Hide details' : 'Find Out More'}
-          <motion.span animate={{ rotate: showDetails ? 180 : 0 }} transition={{ duration: 0.15 }} style={{ display: 'flex' }}>
-            <ChevronDown size={12} />
-          </motion.span>
-        </button>
+        <PackageToggleBtn showDetails={showDetails} onToggle={() => setShowDetails(v => !v)} />
       </div>
 
       <AnimatePresence>
@@ -334,6 +346,7 @@ function PackageCard({ pkg, variants }) {
 
 export default function Packages() {
   const reduceMotion = useReducedMotion()
+  const t = useTranslations()
 
   const stagger = {
     hidden: {},
@@ -347,9 +360,9 @@ export default function Packages() {
   return (
     <main style={{ paddingTop: 64 }}>
       <PageHero
-        tag="Packages"
-        title="Service Packages"
-        description="Choose individual services such as website design, SEO, automation, content, video and AI support."
+        tag={t.pages.packages.tag}
+        title={t.pages.packages.title}
+        description={t.pages.packages.description}
       />
 
       <WhatsDifferenceStrip activePage="packages" insideJourney={false} />
@@ -370,7 +383,7 @@ export default function Packages() {
           </motion.div>
 
           <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', fontStyle: 'italic' }}>
-            All prices exclude Greek VAT (24%). Custom plans available for larger businesses.
+            {t.pages.packages.vatNote}
           </p>
         </div>
       </section>
@@ -386,13 +399,13 @@ export default function Packages() {
         >
           <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
             <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--color-accent-500)' }}>
-              Not sure which services you need?
+              {t.pages.packages.ctaTag}
             </p>
             <h2 style={{ fontSize: 'clamp(var(--text-lg), 3vw, var(--text-xl))', fontWeight: 700, lineHeight: 1.15, letterSpacing: '-0.02em', color: 'var(--text-primary)' }}>
-              Also available as monthly bundles
+              {t.pages.packages.ctaTitle}
             </h2>
             <p style={{ fontSize: 'var(--text-base)', lineHeight: 1.6, color: 'var(--text-secondary)', maxWidth: '46ch' }}>
-              Combine website setup with monthly services and save. View our bundled packages for better value.
+              {t.pages.packages.ctaBody}
             </p>
           </div>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-3)', justifyContent: 'center' }}>
@@ -402,7 +415,7 @@ export default function Packages() {
               onMouseEnter={(e) => { e.currentTarget.style.filter = 'brightness(1.1)'; e.currentTarget.style.boxShadow = '0 0 40px rgba(118, 39, 239, 0.5)' }}
               onMouseLeave={(e) => { e.currentTarget.style.filter = 'brightness(1)'; e.currentTarget.style.boxShadow = '0 0 30px rgba(118, 39, 239, 0.35)' }}
             >
-              View Monthly Bundles
+              {t.pages.packages.ctaBundles}
             </Link>
             <Link
               to="/contact"
@@ -410,7 +423,7 @@ export default function Packages() {
               onMouseEnter={(e) => { e.currentTarget.style.background = 'linear-gradient(90deg, #293BFF 0%, #7627EF 100%)'; e.currentTarget.style.color = '#FFFFFF'; e.currentTarget.style.border = '1px solid transparent' }}
               onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--text-primary)'; e.currentTarget.style.border = '1px solid var(--goai-violet)' }}
             >
-              Talk to Us
+              {t.pages.packages.ctaContact}
             </Link>
           </div>
         </motion.div>

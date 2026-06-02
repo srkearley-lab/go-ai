@@ -18,71 +18,28 @@ const ShaderAnimation = lazy(() =>
   import('../components/ShaderAnimation').then((m) => ({ default: m.ShaderAnimation }))
 )
 
-// ── Data ─────────────────────────────────────────────────────────────────────
+// ── Static metadata (icons + hrefs only — text comes from translations) ────────
 
-const industries = [
-  { icon: HomeIcon,        label: 'Villa Rentals',     href: '/industries#villa-rentals' },
-  { icon: Dumbbell,        label: 'Gyms & Fitness',    href: '/industries#gyms-fitness' },
-  { icon: UtensilsCrossed, label: 'Restaurants',       href: '/industries#restaurants' },
-  { icon: Coffee,          label: 'Cafés',             href: '/industries#cafes' },
-  { icon: Scissors,        label: 'Hair & Beauty',     href: '/industries#hair-beauty' },
-  { icon: Map,             label: 'Tourism Companies', href: '/industries#tourism' },
-  { icon: Car,             label: 'Car Hire',          href: '/industries#car-hire' },
-  { icon: Anchor,          label: 'Boat Hire',         href: '/industries#boat-hire' },
+const INDUSTRY_META = [
+  { icon: HomeIcon,        href: '/industries#villa-rentals' },
+  { icon: Dumbbell,        href: '/industries#gyms-fitness' },
+  { icon: UtensilsCrossed, href: '/industries#restaurants' },
+  { icon: Coffee,          href: '/industries#cafes' },
+  { icon: Scissors,        href: '/industries#hair-beauty' },
+  { icon: Map,             href: '/industries#tourism' },
+  { icon: Car,             href: '/industries#car-hire' },
+  { icon: Anchor,          href: '/industries#boat-hire' },
 ]
 
-const steps = [
-  { icon: Globe,        number: 1, title: 'Choose your website',    description: 'Start by selecting the type of website you need.' },
-  { icon: Package,      number: 2, title: 'Choose your package',    description: 'Pick the setup or service option that best fits your business.' },
-  { icon: Layers,       number: 3, title: 'Add a monthly bundle',   description: 'Add ongoing support, updates, hosting help or digital growth support if needed.' },
-  { icon: PlusCircle,   number: 4, title: 'Add optional extras',    description: 'Bolt on extra features such as storage, extra pages, forms, automation or additional functionality.' },
-  { icon: FileText,     number: 5, title: 'Review and complete',    description: 'Review your selections, then add fixed-price items to basket and proceed to checkout, or request a quote if any items need a recommendation.' },
-]
+const STEP_ICONS = [Globe, Package, Layers, PlusCircle, FileText]
 
-const quickChoiceItems = [
-  {
-    icon: Globe,
-    category: 'Websites',
-    title: 'Get a professional website',
-    description: 'One-off website setup packages for businesses that need a professional online presence — from a single-page launch site to a full premium build.',
-    cta: 'View Website Packages',
-    href: '/websites',
-  },
-  {
-    icon: Package,
-    category: 'Packages',
-    title: 'Add individual monthly services',
-    description: 'Hosting care, social content, AI marketing, automation, video content and proposal tools — add exactly the services your business needs.',
-    cta: 'View Service Packages',
-    href: '/packages',
-  },
-  {
-    icon: Layers,
-    category: 'Bundles',
-    title: 'Everything together in one bundle',
-    description: 'Combined monthly support packages covering website, content, marketing, automation and growth — all managed for you, for one monthly price.',
-    cta: 'View Bundles',
-    href: '/bundles',
-  },
-]
+const QUICK_CHOICE_ICONS = [Globe, Package, Layers]
+const QUICK_CHOICE_HREFS = ['/websites', '/packages', '/bundles']
 
-const trustPoints = [
-  {
-    icon: TrendingUp,
-    title: 'Built to convert visitors into customers',
-    body: 'Every page, automation and content block is designed to move visitors toward a booking, enquiry or purchase — not just look good.',
-  },
-  {
-    icon: Zap,
-    title: 'Live in 7 days, managed via one message',
-    body: 'Your website goes live within a week. Every update, report or request is handled via a single WhatsApp message — no dashboards to learn.',
-  },
-  {
-    icon: Bot,
-    title: 'AI-powered at a fraction of agency cost',
-    body: 'We use AI to handle writing, design and automation — delivering agency quality at a price that makes sense for businesses with real margins.',
-  },
-]
+const TOP_PACKAGES_PRICES = ['€450', '€1,200', '€30']
+const TOP_PACKAGES_HREFS  = ['/websites', '/websites', '/addons']
+
+const TRUST_ICONS = [TrendingUp, Zap, Bot]
 
 // ── Shared section wrapper ────────────────────────────────────────────────────
 
@@ -96,39 +53,16 @@ function Section({ children, style, id }) {
   )
 }
 
-// ── Top 3 Recommended Packages ────────────────────────────────────────────────
-
-const topPackages = [
-  {
-    name: 'Basic Launch Website',
-    bestFor: 'Businesses that just need to get online professionally',
-    price: '€450',
-    priceNote: 'one-off',
-    cta: 'View Basic Website',
-    href: '/websites',
-    recommended: false,
-  },
-  {
-    name: 'Business Website',
-    bestFor: 'Businesses that want a proper professional website',
-    price: '€1,200',
-    priceNote: 'one-off',
-    cta: 'View Business Website',
-    href: '/websites',
-    recommended: true,
-  },
-  {
-    name: 'Hosting & Website Care',
-    bestFor: 'Businesses wanting hosting and ongoing technical care',
-    price: '€30',
-    priceNote: '/month',
-    cta: 'View Add-ons',
-    href: '/addons',
-    recommended: false,
-  },
-]
+const TOP_PACKAGES_RECOMMENDED = [false, true, false]
 
 function TopPackagesSection({ reduceMotion, stagger, cardVariants, t }) {
+  const pkgs = t.home.topPackages.map((p, i) => ({
+    ...p,
+    price: TOP_PACKAGES_PRICES[i],
+    href:  TOP_PACKAGES_HREFS[i],
+    recommended: TOP_PACKAGES_RECOMMENDED[i],
+  }))
+
   return (
     <Section
       style={{ background: 'var(--surface-base)', borderBottom: '1px solid var(--border-default)' }}
@@ -146,7 +80,7 @@ function TopPackagesSection({ reduceMotion, stagger, cardVariants, t }) {
           viewport={{ once: true, margin: '-60px' }}
           className="grid grid-cols-1 md:grid-cols-3 gap-5 w-full"
         >
-          {topPackages.map((pkg) => (
+          {pkgs.map((pkg) => (
             <motion.div
               key={pkg.name}
               variants={cardVariants}
@@ -404,46 +338,49 @@ export default function Home() {
             viewport={{ once: true, margin: '-60px' }}
             className="grid grid-cols-1 md:grid-cols-3 gap-5 w-full"
           >
-            {quickChoiceItems.map((item) => (
-              <motion.div
-                key={item.category}
-                variants={cardVariants}
-                style={{
-                  background: 'var(--surface-raised)',
-                  border: '1px solid var(--border-default)',
-                  borderRadius: 'var(--radius-lg)',
-                  padding: 'var(--space-8)',
-                  display: 'flex', flexDirection: 'column', gap: 'var(--space-5)',
-                  transition: 'border-color 150ms ease, box-shadow 150ms ease, transform 150ms ease',
-                }}
-                whileHover={reduceMotion ? {} : { y: -3, transition: { duration: 0.15 } }}
-                onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--color-brand-500)'; e.currentTarget.style.boxShadow = 'var(--shadow-lg)' }}
-                onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--border-default)'; e.currentTarget.style.boxShadow = 'none' }}
-              >
-                <div style={{ width: 52, height: 52, background: 'rgba(99,102,241,0.1)', border: '1px solid rgba(99,102,241,0.2)', borderRadius: 'var(--radius-lg)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-brand-400)' }}>
-                  <item.icon size={24} />
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
-                  <span style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--color-brand-400)' }}>
-                    {item.category}
-                  </span>
-                  <h3 style={{ fontSize: 'var(--text-md)', fontWeight: 700, lineHeight: 1.2, color: 'var(--text-primary)', letterSpacing: '-0.01em' }}>
-                    {item.title}
-                  </h3>
-                  <p style={{ fontSize: 'var(--text-sm)', lineHeight: 1.65, color: 'var(--text-secondary)' }}>
-                    {item.description}
-                  </p>
-                </div>
-                <Link
-                  to={item.href}
-                  style={{ marginTop: 'auto', display: 'inline-flex', alignItems: 'center', gap: 'var(--space-2)', fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--color-brand-400)', transition: 'color 120ms ease' }}
-                  onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--color-brand-200)' }}
-                  onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--color-brand-400)' }}
+            {t.home.quickChoiceItems.map((item, i) => {
+              const Icon = QUICK_CHOICE_ICONS[i]
+              return (
+                <motion.div
+                  key={item.category}
+                  variants={cardVariants}
+                  style={{
+                    background: 'var(--surface-raised)',
+                    border: '1px solid var(--border-default)',
+                    borderRadius: 'var(--radius-lg)',
+                    padding: 'var(--space-8)',
+                    display: 'flex', flexDirection: 'column', gap: 'var(--space-5)',
+                    transition: 'border-color 150ms ease, box-shadow 150ms ease, transform 150ms ease',
+                  }}
+                  whileHover={reduceMotion ? {} : { y: -3, transition: { duration: 0.15 } }}
+                  onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--color-brand-500)'; e.currentTarget.style.boxShadow = 'var(--shadow-lg)' }}
+                  onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--border-default)'; e.currentTarget.style.boxShadow = 'none' }}
                 >
-                  {item.cta} <ArrowRight size={14} />
-                </Link>
-              </motion.div>
-            ))}
+                  <div style={{ width: 52, height: 52, background: 'rgba(99,102,241,0.1)', border: '1px solid rgba(99,102,241,0.2)', borderRadius: 'var(--radius-lg)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-brand-400)' }}>
+                    <Icon size={24} />
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
+                    <span style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--color-brand-400)' }}>
+                      {item.category}
+                    </span>
+                    <h3 style={{ fontSize: 'var(--text-md)', fontWeight: 700, lineHeight: 1.2, color: 'var(--text-primary)', letterSpacing: '-0.01em' }}>
+                      {item.title}
+                    </h3>
+                    <p style={{ fontSize: 'var(--text-sm)', lineHeight: 1.65, color: 'var(--text-secondary)' }}>
+                      {item.description}
+                    </p>
+                  </div>
+                  <Link
+                    to={QUICK_CHOICE_HREFS[i]}
+                    style={{ marginTop: 'auto', display: 'inline-flex', alignItems: 'center', gap: 'var(--space-2)', fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--color-brand-400)', transition: 'color 120ms ease' }}
+                    onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--color-brand-200)' }}
+                    onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--color-brand-400)' }}
+                  >
+                    {item.cta} <ArrowRight size={14} />
+                  </Link>
+                </motion.div>
+              )
+            })}
           </motion.div>
         </div>
       </Section>
@@ -508,9 +445,9 @@ export default function Home() {
             viewport={{ once: true, margin: '-60px' }}
             className="grid grid-cols-2 sm:grid-cols-4 gap-4 w-full"
           >
-            {industries.map((ind) => (
-              <Link key={ind.label} to={ind.href} style={{ textDecoration: 'none', display: 'block' }}>
-                <IndustryCard icon={ind.icon} label={ind.label} />
+            {INDUSTRY_META.map((meta, i) => (
+              <Link key={meta.href} to={meta.href} style={{ textDecoration: 'none', display: 'block' }}>
+                <IndustryCard icon={meta.icon} label={t.home.industryLabels[i]} />
               </Link>
             ))}
           </motion.div>
@@ -540,14 +477,14 @@ export default function Home() {
             viewport={{ once: true, margin: '-60px' }}
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 w-full"
           >
-            {steps.map((step, i) => (
+            {t.home.steps.map((step, i) => (
               <StepCard
-                key={step.number}
-                number={step.number}
-                icon={step.icon}
+                key={i}
+                number={i + 1}
+                icon={STEP_ICONS[i]}
                 title={step.title}
                 description={step.description}
-                isLast={i === steps.length - 1}
+                isLast={i === t.home.steps.length - 1}
               />
             ))}
           </motion.div>
@@ -565,11 +502,7 @@ export default function Home() {
             transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
             className="grid grid-cols-1 sm:grid-cols-3 gap-8"
           >
-            {[
-              { stat: '5–7 days', label: 'Average website build time' },
-              { stat: '€450',    label: 'Starting price for a website' },
-              { stat: '24 hrs',  label: 'Response time for updates' },
-            ].map(({ stat, label }) => (
+            {t.home.statsRow.map(({ stat, label }) => (
               <div key={stat} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
                 <span style={{ fontSize: 'var(--text-2xl)', fontWeight: 700, letterSpacing: '-0.03em', color: 'var(--text-primary)', lineHeight: 1 }}>{stat}</span>
                 <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', lineHeight: 1.4 }}>{label}</span>
@@ -579,7 +512,7 @@ export default function Home() {
 
           {/* Differentiators */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-6)' }}>
-            <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--color-brand-400)' }}>Why GO AI</p>
+            <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--color-brand-400)' }}>{t.home.whyGoAI}</p>
             <motion.div
               variants={stagger}
               initial="hidden"
@@ -587,15 +520,18 @@ export default function Home() {
               viewport={{ once: true, margin: '-60px' }}
               className="grid grid-cols-1 md:grid-cols-3 gap-8"
             >
-              {trustPoints.map(({ icon: Icon, title, body }) => (
-                <motion.div key={title} variants={cardVariants} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
-                  <div style={{ width: 44, height: 44, background: 'rgba(99,102,241,0.1)', border: '1px solid rgba(99,102,241,0.2)', borderRadius: 'var(--radius-md)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-brand-400)' }}>
-                    <Icon size={20} />
-                  </div>
-                  <h3 style={{ fontSize: 'var(--text-md)', fontWeight: 600, lineHeight: 1.2, color: 'var(--text-primary)' }}>{title}</h3>
-                  <p style={{ fontSize: 'var(--text-sm)', lineHeight: 1.65, color: 'var(--text-secondary)' }}>{body}</p>
-                </motion.div>
-              ))}
+              {t.home.trustPoints.map(({ title, body }, i) => {
+                const Icon = TRUST_ICONS[i]
+                return (
+                  <motion.div key={title} variants={cardVariants} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
+                    <div style={{ width: 44, height: 44, background: 'rgba(99,102,241,0.1)', border: '1px solid rgba(99,102,241,0.2)', borderRadius: 'var(--radius-md)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-brand-400)' }}>
+                      <Icon size={20} />
+                    </div>
+                    <h3 style={{ fontSize: 'var(--text-md)', fontWeight: 600, lineHeight: 1.2, color: 'var(--text-primary)' }}>{title}</h3>
+                    <p style={{ fontSize: 'var(--text-sm)', lineHeight: 1.65, color: 'var(--text-secondary)' }}>{body}</p>
+                  </motion.div>
+                )
+              })}
             </motion.div>
           </div>
         </div>

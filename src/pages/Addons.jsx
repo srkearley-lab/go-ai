@@ -4,6 +4,7 @@ import { Check, ShoppingCart, MessageCircle, Zap } from 'lucide-react'
 import PageHero from '../components/PageHero'
 import WhatsDifferenceStrip from '../components/WhatsDifferenceStrip'
 import { useBasket } from '../context/BasketContext'
+import { useTranslations } from '../context/LanguageContext'
 
 // ── Add-on data ───────────────────────────────────────────────────────────────
 
@@ -300,6 +301,7 @@ function FeatureItem({ text }) {
 
 function BasketButton({ item }) {
   const { addItem, removeItem, isInBasket } = useBasket()
+  const t = useTranslations()
   const inBasket = isInBasket(item.id)
   return (
     <button
@@ -320,13 +322,14 @@ function BasketButton({ item }) {
       onMouseLeave={(e) => { if (!inBasket) e.currentTarget.style.filter = 'brightness(1)' }}
     >
       {inBasket
-        ? <><Check size={11} strokeWidth={3} /> In Basket</>
-        : <><ShoppingCart size={11} /> Add to Basket</>}
+        ? <><Check size={11} strokeWidth={3} /> {t.buttons.inBasket}</>
+        : <><ShoppingCart size={11} /> {t.buttons.addToBasket}</>}
     </button>
   )
 }
 
 function AddonCard({ addon, variants }) {
+  const t = useTranslations()
   const basketItem = {
     id: addon.id,
     name: addon.name,
@@ -365,7 +368,7 @@ function AddonCard({ addon, variants }) {
       </div>
 
       <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
-        <span style={{ fontWeight: 600, color: 'var(--text-tertiary)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Best for: </span>
+        <span style={{ fontWeight: 600, color: 'var(--text-tertiary)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>{t.pages.addons.bestFor} </span>
         {addon.bestFor}
       </p>
 
@@ -407,7 +410,7 @@ function AddonCard({ addon, variants }) {
             onMouseEnter={(e) => { e.currentTarget.style.filter = 'brightness(1.1)' }}
             onMouseLeave={(e) => { e.currentTarget.style.filter = 'brightness(1)' }}
           >
-            <MessageCircle size={12} /> Contact Us
+            <MessageCircle size={12} /> {t.pages.addons.contactUs}
           </Link>
         )}
 
@@ -427,7 +430,7 @@ function AddonCard({ addon, variants }) {
             onMouseEnter={(e) => { e.currentTarget.style.filter = 'brightness(1.1)' }}
             onMouseLeave={(e) => { e.currentTarget.style.filter = 'brightness(1)' }}
           >
-            <Zap size={12} /> Get a Quote
+            <Zap size={12} /> {t.pages.addons.getAQuote}
           </Link>
         )}
       </div>
@@ -439,6 +442,7 @@ function AddonCard({ addon, variants }) {
 
 export default function Addons() {
   const reduceMotion = useReducedMotion()
+  const t = useTranslations()
 
   const stagger = {
     hidden: {},
@@ -452,9 +456,9 @@ export default function Addons() {
   return (
     <main style={{ paddingTop: 64 }}>
       <PageHero
-        tag="Add-ons"
-        title="Add-ons"
-        description="Need something extra without moving to a full bundle? Add-ons let you bolt extra support, hosting, storage, pages, updates, automation, or content services onto your website package."
+        tag={t.pages.addons.tag}
+        title={t.pages.addons.title}
+        description={t.pages.addons.description}
       />
 
       <WhatsDifferenceStrip activePage="addons" insideJourney={false} />
@@ -498,7 +502,7 @@ export default function Addons() {
           ))}
 
           <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', fontStyle: 'italic' }}>
-            All prices exclude Greek VAT (24%). Add-ons are available as standalone services or alongside any package.
+            {t.pages.addons.vatNote}
           </p>
         </div>
       </section>
@@ -514,13 +518,13 @@ export default function Addons() {
         >
           <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
             <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--goai-violet)' }}>
-              Not sure which add-ons you need?
+              {t.pages.addons.ctaTag}
             </p>
             <h2 style={{ fontSize: 'clamp(var(--text-lg), 3vw, var(--text-xl))', fontWeight: 700, lineHeight: 1.15, letterSpacing: '-0.02em', color: 'var(--text-primary)' }}>
-              Not sure which add-ons you need?
+              {t.pages.addons.ctaTitle}
             </h2>
             <p style={{ fontSize: 'var(--text-base)', lineHeight: 1.6, color: 'var(--text-secondary)', maxWidth: '48ch' }}>
-              Tell us what you are trying to improve and we will recommend the right package, bundle, or add-ons.
+              {t.pages.addons.ctaBody}
             </p>
           </div>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-3)', justifyContent: 'center' }}>
@@ -539,7 +543,7 @@ export default function Addons() {
               onMouseEnter={(e) => { e.currentTarget.style.filter = 'brightness(1.1)'; e.currentTarget.style.boxShadow = '0 0 40px rgba(118, 39, 239, 0.5)' }}
               onMouseLeave={(e) => { e.currentTarget.style.filter = 'brightness(1)'; e.currentTarget.style.boxShadow = '0 0 30px rgba(118, 39, 239, 0.35)' }}
             >
-              Get a Quote Today
+              {t.pages.addons.ctaPrimary}
             </Link>
             <Link
               to="/contact"
@@ -555,7 +559,7 @@ export default function Addons() {
               onMouseEnter={(e) => { e.currentTarget.style.background = 'linear-gradient(90deg, #293BFF 0%, #7627EF 100%)'; e.currentTarget.style.color = '#FFFFFF'; e.currentTarget.style.border = '1px solid transparent' }}
               onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--text-primary)'; e.currentTarget.style.border = '1px solid var(--goai-violet)' }}
             >
-              Contact GoAI
+              {t.pages.addons.ctaContact}
             </Link>
           </div>
         </motion.div>

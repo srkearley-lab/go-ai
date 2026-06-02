@@ -6,6 +6,7 @@ import PageHero from '../components/PageHero'
 import WhatsDifferenceStrip from '../components/WhatsDifferenceStrip'
 import { useBasket, PACKAGE_FORM_TYPES } from '../context/BasketContext'
 import { packageDetails } from '../data/packageDetails'
+import { useTranslations } from '../context/LanguageContext'
 
 const WHATSAPP = '#'
 
@@ -148,16 +149,17 @@ function FeatureItem({ text, accent = false }) {
 }
 
 function SavingsBadge({ yearly, upfront }) {
+  const t = useTranslations()
   return (
     <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-2)' }}>
       {upfront && (
         <span style={{ display: 'inline-flex', alignItems: 'center', fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--color-accent-400)', background: 'rgba(245,158,11,0.1)', border: '1px solid rgba(245,158,11,0.2)', borderRadius: 'var(--radius-sm)', padding: '2px var(--space-2)' }}>
-          Save €{upfront} upfront
+          {t.pages.bundles.saveUpfront.replace('{amount}', upfront)}
         </span>
       )}
       {yearly && (
         <span style={{ display: 'inline-flex', alignItems: 'center', fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--color-accent-400)', background: 'rgba(245,158,11,0.1)', border: '1px solid rgba(245,158,11,0.2)', borderRadius: 'var(--radius-sm)', padding: '2px var(--space-2)' }}>
-          Save €{yearly}/year
+          {t.pages.bundles.savePerYear.replace('{amount}', yearly)}
         </span>
       )}
     </div>
@@ -168,6 +170,7 @@ function SavingsBadge({ yearly, upfront }) {
 
 function BasketButton({ item }) {
   const { addItem, removeItem, isInBasket } = useBasket()
+  const t = useTranslations()
   const inBasket = isInBasket(item.id)
   return (
     <button
@@ -188,8 +191,8 @@ function BasketButton({ item }) {
       onMouseLeave={(e) => { if (!inBasket) { e.currentTarget.style.filter = 'brightness(1)' } }}
     >
       {inBasket
-        ? <><Check size={11} strokeWidth={3} /> In Basket</>
-        : <><ShoppingCart size={11} /> Add to Basket</>}
+        ? <><Check size={11} strokeWidth={3} /> {t.buttons.inBasket}</>
+        : <><ShoppingCart size={11} /> {t.buttons.addToBasket}</>}
     </button>
   )
 }
@@ -198,6 +201,7 @@ function BasketButton({ item }) {
 
 function FindOutMorePanel({ detailKey, item }) {
   const details = packageDetails[detailKey]
+  const t = useTranslations()
   if (!details) return null
   return (
     <div style={{ borderTop: '1px solid var(--border-default)', paddingTop: 'var(--space-6)', marginTop: 'var(--space-4)', display: 'flex', flexDirection: 'column', gap: 'var(--space-6)' }}>
@@ -209,11 +213,11 @@ function FindOutMorePanel({ detailKey, item }) {
       </div>
       <div className="fom-grid grid grid-cols-1 md:grid-cols-2 gap-6">
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
-          <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', margin: 0 }}>Who this is for</p>
+          <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', margin: 0 }}>{t.findOutMore.whoFor}</p>
           <p style={{ fontSize: 'var(--text-sm)', lineHeight: 1.6, color: 'var(--text-secondary)', margin: 0 }}>{details.whoFor}</p>
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
-          <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', margin: 0 }}>What we need from you</p>
+          <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', margin: 0 }}>{t.findOutMore.weNeed}</p>
           <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
             {details.youNeed.map(i => (
               <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 'var(--space-2)', fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
@@ -223,7 +227,7 @@ function FindOutMorePanel({ detailKey, item }) {
           </ul>
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
-          <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', margin: 0 }}>What's included</p>
+          <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', margin: 0 }}>{t.findOutMore.included}</p>
           <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
             {details.included.map(i => (
               <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 'var(--space-2)' }}>
@@ -236,7 +240,7 @@ function FindOutMorePanel({ detailKey, item }) {
           </ul>
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
-          <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', margin: 0 }}>How it works</p>
+          <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', margin: 0 }}>{t.findOutMore.howItWorks}</p>
           <ol style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
             {details.steps.map((step, i) => (
               <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 'var(--space-3)' }}>
@@ -256,8 +260,25 @@ function FindOutMorePanel({ detailKey, item }) {
 
 // ── Bundle cards ──────────────────────────────────────────────────────────────
 
+function BundleToggleBtn({ showDetails, onToggle }) {
+  const t = useTranslations()
+  return (
+    <button
+      type="button"
+      onClick={onToggle}
+      style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-1)', background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-brand-400)', fontSize: 'var(--text-xs)', fontWeight: 500, padding: 0, fontFamily: 'inherit' }}
+    >
+      {showDetails ? t.buttons.hideDetails : t.buttons.findOutMore}
+      <motion.span animate={{ rotate: showDetails ? 180 : 0 }} transition={{ duration: 0.15 }} style={{ display: 'flex' }}>
+        <ChevronDown size={12} />
+      </motion.span>
+    </button>
+  )
+}
+
 function SmallBundleCard({ bundle, variants }) {
   const [showDetails, setShowDetails] = useState(false)
+  const t = useTranslations()
   const basketItem = {
     id: bundle.name,
     name: bundle.name,
@@ -285,7 +306,7 @@ function SmallBundleCard({ bundle, variants }) {
 
       <div style={{ display: 'flex', alignItems: 'baseline', gap: 'var(--space-1)' }}>
         <span style={{ fontSize: 'var(--text-lg)', fontWeight: 700, letterSpacing: '-0.02em', color: 'var(--text-primary)', lineHeight: 1 }}>€{bundle.monthly}</span>
-        <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)' }}>/month</span>
+        <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)' }}>{t.pages.bundles.perMonth}</span>
       </div>
 
       <hr style={{ border: 'none', borderTop: '1px solid var(--border-default)', margin: 0 }} />
@@ -301,16 +322,7 @@ function SmallBundleCard({ bundle, variants }) {
         >{bundle.cta}</Link>
         <BasketButton item={basketItem} />
       </div>
-      <button
-        type="button"
-        onClick={() => setShowDetails(v => !v)}
-        style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-1)', background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-brand-400)', fontSize: 'var(--text-xs)', fontWeight: 500, padding: 0, fontFamily: 'inherit' }}
-      >
-        {showDetails ? 'Hide details' : 'Find Out More'}
-        <motion.span animate={{ rotate: showDetails ? 180 : 0 }} transition={{ duration: 0.15 }} style={{ display: 'flex' }}>
-          <ChevronDown size={12} />
-        </motion.span>
-      </button>
+      <BundleToggleBtn showDetails={showDetails} onToggle={() => setShowDetails(v => !v)} />
 
       <AnimatePresence>
         {showDetails && (
@@ -332,6 +344,7 @@ function SmallBundleCard({ bundle, variants }) {
 
 function RecommendedBundleCard({ bundle, variants }) {
   const [showDetails, setShowDetails] = useState(false)
+  const t = useTranslations()
   const basketItem = {
     id: bundle.name,
     name: bundle.name,
@@ -368,11 +381,11 @@ function RecommendedBundleCard({ bundle, variants }) {
 
         <div style={{ display: 'flex', alignItems: 'baseline', gap: 'var(--space-1)' }}>
           <span style={{ fontSize: 'var(--text-2xl)', fontWeight: 700, letterSpacing: '-0.03em', color: 'var(--text-primary)', lineHeight: 1 }}>€{bundle.monthly}</span>
-          <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-tertiary)' }}>/month</span>
+          <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-tertiary)' }}>{t.pages.bundles.perMonth}</span>
         </div>
 
         <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-secondary)', fontStyle: 'italic' }}>
-          Most growing businesses get better value from a bundle.
+          {t.pages.bundles.bundleValueNote}
         </p>
 
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-3)', alignItems: 'center' }}>
@@ -384,22 +397,13 @@ function RecommendedBundleCard({ bundle, variants }) {
           >{bundle.cta}</Link>
           <BasketButton item={basketItem} />
         </div>
-        <button
-          type="button"
-          onClick={() => setShowDetails(v => !v)}
-          style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-1)', background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-brand-400)', fontSize: 'var(--text-xs)', fontWeight: 500, padding: 0, fontFamily: 'inherit' }}
-        >
-          {showDetails ? 'Hide details' : 'Find Out More'}
-          <motion.span animate={{ rotate: showDetails ? 180 : 0 }} transition={{ duration: 0.15 }} style={{ display: 'flex' }}>
-            <ChevronDown size={12} />
-          </motion.span>
-        </button>
+        <BundleToggleBtn showDetails={showDetails} onToggle={() => setShowDetails(v => !v)} />
       </div>
 
       {/* Right — features */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-5)' }}>
         <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)' }}>
-          Everything included
+          {t.pages.bundles.everythingIncluded}
         </p>
         <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
           {bundle.features.map(f => <FeatureItem key={f} text={f} accent />)}
@@ -428,6 +432,7 @@ function RecommendedBundleCard({ bundle, variants }) {
 
 export default function Bundles() {
   const reduceMotion = useReducedMotion()
+  const t = useTranslations()
 
   const stagger = {
     hidden: {},
@@ -446,9 +451,9 @@ export default function Bundles() {
   return (
     <main style={{ paddingTop: 64 }}>
       <PageHero
-        tag="Bundles"
-        title="Monthly Bundles"
-        description="Combine services into monthly support packages for websites, marketing, automation and growth."
+        tag={t.pages.bundles.tag}
+        title={t.pages.bundles.title}
+        description={t.pages.bundles.description}
       />
 
       <WhatsDifferenceStrip activePage="bundles" insideJourney={false} />
@@ -457,11 +462,11 @@ export default function Bundles() {
         <div style={{ maxWidth: 'var(--width-xl)', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'var(--space-10)' }}>
 
           <p style={{ fontSize: 'var(--text-sm)', lineHeight: 1.7, color: 'var(--text-secondary)', maxWidth: '62ch' }}>
-            Save time, look professional, and stay consistent online. Bundling your website with monthly support gives you better value and a single point of contact for everything digital.
+            {t.pages.bundles.intro}
           </p>
 
           <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', fontStyle: 'italic' }}>
-            Website setup prices are fixed starting at €450 one-off for the initial website build. Monthly prices shown are for ongoing support only.
+            {t.pages.bundles.priceNote}
           </p>
 
           <motion.div
@@ -483,7 +488,7 @@ export default function Bundles() {
           </motion.div>
 
           <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)' }}>
-            All prices exclude Greek VAT (24%). Custom plans available for larger businesses.
+            {t.pages.bundles.vatNote}
           </p>
         </div>
       </section>
@@ -499,13 +504,13 @@ export default function Bundles() {
         >
           <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
             <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--color-accent-500)' }}>
-              Free consultation
+              {t.pages.bundles.ctaTag}
             </p>
             <h2 style={{ fontSize: 'clamp(var(--text-lg), 3vw, var(--text-xl))', fontWeight: 700, lineHeight: 1.15, letterSpacing: '-0.02em', color: 'var(--text-primary)' }}>
-              Not sure which bundle is right for you?
+              {t.pages.bundles.ctaTitle}
             </h2>
             <p style={{ fontSize: 'var(--text-base)', lineHeight: 1.6, color: 'var(--text-secondary)', maxWidth: '46ch' }}>
-              Tell us about your business and goals — we'll recommend the right starting point and show you exactly what's included.
+              {t.pages.bundles.ctaBody}
             </p>
           </div>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-3)', justifyContent: 'center' }}>
@@ -515,7 +520,7 @@ export default function Bundles() {
               onMouseEnter={(e) => { e.currentTarget.style.filter = 'brightness(1.1)'; e.currentTarget.style.boxShadow = '0 0 40px rgba(118, 39, 239, 0.5)' }}
               onMouseLeave={(e) => { e.currentTarget.style.filter = 'brightness(1)'; e.currentTarget.style.boxShadow = '0 0 30px rgba(118, 39, 239, 0.35)' }}
             >
-              Get a Recommendation
+              {t.pages.bundles.ctaPrimary}
             </Link>
             <a
               href={WHATSAPP}
@@ -526,7 +531,7 @@ export default function Bundles() {
               onMouseLeave={(e) => { e.currentTarget.style.background = '#25d366' }}
             >
               <MessageCircle size={15} />
-              Ask us on WhatsApp
+              {t.pages.bundles.ctaWhatsApp}
             </a>
           </div>
         </motion.div>
