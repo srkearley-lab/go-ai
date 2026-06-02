@@ -434,7 +434,7 @@ export const translations = {
       days: 'ημέρες',
       serviceMap: {
         'Website':             'Ιστοσελίδα',
-        'WhatsApp Bot':        'Ρομπότ WhatsApp',
+        'WhatsApp Bot':        'Αυτοματοποιημένο bot WhatsApp',
         'Email Automation':    'Αυτοματοποίηση Email',
         'SEO':                 'SEO',
         'Google SEO':          'Google SEO',
@@ -649,7 +649,7 @@ export const translations = {
         'Προτεραιοποιημένες ενημερώσεις', 'Ανανέωση περιεχομένου', 'SEO basics',
         'Google Business Profile', 'Επιπλέον σελίδες', 'Φόρμες επικοινωνίας',
         'Φόρμες κρατήσεων', 'Λειτουργικότητα πληρωμών', 'Ηλεκτρονικό εμπόριο',
-        'Αυτοματισμός', 'Ενσωματώσεις', 'AI chatbot', 'CRM', 'Social media',
+        'Αυτοματισμός', 'Ενσωματώσεις', 'AI chatbot', 'CRM', 'Μέσα κοινωνικής δικτύωσης',
         'Branding', 'Συγγραφή περιεχομένου', 'Σελίδες προϊόντων', 'Landing pages',
         'Δεν είμαι σίγουρος/η',
       ],
@@ -677,20 +677,20 @@ export const translations = {
         'starter-business':{ name: 'Βασική Επαγγελματική Ιστοσελίδα', badge: 'Starter', bestFor: 'Νέες επιχειρήσεις που θέλουν περισσότερη αξιοπιστία', features: ['Έως 3 σελίδες', 'Βελτιστοποιημένη για κινητά', 'Φόρμα επικοινωνίας', 'CTA κρατήσεων', 'Βασικό SEO', 'Social links'] },
         'business':        { name: 'Επαγγελματική Ιστοσελίδα', badge: 'Συνιστώμενο', bestFor: 'Εδραιωμένες επιχειρήσεις, σύμβουλοι, τοπικοί πάροχοι', features: ['Έως 5 σελίδες', 'Φόρμα capture leads', 'Σύνδεσμος κρατήσεων', 'Ενότητα FAQ', 'Έτοιμο για analytics', 'Υποστήριξη deployment'] },
         'growth':          { name: 'Ιστοσελίδα Ανάπτυξης', badge: 'Καλύτερο για Ανάπτυξη', bestFor: 'Επιχειρήσεις έτοιμες να επενδύσουν σε ιστοσελίδα υψηλότερης μετατροπής', features: ['Έως 7 σελίδες', 'Δομή funnel', 'Σύγκριση πακέτων', 'Meta Pixel και GTM', 'Βελτιωμένο SEO'] },
-        'premium':         { name: 'Premium Ιστοσελίδα έτοιμη για AI', badge: 'Premium', bestFor: 'Επιχειρήσεις που θέλουν κορυφαία ιστοσελίδα ως μακροπρόθεσμο asset', features: ['Τα πάντα στο Growth Website', 'Premium custom design system', 'Ενότητες έτοιμες για ΑΙ', 'Δομημένο journey πελάτη', 'Πλήρης τεκμηρίωση εκκίνησης'] },
+        'premium':         { name: 'Ιστότοπος Προηγμένης Τεχνολογίας AI', badge: 'Premium', bestFor: 'Επιχειρήσεις που θέλουν κορυφαία ιστοσελίδα ως μακροπρόθεσμο asset', features: ['Τα πάντα στο Growth Website', 'Σύστημα Προηγμένης Σχεδίασης', 'Ενότητες έτοιμες για ΑΙ', 'Δομημένο journey πελάτη', 'Πλήρης τεκμηρίωση εκκίνησης'] },
       },
       packages: {
         'pkg-website-design':     { name: 'Σχεδιασμός Ιστοσελίδας', bestFor: 'Κάθε επιχείρηση που χρειάζεται νέα ή επανασχεδιασμένη ιστοσελίδα', features: ['Custom mobile-responsive σχέδιο', 'Φόρμες capture leads', 'Βασική ρύθμιση SEO', 'Google Analytics'] },
         'pkg-seo':                { name: 'SEO', bestFor: 'Επιχειρήσεις που θέλουν να εμφανίζονται στην τοπική αναζήτηση Google', features: ['Τίτλοι σελίδων και meta descriptions', 'Έρευνα λέξεων-κλειδιών', 'Google Search Console', 'Μηνιαία παρακολούθηση κατατάξεων'] },
         'pkg-whatsapp-automation':{ name: 'Αυτοματοποίηση WhatsApp', bestFor: 'Επιχειρήσεις που λαμβάνουν ερωτήματα μέσω WhatsApp', features: ['Αυτόματη απάντηση', 'Δρομολόγηση leads', 'Επιβεβαίωση κρατήσεων', 'Αυτοματισμός workflows'] },
-        'pkg-email-automation':   { name: 'Αυτοματοποίηση Email', bestFor: 'Επιχειρήσεις που θέλουν αυτόματα follow-ups', features: ['Αλληλουχίες follow-up', 'Ροές απάντησης', 'Campaigns leads', 'Ρύθμιση πλατφόρμας email'] },
+        'pkg-email-automation':   { name: 'Αυτοματοποίηση Email', bestFor: 'Επιχειρήσεις που θέλουν αυτόματα follow-ups', features: ['Αλληλουχίες follow-up', 'Ροές απάντησης', 'Καμπάνιες leads', 'Ρύθμιση πλατφόρμας email'] },
         'pkg-video-websites':     { name: 'Βίντεο Ιστοσελίδες', bestFor: 'Επιχειρήσεις με βίντεο που θέλουν να ξεχωρίσουν', features: ['Ενότητες hero με βίντεο', 'Landing page με βίντεο', 'Ενσωμάτωση AI avatar', 'Εμφάνιση βίντεο για κινητά'] },
         'pkg-ai-prompts':         { name: 'Προτροπές AI', bestFor: 'Ιδιοκτήτες που θέλουν να χρησιμοποιούν εργαλεία ΑΙ αποτελεσματικά', features: ['Βιβλιοθήκη custom prompts', 'Templates δημιουργίας περιεχομένου', 'Πλαίσια απαντήσεων', 'Scripts πωλήσεων'] },
         'pkg-hosting-care':       { name: 'Φιλοξενία και Φροντίδα Ιστοσελίδας', bestFor: 'Επιχειρήσεις που θέλουν φιλοξενία και τεχνική φροντίδα', features: ['Managed φιλοξενία', 'Ασφάλεια και backups', 'Έως 2 ώρες ενημερώσεων/μήνα', 'Παρακολούθηση απόδοσης'] },
-        'pkg-social-media':       { name: 'Περιεχόμενο Κοινωνικών Μέσων', bestFor: 'Επιχειρήσεις που χρειάζονται σταθερή παρουσία social media', features: ['12 posts/μήνα σε 2 πλατφόρμες', 'Captions, hashtags, προγραμματισμός', 'Ημερολόγιο περιεχομένου', 'Για τοπικά ερωτήματα'] },
+        'pkg-social-media':       { name: 'Περιεχόμενο Κοινωνικών Μέσων', bestFor: 'Επιχειρήσεις που χρειάζονται σταθερή παρουσία κοινωνικών μέσων', features: ['12 αναρτήσεις/μήνα σε 2 πλατφόρμες', 'Captions, hashtags, προγραμματισμός', 'Ημερολόγιο περιεχομένου', 'Για τοπικά ερωτήματα'] },
         'pkg-ai-content':         { name: 'Περιεχόμενο AI και Marketing', bestFor: 'Επιχειρήσεις που θέλουν να αυξήσουν την οργανική επισκεψιμότητα', features: ['Μηνιαία άρθρα blog SEO', 'Email newsletter', 'Παρακολούθηση Google', 'Μηνιαία αναφορά'] },
-        'pkg-ai-automation':      { name: 'Αυτοματοποίηση AI', bestFor: 'Επιχειρήσεις που χάνουν ερωτήματα ή follow-ups', features: ['Bot WhatsApp', 'Αλληλουχίες email', 'Παρακολούθηση CRM', 'Dashboard χωρίς κώδικα'] },
-        'pkg-ai-avatar':          { name: 'Βίντεο Avatar AI', bestFor: 'Επιχειρήσεις που θέλουν AI βίντεο για social media', features: ['8 AI βίντεο/μήνα', 'Custom ψηφιακό avatar', 'Υπότιτλοι Ελληνικά/Αγγλικά', 'Instagram και TikTok'] },
+        'pkg-ai-automation':      { name: 'Αυτοματοποίηση AI', bestFor: 'Επιχειρήσεις που χάνουν ερωτήματα ή follow-ups', features: ['Αυτοματοποιημένο bot WhatsApp', 'Αλληλουχίες email', 'Παρακολούθηση CRM', 'Dashboard χωρίς κώδικα'] },
+        'pkg-ai-avatar':          { name: 'Βίντεο Avatar AI', bestFor: 'Επιχειρήσεις που θέλουν AI βίντεο για κοινωνικά μέσα', features: ['8 AI βίντεο/μήνα', 'Custom ψηφιακό avatar', 'Υπότιτλοι Ελληνικά/Αγγλικά', 'Instagram και TikTok'] },
         'pkg-proposals':          { name: 'Προτάσεις και Έγγραφα Πωλήσεων', bestFor: 'Επιχειρήσεις που υποβάλλουν συχνά προσφορές', features: ['AI-generated προσφορές σε λεπτά', 'Branded quotes και συμβόλαια', 'Ψηφιακή υπογραφή', 'Αυτόματες αλληλουχίες follow-up'] },
       },
       bundles: {
@@ -698,7 +698,7 @@ export const translations = {
         'bundle-social-growth':    { name: 'Ιστοσελίδα και Ανάπτυξη Κοινωνικών Μέσων', badge: 'Ανάπτυξη', bestFor: 'Επιχειρήσεις που χτίζουν Διαδικτυακή παρουσία', features: ['Επαγγελματική κατασκευή', 'Managed φιλοξενία', '12 social posts/μήνα', 'Captions, hashtags, προγραμματισμός'] },
         'bundle-marketing-engine': { name: 'Ιστοσελίδα και Μηχανή Marketing', badge: 'Συνιστώμενο', bestFor: 'Αναπτυσσόμενες επιχειρήσεις που θέλουν πλήρη ψηφιακή παρουσία', features: ['Επαγγελματική κατασκευή', 'Managed φιλοξενία', 'Άρθρα blog SEO', 'Email newsletter', '12 social posts/μήνα', 'Παρακολούθηση Google'] },
         'bundle-automation':       { name: 'Ιστοσελίδα και Αυτοματοποίηση', badge: 'Αυτοματισμός', bestFor: 'Επιχειρήσεις υπηρεσιών όπου η ταχύτητα follow-up είναι κρίσιμη', features: ['Επαγγελματική κατασκευή', 'Managed φιλοξενία', 'Αυτοματισμός WhatsApp', 'Αλληλουχίες email', 'Παρακολούθηση CRM'] },
-        'bundle-ai-growth':        { name: 'Πακέτο Ανάπτυξης AI', badge: 'Premium', bestFor: 'Ιδιοκτήτες που θέλουν πλήρως managed premium παρουσία', features: ['Πλήρης κατασκευή και φιλοξενία', 'Μηνιαίο social media', 'SEO και email campaigns', 'WhatsApp automation και CRM', 'AI Avatar και βίντεο', 'Αφοσιωμένος account manager'] },
+        'bundle-ai-growth':        { name: 'Πακέτο Ανάπτυξης AI', badge: 'Premium', bestFor: 'Ιδιοκτήτες που θέλουν πλήρως managed παρουσία υψηλής ποιότητας', features: ['Πλήρης κατασκευή και φιλοξενία', 'Μηνιαίο περιεχόμενο κοινωνικών μέσων', 'SEO και καμπάνιες email', 'WhatsApp automation και CRM', 'AI Avatar και βίντεο', 'Αφοσιωμένος account manager'] },
       },
       addonGroupTitles:    ['Πρόσθετα Ιστοσελίδας', 'Μηνιαία Υποστήριξη και Πρόσθετα', 'Πρόσθετα Αυτοματοποίησης και AI', 'Πρόσθετα Εγκατάστασης'],
       addonGroupSubtitles: [null, null, 'Αυτά τα add-on απαιτούν προσφορά. Ζητήστε προσφορά και θα αξιολογήσουμε εύρος και κόστος.', null],
@@ -706,7 +706,7 @@ export const translations = {
         'addon-extra-page':        { name: 'Επιπλέον Σελίδα Ιστοσελίδας', bestFor: 'Επιχειρήσεις που χρειάζονται περισσότερες σελίδες', features: ['Μία επιπλέον σελίδα', 'Αντίστοιχο styling', 'Mobile έλεγχος', 'Ενημέρωση πλοήγησης'] },
         'addon-landing-page':      { name: 'Σελίδα Προσγείωσης', bestFor: 'Campaigns, διαφημίσεις, δημιουργία leads', features: ['Αυτόνομη σελίδα', 'Δομή headline και CTA', 'Τοποθέτηση φόρμας', 'Mobile layout'] },
         'addon-form-upgrade':      { name: 'Αναβάθμιση Φόρμας Ιστοσελίδας', bestFor: 'Καλύτερη capture ερωτημάτων ή κρατήσεων', features: ['Custom πεδία', 'Υποχρεωτικά πεδία', 'Dropdowns και επιβεβαίωση', 'Ρύθμιση δρομολόγησης'] },
-        'addon-whatsapp-chat':     { name: 'Ρύθμιση Click-to-Chat WhatsApp', bestFor: 'Επιχειρήσεις που προτιμούν WhatsApp', features: ['Ρύθμιση button και link', 'Τοποθέτηση σε κύριες σελίδες', 'Mobile click-to-chat'] },
+        'addon-whatsapp-chat':     { name: 'Κλικ για συνομιλία στο WhatsApp', bestFor: 'Επιχειρήσεις που προτιμούν WhatsApp', features: ['Ρύθμιση button και link', 'Τοποθέτηση σε κύριες σελίδες', 'Κλικ για συνομιλία σε κινητά'] },
         'addon-hosting-care':      { name: 'Φιλοξενία και Φροντίδα Ιστοσελίδας', bestFor: 'Επιχειρήσεις που θέλουν τεχνική φροντίδα', features: ['Managed φιλοξενία', 'Παρακολούθηση uptime', 'Ασφάλεια και backups', 'SSL και domain'] },
         'addon-extra-storage':     { name: 'Επιπλέον Χώρος Αποθήκευσης', bestFor: 'Επιχειρήσεις με μεγάλες συλλογές ή media', features: ['Επιπλέον managed χώρος', 'Υποστήριξη εικόνων και PDF', 'Παρακολούθηση χώρου'] },
         'addon-priority-updates':  { name: 'Ενημερώσεις Προτεραιότητας', bestFor: 'Επιχειρήσεις που χρειάζονται γρήγορες αλλαγές', features: ['Προτεραιοποιημένη διαχείριση', 'Ταχύτεροι χρόνοι', 'Ενημερώσεις κειμένου, εικόνων, τιμών'] },
@@ -734,13 +734,13 @@ export const translations = {
       {
         name: 'Ιστοσελίδα και Κοινωνική Ανάπτυξη',
         description: null,
-        features: ['Επαγγελματική κατασκευή ιστοσελίδας', 'Managed φιλοξενία συμπεριλαμβάνεται', '12 social posts/μήνα', 'Captions, hashtags, προγραμματισμός'],
+        features: ['Επαγγελματική κατασκευή ιστοσελίδας', 'Managed φιλοξενία συμπεριλαμβάνεται', '12 αναρτήσεις/μήνα', 'Captions, hashtags, προγραμματισμός'],
         cta: 'Αποκτήστε Ιστοσελίδα και Κοινωνική Ανάπτυξη',
       },
       {
         name: 'Ιστοσελίδα και Μηχανή Marketing',
-        description: 'Το πλήρες πακέτο ανάπτυξης. Η ιστοσελίδα σας, SEO, περιεχόμενο και social media — όλα γίνονται για εσάς κάθε μήνα.',
-        features: ['Επαγγελματική κατασκευή ιστοσελίδας', 'Managed φιλοξενία συμπεριλαμβάνεται', 'Μηνιαία άρθρα blog SEO', 'Καμπάνιες email newsletter', '12 posts social media/μήνα', 'Παρακολούθηση κατάταξης Google'],
+        description: 'Το πλήρες πακέτο ανάπτυξης. Η ιστοσελίδα σας, SEO, περιεχόμενο και κοινωνικά μέσα — όλα γίνονται για εσάς κάθε μήνα.',
+        features: ['Επαγγελματική κατασκευή ιστοσελίδας', 'Managed φιλοξενία συμπεριλαμβάνεται', 'Μηνιαία άρθρα blog SEO', 'Καμπάνιες email newsletter', '12 αναρτήσεις κοινωνικών μέσων/μήνα', 'Παρακολούθηση κατάταξης Google'],
         cta: 'Επιλέξτε Προτεινόμενη Δέσμη',
       },
       {
@@ -783,10 +783,10 @@ export const translations = {
         cta: 'Δημιουργήστε Ιστοσελίδα Ανάπτυξης',
       },
       {
-        name: 'Premium Ιστοσελίδα έτοιμη για AI',
-        bestFor: 'Επιχειρήσεις που θέλουν premium ιστοσελίδα με AI-ready βάσεις',
-        features: ['Τα πάντα στο Growth Website', 'Premium σχεδιασμός', 'Ενότητες έτοιμες για AI', 'Journey πελάτη', 'Ροή καταγραφής leads', 'Τεκμηρίωση εκκίνησης και παράδοσης'],
-        cta: 'Αίτημα Quote για Premium Ιστοσελίδα',
+        name: 'Ιστότοπος Προηγμένης Τεχνολογίας AI',
+        bestFor: 'Επιχειρήσεις που θέλουν ιστοσελίδα Προηγμένης Τεχνολογίας AI',
+        features: ['Τα πάντα στο Growth Website', 'Σχεδιασμός Προηγμένης Ποιότητας', 'Ενότητες έτοιμες για AI', 'Journey πελάτη', 'Ροή καταγραφής leads', 'Τεκμηρίωση εκκίνησης και παράδοσης'],
+        cta: 'Αίτημα Quote για Ιστοσελίδα Προηγμένης Τεχνολογίας',
       },
     ],
 
@@ -798,7 +798,7 @@ export const translations = {
           { name: 'Επιπλέον Σελίδα Ιστοσελίδας', bestFor: 'Επιχειρήσεις που χρειάζονται περισσότερες σελίδες από αυτές που περιλαμβάνει το πακέτο τους', includes: ['Μία επιπλέον σελίδα', 'Αντίστοιχο styling με την υπάρχουσα ιστοσελίδα', 'Έλεγχος για κινητά', 'Ενημέρωση πλοήγησης'], note: null },
           { name: 'Σελίδα Προσγείωσης', bestFor: 'Campaigns, διαφημίσεις, προσφορές, δημιουργία leads', includes: ['Αυτόνομη σελίδα', 'Δομή τίτλου και CTA', 'Τοποθέτηση φόρμας', 'Διάταξη για κινητά'], note: null },
           { name: 'Αναβάθμιση Φόρμας Ιστοσελίδας', bestFor: 'Καλύτερη καταγραφή ερωτημάτων, προσφορών ή κρατήσεων', includes: ['Προσαρμοσμένα πεδία', 'Ρύθμιση υποχρεωτικών πεδίων', 'Αναπτυσσόμενα και επιβεβαίωση', 'Ρύθμιση δρομολόγησης'], note: null },
-          { name: 'Ρύθμιση WhatsApp Click-to-Chat', bestFor: 'Επιχειρήσεις που προτιμούν συνομιλίες μέσω WhatsApp', includes: ['Ρύθμιση κουμπιού και συνδέσμου', 'Τοποθέτηση σε βασικές σελίδες', 'Click-to-chat για κινητά'], note: null },
+          { name: 'Κλικ για συνομιλία στο WhatsApp', bestFor: 'Επιχειρήσεις που προτιμούν συνομιλίες μέσω WhatsApp', includes: ['Ρύθμιση κουμπιού και συνδέσμου', 'Τοποθέτηση σε βασικές σελίδες', 'Κλικ για συνομιλία σε κινητά'], note: null },
         ],
       },
       {
@@ -820,7 +820,7 @@ export const translations = {
           { name: 'Απλός Αυτοματισμός', bestFor: 'Επιχειρήσεις με επαναλαμβανόμενη εργασία που θέλουν να αυτοματοποιήσουν', includes: [], note: null },
           { name: 'Αυτοματισμός Email', bestFor: 'Επιχειρήσεις που θέλουν αυτοματοποιημένα follow-ups και ροές email', includes: [], note: null },
           { name: 'Ροή Περιεχομένου AI', bestFor: 'Επιχειρήσεις που θέλουν το AI να τροφοδοτεί τη δημιουργία περιεχομένου τους', includes: [], note: null },
-          { name: 'AI Avatar / Βίντεο Περιεχόμενο', bestFor: 'Επιχειρήσεις που θέλουν AI-generated βίντεο για social media', includes: [], note: null },
+          { name: 'AI Avatar / Βίντεο Περιεχόμενο', bestFor: 'Επιχειρήσεις που θέλουν AI-generated βίντεο για κοινωνικά μέσα', includes: [], note: null },
         ],
       },
       {
@@ -869,8 +869,8 @@ export const translations = {
       },
       {
         name: 'Περιεχόμενο Κοινωνικών Μέσων',
-        description: 'Σταθερή παρουσία στα social media χωρίς να χρειαστεί να κάνετε τίποτα.',
-        features: ['12 posts/μήνα σε 2 πλατφόρμες', 'Captions, hashtags, προγραμματισμός', 'Σχεδιασμένο για τοπικά ερωτήματα'],
+        description: 'Σταθερή παρουσία στα κοινωνικά μέσα χωρίς να χρειαστεί να κάνετε τίποτα.',
+        features: ['12 αναρτήσεις/μήνα σε 2 πλατφόρμες', 'Captions, hashtags, προγραμματισμός', 'Σχεδιασμένο για τοπικά ερωτήματα'],
       },
       {
         name: 'Περιεχόμενο AI και Marketing',
@@ -884,7 +884,7 @@ export const translations = {
       },
       {
         name: 'Βίντεο Avatar AI',
-        description: 'Ξεχωρίστε στα social media με AI-generated περιεχόμενο βίντεο.',
+        description: 'Ξεχωρίστε στα κοινωνικά μέσα με AI-generated περιεχόμενο βίντεο.',
         features: ['8 AI βίντεο/μήνα', 'Δημιουργία digital avatar', 'Βελτιστοποιημένο για Instagram και TikTok'],
       },
       {
@@ -940,8 +940,8 @@ export const translations = {
       {
         name: 'Περιεχόμενο Κοινωνικών Μέσων',
         priceNote: 'Ρύθμιση συμπεριλαμβάνεται',
-        description: 'Σταθερή παρουσία στα social media χωρίς να χρειαστεί να κάνετε τίποτα.',
-        features: ['12 posts/μήνα σε 2 πλατφόρμες', 'Captions, hashtags, προγραμματισμός', 'Ημερολόγιο περιεχομένου', 'Σχεδιασμένο για τοπικά ερωτήματα'],
+        description: 'Σταθερή παρουσία στα κοινωνικά μέσα χωρίς να χρειαστεί να κάνετε τίποτα.',
+        features: ['12 αναρτήσεις/μήνα σε 2 πλατφόρμες', 'Captions, hashtags, προγραμματισμός', 'Ημερολόγιο περιεχομένου', 'Σχεδιασμένο για τοπικά ερωτήματα'],
       },
       {
         name: 'Περιεχόμενο AI και Marketing',
@@ -958,7 +958,7 @@ export const translations = {
       {
         name: 'Βίντεο Avatar AI',
         priceNote: '+ €250 εφάπαξ ρύθμιση',
-        description: 'Ξεχωρίστε στα social media με AI-generated περιεχόμενο βίντεο.',
+        description: 'Ξεχωρίστε στα κοινωνικά μέσα με AI-generated περιεχόμενο βίντεο.',
         features: ['8 AI βίντεο/μήνα', 'Δημιουργία custom ψηφιακού avatar', 'Υπότιτλοι στα Αγγλικά και Ελληνικά', 'Βελτιστοποιημένο για Instagram και TikTok'],
       },
       {
