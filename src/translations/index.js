@@ -651,6 +651,51 @@ export const translations = {
       },
     },
 
+    addonGroups: [
+      {
+        title: 'Website Add-ons',
+        subtitle: null,
+        addons: [
+          { name: 'Επιπλέον Σελίδα Ιστοσελίδας', bestFor: 'Επιχειρήσεις που χρειάζονται περισσότερες σελίδες από αυτές που περιλαμβάνει το πακέτο τους', includes: ['Μία επιπλέον σελίδα', 'Αντίστοιχο styling με την υπάρχουσα ιστοσελίδα', 'Έλεγχος για κινητά', 'Ενημέρωση πλοήγησης'], note: null },
+          { name: 'Landing Page', bestFor: 'Campaigns, διαφημίσεις, προσφορές, δημιουργία leads', includes: ['Αυτόνομη σελίδα', 'Δομή τίτλου και CTA', 'Τοποθέτηση φόρμας', 'Διάταξη για κινητά'], note: null },
+          { name: 'Αναβάθμιση Φόρμας Ιστοσελίδας', bestFor: 'Καλύτερη καταγραφή ερωτημάτων, προσφορών ή κρατήσεων', includes: ['Προσαρμοσμένα πεδία', 'Ρύθμιση υποχρεωτικών πεδίων', 'Αναπτυσσόμενα και επιβεβαίωση', 'Ρύθμιση δρομολόγησης'], note: null },
+          { name: 'Ρύθμιση WhatsApp Click-to-Chat', bestFor: 'Επιχειρήσεις που προτιμούν συνομιλίες μέσω WhatsApp', includes: ['Ρύθμιση κουμπιού και συνδέσμου', 'Τοποθέτηση σε βασικές σελίδες', 'Click-to-chat για κινητά'], note: null },
+        ],
+      },
+      {
+        title: 'Μηνιαία Support Add-ons',
+        subtitle: null,
+        addons: [
+          { name: 'Φιλοξενία & Φροντίδα Ιστοσελίδας', bestFor: 'Επιχειρήσεις που θέλουν τεχνική φροντίδα χωρίς να τη διαχειρίζονται', includes: ['Φιλοξενία και διαχειριζόμενος χώρος', 'Παρακολούθηση διαθεσιμότητας', 'Έλεγχοι ασφαλείας και αντίγραφα ασφαλείας', 'Μικρές διορθώσεις', 'Υποστήριξη SSL και domain'], note: 'Ανανεώσεις domain, άδειες τρίτων, μεγάλες ανακατασκευές και προηγμένες εργασίες ανάπτυξης δεν περιλαμβάνονται.' },
+          { name: 'Επιπλέον Χώρος Αποθήκευσης', bestFor: 'Επιχειρήσεις με μεγαλύτερες συλλογές, PDF ή πολυμέσα', includes: ['Επιπλέον διαχειριζόμενος χώρος', 'Υποστήριξη εικόνων και PDF', 'Παρακολούθηση χώρου αποθήκευσης'], note: 'Απαιτείται μόνο αν υπερβείτε τον χώρο που περιλαμβάνεται στη Φιλοξενία & Φροντίδα Ιστοσελίδας.' },
+          { name: 'Ενημερώσεις Προτεραιότητας', bestFor: 'Επιχειρήσεις που χρειάζονται γρήγορη εκτέλεση αλλαγών', includes: ['Χειρισμός προτεραιότητας', 'Ταχύτεροι χρόνοι απόκρισης', 'Ενημερώσεις κειμένου, εικόνας και τιμών'], note: null },
+          { name: 'Μηνιαία Ανανέωση Περιεχομένου', bestFor: 'Επιχειρήσεις που θέλουν την ιστοσελίδα τους να παραμένει φρέσκια', includes: ['Μία μηνιαία ανανέωση περιεχομένου', 'Ενημερώσεις περιεχομένου και εικόνων', 'Σημειώσεις βελτίωσης'], note: null },
+          { name: 'Βασικό SEO', bestFor: 'Επιχειρήσεις που θέλουν καλύτερη τοπική ορατότητα στην αναζήτηση', includes: ['Τακτοποίηση τίτλων σελίδων', 'Meta descriptions', 'Έλεγχοι επικεφαλίδων', 'Ευθυγράμμιση τοπικών λέξεων-κλειδιών'], note: null },
+          { name: 'Υποστήριξη Google Business Profile', bestFor: 'Επιχειρήσεις που θέλουν καλά διαχειριζόμενη παρουσία Google', includes: ['Υποστήριξη περιεχομένου προφίλ', 'Μηνιαίες δημοσιεύσεις', 'Ενημερώσεις φωτογραφιών και υπηρεσιών'], note: null },
+        ],
+      },
+      {
+        title: 'Automation & AI Add-ons',
+        subtitle: 'Όλα τα add-ons αυτοματισμού και AI απαιτούν προσφορά. Πείτε μας τι χρειάζεστε και θα αξιολογήσουμε εύρος και κόστος.',
+        addons: [
+          { name: 'Απλός Αυτοματισμός', bestFor: 'Επιχειρήσεις με επαναλαμβανόμενη εργασία που θέλουν να αυτοματοποιήσουν', includes: [], note: null },
+          { name: 'Αυτοματισμός Email', bestFor: 'Επιχειρήσεις που θέλουν αυτοματοποιημένα follow-ups και ροές email', includes: [], note: null },
+          { name: 'Ροή Περιεχομένου AI', bestFor: 'Επιχειρήσεις που θέλουν το AI να τροφοδοτεί τη δημιουργία περιεχομένου τους', includes: [], note: null },
+          { name: 'AI Avatar / Βίντεο Περιεχόμενο', bestFor: 'Επιχειρήσεις που θέλουν AI-generated βίντεο για social media', includes: [], note: null },
+        ],
+      },
+      {
+        title: 'Setup Add-ons',
+        subtitle: null,
+        addons: [
+          { name: 'Υποστήριξη Εγκατάστασης Επαγγελματικού Email', bestFor: 'Επιχειρήσεις που χρειάζονται ρύθμιση επαγγελματικής διεύθυνσης email', includes: ['Ρύθμιση παρόχου email', 'Επαλήθευση domain', 'Βασική ρύθμιση inbox'], note: 'Εξωτερικά κόστη αδειών (π.χ. Google Workspace, Microsoft 365) δεν περιλαμβάνονται.' },
+          { name: 'Υποστήριξη Σύνδεσης Domain', bestFor: 'Επιχειρήσεις που χρειάζονται βοήθεια για σύνδεση domain με την ιστοσελίδα τους', includes: ['Ρύθμιση DNS', 'Κατεύθυνση domain', 'Επαλήθευση σύνδεσης'], note: 'Κόστη αγοράς και ανανέωσης domain δεν περιλαμβάνονται.' },
+          { name: 'Ρύθμιση Παρακολούθησης', bestFor: 'Επιχειρήσεις που θέλουν κατάλληλο analytics και παρακολούθηση διαφημίσεων', includes: ['Ρύθμιση Google Analytics', 'Τοποθέτηση Meta Pixel ή GTM', 'Βασική παρακολούθηση events'], note: null },
+          { name: 'Έλεγχος Υγείας Ιστοσελίδας', bestFor: 'Επιχειρήσεις που θέλουν αξιολόγηση της υπάρχουσας ιστοσελίδας τους', includes: ['Έλεγχος ταχύτητας και κινητών', 'Σάρωση κατεστραμμένων συνδέσμων', 'Αξιολόγηση βασικού SEO', 'Αναφορά σύνοψης με συστάσεις'], note: null },
+        ],
+      },
+    ],
+
     findOutMore: {
       whoFor:     'Για ποιον προορίζεται',
       weNeed:     'Τι χρειαζόμαστε από εσάς',
@@ -1285,6 +1330,51 @@ export const translations = {
       summaryBundlesLabel:  'Bundles',
       summaryAddonsLabel:   'Add-ons',
     },
+
+    addonGroups: [
+      {
+        title: 'Website Add-ons',
+        subtitle: null,
+        addons: [
+          { name: 'Extra Website Page', bestFor: 'Businesses needing more pages than their package includes', includes: ['One additional page', 'Matched styling to existing site', 'Mobile check', 'Navigation update'], note: null },
+          { name: 'Landing Page', bestFor: 'Campaigns, ads, promotions, lead generation', includes: ['Standalone page', 'Headline and CTA structure', 'Form placement', 'Mobile layout'], note: null },
+          { name: 'Website Form Upgrade', bestFor: 'Better enquiry, quote, or booking capture', includes: ['Custom fields', 'Required field setup', 'Dropdowns and confirmation', 'Routing setup'], note: null },
+          { name: 'WhatsApp Click-to-Chat Setup', bestFor: 'Businesses preferring WhatsApp conversations', includes: ['Button and link setup', 'Key page placement', 'Mobile click-to-chat'], note: null },
+        ],
+      },
+      {
+        title: 'Monthly Support Add-ons',
+        subtitle: null,
+        addons: [
+          { name: 'Hosting & Website Care', bestFor: 'Businesses wanting technical care without managing it', includes: ['Hosting and managed storage', 'Uptime monitoring', 'Security checks and backups', 'Minor fixes', 'SSL and domain support'], note: 'Domain renewals, third-party licences, major redesigns and advanced development work are not included.' },
+          { name: 'Extra Website Storage', bestFor: 'Businesses with larger galleries, PDFs, or media', includes: ['Extra managed storage', 'Image and PDF support', 'Storage monitoring'], note: 'Only needed if you exceed the storage included in Hosting & Website Care.' },
+          { name: 'Priority Updates', bestFor: 'Businesses that need fast turnaround on changes', includes: ['Priority handling', 'Faster response times', 'Text, image and price updates'], note: null },
+          { name: 'Monthly Content Refresh', bestFor: 'Businesses wanting their site kept fresh', includes: ['One monthly content refresh', 'Content and image updates', 'Improvement notes'], note: null },
+          { name: 'SEO Basics', bestFor: 'Businesses wanting better local search visibility', includes: ['Page title tidy-up', 'Meta descriptions', 'Heading checks', 'Local keyword alignment'], note: null },
+          { name: 'Google Business Profile Support', bestFor: 'Businesses wanting a well-managed Google presence', includes: ['Profile content support', 'Monthly posts', 'Photo and service updates'], note: null },
+        ],
+      },
+      {
+        title: 'Automation and AI Add-ons',
+        subtitle: "All automation and AI add-ons require a quote. Tell us what you need and we'll assess scope and cost.",
+        addons: [
+          { name: 'Simple Automation', bestFor: 'Businesses with a repetitive task they want automated', includes: [], note: null },
+          { name: 'Email Automation', bestFor: 'Businesses wanting automated follow-ups and email flows', includes: [], note: null },
+          { name: 'AI Content Workflow', bestFor: 'Businesses wanting AI to power their content creation', includes: [], note: null },
+          { name: 'AI Avatar / Video Content', bestFor: 'Businesses wanting AI-generated video for social media', includes: [], note: null },
+        ],
+      },
+      {
+        title: 'Setup Add-ons',
+        subtitle: null,
+        addons: [
+          { name: 'Business Email Setup Support', bestFor: 'Businesses needing a professional email address set up', includes: ['Email provider configuration', 'Domain verification', 'Basic inbox setup'], note: 'External licence costs (e.g. Google Workspace, Microsoft 365) are not included.' },
+          { name: 'Domain Connection Support', bestFor: 'Businesses needing help connecting a domain to their website', includes: ['DNS configuration', 'Domain pointing', 'Connection verification'], note: 'Domain purchase and renewal costs are not included.' },
+          { name: 'Tracking Setup', bestFor: 'Businesses wanting proper analytics and ad tracking in place', includes: ['Google Analytics setup', 'Meta Pixel or GTM placement', 'Basic event tracking'], note: null },
+          { name: 'Website Health Check', bestFor: 'Businesses wanting a review of their existing website', includes: ['Speed and mobile check', 'Broken link scan', 'SEO basics review', 'Summary report with recommendations'], note: null },
+        ],
+      },
+    ],
 
     findOutMore: {
       whoFor:     'Who this is for',

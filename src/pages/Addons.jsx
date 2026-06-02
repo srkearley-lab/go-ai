@@ -444,6 +444,23 @@ export default function Addons() {
   const reduceMotion = useReducedMotion()
   const t = useTranslations()
 
+  // Merge structural data (id, price, priceNote, cta) with translated text
+  const localizedGroups = groups.map((group, gi) => {
+    const tg = t.addonGroups[gi]
+    return {
+      ...group,
+      title: tg.title,
+      subtitle: tg.subtitle,
+      addons: group.addons.map((addon, ai) => ({
+        ...addon,
+        name: tg.addons[ai].name,
+        bestFor: tg.addons[ai].bestFor,
+        includes: tg.addons[ai].includes,
+        note: tg.addons[ai].note,
+      })),
+    }
+  })
+
   const stagger = {
     hidden: {},
     show: { transition: { staggerChildren: reduceMotion ? 0 : 0.06, delayChildren: reduceMotion ? 0 : 0.04 } },
@@ -467,7 +484,7 @@ export default function Addons() {
         <div style={{ maxWidth: 'var(--width-xl)', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'var(--space-16)' }}>
 
           {/* Groups */}
-          {groups.map((group) => (
+          {localizedGroups.map((group) => (
             <div key={group.id} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-6)' }}>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
                 <h2 style={{

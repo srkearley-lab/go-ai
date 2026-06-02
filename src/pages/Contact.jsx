@@ -247,7 +247,7 @@ export default function Contact() {
             style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}
           >
             <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--color-brand-400)' }}>
-              FAQ
+              {t.nav.faq}
             </p>
             <h2 style={{ fontSize: 'clamp(var(--text-lg), 2.5vw, var(--text-xl))', fontWeight: 700, lineHeight: 1.15, letterSpacing: '-0.02em', color: 'var(--text-primary)' }}>
               {tc.faqHeading}
