@@ -8,17 +8,10 @@ import { useTranslations } from '../context/LanguageContext'
 const WHATSAPP  = '#'
 const CALENDLY  = import.meta.env.VITE_CALENDLY_URL || ''
 
-const callIncludes = [
-  '30 minutes, no obligation',
-  'We review your current online presence',
-  'You tell us your business goals',
-  'We recommend the right package',
-  'You receive a written plan within 24 hours',
-]
-
 export default function Book() {
   const reduceMotion = useReducedMotion()
   const t = useTranslations()
+  const callIncludes = t.book?.callIncludes || []
   useSEO({
     title: 'Book a Free Consultation',
     description: 'Book a free 30-minute consultation with GO AI. We\'ll review your business, recommend the right package and send you a written plan within 24 hours.',
