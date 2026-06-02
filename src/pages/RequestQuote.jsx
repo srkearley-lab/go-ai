@@ -708,12 +708,12 @@ function Step5({ form, set, errors, tr }) {
           <Field label="Google Business Profile" id="lGBP" type="url" placeholder="https://maps.app.goo.gl/…" value={form.linkGBP} onChange={set('linkGBP')} error={errors.linkGBP} />
         </div>
         <div className="rq-grid-3">
-          <Field label="Competitor 1" id="lC1" type="url" placeholder="https://" value={form.linkCompetitor1} onChange={set('linkCompetitor1')} error={errors.linkCompetitor1} />
-          <Field label="Competitor 2" id="lC2" type="url" placeholder="https://" value={form.linkCompetitor2} onChange={set('linkCompetitor2')} error={errors.linkCompetitor2} />
-          <Field label="Competitor 3" id="lC3" type="url" placeholder="https://" value={form.linkCompetitor3} onChange={set('linkCompetitor3')} error={errors.linkCompetitor3} />
-          <Field label="Example site 1" id="lE1" type="url" placeholder="https://" value={form.linkExample1} onChange={set('linkExample1')} error={errors.linkExample1} />
-          <Field label="Example site 2" id="lE2" type="url" placeholder="https://" value={form.linkExample2} onChange={set('linkExample2')} error={errors.linkExample2} />
-          <Field label="Example site 3" id="lE3" type="url" placeholder="https://" value={form.linkExample3} onChange={set('linkExample3')} error={errors.linkExample3} />
+          <Field label={tr.linkCompetitor1} id="lC1" type="url" placeholder="https://" value={form.linkCompetitor1} onChange={set('linkCompetitor1')} error={errors.linkCompetitor1} />
+          <Field label={tr.linkCompetitor2} id="lC2" type="url" placeholder="https://" value={form.linkCompetitor2} onChange={set('linkCompetitor2')} error={errors.linkCompetitor2} />
+          <Field label={tr.linkCompetitor3} id="lC3" type="url" placeholder="https://" value={form.linkCompetitor3} onChange={set('linkCompetitor3')} error={errors.linkCompetitor3} />
+          <Field label={tr.linkExample1} id="lE1" type="url" placeholder="https://" value={form.linkExample1} onChange={set('linkExample1')} error={errors.linkExample1} />
+          <Field label={tr.linkExample2} id="lE2" type="url" placeholder="https://" value={form.linkExample2} onChange={set('linkExample2')} error={errors.linkExample2} />
+          <Field label={tr.linkExample3} id="lE3" type="url" placeholder="https://" value={form.linkExample3} onChange={set('linkExample3')} error={errors.linkExample3} />
         </div>
       </div>
 

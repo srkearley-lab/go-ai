@@ -3,35 +3,40 @@ import { Link } from 'react-router-dom'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { Check, ArrowRight, ArrowLeft, Send, CheckCircle, ShoppingBag, AlertCircle, CreditCard, Paperclip, X } from 'lucide-react'
 import { useBasket } from '../context/BasketContext'
+import { useTranslations } from '../context/LanguageContext'
 import { useSEO } from '../lib/seo'
+
+// ── Country and business type stable values (never changes with language) ──────
+
+const COUNTRY_VALUES = ['Greece', 'Cyprus', 'UK', 'Germany', 'France', 'Australia', 'USA', 'Other']
+const BUSINESS_TYPE_VALUES = [
+  'Villa / Holiday Rental', 'Restaurant / Café', 'Gym / Fitness', 'Hair & Beauty',
+  'Tourism Company', 'Car / Boat Hire', 'Retail / E-commerce', 'Professional Services',
+  'Consultancy', 'Healthcare', 'Other',
+]
 
 // ── Validation helpers ────────────────────────────────────────────────────────
 
 const isValidEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim())
 const isValidPhone = (v) => /^[+\d\s\-().]{7,}$/.test(v.trim())
 
-function validateContact(data) {
+function validateContact(data, tr) {
   const e = {}
-  if (!data.firstName.trim())                  e.firstName    = 'Please enter your first name.'
-  if (!data.lastName.trim())                   e.lastName     = 'Please enter your last name.'
-  if (!data.businessName.trim())               e.businessName = 'Please enter your business name.'
-  if (!data.email.trim() || !isValidEmail(data.email)) e.email = 'Please enter a valid email address.'
-  if (!data.phone.trim() || !isValidPhone(data.phone)) e.phone = 'Please enter a valid phone number.'
-  if (!data.country)                           e.country      = 'Please select your country.'
+  if (!data.firstName.trim())                  e.firstName    = tr.errFirstName
+  if (!data.lastName.trim())                   e.lastName     = tr.errLastName
+  if (!data.businessName.trim())               e.businessName = tr.errBusinessName
+  if (!data.email.trim() || !isValidEmail(data.email)) e.email = tr.errEmail
+  if (!data.phone.trim() || !isValidPhone(data.phone)) e.phone = tr.errPhone
+  if (!data.country)                           e.country      = tr.errCountry
   return e
 }
 
-function validateReview(consent) {
-  return consent ? {} : { consent: 'Please confirm you agree before continuing.' }
+function validateReview(consent, tr) {
+  return consent ? {} : { consent: tr.errConsent }
 }
 
 function hasRecurringCost(items) {
   return items.some(i => /\/mo(nth)?|\/μήνα/i.test(i.priceDisplay))
-}
-
-function getReviewButtonLabel(items) {
-  if (hasRecurringCost(items)) return 'Continue to Payment Setup'
-  return 'Continue to Secure Payment'
 }
 
 // ── Field components ──────────────────────────────────────────────────────────
@@ -96,8 +101,12 @@ function TextareaField({ label, id, placeholder, value, onChange, rows = 3, requ
   )
 }
 
-function SelectField({ label, id, options, value, onChange, required, hint, error }) {
+// SelectField supports both plain string options and {label, value} objects.
+// Use {label, value} to display a translated label while storing a stable English value.
+function SelectField({ label, id, options, value, onChange, required, hint, error, placeholder }) {
   const [focused, setFocused] = useState(false)
+  const t = useTranslations()
+  const ph = placeholder || t.orderForm?.selectPlaceholder || 'Select...'
   return (
     <div>
       <label htmlFor={id} style={labelStyle}>
@@ -108,8 +117,11 @@ function SelectField({ label, id, options, value, onChange, required, hint, erro
         style={{ ...baseInput, borderColor: error ? 'var(--color-danger)' : focused ? 'var(--border-focus)' : 'var(--border-default)', boxShadow: focused ? 'var(--shadow-focus)' : 'none', appearance: 'none', cursor: 'pointer' }}
         onFocus={() => setFocused(true)} onBlur={() => setFocused(false)}
       >
-        <option value="" disabled>Select...</option>
-        {options.map(o => <option key={o} value={o}>{o}</option>)}
+        <option value="" disabled>{ph}</option>
+        {options.map(o => typeof o === 'string'
+          ? <option key={o} value={o}>{o}</option>
+          : <option key={o.value} value={o.value}>{o.label}</option>
+        )}
       </select>
       <ErrorMsg msg={error} />
       {hint && !error && <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', marginTop: 'var(--space-1)' }}>{hint}</p>}
@@ -138,7 +150,10 @@ function CheckboxGroup({ label, options, selected, onChange, hint }) {
   )
 }
 
-function YesNoToggle({ label, value, onChange, hint }) {
+function YesNoToggle({ label, value, onChange, hint, yesLabel, noLabel }) {
+  const t = useTranslations()
+  const yes = yesLabel || t.orderForm?.yes || 'Yes'
+  const no  = noLabel  || t.orderForm?.no  || 'No'
   return (
     <div>
       <p style={labelStyle}>{label}</p>
@@ -147,7 +162,7 @@ function YesNoToggle({ label, value, onChange, hint }) {
           const active = value === opt
           return (
             <button key={String(opt)} type="button" onClick={() => onChange(opt)} style={{ height: 36, padding: '0 var(--space-5)', fontSize: 'var(--text-sm)', fontWeight: 500, background: active ? (opt ? 'rgba(22,163,74,0.12)' : 'rgba(220,38,38,0.1)') : 'var(--surface-subtle)', color: active ? (opt ? 'var(--color-success)' : 'var(--color-danger)') : 'var(--text-secondary)', border: `1px solid ${active ? (opt ? 'rgba(22,163,74,0.3)' : 'rgba(220,38,38,0.25)') : 'var(--border-default)'}`, borderRadius: 'var(--radius-md)', cursor: 'pointer', transition: 'all 120ms ease', fontFamily: 'inherit' }}>
-              {opt ? 'Yes' : 'No'}
+              {opt ? yes : no}
             </button>
           )
         })}
@@ -168,6 +183,8 @@ function Divider({ title }) {
 
 function FileUploadField({ label, files, onAdd, onRemove, hint }) {
   const inputRef = useRef(null)
+  const t = useTranslations()
+  const chooseFiles = t.orderForm?.chooseFiles || 'Choose files'
 
   const handleChange = (e) => {
     const picked = Array.from(e.target.files).map(f => ({ name: f.name, size: f.size }))
@@ -188,7 +205,7 @@ function FileUploadField({ label, files, onAdd, onRemove, hint }) {
         onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--border-strong)'; e.currentTarget.style.color = 'var(--text-primary)' }}
         onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--border-default)'; e.currentTarget.style.color = 'var(--text-secondary)' }}
       >
-        <Paperclip size={14} /> Choose files
+        <Paperclip size={14} /> {chooseFiles}
       </button>
 
       {files.length > 0 && (
@@ -242,17 +259,17 @@ function ProgressBar({ steps, currentIndex }) {
 
 // ── Step 1: Customer details ──────────────────────────────────────────────────
 
-function ContactStep({ data, set, errors }) {
+function ContactStep({ data, set, errors, tr, countryOptions }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-6)' }}>
-      <Divider title="Your details" />
+      <Divider title={tr.dividerYourDetails} />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-        <Field label="First name" id="firstName" placeholder="e.g. Maria" value={data.firstName} onChange={set('firstName')} required autoComplete="given-name" error={errors.firstName} />
-        <Field label="Last name" id="lastName" placeholder="e.g. Papadopoulos" value={data.lastName} onChange={set('lastName')} required autoComplete="family-name" error={errors.lastName} />
-        <Field label="Business name" id="businessName" placeholder="e.g. Santorini Dream Villas" value={data.businessName} onChange={set('businessName')} required autoComplete="organization" error={errors.businessName} />
-        <Field label="Email address" id="email" type="email" placeholder="your@email.com" value={data.email} onChange={set('email')} required autoComplete="email" error={errors.email} />
-        <Field label="Phone number" id="phone" type="tel" placeholder="+30 69..." value={data.phone} onChange={set('phone')} required autoComplete="tel" hint="Include country code" error={errors.phone} />
-        <SelectField label="Country" id="country" options={['Greece', 'Cyprus', 'UK', 'Germany', 'France', 'Australia', 'USA', 'Other']} value={data.country} onChange={set('country')} required error={errors.country} />
+        <Field label={tr.firstName} id="firstName" placeholder={tr.placeholderFirstName} value={data.firstName} onChange={set('firstName')} required autoComplete="given-name" error={errors.firstName} />
+        <Field label={tr.lastName} id="lastName" placeholder={tr.placeholderLastName} value={data.lastName} onChange={set('lastName')} required autoComplete="family-name" error={errors.lastName} />
+        <Field label={tr.businessName} id="businessName" placeholder={tr.placeholderBusiness} value={data.businessName} onChange={set('businessName')} required autoComplete="organization" error={errors.businessName} />
+        <Field label={tr.emailAddress} id="email" type="email" placeholder="your@email.com" value={data.email} onChange={set('email')} required autoComplete="email" error={errors.email} />
+        <Field label={tr.phoneNumber} id="phone" type="tel" placeholder="+30 69..." value={data.phone} onChange={set('phone')} required autoComplete="tel" hint={tr.phoneHint} error={errors.phone} />
+        <SelectField label={tr.country} id="country" options={countryOptions} value={data.country} onChange={set('country')} required error={errors.country} />
       </div>
     </div>
   )
@@ -260,28 +277,28 @@ function ContactStep({ data, set, errors }) {
 
 // ── Step 2: Business and project details ──────────────────────────────────────
 
-function BusinessStep({ data, set, uploads, onAddFiles, onRemoveFile }) {
+function BusinessStep({ data, set, uploads, onAddFiles, onRemoveFile, tr, businessTypeOptions }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-6)' }}>
-      <Divider title="About your business" />
+      <Divider title={tr.dividerAboutBusiness} />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-        <SelectField label="Business type" id="businessType" options={['Villa / Holiday Rental', 'Restaurant / Café', 'Gym / Fitness', 'Hair & Beauty', 'Tourism Company', 'Car / Boat Hire', 'Retail / E-commerce', 'Professional Services', 'Consultancy', 'Healthcare', 'Other']} value={data.businessType} onChange={set('businessType')} required />
-        <Field label="Main services or products" id="businessServices" placeholder="e.g. luxury villa rentals, private tours" value={data.businessServices} onChange={set('businessServices')} required />
+        <SelectField label={tr.businessType} id="businessType" options={businessTypeOptions} value={data.businessType} onChange={set('businessType')} required />
+        <Field label={tr.mainServices} id="businessServices" placeholder={tr.placeholderServices} value={data.businessServices} onChange={set('businessServices')} required />
       </div>
-      <TextareaField label="Target audience" id="targetAudience" placeholder="Who are your ideal customers? e.g. European tourists, local families, corporate clients..." value={data.targetAudience} onChange={set('targetAudience')} rows={3} required />
-      <Field label="Existing website URL" id="existingWebsite" placeholder="www.example.gr (leave blank if none)" value={data.existingWebsite} onChange={set('existingWebsite')} hint="Leave blank if you don't have one yet" />
-      <Divider title="Brand assets" />
+      <TextareaField label={tr.targetAudience} id="targetAudience" placeholder={tr.placeholderTargetAudience} value={data.targetAudience} onChange={set('targetAudience')} rows={3} required />
+      <Field label={tr.existingWebsite} id="existingWebsite" placeholder="www.example.gr (leave blank if none)" value={data.existingWebsite} onChange={set('existingWebsite')} hint="Leave blank if you don't have one yet" />
+      <Divider title={tr.dividerBrandAssets} />
       <FileUploadField
-        label="Upload brand assets (optional)"
+        label={tr.uploadLabel}
         files={uploads}
         onAdd={onAddFiles}
         onRemove={onRemoveFile}
         hint="Logo, brand colours guide, photos, or any reference files. If you prefer, email them to hello@goai.example after submitting."
       />
-      <Divider title="Project timing" />
+      <Divider title={tr.dividerProjectTiming} />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-        <Field label="Preferred launch date" id="launchDate" type="date" value={data.launchDate} onChange={set('launchDate')} hint="Target date — we'll confirm if achievable" />
-        <TextareaField label="Additional project notes" id="projectNotes" placeholder="Anything else about your project — budget, requirements, deadlines..." value={data.projectNotes} onChange={set('projectNotes')} rows={2} />
+        <Field label={tr.preferredLaunchDate} id="launchDate" type="date" value={data.launchDate} onChange={set('launchDate')} hint="Target date — we'll confirm if achievable" />
+        <TextareaField label={tr.additionalNotes} id="projectNotes" placeholder={tr.placeholderNotes} value={data.projectNotes} onChange={set('projectNotes')} rows={2} />
       </div>
     </div>
   )
@@ -388,17 +405,17 @@ function SummaryRow({ label, value }) {
   )
 }
 
-function ReviewStep({ form, items, uploads, consent, setConsent, errors }) {
+function ReviewStep({ form, items, uploads, consent, setConsent, errors, tr }) {
   const recurring = items.filter(i => /\/mo(nth)?|\/μήνα/i.test(i.priceDisplay))
   const oneOff = items.filter(i => !/\/mo(nth)?|\/μήνα/i.test(i.priceDisplay))
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-8)' }}>
-      <Divider title="Order summary" />
+      <Divider title={tr.dividerOrderSummary} />
 
       {/* Packages */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
-        <p style={{ ...labelStyle, margin: 0 }}>Selected packages ({items.length})</p>
+        <p style={{ ...labelStyle, margin: 0 }}>{tr.selectedPackages} ({items.length})</p>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
           {items.map(item => (
             <div key={item.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--space-3) var(--space-4)', background: 'var(--surface-subtle)', border: '1px solid var(--border-default)', borderRadius: 'var(--radius-md)' }}>
@@ -410,35 +427,35 @@ function ReviewStep({ form, items, uploads, consent, setConsent, errors }) {
 
         {oneOff.length > 0 && (
           <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', fontStyle: 'italic' }}>
-            One-off setup: {oneOff.map(i => i.name).join(', ')}
+            {tr.oneOffSetup}: {oneOff.map(i => i.name).join(', ')}
           </p>
         )}
         {recurring.length > 0 && (
           <p style={{ fontSize: 'var(--text-xs)', color: 'var(--color-accent-400)', fontStyle: 'italic' }}>
-            Monthly recurring: {recurring.map(i => i.name).join(', ')}
+            {tr.monthlyRecurring}: {recurring.map(i => i.name).join(', ')}
           </p>
         )}
       </div>
 
       {/* Customer details */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
-        <p style={{ ...labelStyle, margin: 0 }}>Your details</p>
+        <p style={{ ...labelStyle, margin: 0 }}>{tr.dividerYourDetailsReview}</p>
         <div style={{ padding: 'var(--space-4)', background: 'var(--surface-subtle)', border: '1px solid var(--border-default)', borderRadius: 'var(--radius-md)', display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
-          <SummaryRow label="Name" value={`${form.contact.firstName} ${form.contact.lastName}`.trim()} />
-          <SummaryRow label="Business" value={form.contact.businessName} />
-          <SummaryRow label="Email" value={form.contact.email} />
-          <SummaryRow label="Phone" value={form.contact.phone} />
-          <SummaryRow label="Country" value={form.contact.country} />
-          {form.business.existingWebsite && <SummaryRow label="Existing website" value={form.business.existingWebsite} />}
-          {form.business.businessType && <SummaryRow label="Business type" value={form.business.businessType} />}
-          {form.business.targetAudience && <SummaryRow label="Target audience" value={form.business.targetAudience} />}
+          <SummaryRow label={tr.labelName} value={`${form.contact.firstName} ${form.contact.lastName}`.trim()} />
+          <SummaryRow label={tr.labelBusiness} value={form.contact.businessName} />
+          <SummaryRow label={tr.labelEmail} value={form.contact.email} />
+          <SummaryRow label={tr.labelPhone} value={form.contact.phone} />
+          <SummaryRow label={tr.labelCountry} value={form.contact.country} />
+          {form.business.existingWebsite && <SummaryRow label={tr.labelExistingWebsite} value={form.business.existingWebsite} />}
+          {form.business.businessType && <SummaryRow label={tr.labelBusinessType} value={form.business.businessType} />}
+          {form.business.targetAudience && <SummaryRow label={tr.labelTargetAudience} value={form.business.targetAudience} />}
         </div>
       </div>
 
       {/* Uploaded files */}
       {uploads.length > 0 && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
-          <p style={{ ...labelStyle, margin: 0 }}>Uploaded files ({uploads.length})</p>
+          <p style={{ ...labelStyle, margin: 0 }}>{tr.uploadedFiles} ({uploads.length})</p>
           <div style={{ padding: 'var(--space-4)', background: 'var(--surface-subtle)', border: '1px solid var(--border-default)', borderRadius: 'var(--radius-md)', display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
             {uploads.map((f, i) => (
               <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', fontSize: 'var(--text-sm)' }}>
@@ -463,7 +480,7 @@ function ReviewStep({ form, items, uploads, consent, setConsent, errors }) {
             {consent && <Check size={11} strokeWidth={3} color="#fff" />}
           </div>
           <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
-            I agree to be contacted by the GO AI team regarding my selected packages and project details. I understand no payment is taken at this stage.*
+            {tr.consentText}*
           </span>
         </label>
         <ErrorMsg msg={errors.consent} />
@@ -474,13 +491,14 @@ function ReviewStep({ form, items, uploads, consent, setConsent, errors }) {
 
 // ── Step 5: Payment ───────────────────────────────────────────────────────────
 
-function PaymentStep({ items }) {
+function PaymentStep({ items, tr }) {
   const recurring = hasRecurringCost(items)
   const oneOff = items.some(i => !/\/mo(nth)?|\/μήνα/i.test(i.priceDisplay) || /one-off|setup|From|εφάπαξ|Ρύθμιση|Από/i.test(i.priceDisplay))
+  const steps = recurring ? tr.paymentStepsRecurring : tr.paymentStepsOneOff
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-8)' }}>
-      <Divider title="Payment Details" />
+      <Divider title={tr.dividerPaymentDetails} />
 
       <div style={{ background: 'var(--surface-raised)', border: '1px solid var(--border-default)', borderRadius: 'var(--radius-lg)', padding: 'var(--space-8)', display: 'flex', flexDirection: 'column', gap: 'var(--space-5)' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)' }}>
@@ -488,32 +506,27 @@ function PaymentStep({ items }) {
             <CreditCard size={20} />
           </div>
           <div>
-            <h3 style={{ fontSize: 'var(--text-md)', fontWeight: 600, color: 'var(--text-primary)', margin: 0 }}>Secure Payment</h3>
-            <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', margin: 0 }}>Arranged after your enquiry is reviewed</p>
+            <h3 style={{ fontSize: 'var(--text-md)', fontWeight: 600, color: 'var(--text-primary)', margin: 0 }}>{tr.securePayment}</h3>
+            <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', margin: 0 }}>{tr.paymentSubtitle}</p>
           </div>
         </div>
 
         <p style={{ fontSize: 'var(--text-sm)', lineHeight: 1.7, color: 'var(--text-secondary)', margin: 0 }}>
-          Payment will be arranged securely after GoAI reviews your selected package and project details.
+          {tr.paymentBody}
         </p>
 
         {recurring && (
           <div style={{ background: 'rgba(245,158,11,0.06)', border: '1px solid rgba(245,158,11,0.2)', borderRadius: 'var(--radius-md)', padding: 'var(--space-4)', display: 'flex', gap: 'var(--space-3)' }}>
             <AlertCircle size={16} color="var(--color-accent-500)" style={{ flexShrink: 0, marginTop: 2 }} />
             <p style={{ fontSize: 'var(--text-sm)', lineHeight: 1.6, color: 'var(--text-secondary)', margin: 0 }}>
-              This package includes a recurring monthly cost. Direct debit or subscription payment setup will be required before the service starts.
+              {tr.recurringNotice}
             </p>
           </div>
         )}
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)', paddingTop: 'var(--space-2)', borderTop: '1px solid var(--border-default)' }}>
-          <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', margin: 0 }}>What happens next</p>
-          {[
-            'GoAI reviews your submission and package selections',
-            'We contact you within 24 hours to confirm scope and pricing',
-            recurring ? 'We send a secure payment link and direct debit setup' : 'We send a secure invoice for your one-off payment',
-            'Work begins once payment is confirmed',
-          ].map((step, i) => (
+          <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', margin: 0 }}>{tr.whatHappensNext}</p>
+          {steps.map((step, i) => (
             <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 'var(--space-3)' }}>
               <span style={{ width: 20, height: 20, borderRadius: '50%', background: 'rgba(99,102,241,0.1)', border: '1px solid rgba(99,102,241,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, fontWeight: 700, color: 'var(--color-brand-400)', flexShrink: 0, marginTop: 1 }}>
                 {i + 1}
@@ -529,10 +542,10 @@ function PaymentStep({ items }) {
 
 // ── Confirmation ──────────────────────────────────────────────────────────────
 
-function Confirmation({ hasRecurring, hasUploads, reduceMotion }) {
+function Confirmation({ hasRecurring, hasUploads, reduceMotion, tr }) {
   const message = hasRecurring
-    ? "Thank you — we've received your details. This package includes a recurring monthly cost. GoAI will contact you to complete the direct debit or subscription setup securely before the service starts."
-    : `Thank you — we've received your details. Your selected package, project information${hasUploads ? ' and uploaded file references' : ''} have been submitted to GoAI. We'll review everything and come back to you with the next steps and payment details.`
+    ? tr.confirmationRecurring
+    : (hasUploads ? tr.confirmationOneOff : tr.confirmationOneOffNoFiles)
 
   return (
     <main style={{ paddingTop: 64, minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--surface-base)', padding: 'var(--space-8)' }}>
@@ -548,7 +561,7 @@ function Confirmation({ hasRecurring, hasUploads, reduceMotion }) {
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
           <h1 style={{ fontSize: 'var(--text-xl)', fontWeight: 700, color: 'var(--text-primary)', margin: 0 }}>
-            Submission received
+            {tr.submissionReceived}
           </h1>
           <p style={{ fontSize: 'var(--text-base)', lineHeight: 1.7, color: 'var(--text-secondary)', margin: 0, maxWidth: '46ch' }}>
             {message}
@@ -562,7 +575,7 @@ function Confirmation({ hasRecurring, hasUploads, reduceMotion }) {
             onMouseEnter={(e) => { e.currentTarget.style.filter = 'brightness(1.1)' }}
             onMouseLeave={(e) => { e.currentTarget.style.filter = 'brightness(1)' }}
           >
-            Return to Homepage
+            {tr.returnHome}
           </Link>
           <Link
             to="/packages"
@@ -570,7 +583,7 @@ function Confirmation({ hasRecurring, hasUploads, reduceMotion }) {
             onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--surface-raised)' }}
             onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent' }}
           >
-            View Packages
+            {tr.viewPackages}
           </Link>
         </div>
       </motion.div>
@@ -583,6 +596,19 @@ function Confirmation({ hasRecurring, hasUploads, reduceMotion }) {
 export default function OrderForm() {
   const reduceMotion = useReducedMotion()
   const { items, neededFormTypes, clearBasket } = useBasket()
+  const t = useTranslations()
+  const tr = t.orderForm || {}
+
+  // Build country and business type options with stable values but translated labels
+  const countryOptions = (tr.countryLabels || COUNTRY_VALUES).map((label, i) => ({
+    label,
+    value: COUNTRY_VALUES[i] || label,
+  }))
+  const businessTypeOptions = (tr.businessTypeLabels || BUSINESS_TYPE_VALUES).map((label, i) => ({
+    label,
+    value: BUSINESS_TYPE_VALUES[i] || label,
+  }))
+
   const [submitted, setSubmitted] = useState(false)
   const [submittedWithRecurring, setSubmittedWithRecurring] = useState(false)
   const [submittedWithUploads, setSubmittedWithUploads] = useState(false)
@@ -609,15 +635,15 @@ export default function OrderForm() {
 
   const steps = useMemo(() => {
     const s = [
-      { id: 'contact',  label: 'Your Details' },
-      { id: 'business', label: 'Your Business' },
+      { id: 'contact',  label: tr.stepYourDetails  || 'Your Details' },
+      { id: 'business', label: tr.stepYourBusiness  || 'Your Business' },
     ]
     const hasPackageQuestions = neededFormTypes.includes('website') || neededFormTypes.includes('social') || neededFormTypes.includes('automation')
-    if (hasPackageQuestions) s.push({ id: 'packages', label: 'Project Details' })
-    s.push({ id: 'review',  label: 'Review Order' })
-    s.push({ id: 'payment', label: 'Payment' })
+    if (hasPackageQuestions) s.push({ id: 'packages', label: tr.stepProjectDetails || 'Project Details' })
+    s.push({ id: 'review',  label: tr.stepReviewOrder  || 'Review Order' })
+    s.push({ id: 'payment', label: tr.stepPayment      || 'Payment' })
     return s
-  }, [neededFormTypes])
+  }, [neededFormTypes, tr])
 
   const currentStep = steps[currentIndex]
 
@@ -632,8 +658,8 @@ export default function OrderForm() {
 
   const handleNext = () => {
     let stepErrors = {}
-    if (currentStep.id === 'contact') stepErrors = validateContact(form.contact)
-    if (currentStep.id === 'review')  stepErrors = validateReview(consent)
+    if (currentStep.id === 'contact') stepErrors = validateContact(form.contact, tr)
+    if (currentStep.id === 'review')  stepErrors = validateReview(consent, tr)
 
     if (Object.keys(stepErrors).length > 0) {
       setErrors(stepErrors)
@@ -654,7 +680,7 @@ export default function OrderForm() {
         business: form.contact.businessName,
         email: form.contact.email,
         phone: form.contact.phone,
-        country: form.contact.country,
+        country: form.contact.country, // stable English value always stored
       },
       project: form.business,
       uploadedFiles: uploads.map(f => f.name),
@@ -674,7 +700,7 @@ export default function OrderForm() {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
-  if (submitted) return <Confirmation hasRecurring={submittedWithRecurring} hasUploads={submittedWithUploads} reduceMotion={reduceMotion} />
+  if (submitted) return <Confirmation hasRecurring={submittedWithRecurring} hasUploads={submittedWithUploads} reduceMotion={reduceMotion} tr={tr} />
 
   // Empty basket guard
   if (items.length === 0) {
@@ -685,11 +711,11 @@ export default function OrderForm() {
             <ShoppingBag size={28} />
           </div>
           <div>
-            <h1 style={{ fontSize: 'var(--text-lg)', fontWeight: 700, color: 'var(--text-primary)', marginBottom: 'var(--space-3)' }}>Your basket is empty</h1>
-            <p style={{ fontSize: 'var(--text-sm)', lineHeight: 1.7, color: 'var(--text-secondary)' }}>Add services from our packages or bundles pages to get started with your order.</p>
+            <h1 style={{ fontSize: 'var(--text-lg)', fontWeight: 700, color: 'var(--text-primary)', marginBottom: 'var(--space-3)' }}>{tr.basketEmpty || 'Your basket is empty'}</h1>
+            <p style={{ fontSize: 'var(--text-sm)', lineHeight: 1.7, color: 'var(--text-secondary)' }}>{tr.basketEmptyBody || 'Add services from our packages or bundles pages to get started with your order.'}</p>
           </div>
           <Link to="/packages" style={{ height: 44, padding: '0 var(--space-6)', display: 'inline-flex', alignItems: 'center', gap: 'var(--space-2)', fontSize: 'var(--text-sm)', fontWeight: 500, background: 'var(--color-brand-500)', color: 'var(--color-neutral-0)', border: '1px solid var(--color-brand-600)', borderRadius: 'var(--radius-md)', textDecoration: 'none', transition: 'background 120ms ease' }} onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--color-brand-600)' }} onMouseLeave={(e) => { e.currentTarget.style.background = 'var(--color-brand-500)' }}>
-            Browse Packages <ArrowRight size={14} />
+            {tr.browsePackages || 'Browse Packages'} <ArrowRight size={14} />
           </Link>
         </div>
       </main>
@@ -697,7 +723,14 @@ export default function OrderForm() {
   }
 
   const isPaymentStep = currentStep.id === 'payment'
-  const reviewButtonLabel = getReviewButtonLabel(items)
+  const isReviewStep  = currentStep.id === 'review'
+  const reviewBtnLabel = hasRecurringCost(items)
+    ? (tr.continueToPaymentSetup || 'Continue to Payment Setup')
+    : (tr.continueToPayment || 'Continue to Secure Payment')
+  const n = items.length
+  const subtitle = n === 1
+    ? (tr.subtitleSingular || '1 package selected · No payment taken here')
+    : (tr.subtitlePlural || `{n} packages selected · No payment taken here`).replace('{n}', n)
 
   return (
     <main style={{ paddingTop: 64, background: 'var(--surface-base)' }}>
@@ -705,12 +738,12 @@ export default function OrderForm() {
       <div style={{ background: 'var(--surface-subtle)', borderBottom: '1px solid var(--border-default)', padding: 'var(--space-8) var(--space-8) var(--space-6)' }}>
         <div style={{ maxWidth: 760, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'var(--space-6)' }}>
           <div>
-            <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--color-brand-400)', marginBottom: 'var(--space-2)' }}>Order form</p>
+            <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--color-brand-400)', marginBottom: 'var(--space-2)' }}>{tr.tag || 'Order form'}</p>
             <h1 style={{ fontSize: 'clamp(var(--text-lg), 3vw, var(--text-xl))', fontWeight: 700, lineHeight: 1.15, letterSpacing: '-0.02em', color: 'var(--text-primary)', margin: 0 }}>
-              Tell us about your project
+              {tr.title || 'Tell us about your project'}
             </h1>
             <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', marginTop: 'var(--space-2)' }}>
-              {items.length} package{items.length !== 1 ? 's' : ''} selected · No payment taken here
+              {subtitle}
             </p>
           </div>
           <ProgressBar steps={steps} currentIndex={currentIndex} />
@@ -729,11 +762,11 @@ export default function OrderForm() {
                 exit={reduceMotion ? {} : { opacity: 0, x: -12 }}
                 transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
               >
-                {currentStep.id === 'contact'  && <ContactStep data={form.contact} set={setField('contact')} errors={errors} />}
-                {currentStep.id === 'business' && <BusinessStep data={form.business} set={setField('business')} uploads={uploads} onAddFiles={addFiles} onRemoveFile={removeFile} />}
+                {currentStep.id === 'contact'  && <ContactStep data={form.contact} set={setField('contact')} errors={errors} tr={tr} countryOptions={countryOptions} />}
+                {currentStep.id === 'business' && <BusinessStep data={form.business} set={setField('business')} uploads={uploads} onAddFiles={addFiles} onRemoveFile={removeFile} tr={tr} businessTypeOptions={businessTypeOptions} />}
                 {currentStep.id === 'packages' && <PackageQuestionsStep form={form} setField={setField} setMulti={setMulti} neededFormTypes={neededFormTypes} />}
-                {currentStep.id === 'review'   && <ReviewStep form={form} items={items} uploads={uploads} consent={consent} setConsent={setConsent} errors={errors} />}
-                {currentStep.id === 'payment'  && <PaymentStep items={items} />}
+                {currentStep.id === 'review'   && <ReviewStep form={form} items={items} uploads={uploads} consent={consent} setConsent={setConsent} errors={errors} tr={tr} />}
+                {currentStep.id === 'payment'  && <PaymentStep items={items} tr={tr} />}
               </motion.div>
             </AnimatePresence>
 
@@ -747,7 +780,7 @@ export default function OrderForm() {
                 onMouseEnter={(e) => { if (currentIndex > 0) e.currentTarget.style.background = 'var(--surface-raised)' }}
                 onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent' }}
               >
-                <ArrowLeft size={14} /> Back
+                <ArrowLeft size={14} /> {tr.back || 'Back'}
               </button>
 
               {!isPaymentStep ? (
@@ -758,7 +791,7 @@ export default function OrderForm() {
                   onMouseEnter={(e) => { e.currentTarget.style.filter = 'brightness(1.1)' }}
                   onMouseLeave={(e) => { e.currentTarget.style.filter = 'brightness(1)' }}
                 >
-                  {currentStep.id === 'review' ? reviewButtonLabel : 'Continue'} <ArrowRight size={14} />
+                  {isReviewStep ? reviewBtnLabel : (tr.continue || 'Continue')} <ArrowRight size={14} />
                 </button>
               ) : (
                 <button
@@ -767,7 +800,7 @@ export default function OrderForm() {
                   onMouseEnter={(e) => { e.currentTarget.style.filter = 'brightness(1.1)' }}
                   onMouseLeave={(e) => { e.currentTarget.style.filter = 'brightness(1)' }}
                 >
-                  <Send size={14} /> Submit Enquiry
+                  <Send size={14} /> {tr.continue || 'Continue'}
                 </button>
               )}
             </div>
