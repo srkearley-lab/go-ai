@@ -372,7 +372,7 @@ function PortfolioCard({ item, viewDemoLabel }) {
         <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)' }}>
           <span style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-1)', fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)' }}>
             <MapPin size={11} />
-            {item.location}
+            {tp.locationMap?.[item.location] || item.location}
           </span>
           <span style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-1)', fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)' }}>
             <Clock size={11} />
