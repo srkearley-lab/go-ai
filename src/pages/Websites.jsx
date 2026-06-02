@@ -265,7 +265,7 @@ function WebsiteCard({ pkg, variants }) {
               {pkg.price}
             </span>
             <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-secondary)', fontStyle: 'italic', marginTop: 'var(--space-1)' }}>
-              One-off, fixed-price website build.
+              {t.labels.oneOffBuildNote}
             </p>
           </div>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-3)', alignItems: 'center' }}>
@@ -282,7 +282,7 @@ function WebsiteCard({ pkg, variants }) {
             onClick={() => setShowDetails(v => !v)}
             style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-1)', background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-brand-400)', fontSize: 'var(--text-xs)', fontWeight: 500, padding: 0, fontFamily: 'inherit' }}
           >
-            {showDetails ? 'Hide details' : 'Find Out More'}
+            {showDetails ? t.buttons.hideDetails : t.buttons.findOutMore}
             <motion.span animate={{ rotate: showDetails ? 180 : 0 }} transition={{ duration: 0.15 }} style={{ display: 'flex' }}>
               <ChevronDown size={12} />
             </motion.span>
@@ -290,7 +290,7 @@ function WebsiteCard({ pkg, variants }) {
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-5)' }}>
-          <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)' }}>What's included</p>
+          <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)' }}>{t.journey.whatsIncluded}</p>
           <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
             {pkg.features.map(f => <FeatureItem key={f} text={f} accent />)}
           </ul>

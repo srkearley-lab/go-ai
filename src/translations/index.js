@@ -282,6 +282,15 @@ export const translations = {
       packagesVsAddons:  'Πακέτα έναντι Πρόσθετων',
       packagesVsAddonsDesc: 'Τα πακέτα είναι επιλογές σταθερής τιμής με σαφές αντικείμενο. Αν χρειάζεστε κάτι μικρότερο — όπως φιλοξενία, αποθηκευτικό χώρο, φόρμες ή υποστήριξη περιεχομένου —',
       visitAddons:       'επισκεφθείτε τα Πρόσθετα',
+      monthly:           'Μηνιαία',
+      perMonthLong:      'Ανά μήνα',
+      fixedPrice:        'Σταθερή τιμή',
+      select:            'Επιλογή',
+      selected:          'Επιλεγμένο',
+      add:               'Προσθήκη',
+      mobileResponsive:  'Βελτιστοποιημένη για κινητά',
+      oneOffBuildNote:   'Εφάπαξ κατασκευή σταθερής τιμής.',
+      oneOffFixedBuild:  'Εφάπαξ κατασκευή με σταθερή τιμή',
     },
 
     strip: {
@@ -635,8 +644,8 @@ export const translations = {
 
     journeyData: {
       websites: {
-        'basic-launch':   { name: 'Βασική Ιστοσελίδα Εκκίνησης', badge: 'Αρχάριοι', bestFor: 'Μικρές επιχειρήσεις, ελεύθεροι επαγγελματίες, startups', features: ['Σελίδα μιας σελίδας', 'Mobile responsive', 'Φόρμα επικοινωνίας', 'Βασικό SEO', 'Εργαλείο analytics', 'Ρύθμιση εκκίνησης'] },
-        'starter-business':{ name: 'Starter Business Website', badge: 'Starter', bestFor: 'Νέες επιχειρήσεις που θέλουν περισσότερη αξιοπιστία', features: ['Έως 3 σελίδες', 'Mobile responsive', 'Φόρμα επικοινωνίας', 'CTA κρατήσεων', 'Βασικό SEO', 'Social links'] },
+        'basic-launch':   { name: 'Βασική Ιστοσελίδα Εκκίνησης', badge: 'Αρχάριοι', bestFor: 'Μικρές επιχειρήσεις, ελεύθεροι επαγγελματίες, startups', features: ['Σελίδα μιας σελίδας', 'Βελτιστοποιημένη για κινητά', 'Φόρμα επικοινωνίας', 'Βασικό SEO', 'Εργαλείο analytics', 'Ρύθμιση εκκίνησης'] },
+        'starter-business':{ name: 'Starter Business Website', badge: 'Starter', bestFor: 'Νέες επιχειρήσεις που θέλουν περισσότερη αξιοπιστία', features: ['Έως 3 σελίδες', 'Βελτιστοποιημένη για κινητά', 'Φόρμα επικοινωνίας', 'CTA κρατήσεων', 'Βασικό SEO', 'Social links'] },
         'business':        { name: 'Business Website', badge: 'Συνιστώμενο', bestFor: 'Εδραιωμένες επιχειρήσεις, σύμβουλοι, τοπικοί πάροχοι', features: ['Έως 5 σελίδες', 'Φόρμα capture leads', 'Σύνδεσμος κρατήσεων', 'Ενότητα FAQ', 'Έτοιμο για analytics', 'Υποστήριξη deployment'] },
         'growth':          { name: 'Growth Website', badge: 'Καλύτερο για Ανάπτυξη', bestFor: 'Επιχειρήσεις έτοιμες να επενδύσουν σε ιστοσελίδα υψηλότερης μετατροπής', features: ['Έως 7 σελίδες', 'Δομή funnel', 'Σύγκριση πακέτων', 'Meta Pixel και GTM', 'Βελτιωμένο SEO'] },
         'premium':         { name: 'Premium AI-Ready Website', badge: 'Premium', bestFor: 'Επιχειρήσεις που θέλουν κορυφαία ιστοσελίδα ως μακροπρόθεσμο asset', features: ['Τα πάντα στο Growth Website', 'Premium custom design system', 'Ενότητες έτοιμες για ΑΙ', 'Δομημένο journey πελάτη', 'Πλήρης τεκμηρίωση εκκίνησης'] },
@@ -646,7 +655,7 @@ export const translations = {
         'pkg-seo':                { name: 'SEO', bestFor: 'Επιχειρήσεις που θέλουν να εμφανίζονται στην τοπική αναζήτηση Google', features: ['Τίτλοι σελίδων και meta descriptions', 'Έρευνα λέξεων-κλειδιών', 'Google Search Console', 'Μηνιαία παρακολούθηση κατατάξεων'] },
         'pkg-whatsapp-automation':{ name: 'WhatsApp Automation', bestFor: 'Επιχειρήσεις που λαμβάνουν ερωτήματα μέσω WhatsApp', features: ['Αυτόματη απάντηση', 'Δρομολόγηση leads', 'Επιβεβαίωση κρατήσεων', 'Αυτοματισμός workflows'] },
         'pkg-email-automation':   { name: 'Email Automation', bestFor: 'Επιχειρήσεις που θέλουν αυτόματα follow-ups', features: ['Αλληλουχίες follow-up', 'Ροές απάντησης', 'Campaigns leads', 'Ρύθμιση πλατφόρμας email'] },
-        'pkg-video-websites':     { name: 'Video Websites', bestFor: 'Επιχειρήσεις με βίντεο που θέλουν να ξεχωρίσουν', features: ['Ενότητες hero με βίντεο', 'Landing page με βίντεο', 'Ενσωμάτωση AI avatar', 'Mobile-optimised βίντεο'] },
+        'pkg-video-websites':     { name: 'Video Websites', bestFor: 'Επιχειρήσεις με βίντεο που θέλουν να ξεχωρίσουν', features: ['Ενότητες hero με βίντεο', 'Landing page με βίντεο', 'Ενσωμάτωση AI avatar', 'Εμφάνιση βίντεο για κινητά'] },
         'pkg-ai-prompts':         { name: 'AI Prompts', bestFor: 'Ιδιοκτήτες που θέλουν να χρησιμοποιούν εργαλεία ΑΙ αποτελεσματικά', features: ['Βιβλιοθήκη custom prompts', 'Templates δημιουργίας περιεχομένου', 'Πλαίσια απαντήσεων', 'Scripts πωλήσεων'] },
         'pkg-hosting-care':       { name: 'Hosting & Website Care', bestFor: 'Επιχειρήσεις που θέλουν φιλοξενία και τεχνική φροντίδα', features: ['Managed φιλοξενία', 'Ασφάλεια και backups', 'Έως 2 ώρες ενημερώσεων/μήνα', 'Παρακολούθηση απόδοσης'] },
         'pkg-social-media':       { name: 'Social Media Content', bestFor: 'Επιχειρήσεις που χρειάζονται σταθερή παρουσία social media', features: ['12 posts/μήνα σε 2 πλατφόρμες', 'Captions, hashtags, προγραμματισμός', 'Ημερολόγιο περιεχομένου', 'Για τοπικά ερωτήματα'] },
@@ -662,7 +671,7 @@ export const translations = {
         'bundle-automation':       { name: 'Website and Automation', badge: 'Αυτοματισμός', bestFor: 'Επιχειρήσεις υπηρεσιών όπου η ταχύτητα follow-up είναι κρίσιμη', features: ['Επαγγελματική κατασκευή', 'Managed φιλοξενία', 'Αυτοματισμός WhatsApp', 'Αλληλουχίες email', 'Παρακολούθηση CRM'] },
         'bundle-ai-growth':        { name: 'AI Growth Package', badge: 'Premium', bestFor: 'Ιδιοκτήτες που θέλουν πλήρως managed premium παρουσία', features: ['Πλήρης κατασκευή και φιλοξενία', 'Μηνιαίο social media', 'SEO και email campaigns', 'WhatsApp automation και CRM', 'AI Avatar και βίντεο', 'Αφοσιωμένος account manager'] },
       },
-      addonGroupTitles:    ['Website Add-ons', 'Μηνιαία Support Add-ons', 'Automation & AI Add-ons', 'Setup Add-ons'],
+      addonGroupTitles:    ['Πρόσθετα Ιστοσελίδας', 'Μηνιαία Υποστήριξη και Πρόσθετα', 'Πρόσθετα Αυτοματοποίησης και AI', 'Πρόσθετα Εγκατάστασης'],
       addonGroupSubtitles: [null, null, 'Αυτά τα add-on απαιτούν προσφορά. Ζητήστε προσφορά και θα αξιολογήσουμε εύρος και κόστος.', null],
       addons: {
         'addon-extra-page':        { name: 'Extra Website Page', bestFor: 'Επιχειρήσεις που χρειάζονται περισσότερες σελίδες', features: ['Μία επιπλέον σελίδα', 'Αντίστοιχο styling', 'Mobile έλεγχος', 'Ενημέρωση πλοήγησης'] },
@@ -723,13 +732,13 @@ export const translations = {
       {
         name: 'Βασική Ιστοσελίδα Εκκίνησης',
         bestFor: 'Μικρές επιχειρήσεις, ελεύθεροι επαγγελματίες, πρώιμες startups',
-        features: ['Μία σελίδα', 'Mobile responsive', 'Φόρμα επικοινωνίας', 'Βασικό SEO', 'Placeholder analytics', 'Ρύθμιση εκκίνησης'],
+        features: ['Μία σελίδα', 'Βελτιστοποιημένη για κινητά', 'Φόρμα επικοινωνίας', 'Βασικό SEO', 'Placeholder analytics', 'Ρύθμιση εκκίνησης'],
         cta: 'Ξεκινήστε με Βασική Ιστοσελίδα',
       },
       {
         name: 'Starter Business Website',
         bestFor: 'Νέες επιχειρήσεις που θέλουν περισσότερη αξιοπιστία',
-        features: ['Έως 3 σελίδες — Αρχική, Υπηρεσίες, Επικοινωνία', 'Mobile responsive', 'Φόρμα επικοινωνίας', 'Placeholder CTA κρατήσεων', 'Βασικό SEO', 'Σύνδεσμοι social'],
+        features: ['Έως 3 σελίδες — Αρχική, Υπηρεσίες, Επικοινωνία', 'Βελτιστοποιημένη για κινητά', 'Φόρμα επικοινωνίας', 'Placeholder CTA κρατήσεων', 'Βασικό SEO', 'Σύνδεσμοι social'],
         cta: 'Δημιουργήστε το Starter Website μου',
       },
       {
@@ -754,7 +763,7 @@ export const translations = {
 
     addonGroups: [
       {
-        title: 'Website Add-ons',
+        title: 'Πρόσθετα Ιστοσελίδας',
         subtitle: null,
         addons: [
           { name: 'Επιπλέον Σελίδα Ιστοσελίδας', bestFor: 'Επιχειρήσεις που χρειάζονται περισσότερες σελίδες από αυτές που περιλαμβάνει το πακέτο τους', includes: ['Μία επιπλέον σελίδα', 'Αντίστοιχο styling με την υπάρχουσα ιστοσελίδα', 'Έλεγχος για κινητά', 'Ενημέρωση πλοήγησης'], note: null },
@@ -764,7 +773,7 @@ export const translations = {
         ],
       },
       {
-        title: 'Μηνιαία Support Add-ons',
+        title: 'Μηνιαία Υποστήριξη και Πρόσθετα',
         subtitle: null,
         addons: [
           { name: 'Φιλοξενία & Φροντίδα Ιστοσελίδας', bestFor: 'Επιχειρήσεις που θέλουν τεχνική φροντίδα χωρίς να τη διαχειρίζονται', includes: ['Φιλοξενία και διαχειριζόμενος χώρος', 'Παρακολούθηση διαθεσιμότητας', 'Έλεγχοι ασφαλείας και αντίγραφα ασφαλείας', 'Μικρές διορθώσεις', 'Υποστήριξη SSL και domain'], note: 'Ανανεώσεις domain, άδειες τρίτων, μεγάλες ανακατασκευές και προηγμένες εργασίες ανάπτυξης δεν περιλαμβάνονται.' },
@@ -776,7 +785,7 @@ export const translations = {
         ],
       },
       {
-        title: 'Automation & AI Add-ons',
+        title: 'Πρόσθετα Αυτοματοποίησης και AI',
         subtitle: 'Όλα τα add-ons αυτοματισμού και AI απαιτούν προσφορά. Πείτε μας τι χρειάζεστε και θα αξιολογήσουμε εύρος και κόστος.',
         addons: [
           { name: 'Απλός Αυτοματισμός', bestFor: 'Επιχειρήσεις με επαναλαμβανόμενη εργασία που θέλουν να αυτοματοποιήσουν', includes: [], note: null },
@@ -786,7 +795,7 @@ export const translations = {
         ],
       },
       {
-        title: 'Setup Add-ons',
+        title: 'Πρόσθετα Εγκατάστασης',
         subtitle: null,
         addons: [
           { name: 'Υποστήριξη Εγκατάστασης Επαγγελματικού Email', bestFor: 'Επιχειρήσεις που χρειάζονται ρύθμιση επαγγελματικής διεύθυνσης email', includes: ['Ρύθμιση παρόχου email', 'Επαλήθευση domain', 'Βασική ρύθμιση inbox'], note: 'Εξωτερικά κόστη αδειών (π.χ. Google Workspace, Microsoft 365) δεν περιλαμβάνονται.' },
@@ -1182,7 +1191,8 @@ export const translations = {
       addons:    'Add-ons',
       reviewLabel:  'Review',
       paymentLabel: 'Payment',
-      bestFor:   'Best for',
+      bestFor:      'Best for',
+      whatsIncluded: "What's included",
       heroTag:   'Start Your Journey',
       heroTitle: 'Start Your GoAI Journey',
       heroDesc:  'Build your perfect setup step by step. Choose your website, add services, and review your full package before committing.',
@@ -1280,6 +1290,15 @@ export const translations = {
       packagesVsAddons:  'Packages vs Add-ons',
       packagesVsAddonsDesc: 'Packages are fixed-price website and service options with a clear scope. If you only need a smaller extra — such as hosting care, extra storage, forms, tracking, WhatsApp setup, or content support —',
       visitAddons:       'visit Add-ons',
+      monthly:           'Monthly',
+      perMonthLong:      'Per month',
+      fixedPrice:        'Fixed price',
+      select:            'Select',
+      selected:          'Selected',
+      add:               'Add',
+      mobileResponsive:  'Mobile responsive',
+      oneOffBuildNote:   'One-off, fixed-price website build.',
+      oneOffFixedBuild:  'One-off fixed price build',
     },
 
     strip: {
