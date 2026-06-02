@@ -7,6 +7,7 @@ import {
   Bot, BarChart3, PenLine,
 } from 'lucide-react'
 import PageHero from '../components/PageHero'
+import { useTranslations } from '../context/LanguageContext'
 
 const WHATSAPP = '#'
 
@@ -209,6 +210,7 @@ const categories = [
 
 function ServiceDetailCard({ icon: Icon, title, description, included, bestFor }) {
   const reduceMotion = useReducedMotion()
+  const t = useTranslations()
 
   return (
     <motion.div
@@ -265,11 +267,11 @@ function ServiceDetailCard({ icon: Icon, title, description, included, bestFor }
       {/* Included */}
       <div>
         <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', marginBottom: 'var(--space-4)' }}>
-          What's included
+          {t.findOutMore.included}
         </p>
         <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
-          {included.map((item) => (
-            <li key={item} style={{ display: 'flex', alignItems: 'flex-start', gap: 'var(--space-3)' }}>
+          {included.map((item, i) => (
+            <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 'var(--space-3)' }}>
               <span
                 style={{
                   width: 16, height: 16, flexShrink: 0, marginTop: 2,
@@ -293,11 +295,11 @@ function ServiceDetailCard({ icon: Icon, title, description, included, bestFor }
       {/* Best for */}
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-2)' }}>
         <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', marginRight: 'var(--space-1)', alignSelf: 'center' }}>
-          Best for:
+          {t.pages.addons.bestFor}
         </span>
-        {bestFor.map((tag) => (
+        {bestFor.map((tag, ti) => (
           <span
-            key={tag}
+            key={ti}
             style={{
               fontSize: 'var(--text-xs)', fontWeight: 500,
               color: 'var(--text-secondary)',
