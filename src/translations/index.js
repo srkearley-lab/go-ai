@@ -12,6 +12,29 @@ export const translations = {
       basket:       'Καλάθι',
       startJourney: 'Ξεκινήστε το Ταξίδι',
       requestQuote: 'Ζητήστε Προσφορά',
+      getQuote:     'Προσφορά',
+    },
+
+    basket: {
+      title:      'Το Καλάθι σας',
+      closeLabel: 'Κλείσιμο',
+      removeItem: 'Αφαίρεση',
+      note:       'Θα συλλέξουμε τις λεπτομέρειες στο επόμενο βήμα. Δεν γίνεται πληρωμή εδώ.',
+      proceed:    'Συνέχεια στη Φόρμα Παραγγελίας',
+    },
+
+    thankYou: {
+      title:        'Το μήνυμα ελήφθη',
+      body:         'Ευχαριστούμε — λάβαμε το μήνυμά σας. Η ομάδα GO AI θα εξετάσει τα στοιχεία σας και θα επικοινωνήσει μαζί σας εντός 24 ωρών.',
+      nextLabel:    'Τι γίνεται στη συνέχεια',
+      steps: [
+        'Ελέγχουμε την υποβολή σας — συνήθως μέσα σε λίγες ώρες',
+        'Ετοιμάζουμε εξατομικευμένη σύσταση για την επιχείρησή σας',
+        'Την λαμβάνετε μέσω WhatsApp ή email εντός 24 ωρών',
+      ],
+      returnHome:   'Επιστροφή στην αρχική',
+      viewPackages: 'Δείτε Πακέτα',
+      whatsappUs:   'WhatsApp',
     },
 
     home: {
@@ -679,6 +702,19 @@ export const translations = {
         ctaPrimary:  'Ζητήστε Προσφορά Σήμερα',
         ctaContact:  'Επικοινωνήστε με το GoAI',
       },
+      websites: {
+        tag:         'Ιστοσελίδες',
+        title:       'Πακέτα Κατασκευής Ιστοσελίδας',
+        description: 'Εφάπαξ κατασκευές ιστοσελίδων σε σταθερές τιμές. Επιλέξτε το κατάλληλο επίπεδο για την επιχείρησή σας, ξεκινώντας από τη Βασική Ιστοσελίδα Εκκίνησης στα €450.',
+        intro:       'Επιλέξτε το κατάλληλο επίπεδο ιστοσελίδας για την επιχείρησή σας. Πρόκειται για σταθερές τιμές μόνο για την αρχική κατασκευή — η συνεχής φιλοξενία, το περιεχόμενο, η ανάπτυξη και τα προαιρετικά extras είναι διαθέσιμα ξεχωριστά μέσω πακέτων, δεσμών και πρόσθετων.',
+        vatNote:     'Όλες οι τιμές αφορούν την αρχική κατασκευή ιστοσελίδας. Η τελική τιμή επιβεβαιώνεται κατόπιν αιτήματος ανάλογα με σελίδες και εύρος εργασιών. Όλες οι τιμές δεν περιλαμβάνουν ΦΠΑ (24%).',
+        bestFor:     'Ιδανικό για:',
+        ctaTag:      'Θέλετε κάτι παραπάνω από μια ιστοσελίδα;',
+        ctaTitle:    'Συνδυάστε με μηνιαία υποστήριξη',
+        ctaBody:     'Προσθέστε μηνιαίες υπηρεσίες για φιλοξενία, SEO, social media και αυτοματισμό — ή εξοικονομήστε με μια δέσμη που τα περιλαμβάνει όλα.',
+        ctaBundles:  'Δείτε Μηνιαίες Δέσμες',
+        ctaPackages: 'Δείτε Πακέτα Υπηρεσιών',
+      },
     },
   },
 
@@ -695,6 +731,29 @@ export const translations = {
       basket:       'Basket',
       startJourney: 'Start Your Journey',
       requestQuote: 'Request a Quote',
+      getQuote:     'Get Quote',
+    },
+
+    basket: {
+      title:      'Your Basket',
+      closeLabel: 'Close basket',
+      removeItem: 'Remove',
+      note:       "We'll collect all details on the next step. No payment taken here.",
+      proceed:    'Proceed to Order Form',
+    },
+
+    thankYou: {
+      title:        'Message received',
+      body:         "Thank you — we've received your message. The GO AI team will review your details and come back to you within 24 hours.",
+      nextLabel:    'What happens next',
+      steps: [
+        'We review your submission — usually within a few hours',
+        'We prepare a tailored recommendation for your business',
+        'You receive it via WhatsApp or email within 24 hours',
+      ],
+      returnHome:   'Return to Homepage',
+      viewPackages: 'View Packages',
+      whatsappUs:   'WhatsApp us',
     },
 
     home: {
@@ -1277,6 +1336,19 @@ export const translations = {
         ctaBody:     "Tell us what you are trying to improve and we will recommend the right package, bundle, or add-ons.",
         ctaPrimary:  'Get a Quote Today',
         ctaContact:  'Contact GoAI',
+      },
+      websites: {
+        tag:         'Websites',
+        title:       'Website Setup Packages',
+        description: 'One-off website builds with fixed prices. Choose the right level for your business, starting with the Basic Launch Website at €450.',
+        intro:       'Choose the right level of website for your business. These are fixed prices for the initial website build only — ongoing hosting, content, growth support and optional extras are available separately through our packages, bundles and add-ons.',
+        vatNote:     'All website prices are fixed prices for the initial website build. Final price confirmed on enquiry based on pages and scope. All prices exclude Greek VAT (24%).',
+        bestFor:     'Best for:',
+        ctaTag:      'Want more than just a website?',
+        ctaTitle:    'Combine with monthly support',
+        ctaBody:     'Add monthly services for hosting, SEO, social media and automation — or save with a bundle that includes everything.',
+        ctaBundles:  'View Monthly Bundles',
+        ctaPackages: 'View Service Packages',
       },
     },
   },

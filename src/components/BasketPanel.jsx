@@ -3,10 +3,12 @@ import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ShoppingCart, X, Trash2, ArrowRight } from 'lucide-react'
 import { useBasket } from '../context/BasketContext'
+import { useTranslations } from '../context/LanguageContext'
 
 export default function BasketPanel() {
   const { items, removeItem } = useBasket()
   const [open, setOpen] = useState(false)
+  const t = useTranslations()
 
   if (items.length === 0) return null
 
@@ -54,7 +56,7 @@ export default function BasketPanel() {
                 <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)' }}>
                   <ShoppingCart size={18} color="var(--color-brand-400)" />
                   <h2 style={{ fontSize: 'var(--text-md)', fontWeight: 700, color: 'var(--text-primary)', margin: 0 }}>
-                    Your Basket
+                    {t.basket.title}
                   </h2>
                   <span style={{
                     display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
@@ -75,7 +77,7 @@ export default function BasketPanel() {
                   }}
                   onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--text-primary)'; e.currentTarget.style.background = 'var(--surface-subtle)' }}
                   onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--text-tertiary)'; e.currentTarget.style.background = 'none' }}
-                  aria-label="Close basket"
+                  aria-label={t.basket.closeLabel}
                 >
                   <X size={18} />
                 </button>
@@ -112,7 +114,7 @@ export default function BasketPanel() {
                       }}
                       onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--color-danger)'; e.currentTarget.style.background = 'var(--surface-overlay)' }}
                       onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--text-tertiary)'; e.currentTarget.style.background = 'none' }}
-                      aria-label={`Remove ${item.name}`}
+                      aria-label={`${t.basket.removeItem} ${item.name}`}
                     >
                       <Trash2 size={14} />
                     </button>
@@ -128,7 +130,7 @@ export default function BasketPanel() {
                 flexShrink: 0,
               }}>
                 <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', margin: 0, textAlign: 'center' }}>
-                  We'll collect all details on the next step. No payment taken here.
+                  {t.basket.note}
                 </p>
                 <Link
                   to="/order"
@@ -145,7 +147,7 @@ export default function BasketPanel() {
                   onMouseEnter={(e) => { e.currentTarget.style.filter = 'brightness(1.1)'; e.currentTarget.style.boxShadow = '0 0 36px rgba(118, 39, 239, 0.5)' }}
                   onMouseLeave={(e) => { e.currentTarget.style.filter = 'brightness(1)'; e.currentTarget.style.boxShadow = '0 0 24px rgba(118, 39, 239, 0.35)' }}
                 >
-                  Proceed to Order Form <ArrowRight size={15} />
+                  {t.basket.proceed} <ArrowRight size={15} />
                 </Link>
               </div>
             </motion.div>

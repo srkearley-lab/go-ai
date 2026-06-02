@@ -5,6 +5,7 @@ import { Check, ChevronDown, ShoppingCart, ArrowRight } from 'lucide-react'
 import PageHero from '../components/PageHero'
 import { useBasket, PACKAGE_FORM_TYPES } from '../context/BasketContext'
 import { packageDetails } from '../data/packageDetails'
+import { useTranslations } from '../context/LanguageContext'
 
 // ── Website packages data ─────────────────────────────────────────────────────
 
@@ -138,6 +139,7 @@ function FeatureItem({ text, accent = false }) {
 
 function BasketButton({ item }) {
   const { addItem, removeItem, isInBasket } = useBasket()
+  const t = useTranslations()
   const inBasket = isInBasket(item.id)
   return (
     <button
@@ -157,8 +159,8 @@ function BasketButton({ item }) {
       onMouseLeave={(e) => { if (!inBasket) { e.currentTarget.style.color = 'var(--text-secondary)'; e.currentTarget.style.borderColor = 'var(--border-default)' } }}
     >
       {inBasket
-        ? <><Check size={11} strokeWidth={3} /> In Basket</>
-        : <><ShoppingCart size={11} /> Add to Basket</>}
+        ? <><Check size={11} strokeWidth={3} /> {t.buttons.inBasket}</>
+        : <><ShoppingCart size={11} /> {t.buttons.addToBasket}</>}
     </button>
   )
 }
@@ -167,6 +169,7 @@ function BasketButton({ item }) {
 
 function FindOutMorePanel({ name, item }) {
   const details = packageDetails[name]
+  const t = useTranslations()
   if (!details) return null
   return (
     <div style={{ borderTop: '1px solid var(--border-default)', paddingTop: 'var(--space-6)', marginTop: 'var(--space-4)', display: 'flex', flexDirection: 'column', gap: 'var(--space-6)' }}>
@@ -176,11 +179,11 @@ function FindOutMorePanel({ name, item }) {
       </div>
       <div className="fom-grid grid grid-cols-1 md:grid-cols-2 gap-6">
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
-          <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', margin: 0 }}>Who this is for</p>
+          <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', margin: 0 }}>{t.findOutMore.whoFor}</p>
           <p style={{ fontSize: 'var(--text-sm)', lineHeight: 1.6, color: 'var(--text-secondary)', margin: 0 }}>{details.whoFor}</p>
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
-          <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', margin: 0 }}>What we need from you</p>
+          <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', margin: 0 }}>{t.findOutMore.weNeed}</p>
           <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
             {details.youNeed.map(i => (
               <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 'var(--space-2)', fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
@@ -190,7 +193,7 @@ function FindOutMorePanel({ name, item }) {
           </ul>
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
-          <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', margin: 0 }}>What's included</p>
+          <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', margin: 0 }}>{t.findOutMore.included}</p>
           <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
             {details.included.map(i => (
               <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 'var(--space-2)' }}>
@@ -203,7 +206,7 @@ function FindOutMorePanel({ name, item }) {
           </ul>
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
-          <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', margin: 0 }}>How it works</p>
+          <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', margin: 0 }}>{t.findOutMore.howItWorks}</p>
           <ol style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
             {details.steps.map((step, i) => (
               <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 'var(--space-3)' }}>
@@ -225,10 +228,11 @@ function FindOutMorePanel({ name, item }) {
 
 function WebsiteCard({ pkg, variants }) {
   const [showDetails, setShowDetails] = useState(false)
+  const t = useTranslations()
   const basketItem = {
     id: pkg.name,
     name: pkg.name,
-    priceDisplay: `${pkg.price} one-off`,
+    priceDisplay: `${pkg.price} ${t.labels.oneOff}`,
     formTypes: PACKAGE_FORM_TYPES[pkg.name] || ['website'],
   }
 
@@ -332,7 +336,7 @@ function WebsiteCard({ pkg, variants }) {
         <span style={{ fontSize: 'var(--text-xl)', fontWeight: 700, letterSpacing: '-0.02em', color: 'var(--text-primary)', lineHeight: 1 }}>{pkg.price}</span>
       </div>
 
-      <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', fontStyle: 'italic' }}>Best for: {pkg.bestFor}</p>
+      <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', fontStyle: 'italic' }}>{t.pages.websites.bestFor} {pkg.bestFor}</p>
 
       <hr style={{ border: 'none', borderTop: '1px solid var(--border-default)', margin: 0 }} />
 
@@ -352,7 +356,7 @@ function WebsiteCard({ pkg, variants }) {
         onClick={() => setShowDetails(v => !v)}
         style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-1)', background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-brand-400)', fontSize: 'var(--text-xs)', fontWeight: 500, padding: 0, fontFamily: 'inherit' }}
       >
-        {showDetails ? 'Hide details' : 'Find Out More'}
+        {showDetails ? t.buttons.hideDetails : t.buttons.findOutMore}
         <motion.span animate={{ rotate: showDetails ? 180 : 0 }} transition={{ duration: 0.15 }} style={{ display: 'flex' }}>
           <ChevronDown size={12} />
         </motion.span>
@@ -380,6 +384,7 @@ function WebsiteCard({ pkg, variants }) {
 
 export default function Websites() {
   const reduceMotion = useReducedMotion()
+  const t = useTranslations()
 
   const stagger = {
     hidden: {},
@@ -398,16 +403,16 @@ export default function Websites() {
   return (
     <main style={{ paddingTop: 64 }}>
       <PageHero
-        tag="Websites"
-        title="Website Setup Packages"
-        description="One-off website builds with fixed prices. Choose the right level for your business, starting with the Basic Launch Website at €450."
+        tag={t.pages.websites.tag}
+        title={t.pages.websites.title}
+        description={t.pages.websites.description}
       />
 
       <section style={{ padding: 'var(--space-16) var(--space-8)', background: 'var(--surface-base)', borderBottom: '1px solid var(--border-default)' }}>
         <div style={{ maxWidth: 'var(--width-xl)', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'var(--space-10)' }}>
 
           <p style={{ fontSize: 'var(--text-sm)', lineHeight: 1.7, color: 'var(--text-secondary)', maxWidth: '62ch' }}>
-            Choose the right level of website for your business. These are fixed prices for the initial website build only — ongoing hosting, content, growth support and optional extras are available separately through our <Link to="/packages" style={{ color: 'var(--color-brand-400)' }}>packages</Link>, <Link to="/bundles" style={{ color: 'var(--color-brand-400)' }}>bundles</Link> and <Link to="/addons" style={{ color: 'var(--color-brand-400)' }}>add-ons</Link>.
+            {t.pages.websites.intro}
           </p>
 
           <motion.div
@@ -429,7 +434,7 @@ export default function Websites() {
           </motion.div>
 
           <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', fontStyle: 'italic', maxWidth: '72ch' }}>
-            All website prices are fixed prices for the initial website build. Final price confirmed on enquiry based on pages and scope. All prices exclude Greek VAT (24%).
+            {t.pages.websites.vatNote}
           </p>
         </div>
       </section>
@@ -445,13 +450,13 @@ export default function Websites() {
         >
           <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
             <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--color-accent-500)' }}>
-              Want more than just a website?
+              {t.pages.websites.ctaTag}
             </p>
             <h2 style={{ fontSize: 'clamp(var(--text-lg), 3vw, var(--text-xl))', fontWeight: 700, lineHeight: 1.15, letterSpacing: '-0.02em', color: 'var(--text-primary)' }}>
-              Combine with monthly support
+              {t.pages.websites.ctaTitle}
             </h2>
             <p style={{ fontSize: 'var(--text-base)', lineHeight: 1.6, color: 'var(--text-secondary)', maxWidth: '46ch' }}>
-              Add monthly services for hosting, SEO, social media and automation — or save with a bundle that includes everything.
+              {t.pages.websites.ctaBody}
             </p>
           </div>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-3)', justifyContent: 'center' }}>
@@ -461,7 +466,7 @@ export default function Websites() {
               onMouseEnter={(e) => { e.currentTarget.style.filter = 'brightness(1.1)'; e.currentTarget.style.boxShadow = '0 0 40px rgba(118, 39, 239, 0.5)' }}
               onMouseLeave={(e) => { e.currentTarget.style.filter = 'brightness(1)'; e.currentTarget.style.boxShadow = '0 0 30px rgba(118, 39, 239, 0.35)' }}
             >
-              View Monthly Bundles
+              {t.pages.websites.ctaBundles}
             </Link>
             <Link
               to="/packages"
@@ -469,7 +474,7 @@ export default function Websites() {
               onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--surface-raised)' }}
               onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent' }}
             >
-              View Service Packages
+              {t.pages.websites.ctaPackages}
             </Link>
           </div>
         </motion.div>

@@ -1,13 +1,15 @@
 import { Link, useLocation } from 'react-router-dom'
 import { Globe, FileText, Mail } from 'lucide-react'
+import { useTranslations } from '../context/LanguageContext'
 
 export default function MobileBottomBar() {
   const { pathname } = useLocation()
+  const t = useTranslations()
 
   const items = [
-    { label: 'Websites',  icon: Globe,     href: '/websites' },
-    { label: 'Get Quote', icon: FileText,   href: '/request-quote' },
-    { label: 'Contact',   icon: Mail,       href: '/contact' },
+    { label: t.nav.websites, icon: Globe,     href: '/websites' },
+    { label: t.nav.getQuote, icon: FileText,   href: '/request-quote' },
+    { label: t.nav.contact,  icon: Mail,       href: '/contact' },
   ]
 
   return (

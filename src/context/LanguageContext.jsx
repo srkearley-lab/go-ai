@@ -5,7 +5,7 @@ import { translations } from '../translations'
 const LanguageContext = createContext(null)
 
 export function LanguageProvider({ children }) {
-  const [language, setLanguage] = useLocalStorage('goai-language', 'gr')
+  const [language, setLanguage] = useLocalStorage('goai-language', 'en')
   return (
     <LanguageContext.Provider value={{ language, setLanguage }}>
       {children}
