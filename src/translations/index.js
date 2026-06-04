@@ -3,7 +3,7 @@ export const translations = {
   gr: {
     nav: {
       websites:     'Ιστοσελίδες',
-      packages:     'Πακέτα',
+      packages:     'Ιστοσελίδες',
       services:     'Υπηρεσίες',
       bundles:      'Δέσμες',
       addons:       'Πρόσθετα',
@@ -147,7 +147,7 @@ export const translations = {
       logoTagline:  'Ιστοσελίδες με AI για την Ελλάδα',
       links: [
         ['/websites',                     'Ιστοσελίδες'],
-        ['/packages',                     'Πακέτα'],
+        ['/packages',                     'Ιστοσελίδες'],
         ['/bundles',                      'Δέσμες'],
         ['/addons',                       'Πρόσθετα'],
         ['/journey',                      'Ξεκινήστε το Ταξίδι'],
@@ -1078,9 +1078,9 @@ export const translations = {
 
     pages: {
       packages: {
-        tag:             'Πακέτα',
-        title:           'Πακέτα Κατασκευής Ιστοσελίδας',
-        description:     'Εφάπαξ κατασκευές ιστοσελίδων σε σταθερές τιμές. Επιλέξτε το κατάλληλο επίπεδο για την επιχείρησή σας, ξεκινώντας από τη Βασική Ιστοσελίδα Εκκίνησης στα €450.',
+        tag:             'ΙΣΤΟΣΕΛΙΔΕΣ',
+        title:           'Ιστοσελίδες',
+        description:     'Εφάπαξ κατασκευές ιστοσελίδων με σταθερές τιμές. Επιλέξτε το κατάλληλο επίπεδο για την επιχείρησή σας, ξεκινώντας από τη Βασική Ιστοσελίδα Εκκίνησης στα €450.',
         hostingCareNote: 'Προαιρετική Φιλοξενία διαθέσιμη από €20/μήνα μετά την ολοκλήρωση.',
         vatNote:         'Όλες οι τιμές αφορούν την αρχική κατασκευή ιστοσελίδας. Η τελική τιμή επιβεβαιώνεται κατόπιν αιτήματος. Όλες οι τιμές δεν περιλαμβάνουν ΦΠΑ (24%).',
         ctaTag:          'Θέλετε κάτι παραπάνω από μια ιστοσελίδα;',
@@ -1308,7 +1308,7 @@ export const translations = {
   en: {
     nav: {
       websites:     'Websites',
-      packages:     'Packages',
+      packages:     'Websites',
       services:     'Services',
       bundles:      'Bundles',
       addons:       'Add-ons',
@@ -1452,7 +1452,7 @@ export const translations = {
       logoTagline:  'AI-powered websites for Greece',
       links: [
         ['/websites',                     'Websites'],
-        ['/packages',                     'Packages'],
+        ['/packages',                     'Websites'],
         ['/bundles',                      'Bundles'],
         ['/addons',                       'Add-ons'],
         ['/journey',                      'Start Your Journey'],
@@ -2292,8 +2292,8 @@ export const translations = {
 
     pages: {
       packages: {
-        tag:             'Packages',
-        title:           'Website Build Packages',
+        tag:             'WEBSITES',
+        title:           'Websites',
         description:     'One-off website builds with fixed prices. Choose the right level for your business, starting with the Basic Launch Website at €450.',
         hostingCareNote: 'Optional Hosting Care available from €20/month after launch.',
         vatNote:         'All website prices are fixed prices for the initial website build. Final price confirmed on enquiry. All prices exclude Greek VAT (24%).',
