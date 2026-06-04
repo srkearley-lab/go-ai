@@ -320,33 +320,45 @@ export default function Home() {
 
       {/* ── Hero video (English only) ── */}
       {language === 'en' && (
-        <section className="w-full relative overflow-hidden">
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="w-full max-h-[600px] object-cover"
-            style={{ display: 'block' }}
-          >
-            <source src="/hero-video.mp4" type="video/mp4" />
-          </video>
+        <section className="w-full py-12 px-4">
+          <div className="max-w-3xl mx-auto rounded-2xl overflow-hidden shadow-2xl"
+            style={{ border: '1px solid var(--goai-violet, #7627EF)' }}>
+            <video
+              controls
+              playsInline
+              className="w-full"
+              style={{ display: 'block', maxHeight: '500px', objectFit: 'cover' }}
+            >
+              <source src="/hero-video.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          <p className="text-center mt-4 text-sm"
+             style={{ color: 'var(--text-secondary)' }}>
+            Watch how GO AI helps businesses grow online
+          </p>
         </section>
       )}
 
       {/* ── Hero video (Greek only) ── */}
       {language === 'gr' && (
-        <section className="w-full relative overflow-hidden">
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="w-full max-h-[600px] object-cover"
-            style={{ display: 'block' }}
-          >
-            <source src="/hero-video-gr.mp4" type="video/mp4" />
-          </video>
+        <section className="w-full py-12 px-4">
+          <div className="max-w-3xl mx-auto rounded-2xl overflow-hidden shadow-2xl"
+            style={{ border: '1px solid var(--goai-violet, #7627EF)' }}>
+            <video
+              controls
+              playsInline
+              className="w-full"
+              style={{ display: 'block', maxHeight: '500px', objectFit: 'cover' }}
+            >
+              <source src="/hero-video-gr.mp4" type="video/mp4" />
+              Ο περιηγητής σας δεν υποστηρίζει βίντεο.
+            </video>
+          </div>
+          <p className="text-center mt-4 text-sm"
+             style={{ color: 'var(--text-secondary)' }}>
+            Δείτε πώς η GO AI βοηθά επιχειρήσεις να αναπτυχθούν διαδικτυακά
+          </p>
         </section>
       )}
 
