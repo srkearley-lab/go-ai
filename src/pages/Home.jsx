@@ -334,6 +334,22 @@ export default function Home() {
         </section>
       )}
 
+      {/* ── Hero video (Greek only) ── */}
+      {language === 'el' && (
+        <section className="w-full relative overflow-hidden">
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="w-full max-h-[600px] object-cover"
+            style={{ display: 'block' }}
+          >
+            <source src="/hero-video-gr.mp4" type="video/mp4" />
+          </video>
+        </section>
+      )}
+
       {/* ── b) Top 3 Recommended Packages ── */}
       <TopPackagesSection reduceMotion={reduceMotion} stagger={stagger} cardVariants={cardVariants} t={t} />
 
