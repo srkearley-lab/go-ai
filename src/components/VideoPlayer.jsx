@@ -1,13 +1,36 @@
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
+import { useLanguage } from '../context/LanguageContext'
 
-export function VideoPlayer({ src }) {
+export function VideoPlayer() {
   const videoRef = useRef(null)
   const [playing, setPlaying] = useState(false)
+  const playingRef = useRef(false)
+  const { language } = useLanguage()
+
+  const videoSrc = language === 'gr' ? '/hero-video-gr.mp4' : '/hero-video.mp4'
+
+  // When language changes, swap src imperatively so the element never unmounts
+  useEffect(() => {
+    if (!videoRef.current) return
+    const wasPlaying = playingRef.current
+    const currentTime = videoRef.current.currentTime
+    videoRef.current.src = videoSrc
+    videoRef.current.load()
+    if (wasPlaying) {
+      videoRef.current.currentTime = currentTime
+      videoRef.current.play().catch(() => {})
+    }
+  }, [language]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  const setPlayState = (val) => {
+    setPlaying(val)
+    playingRef.current = val
+  }
 
   const handlePlay = () => {
     if (videoRef.current) {
       videoRef.current.play()
-      setPlaying(true)
+      setPlayState(true)
     }
   }
 
@@ -15,10 +38,10 @@ export function VideoPlayer({ src }) {
     if (videoRef.current) {
       if (playing) {
         videoRef.current.pause()
-        setPlaying(false)
+        setPlayState(false)
       } else {
         videoRef.current.play()
-        setPlaying(true)
+        setPlayState(true)
       }
     }
   }
@@ -32,18 +55,17 @@ export function VideoPlayer({ src }) {
       >
         <video
           ref={videoRef}
+          src={videoSrc}
           playsInline
           disablePictureInPicture
           controlsList="nodownload nofullscreen noremoteplayback"
           x-webkit-airplay="deny"
           className="w-full"
           style={{ display: 'block', maxHeight: '500px', objectFit: 'cover', WebkitMediaControls: 'none' }}
-          onPlay={() => setPlaying(true)}
-          onPause={() => setPlaying(false)}
-          onEnded={() => setPlaying(false)}
-        >
-          <source src={src} type="video/mp4" />
-        </video>
+          onPlay={() => setPlayState(true)}
+          onPause={() => setPlayState(false)}
+          onEnded={() => setPlayState(false)}
+        />
 
         {!playing && (
           <div
