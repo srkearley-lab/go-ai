@@ -335,7 +335,7 @@ export default function Home() {
       )}
 
       {/* ── Hero video (Greek only) ── */}
-      {language === 'el' && (
+      {language === 'gr' && (
         <section className="w-full relative overflow-hidden">
           <video
             autoPlay
