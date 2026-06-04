@@ -146,6 +146,26 @@ img { display: block; }
 ::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: var(--radius-full); }
 ::-webkit-scrollbar-thumb:hover { background: var(--text-tertiary); }
 
+/* Hide browser default video controls */
+video::-webkit-media-controls-panel {
+  display: none !important;
+}
+video::-webkit-media-controls-play-button {
+  display: none !important;
+}
+video::-webkit-media-controls-start-playback-button {
+  display: none !important;
+}
+video::-webkit-media-controls-overlay-cast-button {
+  display: none !important;
+}
+video::-internal-media-controls-overlay-cast-button {
+  display: none !important;
+}
+video::-webkit-media-controls-picture-in-picture-button {
+  display: none !important;
+}
+
 /* Global input / textarea / select focus */
 input:focus, textarea:focus, select:focus {
   outline: none;

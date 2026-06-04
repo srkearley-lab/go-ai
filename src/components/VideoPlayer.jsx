@@ -33,8 +33,11 @@ export function VideoPlayer({ src }) {
         <video
           ref={videoRef}
           playsInline
+          disablePictureInPicture
+          controlsList="nodownload nofullscreen noremoteplayback"
+          x-webkit-airplay="deny"
           className="w-full"
-          style={{ display: 'block', maxHeight: '500px', objectFit: 'cover' }}
+          style={{ display: 'block', maxHeight: '500px', objectFit: 'cover', WebkitMediaControls: 'none' }}
           onPlay={() => setPlaying(true)}
           onPause={() => setPlaying(false)}
           onEnded={() => setPlaying(false)}
