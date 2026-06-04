@@ -132,28 +132,6 @@ const PACKAGES = [
     features: ['Automated follow-up sequences', 'Enquiry response flows', 'Lead nurturing campaigns', 'Email platform setup included'],
   },
   {
-    id: 'pkg-video-websites',
-    name: 'Video Websites',
-    price: '€500',
-    priceNote: 'one-off',
-    oneOff: 500,
-    monthly: 0,
-    isQuote: false,
-    bestFor: 'Businesses with video content wanting to stand out',
-    features: ['Video hero sections', 'Video landing page design', 'AI avatar content integration', 'Mobile-optimised video display'],
-  },
-  {
-    id: 'pkg-ai-prompts',
-    name: 'AI Prompts',
-    price: '€200',
-    priceNote: 'one-off',
-    oneOff: 200,
-    monthly: 0,
-    isQuote: false,
-    bestFor: 'Business owners wanting to use AI tools more effectively',
-    features: ['Custom AI prompt library', 'Content creation templates', 'Customer reply frameworks', 'Sales and admin support scripts'],
-  },
-  {
     id: 'pkg-social-media',
     name: 'Social Media Content',
     price: '€150',
@@ -282,10 +260,8 @@ const ADDON_GROUPS = [
   {
     title: 'Website Add-ons',
     addons: [
-      { id: 'addon-extra-page', name: 'Extra Website Page', price: '€100', priceNote: 'one-off', oneOff: 100, monthly: 0, isQuote: false, bestFor: 'Businesses needing more pages than their package includes', features: ['One additional page', 'Matched styling', 'Mobile check', 'Navigation update'] },
       { id: 'addon-landing-page', name: 'Landing Page', price: '€150', priceNote: 'one-off', oneOff: 150, monthly: 0, isQuote: false, bestFor: 'Campaigns, ads, promotions, lead generation', features: ['Standalone page', 'Headline and CTA structure', 'Form placement', 'Mobile layout'] },
       { id: 'addon-form-upgrade', name: 'Website Form Upgrade', price: '€75', priceNote: 'one-off', oneOff: 75, monthly: 0, isQuote: false, bestFor: 'Better enquiry, quote, or booking capture', features: ['Custom fields', 'Required field setup', 'Dropdowns and confirmation', 'Routing setup'] },
-      { id: 'addon-whatsapp-chat', name: 'WhatsApp Click-to-Chat Setup', price: '€30', priceNote: 'one-off', oneOff: 30, monthly: 0, isQuote: false, bestFor: 'Businesses preferring WhatsApp conversations', features: ['Button and link setup', 'Key page placement', 'Mobile click-to-chat'] },
       { id: 'addon-whatsapp-chatbot', name: 'WhatsApp Chatbot / Basic Setup', price: '€150', priceNote: 'one-off', oneOff: 150, monthly: 0, isQuote: false, bestFor: 'Businesses wanting simple WhatsApp auto-reply and lead capture', features: ['Basic WhatsApp auto-reply setup', 'Enquiry collection flow', 'Lead notification to your phone'] },
     ],
   },
@@ -293,30 +269,10 @@ const ADDON_GROUPS = [
     title: 'Monthly Support Add-ons',
     addons: [
       { id: 'addon-hosting-care', name: 'Hosting Care', price: '€20', priceNote: '/month', oneOff: 0, monthly: 20, isQuote: false, bestFor: 'Businesses wanting basic hosting and technical monitoring', features: ['Website hosting', 'Basic website storage', 'SSL/security basics', 'Basic uptime monitoring', 'Monthly platform/plugin checks'] },
-      { id: 'addon-extra-storage', name: 'Extra Website Storage', price: '€10', priceNote: '/month', oneOff: 0, monthly: 10, isQuote: false, bestFor: 'Businesses with larger galleries, PDFs, or media', features: ['Extra managed storage above standard allowance', 'Image and PDF support', 'Storage monitoring'] },
-      { id: 'addon-priority-updates', name: 'Priority Updates', price: '€30', priceNote: '/month', oneOff: 0, monthly: 30, isQuote: false, bestFor: 'Businesses needing fast turnaround on changes', features: ['Priority handling', 'Faster response times', 'Text, image and price updates'] },
-      { id: 'addon-content-refresh', name: 'Monthly Contact Refresh', price: '€50', priceNote: '/month', oneOff: 0, monthly: 50, isQuote: false, bestFor: 'Businesses wanting their site kept fresh', features: ['One monthly content refresh', 'Content and image updates', 'Improvement notes'] },
       { id: 'addon-seo-basics', name: 'SEO Basics', price: '€75', priceNote: 'one-off', oneOff: 75, monthly: 0, isQuote: false, bestFor: 'Businesses wanting a one-off SEO setup on their website', features: ['Page titles and meta descriptions', 'Heading structure review', 'Local keyword setup', 'Google Search Console submission'] },
       { id: 'addon-gbp-support', name: 'Google Business Profile Support', price: '€40', priceNote: '/month', oneOff: 0, monthly: 40, isQuote: false, bestFor: 'Businesses wanting a well-managed Google presence', features: ['Profile content support', 'Monthly posts', 'Photo and service updates'] },
-    ],
-  },
-  {
-    title: 'Automation & AI Add-ons',
-    subtitle: 'These add-ons require a quote. Request a quote and we\'ll assess scope and cost.',
-    addons: [
-      { id: 'addon-simple-automation', name: 'Simple Automation', price: 'Quote required', priceNote: null, oneOff: 0, monthly: 0, isQuote: true, bestFor: 'Businesses with a repetitive task to automate', features: [] },
-      { id: 'addon-email-automation', name: 'Email Automation', price: 'Quote required', priceNote: null, oneOff: 0, monthly: 0, isQuote: true, bestFor: 'Businesses wanting automated follow-ups and email flows', features: [] },
-      { id: 'addon-ai-content-workflow', name: 'AI Content Workflow', price: 'Quote required', priceNote: null, oneOff: 0, monthly: 0, isQuote: true, bestFor: 'Businesses wanting AI to power content creation', features: [] },
-      { id: 'addon-ai-avatar-video', name: 'AI Avatar / Video Content — Bespoke', price: 'Quote required', priceNote: null, oneOff: 0, monthly: 0, isQuote: true, bestFor: 'Businesses wanting bespoke AI-generated video — full service available under Services', features: [] },
-    ],
-  },
-  {
-    title: 'Setup Add-ons',
-    addons: [
-      { id: 'addon-email-setup', name: 'Business Email Setup', price: '€50', priceNote: 'one-off', oneOff: 50, monthly: 0, isQuote: false, bestFor: 'Businesses needing a professional email address set up', features: ['Email provider configuration', 'Domain verification', 'Basic inbox setup'] },
-      { id: 'addon-domain-connection', name: 'Domain Connection Support', price: '€40', priceNote: 'one-off', oneOff: 40, monthly: 0, isQuote: false, bestFor: 'Businesses needing help connecting a domain', features: ['DNS configuration', 'Domain pointing', 'Connection verification'] },
-      { id: 'addon-tracking-setup', name: 'Tracking Setup', price: '€60', priceNote: 'one-off', oneOff: 60, monthly: 0, isQuote: false, bestFor: 'Businesses wanting proper analytics and ad tracking in place', features: ['Google Analytics setup', 'Meta Pixel or GTM placement', 'Basic event tracking'] },
-      { id: 'addon-health-check', name: 'Website Health Check', price: '€50', priceNote: 'one-off', oneOff: 50, monthly: 0, isQuote: false, bestFor: 'Businesses wanting a review of their existing website', features: ['Speed and mobile check', 'Broken link scan', 'SEO basics review', 'Summary report'] },
+      { id: 'addon-priority-updates', name: 'Priority Updates', price: '€30', priceNote: '/month', oneOff: 0, monthly: 30, isQuote: false, bestFor: 'Businesses needing fast turnaround on changes', features: ['Priority handling', 'Faster response times', 'Text, image and price updates'] },
+      { id: 'addon-content-refresh', name: 'Monthly Content Refresh', price: '€50', priceNote: '/month', oneOff: 0, monthly: 50, isQuote: false, bestFor: 'Businesses wanting their site kept fresh', features: ['One monthly content refresh', 'Content and image updates', 'Improvement notes'] },
     ],
   },
 ]
