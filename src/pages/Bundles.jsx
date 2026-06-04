@@ -318,6 +318,12 @@ function SmallBundleCard({ bundle, variants }) {
         {t.pages.bundles.bundleSupportNote}
       </p>
 
+      {bundle.serviceNote && (
+        <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', fontStyle: 'italic', margin: 0 }}>
+          {bundle.serviceNote}
+        </p>
+      )}
+
       <hr style={{ border: 'none', borderTop: '1px solid var(--border-default)', margin: 0 }} />
 
       <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
@@ -397,6 +403,12 @@ function RecommendedBundleCard({ bundle, variants }) {
           {t.pages.bundles.bundleSupportNote}
         </p>
 
+        {bundle.serviceNote && (
+          <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', fontStyle: 'italic' }}>
+            {bundle.serviceNote}
+          </p>
+        )}
+
         <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-secondary)', fontStyle: 'italic' }}>
           {t.pages.bundles.bundleValueNote}
         </p>
@@ -451,7 +463,7 @@ export default function Bundles() {
   const localizedBundles = bundles.map((bundle, i) => {
     const td = t.bundleData?.[i]
     if (!td) return bundle
-    return { ...bundle, name: td.name, description: td.description, features: td.features, cta: td.cta }
+    return { ...bundle, name: td.name, description: td.description, features: td.features, cta: td.cta, serviceNote: td.serviceNote }
   })
 
   const stagger = {

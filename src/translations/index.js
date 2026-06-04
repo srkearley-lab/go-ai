@@ -840,12 +840,14 @@ export const translations = {
         description: 'Μηνιαία διαχείριση κοινωνικών μέσων και υποστήριξη ιστοσελίδας για επιχειρήσεις που θέλουν σταθερή online παρουσία.',
         features: ['Συνεχής φροντίδα ιστοσελίδας', 'Διαχειριζόμενη φιλοξενία', '12 αναρτήσεις/μήνα', 'Captions, hashtags, προγραμματισμός'],
         cta: 'Αποκτήστε Ιστοσελίδα και Κοινωνική Ανάπτυξη',
+        serviceNote: 'Αυτή η δέσμη συνδυάζει υποστήριξη ιστοσελίδας με υπηρεσίες social/marketing.',
       },
       {
         name: 'Ιστοσελίδα και Μηχανή Marketing',
         description: 'Το πλήρες μηνιαίο πακέτο ανάπτυξης. SEO, περιεχόμενο, κοινωνικά μέσα και φροντίδα ιστοσελίδας — όλα γίνονται για εσάς κάθε μήνα.',
         features: ['Συνεχής φροντίδα ιστοσελίδας', 'Διαχειριζόμενη φιλοξενία', 'Μηνιαία άρθρα blog SEO', 'Καμπάνιες newsletter email', '12 αναρτήσεις κοινωνικών μέσων/μήνα', 'Παρακολούθηση κατάταξης Google'],
         cta: 'Επιλέξτε Προτεινόμενη Δέσμη',
+        serviceNote: 'Αυτή η δέσμη συνδυάζει υποστήριξη ιστοσελίδας με υπηρεσίες social/marketing.',
       },
       {
         name: 'Ιστοσελίδα και Αυτοματισμός',
@@ -903,7 +905,7 @@ export const translations = {
           { name: 'Σελίδα Προσγείωσης', bestFor: 'Campaigns, διαφημίσεις, προσφορές, δημιουργία leads', includes: ['Αυτόνομη σελίδα', 'Δομή τίτλου και CTA', 'Τοποθέτηση φόρμας', 'Διάταξη για κινητά'], note: null },
           { name: 'Αναβάθμιση Φόρμας Ιστοσελίδας', bestFor: 'Καλύτερη καταγραφή ερωτημάτων, προσφορών ή κρατήσεων', includes: ['Προσαρμοσμένα πεδία', 'Ρύθμιση υποχρεωτικών πεδίων', 'Αναπτυσσόμενα και επιβεβαίωση', 'Ρύθμιση δρομολόγησης'], note: null },
           { name: 'Κλικ για συνομιλία στο WhatsApp', bestFor: 'Επιχειρήσεις που προτιμούν συνομιλίες μέσω WhatsApp', includes: ['Ρύθμιση κουμπιού και συνδέσμου', 'Τοποθέτηση σε βασικές σελίδες', 'Κλικ για συνομιλία σε κινητά'], note: null },
-          { name: 'WhatsApp Chatbot / Βασική Ρύθμιση', bestFor: 'Επιχειρήσεις που θέλουν απλή αυτόματη απάντηση WhatsApp και συλλογή leads', includes: ['Βασική ρύθμιση αυτόματης απάντησης WhatsApp', 'Ροή συλλογής ερωτημάτων', 'Ειδοποίηση leads στο τηλέφωνό σας'], note: 'Για πλήρη αυτοματισμό WhatsApp, ροές εργασίας και ενσωματώσεις, δείτε την υπηρεσία Αυτοματοποίησης WhatsApp.' },
+          { name: 'WhatsApp Chatbot / Βασική Ρύθμιση', bestFor: 'Επιχειρήσεις που θέλουν απλή αυτόματη απάντηση WhatsApp και συλλογή leads', includes: ['Βασική ρύθμιση αυτόματης απάντησης WhatsApp', 'Ροή συλλογής ερωτημάτων', 'Ειδοποίηση leads στο τηλέφωνό σας'], note: 'Βασική ρύθμιση WhatsApp click-to-chat ή απλό chatbot. Για πλήρη αυτοματισμό WhatsApp, ροές εργασίας και ενσωματώσεις, δείτε την υπηρεσία Αυτοματοποίησης WhatsApp.' },
         ],
       },
       {
@@ -914,7 +916,7 @@ export const translations = {
           { name: 'Επιπλέον Χώρος Αποθήκευσης', bestFor: 'Επιχειρήσεις με μεγαλύτερες συλλογές, PDF ή πολυμέσα πέραν του τυπικού ορίου', includes: ['Επιπλέον διαχειριζόμενος χώρος πέραν του τυπικού ορίου', 'Υποστήριξη εικόνων και PDF', 'Παρακολούθηση χώρου αποθήκευσης'], note: 'Απαιτείται μόνο αν υπερβείτε τον χώρο που περιλαμβάνεται στο πλάνο Φιλοξενίας.' },
           { name: 'Ενημερώσεις Προτεραιότητας', bestFor: 'Επιχειρήσεις που χρειάζονται γρήγορη εκτέλεση αλλαγών', includes: ['Χειρισμός προτεραιότητας', 'Ταχύτεροι χρόνοι απόκρισης', 'Ενημερώσεις κειμένου, εικόνας και τιμών'], note: null },
           { name: 'Μηνιαία Ανανέωση Επικοινωνίας', bestFor: 'Επιχειρήσεις που θέλουν την ιστοσελίδα τους να παραμένει φρέσκια κάθε μήνα', includes: ['Μία μηνιαία ανανέωση περιεχομένου', 'Ενημερώσεις περιεχομένου και εικόνων', 'Σημειώσεις βελτίωσης'], note: null },
-          { name: 'Βασικό SEO', bestFor: 'Επιχειρήσεις που θέλουν εφάπαξ ρύθμιση SEO στην ιστοσελίδα τους', includes: ['Τίτλοι σελίδων και μετα-περιγραφές', 'Έλεγχος δομής επικεφαλίδων', 'Ρύθμιση τοπικών λέξεων-κλειδιών', 'Υποβολή Google Search Console'], note: 'Για συνεχή μηνιαία διαχείριση SEO, δείτε την υπηρεσία SEO.' },
+          { name: 'Βασικό SEO', bestFor: 'Επιχειρήσεις που θέλουν εφάπαξ ρύθμιση SEO στην ιστοσελίδα τους', includes: ['Τίτλοι σελίδων και μετα-περιγραφές', 'Έλεγχος δομής επικεφαλίδων', 'Ρύθμιση τοπικών λέξεων-κλειδιών', 'Υποβολή Google Search Console'], note: 'Εφάπαξ βασική ρύθμιση SEO — τίτλοι σελίδων, μετα-περιγραφές, δομή επικεφαλίδων. Για συνεχή μηνιαία διαχείριση SEO, δείτε την υπηρεσία SEO.' },
           { name: 'Υποστήριξη Google Business Profile', bestFor: 'Επιχειρήσεις που θέλουν καλά διαχειριζόμενη παρουσία Google', includes: ['Υποστήριξη περιεχομένου προφίλ', 'Μηνιαίες δημοσιεύσεις', 'Ενημερώσεις φωτογραφιών και υπηρεσιών'], note: null },
         ],
       },
@@ -1002,19 +1004,19 @@ export const translations = {
       {
         name: 'Σχεδιασμός Ιστοσελίδας',
         priceNote: 'εφάπαξ κατασκευή ιστοσελίδας',
-        description: 'Η GoAI δημιουργεί σύγχρονες, επαγγελματικές ιστοσελίδες που βοηθούν τις επιχειρήσεις να είναι αξιόπιστες και να δημιουργούν ερωτήματα.',
+        description: 'Προσαρμοσμένος σχεδιασμός ιστοσελίδας — ξεχωριστός από τα πακέτα κατασκευής.',
         features: ['Προσαρμοσμένος σχεδιασμός για κινητά', 'Φόρμες capture leads και επικοινωνίας', 'Βασική ρύθμιση SEO', 'Ενσωμάτωση Google Analytics'],
       },
       {
         name: 'SEO',
         priceNote: 'συνεχής διαχείριση SEO',
-        description: 'Βασική ρύθμιση SEO με τίτλους σελίδων, meta descriptions, δομή, λέξεις-κλειδιά και βάσεις ορατότητας.',
+        description: 'Πλήρης μηνιαία υπηρεσία SEO με στρατηγική λέξεων-κλειδιών και βελτιστοποίηση.',
         features: ['Τίτλοι σελίδων και μετα-περιγραφές', 'Έρευνα και στόχευση λέξεων-κλειδιών', 'Ρύθμιση Google Search Console', 'Μηνιαία παρακολούθηση κατατάξεων'],
       },
       {
         name: 'Αυτοματοποίηση WhatsApp',
         priceNote: 'χρέωση ρύθμισης + μηνιαία',
-        description: 'Καταγραφή ερωτημάτων, δρομολόγηση leads WhatsApp, αυτόματες απαντήσεις, ειδοποιήσεις και αυτοματισμός ροής εργασίας.',
+        description: 'Πλήρης αυτοματοποίηση WhatsApp με ροές πελατών και ενσωματώσεις.',
         features: ['Αυτόματη απάντηση σε ερωτήματα', 'Δρομολόγηση leads στο τηλέφωνό σας', 'Μηνύματα επιβεβαίωσης κρατήσεων', 'Αυτοματισμός ροής εργασίας'],
       },
       {
@@ -2052,12 +2054,14 @@ export const translations = {
         description: 'Monthly social media management and website support for businesses wanting a consistent online presence.',
         features: ['Ongoing website care included', 'Managed hosting', '12 social posts/month', 'Captions, hashtags, scheduling'],
         cta: 'Get Website and Social Growth',
+        serviceNote: 'This bundle combines ongoing website support with social/marketing services.',
       },
       {
         name: 'Website and Marketing Engine',
         description: 'The complete monthly growth package. SEO, content, social media and website care — all done for you every month.',
         features: ['Ongoing website care included', 'Managed hosting', 'Monthly SEO blog posts', 'Email newsletter campaigns', '12 social media posts/month', 'Google ranking monitoring'],
         cta: 'Choose Recommended Bundle',
+        serviceNote: 'This bundle combines ongoing website support with social/marketing services.',
       },
       {
         name: 'Website and Automation',
@@ -2115,7 +2119,7 @@ export const translations = {
           { name: 'Landing Page', bestFor: 'Campaigns, ads, promotions, lead generation', includes: ['Standalone page', 'Headline and CTA structure', 'Form placement', 'Διάταξη για κινητά'], note: null },
           { name: 'Website Form Upgrade', bestFor: 'Better enquiry, quote, or booking capture', includes: ['Custom fields', 'Required field setup', 'Dropdowns and confirmation', 'Routing setup'], note: null },
           { name: 'WhatsApp Click-to-Chat Setup', bestFor: 'Businesses preferring WhatsApp conversations', includes: ['Button and link setup', 'Key page placement', 'Mobile click-to-chat'], note: null },
-          { name: 'WhatsApp Chatbot / Basic Setup', bestFor: 'Businesses wanting simple WhatsApp auto-reply and lead capture', includes: ['Basic WhatsApp auto-reply setup', 'Enquiry collection flow', 'Lead notification to your phone'], note: 'For full WhatsApp automation, workflows and integrations, see the WhatsApp Automation service.' },
+          { name: 'WhatsApp Chatbot / Basic Setup', bestFor: 'Businesses wanting simple WhatsApp auto-reply and lead capture', includes: ['Basic WhatsApp auto-reply setup', 'Enquiry collection flow', 'Lead notification to your phone'], note: 'Basic WhatsApp click-to-chat or simple chatbot setup. For full WhatsApp automation, workflows and integrations, see the WhatsApp Automation service.' },
         ],
       },
       {
@@ -2126,7 +2130,7 @@ export const translations = {
           { name: 'Extra Website Storage', bestFor: 'Businesses with larger galleries, PDFs, or media needing storage above the standard allowance', includes: ['Extra managed storage above standard allowance', 'Image and PDF support', 'Storage monitoring'], note: 'Only needed if you exceed the storage included in your Hosting Care plan.' },
           { name: 'Priority Updates', bestFor: 'Businesses that need fast turnaround on changes', includes: ['Priority handling', 'Faster response times', 'Text, image and price updates'], note: null },
           { name: 'Monthly Contact Refresh', bestFor: 'Businesses wanting their site kept fresh each month', includes: ['One monthly content refresh', 'Content and image updates', 'Improvement notes'], note: null },
-          { name: 'SEO Basics', bestFor: 'Businesses wanting a one-off SEO setup on their website', includes: ['Page titles and meta descriptions', 'Heading structure review', 'Local keyword setup', 'Google Search Console submission'], note: 'For ongoing monthly SEO management, see the SEO service.' },
+          { name: 'SEO Basics', bestFor: 'Businesses wanting a one-off SEO setup on their website', includes: ['Page titles and meta descriptions', 'Heading structure review', 'Local keyword setup', 'Google Search Console submission'], note: 'One-off SEO basics setup — page titles, meta descriptions, heading structure and Google Search Console submission. For ongoing monthly SEO management, see the SEO service.' },
           { name: 'Google Business Profile Support', bestFor: 'Businesses wanting a well-managed Google presence', includes: ['Profile content support', 'Monthly posts', 'Photo and service updates'], note: null },
         ],
       },
@@ -2214,19 +2218,19 @@ export const translations = {
       {
         name: 'Website Design',
         priceNote: 'one-off website build',
-        description: 'GoAI builds modern, professional, mobile-friendly websites that help businesses look credible and generate enquiries.',
+        description: 'Bespoke website design and design support — separate from our website build packages.',
         features: ['Custom mobile-responsive design', 'Lead capture and contact forms', 'Basic SEO setup included', 'Google Analytics integration'],
       },
       {
         name: 'SEO',
         priceNote: 'ongoing SEO management',
-        description: 'Basic SEO setup including page titles, meta descriptions, structure, keywords and visibility foundations.',
+        description: 'Full monthly SEO service including keyword strategy, content optimisation, reporting and ongoing improvements.',
         features: ['Page titles and meta descriptions', 'Keyword research and targeting', 'Google Search Console setup', 'Monthly ranking monitoring'],
       },
       {
         name: 'WhatsApp Automation',
         priceNote: 'setup fee + monthly',
-        description: 'Enquiry capture, WhatsApp lead routing, auto-replies, notifications and simple workflow automation.',
+        description: 'Full WhatsApp automation including customer journeys, workflows, enquiry routing and integrations.',
         features: ['Auto-reply to enquiries', 'Lead routing to your phone', 'Booking confirmation messages', 'Workflow automation'],
       },
       {
