@@ -4,7 +4,7 @@ export const translations = {
     nav: {
       websites:     'Ιστοσελίδες',
       packages:     'Ιστοσελίδες',
-      services:     'Υπηρεσίες',
+      services:     'Πακέτα',
       bundles:      'Δέσμες',
       addons:       'Πρόσθετα',
       portfolio:    'Χαρτοφυλάκιο',
@@ -1090,9 +1090,9 @@ export const translations = {
         ctaContact:      'Μιλήστε μαζί μας',
       },
       services: {
-        tag:         'Υπηρεσίες',
-        title:       'Αυτόνομες Υπηρεσίες',
-        description: 'Μεμονωμένες υπηρεσίες που μπορείτε να προσθέσετε στην ιστοσελίδα σας — SEO, αυτοματισμός WhatsApp, αυτοματισμός email, κοινωνικά μέσα, περιεχόμενο AI, βίντεο και άλλα.',
+        tag:         'ΠΑΚΕΤΑ',
+        title:       'Αυτόνομα Πακέτα',
+        description: 'Μεμονωμένα πακέτα που μπορείτε να προσθέσετε στην ιστοσελίδα σας — SEO, αυτοματοποίηση WhatsApp, email, κοινωνικά μέσα, περιεχόμενο AI, βίντεο και άλλα.',
         vatNote:     'Όλες οι τιμές δεν περιλαμβάνουν ΦΠΑ (24%). Διαθέσιμα custom πλάνα για μεγαλύτερες επιχειρήσεις.',
         ctaTag:      'Δεν είστε σίγουροι ποιες υπηρεσίες χρειάζεστε;',
         ctaTitle:    'Διαθέσιμο και ως μηνιαίες δέσμες',
@@ -1309,7 +1309,7 @@ export const translations = {
     nav: {
       websites:     'Websites',
       packages:     'Websites',
-      services:     'Services',
+      services:     'Packages',
       bundles:      'Bundles',
       addons:       'Add-ons',
       portfolio:    'Portfolio',
@@ -2304,9 +2304,9 @@ export const translations = {
         ctaContact:      'Talk to Us',
       },
       services: {
-        tag:         'Services',
-        title:       'Standalone Services',
-        description: 'Individual services you can add to your website — SEO, WhatsApp automation, email automation, social media, AI content, video and more.',
+        tag:         'PACKAGES',
+        title:       'Standalone Packages',
+        description: 'Individual packages you can add to your website — SEO, WhatsApp automation, email automation, social media, AI content, video and more.',
         vatNote:     'All prices exclude Greek VAT (24%). Custom plans available for larger businesses.',
         ctaTag:      'Not sure which services you need?',
         ctaTitle:    'Also available as monthly bundles',
