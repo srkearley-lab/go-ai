@@ -314,6 +314,10 @@ function SmallBundleCard({ bundle, variants }) {
         <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)' }}>{t.pages.bundles.perMonth}</span>
       </div>
 
+      <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', fontStyle: 'italic', margin: 0 }}>
+        {t.pages.bundles.bundleSupportNote}
+      </p>
+
       <hr style={{ border: 'none', borderTop: '1px solid var(--border-default)', margin: 0 }} />
 
       <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
@@ -388,6 +392,10 @@ function RecommendedBundleCard({ bundle, variants }) {
           <span style={{ fontSize: 'var(--text-2xl)', fontWeight: 700, letterSpacing: '-0.03em', color: 'var(--text-primary)', lineHeight: 1 }}>€{bundle.monthly}</span>
           <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-tertiary)' }}>{t.pages.bundles.perMonth}</span>
         </div>
+
+        <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', fontStyle: 'italic' }}>
+          {t.pages.bundles.bundleSupportNote}
+        </p>
 
         <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-secondary)', fontStyle: 'italic' }}>
           {t.pages.bundles.bundleValueNote}

@@ -216,16 +216,6 @@ const groups = [
         note: null,
         cta: 'quote',
       },
-      {
-        id: 'addon-ai-avatar-video',
-        name: 'AI Avatar / Video Content',
-        price: 'Quote required',
-        priceNote: null,
-        bestFor: 'Businesses wanting AI-generated video for social media',
-        includes: [],
-        note: null,
-        cta: 'quote',
-      },
     ],
   },
   {
