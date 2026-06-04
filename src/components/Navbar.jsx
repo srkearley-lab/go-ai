@@ -7,8 +7,8 @@ import { useTranslations } from '../context/LanguageContext'
 import LanguageToggle from './LanguageToggle'
 
 const NAV_KEYS = [
-  { key: 'websites',  href: '/websites' },
   { key: 'packages',  href: '/packages' },
+  { key: 'services',  href: '/services' },
   { key: 'bundles',   href: '/bundles' },
   { key: 'addons',    href: '/addons' },
   { key: 'portfolio', href: '/portfolio' },

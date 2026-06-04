@@ -154,17 +154,6 @@ const PACKAGES = [
     features: ['Custom AI prompt library', 'Content creation templates', 'Customer reply frameworks', 'Sales and admin support scripts'],
   },
   {
-    id: 'pkg-hosting-care',
-    name: 'Hosting & Website Care',
-    price: '€100',
-    priceNote: '/month',
-    oneOff: 0,
-    monthly: 100,
-    isQuote: false,
-    bestFor: 'Businesses wanting hosting and technical care managed',
-    features: ['Reliable managed hosting', 'Security monitoring and backups', 'Up to 2 hrs content updates/month', 'Performance monitoring'],
-  },
-  {
     id: 'pkg-social-media',
     name: 'Social Media Content',
     price: '€150',
@@ -224,15 +213,15 @@ const PACKAGES = [
 const BUNDLES = [
   {
     id: 'bundle-hosting-care',
-    name: 'Website and Hosting Care',
+    name: 'Website Care and Maintenance',
     badge: 'Peace of Mind',
     price: '€90',
     priceNote: '/month',
     oneOff: 0,
     monthly: 90,
     isQuote: false,
-    bestFor: 'Businesses wanting a website kept fast, secure and up to date',
-    features: ['Professional website build', 'Reliable managed hosting', 'Monthly security and backups', 'Up to 2 hours of updates/month'],
+    bestFor: 'Businesses wanting their website kept secure, up to date and running smoothly',
+    features: ['Managed website hosting', 'Monthly security and backups', 'Light website edits included', 'Up to 2 hours of updates/month', 'Website health checks', 'Basic technical maintenance'],
     highlighted: false,
   },
   {
@@ -244,8 +233,8 @@ const BUNDLES = [
     oneOff: 0,
     monthly: 220,
     isQuote: false,
-    bestFor: 'Businesses building an online presence and active social media',
-    features: ['Professional website build', 'Managed hosting included', '12 social posts/month', 'Captions, hashtags, scheduling'],
+    bestFor: 'Businesses building an active social media presence alongside their website',
+    features: ['Ongoing website care included', 'Managed hosting', '12 social posts/month', 'Captions, hashtags, scheduling'],
     highlighted: false,
   },
   {
@@ -257,8 +246,8 @@ const BUNDLES = [
     oneOff: 0,
     monthly: 300,
     isQuote: false,
-    bestFor: 'Growing businesses wanting a complete digital presence',
-    features: ['Professional website build', 'Managed hosting', 'Monthly SEO blog posts', 'Email newsletter campaigns', '12 social posts/month', 'Google ranking monitoring'],
+    bestFor: 'Growing businesses wanting complete monthly digital support',
+    features: ['Ongoing website care included', 'Managed hosting', 'Monthly SEO blog posts', 'Email newsletter campaigns', '12 social posts/month', 'Google ranking monitoring'],
     highlighted: true,
   },
   {
@@ -271,7 +260,7 @@ const BUNDLES = [
     monthly: 350,
     isQuote: false,
     bestFor: 'Service businesses where speed of follow-up matters',
-    features: ['Professional website build', 'Managed hosting', 'WhatsApp enquiry automation', 'Email follow-up sequences', 'CRM lead tracking'],
+    features: ['Ongoing website care included', 'Managed hosting', 'WhatsApp enquiry automation', 'Email follow-up sequences', 'CRM lead tracking'],
     highlighted: false,
   },
   {
@@ -284,7 +273,7 @@ const BUNDLES = [
     monthly: 950,
     isQuote: false,
     bestFor: 'Business owners wanting a fully-managed premium digital presence',
-    features: ['Full website build and hosting', 'Monthly social media content', 'SEO blog posts and email campaigns', 'WhatsApp automation and CRM', 'AI Avatar and Video content', 'Dedicated account manager'],
+    features: ['All monthly services included', 'AI Avatar and Video content', 'AI proposals and sales documents', 'Dedicated account manager', 'Priority support and updates'],
     highlighted: false,
   },
 ]
@@ -297,16 +286,17 @@ const ADDON_GROUPS = [
       { id: 'addon-landing-page', name: 'Landing Page', price: '€150', priceNote: 'one-off', oneOff: 150, monthly: 0, isQuote: false, bestFor: 'Campaigns, ads, promotions, lead generation', features: ['Standalone page', 'Headline and CTA structure', 'Form placement', 'Mobile layout'] },
       { id: 'addon-form-upgrade', name: 'Website Form Upgrade', price: '€75', priceNote: 'one-off', oneOff: 75, monthly: 0, isQuote: false, bestFor: 'Better enquiry, quote, or booking capture', features: ['Custom fields', 'Required field setup', 'Dropdowns and confirmation', 'Routing setup'] },
       { id: 'addon-whatsapp-chat', name: 'WhatsApp Click-to-Chat Setup', price: '€30', priceNote: 'one-off', oneOff: 30, monthly: 0, isQuote: false, bestFor: 'Businesses preferring WhatsApp conversations', features: ['Button and link setup', 'Key page placement', 'Mobile click-to-chat'] },
+      { id: 'addon-whatsapp-chatbot', name: 'WhatsApp Chatbot / Basic Setup', price: '€150', priceNote: 'one-off', oneOff: 150, monthly: 0, isQuote: false, bestFor: 'Businesses wanting simple WhatsApp auto-reply and lead capture', features: ['Basic WhatsApp auto-reply setup', 'Enquiry collection flow', 'Lead notification to your phone'] },
     ],
   },
   {
     title: 'Monthly Support Add-ons',
     addons: [
-      { id: 'addon-hosting-care', name: 'Hosting & Website Care', price: '€30', priceNote: '/month', oneOff: 0, monthly: 30, isQuote: false, bestFor: 'Businesses wanting technical care without managing it', features: ['Hosting and managed storage', 'Uptime monitoring', 'Security checks and backups', 'SSL and domain support'] },
-      { id: 'addon-extra-storage', name: 'Extra Website Storage', price: '€10', priceNote: '/month', oneOff: 0, monthly: 10, isQuote: false, bestFor: 'Businesses with larger galleries, PDFs, or media', features: ['Extra managed storage', 'Image and PDF support', 'Storage monitoring'] },
+      { id: 'addon-hosting-care', name: 'Hosting Care', price: '€20', priceNote: '/month', oneOff: 0, monthly: 20, isQuote: false, bestFor: 'Businesses wanting basic hosting and technical monitoring', features: ['Website hosting', 'Basic website storage', 'SSL/security basics', 'Basic uptime monitoring', 'Monthly platform/plugin checks'] },
+      { id: 'addon-extra-storage', name: 'Extra Website Storage', price: '€10', priceNote: '/month', oneOff: 0, monthly: 10, isQuote: false, bestFor: 'Businesses with larger galleries, PDFs, or media', features: ['Extra managed storage above standard allowance', 'Image and PDF support', 'Storage monitoring'] },
       { id: 'addon-priority-updates', name: 'Priority Updates', price: '€30', priceNote: '/month', oneOff: 0, monthly: 30, isQuote: false, bestFor: 'Businesses needing fast turnaround on changes', features: ['Priority handling', 'Faster response times', 'Text, image and price updates'] },
-      { id: 'addon-content-refresh', name: 'Monthly Content Refresh', price: '€50', priceNote: '/month', oneOff: 0, monthly: 50, isQuote: false, bestFor: 'Businesses wanting their site kept fresh', features: ['One monthly content refresh', 'Content and image updates', 'Improvement notes'] },
-      { id: 'addon-seo-basics', name: 'SEO Basics', price: '€50', priceNote: '/month', oneOff: 0, monthly: 50, isQuote: false, bestFor: 'Businesses wanting better local search visibility', features: ['Page title tidy-up', 'Meta descriptions', 'Heading checks', 'Local keyword alignment'] },
+      { id: 'addon-content-refresh', name: 'Monthly Contact Refresh', price: '€50', priceNote: '/month', oneOff: 0, monthly: 50, isQuote: false, bestFor: 'Businesses wanting their site kept fresh', features: ['One monthly content refresh', 'Content and image updates', 'Improvement notes'] },
+      { id: 'addon-seo-basics', name: 'SEO Basics', price: '€75', priceNote: 'one-off', oneOff: 75, monthly: 0, isQuote: false, bestFor: 'Businesses wanting a one-off SEO setup on their website', features: ['Page titles and meta descriptions', 'Heading structure review', 'Local keyword setup', 'Google Search Console submission'] },
       { id: 'addon-gbp-support', name: 'Google Business Profile Support', price: '€40', priceNote: '/month', oneOff: 0, monthly: 40, isQuote: false, bestFor: 'Businesses wanting a well-managed Google presence', features: ['Profile content support', 'Monthly posts', 'Photo and service updates'] },
     ],
   },
@@ -317,7 +307,7 @@ const ADDON_GROUPS = [
       { id: 'addon-simple-automation', name: 'Simple Automation', price: 'Quote required', priceNote: null, oneOff: 0, monthly: 0, isQuote: true, bestFor: 'Businesses with a repetitive task to automate', features: [] },
       { id: 'addon-email-automation', name: 'Email Automation', price: 'Quote required', priceNote: null, oneOff: 0, monthly: 0, isQuote: true, bestFor: 'Businesses wanting automated follow-ups and email flows', features: [] },
       { id: 'addon-ai-content-workflow', name: 'AI Content Workflow', price: 'Quote required', priceNote: null, oneOff: 0, monthly: 0, isQuote: true, bestFor: 'Businesses wanting AI to power content creation', features: [] },
-      { id: 'addon-ai-avatar-video', name: 'AI Avatar / Video Content', price: 'Quote required', priceNote: null, oneOff: 0, monthly: 0, isQuote: true, bestFor: 'Businesses wanting AI-generated video for social media', features: [] },
+      { id: 'addon-ai-avatar-video', name: 'AI Avatar / Video Content — Bespoke', price: 'Quote required', priceNote: null, oneOff: 0, monthly: 0, isQuote: true, bestFor: 'Businesses wanting bespoke AI-generated video — full service available under Services', features: [] },
     ],
   },
   {
@@ -334,11 +324,11 @@ const ADDON_GROUPS = [
 // ─── Preserved What's the Difference data ──────────────────────────────────────
 
 const differenceItems = [
-  { id: 'websites', icon: Globe,      term: 'Websites',    subtitle: 'One-off website builds',      description: 'One-off website builds for businesses that need a professional online presence.' },
-  { id: 'packages', icon: Package,    term: 'Packages',    subtitle: 'Structured service options',   description: 'Structured service options that combine key website features into clear, ready-made choices.' },
-  { id: 'bundles',  icon: Layers,     term: 'Bundles',     subtitle: 'Monthly support plans',        description: 'Monthly support plans for businesses that want ongoing updates, improvements, hosting support, content changes, and digital growth support.' },
-  { id: 'addons',   icon: PlusCircle, term: 'Add-ons',     subtitle: 'Optional extras',              description: 'Optional extras that can be added to a website, package, or bundle, such as storage, hosting support, extra pages, forms, automation, integrations, or additional features.' },
-  { id: 'quote',    icon: FileText,   term: 'Get a Quote', subtitle: 'Tailored recommendation',      description: 'Best for customers who are unsure what they need or want a tailored recommendation based on their business.' },
+  { id: 'websites', icon: Globe,      term: 'Packages',    subtitle: 'One-off website builds',      description: 'One-off website build packages. Fixed prices. Choose the right level for your business — delivered in 5–7 days.' },
+  { id: 'packages', icon: Package,    term: 'Services',    subtitle: 'Standalone individual services', description: 'Individual services you can add to your website — SEO, automation, content, AI tools and more.' },
+  { id: 'bundles',  icon: Layers,     term: 'Bundles',     subtitle: 'Monthly support plans',        description: 'Monthly ongoing support plans for businesses that already have a website. Hosting care, content, SEO, marketing, automation and growth — all managed for you.' },
+  { id: 'addons',   icon: PlusCircle, term: 'Add-ons',     subtitle: 'Optional extras',              description: 'Small bolt-on extras: Hosting Care from €20/month, landing pages, form upgrades, WhatsApp chatbot setup, SEO basics, Google Business Profile support and more.' },
+  { id: 'quote',    icon: FileText,   term: 'Get a Quote', subtitle: 'Tailored recommendation',      description: 'Not sure what you need? Request a quote for a tailored recommendation based on your business.' },
 ]
 
 // ─── Shared helpers ─────────────────────────────────────────────────────────────

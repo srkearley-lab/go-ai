@@ -5,113 +5,87 @@ import { Check, ChevronDown, ShoppingCart, ArrowRight } from 'lucide-react'
 import PageHero from '../components/PageHero'
 import WhatsDifferenceStrip from '../components/WhatsDifferenceStrip'
 import { useBasket, PACKAGE_FORM_TYPES } from '../context/BasketContext'
-import { packageDetails } from '../data/packageDetails'
 import { useTranslations, useLanguage } from '../context/LanguageContext'
 
-const WHATSAPP = '#'
+// ── Website package structural data (prices / ids stay here; text overridden by translations) ──
 
-// ── Service packages data ─────────────────────────────────────────────────────
-
-const servicePackages = [
+const websitePackages = [
   {
-    id: 'Website Design',
-    name: 'Website Design',
-    priceDisplay: '€450',
-    priceNote: 'one-off website build',
-    description: 'GoAI builds modern, professional, mobile-friendly websites that help businesses look credible and generate enquiries.',
-    features: ['Custom mobile-responsive design', 'Lead capture and contact forms', 'Basic SEO setup included', 'Google Analytics integration'],
+    id: 'basic-launch',
+    badge: 'Entry Level',
+    price: '€450',
+    priceNote: 'one-off',
+    oneOff: 450,
+    isQuote: false,
+    highlighted: false,
   },
   {
-    id: 'SEO',
-    name: 'SEO',
-    priceDisplay: '€150/month',
-    priceNote: 'ongoing SEO management',
-    description: 'Basic SEO setup including page titles, meta descriptions, structure, keywords and visibility foundations.',
-    features: ['Page titles and meta descriptions', 'Keyword research and targeting', 'Google Search Console setup', 'Monthly ranking monitoring'],
+    id: 'starter-business',
+    badge: 'Starter',
+    price: '€750',
+    priceNote: 'one-off',
+    oneOff: 750,
+    isQuote: false,
+    highlighted: false,
   },
   {
-    id: 'WhatsApp Automation',
-    name: 'WhatsApp Automation',
-    priceDisplay: '€250 setup + €150/mo',
-    priceNote: 'setup fee + monthly',
-    description: 'Enquiry capture, WhatsApp lead routing, auto-replies, notifications and simple workflow automation.',
-    features: ['Auto-reply to enquiries', 'Lead routing to your phone', 'Booking confirmation messages', 'Workflow automation'],
+    id: 'business',
+    badge: 'Recommended',
+    price: '€1,200',
+    priceNote: 'one-off',
+    oneOff: 1200,
+    isQuote: false,
+    highlighted: true,
   },
   {
-    id: 'Email Automation',
-    name: 'Email Automation',
-    priceDisplay: '€150 setup + €100/mo',
-    priceNote: 'setup fee + monthly',
-    description: 'Automated follow-ups, enquiry responses, lead nurturing, campaign emails and customer communication workflows.',
-    features: ['Automated follow-up sequences', 'Enquiry response flows', 'Lead nurturing campaigns', 'Email platform setup included'],
+    id: 'growth',
+    badge: 'Best for Growth',
+    price: '€1,750',
+    priceNote: 'one-off',
+    oneOff: 1750,
+    isQuote: false,
+    highlighted: false,
   },
   {
-    id: 'Video Websites',
-    name: 'Video Websites',
-    priceDisplay: '€500',
-    priceNote: 'one-off build',
-    description: 'Video-led website sections, video landing pages, avatar/video content areas and video-first sales pages.',
-    features: ['Video hero sections and backgrounds', 'Video landing page design', 'AI avatar content integration', 'Mobile-optimised video display'],
-  },
-  {
-    id: 'AI Prompts',
-    name: 'AI Prompts',
-    priceDisplay: '€200',
-    priceNote: 'one-off prompt pack',
-    description: 'Tailored AI prompts for business workflows, content creation, marketing, customer replies, admin tasks and sales support.',
-    features: ['Custom AI prompt library', 'Content creation templates', 'Customer reply frameworks', 'Sales and admin support scripts'],
-  },
-  {
-    id: 'Hosting & Website Care',
-    displayName: 'Hosting and Web Care',
-    priceDisplay: '€100/month',
-    priceNote: 'Setup included with website',
-    description: 'Your website stays fast, secure and up to date every month — no technical headaches.',
-    features: ['Reliable managed hosting', 'Security monitoring and backups', 'Up to 2 hrs content updates/month', 'Performance monitoring'],
-  },
-  {
-    id: 'Social Media Content',
-    name: 'Social Media Content',
-    priceDisplay: '€150/month',
-    priceNote: 'Setup included',
-    description: 'Consistent social media presence without lifting a finger.',
-    features: ['12 posts/month across 2 platforms', 'Captions, hashtags, scheduling', 'Content calendar planned ahead', 'Designed to drive local enquiries'],
-  },
-  {
-    id: 'AI Content & Marketing',
-    name: 'AI Content and Marketing',
-    priceDisplay: '€250/month',
-    priceNote: 'Setup included',
-    description: 'Keep your website fresh and your Google ranking growing month after month.',
-    features: ['Monthly SEO blog posts', 'Email newsletter campaigns', 'Google ranking monitoring', 'Monthly performance report'],
-  },
-  {
-    id: 'AI Automation',
-    name: 'AI Automation',
-    priceDisplay: '€300/month',
-    priceNote: '+ €250 one-off setup',
-    description: 'Turn enquiries into bookings automatically, 24/7.',
-    features: ['WhatsApp enquiry bot', 'Email follow-up sequences', 'CRM lead tracking', 'No-code dashboard to update replies'],
-  },
-  {
-    id: 'AI Avatar & Video Content',
-    name: 'AI Avatar and Video Content',
-    priceDisplay: '€300/month',
-    priceNote: '+ €250 one-off setup',
-    description: 'Stand out on social media with AI-generated video content.',
-    features: ['8 AI videos/month', 'Custom digital avatar creation', 'Subtitles in English and Greek', 'Optimised for Instagram and TikTok'],
-  },
-  {
-    id: 'Proposal & Sales Documents',
-    name: 'Proposal and Sales Documents',
-    priceDisplay: '€200/month',
-    priceNote: '+ €200 one-off setup',
-    description: 'Send polished proposals to prospects in minutes, not hours.',
-    features: ['AI-generated proposals in minutes', 'Branded quotes and contracts', 'Digital signature support', 'Automated follow-up sequences'],
+    id: 'premium',
+    badge: 'Premium',
+    price: null,
+    priceNote: null,
+    oneOff: 0,
+    isQuote: true,
+    highlighted: false,
   },
 ]
 
-// ── Shared helpers ────────────────────────────────────────────────────────────
+const BADGE_COLORS = {
+  'Entry Level':     { bg: 'rgba(22,163,74,0.08)',   border: 'rgba(22,163,74,0.18)',   color: 'var(--color-success)' },
+  'Starter':         { bg: 'rgba(99,102,241,0.1)',   border: 'rgba(99,102,241,0.2)',   color: 'var(--color-brand-400)' },
+  'Recommended':     { bg: 'var(--color-brand-500)', border: 'var(--color-brand-600)', color: 'var(--color-neutral-0)' },
+  'Best for Growth': { bg: 'rgba(245,158,11,0.1)',   border: 'rgba(245,158,11,0.2)',   color: 'var(--color-accent-400)' },
+  'Premium':         { bg: 'rgba(245,158,11,0.12)',  border: 'rgba(245,158,11,0.25)',  color: 'var(--color-accent-400)' },
+  // Greek aliases
+  'Εισαγωγικό':             { bg: 'rgba(22,163,74,0.08)',   border: 'rgba(22,163,74,0.18)',   color: 'var(--color-success)' },
+  'Αρχικό πακέτο':          { bg: 'rgba(99,102,241,0.1)',   border: 'rgba(99,102,241,0.2)',   color: 'var(--color-brand-400)' },
+  'Συνιστώμενο':            { bg: 'var(--color-brand-500)', border: 'var(--color-brand-600)', color: 'var(--color-neutral-0)' },
+  'Καλύτερο για Ανάπτυξη': { bg: 'rgba(245,158,11,0.1)',   border: 'rgba(245,158,11,0.2)',   color: 'var(--color-accent-400)' },
+  'Προνομιακό':             { bg: 'rgba(245,158,11,0.12)',  border: 'rgba(245,158,11,0.25)',  color: 'var(--color-accent-400)' },
+}
+
+function Badge({ label }) {
+  const t = useTranslations()
+  const c = BADGE_COLORS[label] || { bg: 'rgba(99,102,241,0.1)', border: 'rgba(99,102,241,0.2)', color: 'var(--color-brand-400)' }
+  return (
+    <span style={{
+      display: 'inline-flex', alignItems: 'center',
+      fontSize: 'var(--text-xs)', fontWeight: 600,
+      letterSpacing: '0.05em', textTransform: 'uppercase',
+      background: c.bg, border: `1px solid ${c.border}`, color: c.color,
+      borderRadius: 'var(--radius-full)', padding: '3px var(--space-3)',
+    }}>
+      {t.labels.badgeLabels?.[label] || label}
+    </span>
+  )
+}
 
 function FeatureItem({ text }) {
   return (
@@ -130,8 +104,6 @@ function FeatureItem({ text }) {
     </li>
   )
 }
-
-// ── Basket button ─────────────────────────────────────────────────────────────
 
 function BasketButton({ item }) {
   const { addItem, removeItem, isInBasket } = useBasket()
@@ -162,100 +134,7 @@ function BasketButton({ item }) {
   )
 }
 
-// ── Find Out More panel ───────────────────────────────────────────────────────
-
-function FindOutMorePanel({ detailKey, item }) {
-  const details = packageDetails[detailKey]
-  const t = useTranslations()
-  const { language } = useLanguage()
-  if (!details) return null
-  const d = language === 'gr' && details.el ? details.el : details
-
-  return (
-    <div style={{ borderTop: '1px solid var(--border-default)', paddingTop: 'var(--space-6)', marginTop: 'var(--space-2)', display: 'flex', flexDirection: 'column', gap: 'var(--space-6)' }}>
-      <div>
-        <h4 style={{ fontSize: 'var(--text-md)', fontWeight: 700, color: 'var(--text-primary)', lineHeight: 1.2, marginBottom: 'var(--space-3)' }}>
-          {d.headline}
-        </h4>
-        <p style={{ fontSize: 'var(--text-sm)', lineHeight: 1.7, color: 'var(--text-secondary)' }}>
-          {d.overview}
-        </p>
-      </div>
-
-      <div className="fom-grid grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
-          <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', margin: 0 }}>{t.findOutMore.whoFor}</p>
-          <p style={{ fontSize: 'var(--text-sm)', lineHeight: 1.6, color: 'var(--text-secondary)', margin: 0 }}>{d.whoFor}</p>
-        </div>
-
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
-          <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', margin: 0 }}>{t.findOutMore.weNeed}</p>
-          <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
-            {d.youNeed.map((need, ni) => (
-              <li key={ni} style={{ display: 'flex', alignItems: 'flex-start', gap: 'var(--space-2)', fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
-                <span style={{ color: 'var(--color-brand-400)', flexShrink: 0, marginTop: 2 }}>→</span>
-                {need}
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
-          <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', margin: 0 }}>{t.findOutMore.included}</p>
-          <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
-            {d.included.map((inc, ii) => (
-              <li key={ii} style={{ display: 'flex', alignItems: 'flex-start', gap: 'var(--space-2)' }}>
-                <span style={{ width: 14, height: 14, borderRadius: '50%', background: 'rgba(99,102,241,0.1)', border: '1px solid rgba(99,102,241,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-brand-400)', flexShrink: 0, marginTop: 2 }}>
-                  <Check size={8} strokeWidth={3} />
-                </span>
-                <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-primary)', lineHeight: 1.5 }}>{inc}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
-          <p style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-tertiary)', margin: 0 }}>{t.findOutMore.howItWorks}</p>
-          <ol style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
-            {d.steps.map((step, i) => (
-              <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 'var(--space-3)' }}>
-                <span style={{ width: 20, height: 20, borderRadius: '50%', background: 'var(--surface-overlay)', border: '1px solid var(--border-strong)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 'var(--text-xs)', fontWeight: 700, color: 'var(--color-brand-400)', flexShrink: 0, marginTop: 1 }}>
-                  {i + 1}
-                </span>
-                <span style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', lineHeight: 1.5 }}>{step}</span>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </div>
-
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-3)', paddingTop: 'var(--space-2)' }}>
-        <BasketButton item={item} />
-        <Link
-          to="/contact"
-          style={{
-            height: 36, padding: '0 var(--space-5)',
-            display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-2)',
-            fontSize: 'var(--text-xs)', fontWeight: 600,
-            background: 'linear-gradient(90deg, #293BFF 0%, #7627EF 100%)', color: '#FFFFFF',
-            border: 'none',
-            boxShadow: '0 0 20px rgba(118, 39, 239, 0.3)',
-            borderRadius: 'var(--radius-md)',
-            transition: 'filter 120ms ease, box-shadow 120ms ease',
-          }}
-          onMouseEnter={(e) => { e.currentTarget.style.filter = 'brightness(1.1)'; e.currentTarget.style.boxShadow = '0 0 30px rgba(118, 39, 239, 0.45)' }}
-          onMouseLeave={(e) => { e.currentTarget.style.filter = 'brightness(1)'; e.currentTarget.style.boxShadow = '0 0 20px rgba(118, 39, 239, 0.3)' }}
-        >
-          {t.buttons.startService} <ArrowRight size={12} />
-        </Link>
-      </div>
-    </div>
-  )
-}
-
-// ── Toggle button ─────────────────────────────────────────────────────────────
-
-function PackageToggleBtn({ showDetails, onToggle }) {
+function ShowFeaturesBtn({ open, onToggle }) {
   const t = useTranslations()
   return (
     <button
@@ -263,83 +142,113 @@ function PackageToggleBtn({ showDetails, onToggle }) {
       onClick={onToggle}
       style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-1)', background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-brand-400)', fontSize: 'var(--text-xs)', fontWeight: 500, padding: 0, fontFamily: 'inherit' }}
     >
-      {showDetails ? t.buttons.hideDetails : t.buttons.findOutMore}
-      <motion.span animate={{ rotate: showDetails ? 180 : 0 }} transition={{ duration: 0.15 }} style={{ display: 'flex' }}>
+      {open ? t.buttons.hideDetails : t.buttons.showDetails}
+      <motion.span animate={{ rotate: open ? 180 : 0 }} transition={{ duration: 0.15 }} style={{ display: 'flex' }}>
         <ChevronDown size={12} />
       </motion.span>
     </button>
   )
 }
 
-// ── Package card ──────────────────────────────────────────────────────────────
+function WebsitePackageCard({ pkg, td, variants }) {
+  const [showFeatures, setShowFeatures] = useState(false)
+  const t = useTranslations()
+  const hl = pkg.highlighted
 
-function PackageCard({ pkg, variants }) {
-  const [showDetails, setShowDetails] = useState(false)
-  const displayName = pkg.displayName || pkg.name || pkg.id
   const basketItem = {
     id: pkg.id,
-    name: displayName,
-    priceDisplay: pkg.priceDisplay,
+    name: td?.name || pkg.id,
+    priceDisplay: pkg.isQuote ? t.labels.quoteRequired : pkg.price,
     formTypes: PACKAGE_FORM_TYPES[pkg.id] || [],
   }
+
+  const tn = (note) => note === 'one-off' ? t.labels.oneOff : note === '/month' ? t.labels.perMonth : note
 
   return (
     <motion.div
       variants={variants}
       style={{
-        background: 'var(--surface-raised)',
-        border: '1px solid var(--border-default)',
+        background: hl ? 'var(--surface-overlay)' : 'var(--surface-raised)',
+        border: `1px solid ${hl ? 'rgba(118,39,239,0.4)' : 'var(--border-default)'}`,
+        borderLeft: hl ? '3px solid var(--goai-violet)' : undefined,
         borderRadius: 'var(--radius-lg)',
         padding: 'var(--space-6)',
         display: 'flex', flexDirection: 'column', gap: 'var(--space-4)',
+        boxShadow: hl ? '0 0 20px rgba(118,39,239,0.12)' : 'none',
         transition: 'border-color 150ms ease, box-shadow 150ms ease',
       }}
-      onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--border-strong)'; e.currentTarget.style.boxShadow = 'var(--shadow-sm)' }}
-      onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--border-default)'; e.currentTarget.style.boxShadow = 'none' }}
+      onMouseEnter={(e) => { e.currentTarget.style.borderColor = hl ? 'rgba(118,39,239,0.6)' : 'var(--border-strong)'; e.currentTarget.style.boxShadow = hl ? '0 0 30px rgba(118,39,239,0.2)' : 'var(--shadow-sm)' }}
+      onMouseLeave={(e) => { e.currentTarget.style.borderColor = hl ? 'rgba(118,39,239,0.4)' : 'var(--border-default)'; e.currentTarget.style.boxShadow = hl ? '0 0 20px rgba(118,39,239,0.12)' : 'none' }}
     >
-      <div>
-        <h3 style={{ fontSize: 'var(--text-md)', fontWeight: 600, color: 'var(--text-primary)', lineHeight: 1.2, marginBottom: 'var(--space-2)' }}>
-          {displayName}
+      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 'var(--space-3)' }}>
+        <h3 style={{ fontSize: 'var(--text-md)', fontWeight: 700, color: 'var(--text-primary)', lineHeight: 1.2 }}>
+          {td?.name || pkg.id}
         </h3>
-        <p style={{ fontSize: 'var(--text-xs)', lineHeight: 1.6, color: 'var(--text-secondary)' }}>
-          {pkg.description}
-        </p>
+        <Badge label={pkg.badge} />
       </div>
+
+      {td?.bestFor && (
+        <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-secondary)', lineHeight: 1.5, fontStyle: 'italic' }}>
+          {t.pages.websites.bestFor} {td.bestFor}
+        </p>
+      )}
 
       <div>
         <span style={{ fontSize: 'var(--text-xl)', fontWeight: 700, letterSpacing: '-0.02em', color: 'var(--text-primary)', lineHeight: 1 }}>
-          {pkg.priceDisplay}
+          {pkg.isQuote ? t.labels.quoteRequired : pkg.price}
         </span>
-        <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', marginTop: 'var(--space-1)' }}>
-          {pkg.priceNote}
-        </p>
-      </div>
-
-      <hr style={{ border: 'none', borderTop: '1px solid var(--border-default)', margin: 0 }} />
-
-      <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
-        {pkg.features.map((f, i) => <FeatureItem key={i} text={f} />)}
-      </ul>
-
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 'var(--space-2)', paddingTop: 'var(--space-2)', borderTop: '1px solid var(--border-default)' }}>
-        <BasketButton item={basketItem} />
-        <PackageToggleBtn showDetails={showDetails} onToggle={() => setShowDetails(v => !v)} />
+        {!pkg.isQuote && pkg.priceNote && (
+          <span style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', marginLeft: 'var(--space-2)' }}>
+            {tn(pkg.priceNote)}
+          </span>
+        )}
       </div>
 
       <AnimatePresence>
-        {showDetails && (
+        {showFeatures && td?.features && (
           <motion.div
-            key={`fom-${pkg.id}`}
+            key={`feat-${pkg.id}`}
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
             style={{ overflow: 'hidden' }}
           >
-            <FindOutMorePanel detailKey={pkg.id} item={basketItem} />
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 'var(--space-2)', paddingTop: 'var(--space-2)', borderTop: '1px solid var(--border-default)' }}>
+              {td.features.map((f, i) => <FeatureItem key={i} text={f} />)}
+            </ul>
           </motion.div>
         )}
       </AnimatePresence>
+
+      <p style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)', fontStyle: 'italic', borderTop: '1px solid var(--border-default)', paddingTop: 'var(--space-3)' }}>
+        {t.pages.packages.hostingCareNote}
+      </p>
+
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 'var(--space-2)' }}>
+        {pkg.isQuote ? (
+          <Link
+            to="/contact"
+            style={{
+              height: 36, padding: '0 var(--space-4)',
+              display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 'var(--space-2)',
+              fontSize: 'var(--text-xs)', fontWeight: 600,
+              background: 'linear-gradient(90deg, #293BFF 0%, #7627EF 100%)',
+              color: '#FFFFFF', border: 'none',
+              boxShadow: '0 0 20px rgba(118, 39, 239, 0.3)',
+              borderRadius: 'var(--radius-md)',
+              transition: 'filter 120ms ease',
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.filter = 'brightness(1.1)' }}
+            onMouseLeave={(e) => { e.currentTarget.style.filter = 'brightness(1)' }}
+          >
+            {t.buttons.requestAQuote} <ArrowRight size={11} />
+          </Link>
+        ) : (
+          <BasketButton item={basketItem} />
+        )}
+        <ShowFeaturesBtn open={showFeatures} onToggle={() => setShowFeatures(v => !v)} />
+      </div>
     </motion.div>
   )
 }
@@ -350,22 +259,10 @@ export default function Packages() {
   const reduceMotion = useReducedMotion()
   const t = useTranslations()
 
-  // Merge structural data (id, priceDisplay) with translated text
-  const localizedPackages = servicePackages.map((pkg, i) => {
-    const td = t.packageServiceData?.[i]
-    if (!td) return pkg
-    const display = pkg.priceDisplay
-      .replace(/\/mo(?:nth)?/g, t.labels.perMonth)
-      .replace(' setup', ` ${t.pricing.setupLabel}`)
-    return {
-      ...pkg,
-      name:        td.name,
-      displayName: td.name,
-      priceNote:   td.priceNote,
-      description: td.description,
-      features:    td.features,
-      priceDisplay: display,
-    }
+  // Merge structural data with translated text from websiteData
+  const localizedPackages = websitePackages.map((pkg, i) => {
+    const td = t.websiteData?.[i]
+    return { pkg, td }
   })
 
   const stagger = {
@@ -385,7 +282,7 @@ export default function Packages() {
         description={t.pages.packages.description}
       />
 
-      <WhatsDifferenceStrip activePage="packages" insideJourney={false} />
+      <WhatsDifferenceStrip activePage="websites" insideJourney={false} />
 
       <section style={{ padding: 'var(--space-16) var(--space-8)', background: 'var(--surface-base)' }}>
         <div style={{ maxWidth: 'var(--width-xl)', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 'var(--space-10)' }}>
@@ -397,8 +294,8 @@ export default function Packages() {
             viewport={{ once: true, margin: '-60px' }}
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
           >
-            {localizedPackages.map(pkg => (
-              <PackageCard key={pkg.id} pkg={pkg} variants={cardVariants} />
+            {localizedPackages.map(({ pkg, td }) => (
+              <WebsitePackageCard key={pkg.id} pkg={pkg} td={td} variants={cardVariants} />
             ))}
           </motion.div>
 
