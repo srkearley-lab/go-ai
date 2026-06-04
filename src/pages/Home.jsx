@@ -12,7 +12,7 @@ import SectionHeader from '../components/SectionHeader'
 import { useSEO } from '../lib/seo'
 import IndustryCard from '../components/IndustryCard'
 import StepCard from '../components/StepCard'
-import { useTranslations } from '../context/LanguageContext'
+import { useTranslations, useLanguage } from '../context/LanguageContext'
 
 const ShaderAnimation = lazy(() =>
   import('../components/ShaderAnimation').then((m) => ({ default: m.ShaderAnimation }))
@@ -172,6 +172,7 @@ function TopPackagesSection({ reduceMotion, stagger, cardVariants, t }) {
 export default function Home() {
   const reduceMotion = useReducedMotion()
   const t = useTranslations()
+  const { language } = useLanguage()
   useSEO({
     title: 'GO AI — AI-powered websites, content and automation',
     description: 'GO AI builds professional websites, AI-powered content systems, automation and monthly growth packages for businesses that want to look professional online and turn visitors into customers.',
@@ -316,6 +317,22 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
+
+      {/* ── Hero video (English only) ── */}
+      {language === 'en' && (
+        <section className="w-full relative overflow-hidden">
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="w-full max-h-[600px] object-cover"
+            style={{ display: 'block' }}
+          >
+            <source src="/hero-video.mp4" type="video/mp4" />
+          </video>
+        </section>
+      )}
 
       {/* ── b) Top 3 Recommended Packages ── */}
       <TopPackagesSection reduceMotion={reduceMotion} stagger={stagger} cardVariants={cardVariants} t={t} />
