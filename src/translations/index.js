@@ -1079,7 +1079,7 @@ export const translations = {
     pages: {
       packages: {
         tag:             'ΙΣΤΟΣΕΛΙΔΕΣ',
-        title:           'Ιστοσελίδες',
+        title:           'Κατασκευή Ιστοσελίδας',
         description:     'Εφάπαξ κατασκευές ιστοσελίδων με σταθερές τιμές. Επιλέξτε το κατάλληλο επίπεδο για την επιχείρησή σας, ξεκινώντας από τη Βασική Ιστοσελίδα Εκκίνησης στα €450.',
         hostingCareNote: 'Προαιρετική Φιλοξενία διαθέσιμη από €20/μήνα μετά την ολοκλήρωση.',
         vatNote:         'Όλες οι τιμές αφορούν την αρχική κατασκευή ιστοσελίδας. Η τελική τιμή επιβεβαιώνεται κατόπιν αιτήματος. Όλες οι τιμές δεν περιλαμβάνουν ΦΠΑ (24%).',
@@ -2293,7 +2293,7 @@ export const translations = {
     pages: {
       packages: {
         tag:             'WEBSITES',
-        title:           'Websites',
+        title:           'Website Build',
         description:     'One-off website builds with fixed prices. Choose the right level for your business, starting with the Basic Launch Website at €450.',
         hostingCareNote: 'Optional Hosting Care available from €20/month after launch.',
         vatNote:         'All website prices are fixed prices for the initial website build. Final price confirmed on enquiry. All prices exclude Greek VAT (24%).',
