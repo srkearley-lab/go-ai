@@ -27,6 +27,7 @@ import Quote from './pages/Quote'
 import RequestQuote from './pages/RequestQuote'
 import Addons from './pages/Addons'
 import Journey from './pages/Journey'
+import GoAINew from './pages/GoAINew'
 
 function App() {
   return (
@@ -57,6 +58,7 @@ function App() {
           <Route path="/faq" element={<FAQ />} />
           <Route path="/thank-you" element={<ThankYou />} />
           <Route path="/control" element={<ControlCentre />} />
+          <Route path="/new" element={<GoAINew />} />
         </Routes>
         <Footer />
         <BasketPanel />

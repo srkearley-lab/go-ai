@@ -1,0 +1,618 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* =========================================================
+   GoAI New — design system scoped under .goai-page
+   All vars use --gn- prefix to avoid Tailwind conflicts
+   ========================================================= */
+
+.goai-page {
+  --gn-font-sans: 'Manrope', system-ui, sans-serif;
+  --gn-font-serif: 'Instrument Serif', Georgia, serif;
+  --gn-font-mono: 'JetBrains Mono', monospace;
+
+  --gn-text-xs:   0.75rem;
+  --gn-text-sm:   0.875rem;
+  --gn-text-base: 1rem;
+  --gn-text-lg:   1.125rem;
+  --gn-text-xl:   1.25rem;
+  --gn-text-2xl:  1.5rem;
+  --gn-text-3xl:  1.875rem;
+  --gn-text-4xl:  2.25rem;
+  --gn-text-5xl:  clamp(2.5rem, 5vw, 3.5rem);
+
+  --gn-section-y: clamp(80px, 9vw, 120px);
+  --gn-card-pad:  32px;
+  --gn-width-content: 1100px;
+
+  --gn-radius-sm:   6px;
+  --gn-radius-md:   12px;
+  --gn-radius-lg:   18px;
+  --gn-radius-xl:   24px;
+  --gn-radius-full: 9999px;
+
+  /* brand */
+  --gn-brand:       #4f46e5;
+  --gn-brand-strong:#4338ca;
+  --gn-brand-soft:  color-mix(in srgb, #4f46e5 10%, transparent);
+  --gn-brand-line:  color-mix(in srgb, #4f46e5 26%, transparent);
+  --gn-brand-ink:   #4f46e5;
+  --gn-success:     #10b981;
+  --gn-whatsapp:    #25d366;
+
+  /* surfaces */
+  --gn-bg:             #f8f8fc;
+  --gn-surface:        #ffffff;
+  --gn-surface-2:      #f1f1f7;
+  --gn-surface-accent: color-mix(in srgb, #4f46e5 8%, #f8f8fc);
+  --gn-ink:   #0d0d14;
+  --gn-ink-2: #4b4b66;
+  --gn-ink-3: #8b8baa;
+  --gn-line:  #e4e4ee;
+  --gn-line-2:#d4d4e4;
+
+  --gn-shadow-sm:   0 1px 3px rgba(13,13,20,.08);
+  --gn-shadow-md:   0 4px 16px rgba(13,13,20,.10);
+  --gn-shadow-lg:   0 8px 32px rgba(13,13,20,.12);
+  --gn-shadow-card: 0 2px 8px rgba(13,13,20,.06), 0 8px 24px rgba(13,13,20,.06);
+
+  font-family: var(--gn-font-sans);
+  color: var(--gn-ink);
+  background: var(--gn-bg);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.6;
+}
+
+/* ---- Layout ---- */
+.goai-page .gn-container {
+  width: 100%;
+  max-width: var(--gn-width-content);
+  margin-inline: auto;
+  padding-inline: 24px;
+}
+
+.goai-page h1,
+.goai-page h2,
+.goai-page h3 {
+  font-family: var(--gn-font-sans);
+  line-height: 1.15;
+  font-weight: 800;
+  color: var(--gn-ink);
+  margin: 0;
+}
+
+.goai-page p { margin: 0; }
+
+/* ---- Eyebrow ---- */
+.goai-page .gn-eyebrow {
+  display: inline-block;
+  font-size: var(--gn-text-xs);
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--gn-brand-ink);
+  margin-bottom: 12px;
+}
+
+/* ---- Buttons ---- */
+.goai-page .gn-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  border-radius: var(--gn-radius-full);
+  font-family: var(--gn-font-sans);
+  font-size: var(--gn-text-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .18s ease;
+  padding: 10px 22px;
+  text-decoration: none;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.goai-page .gn-btn-primary {
+  background: var(--gn-brand);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(79,70,229,.3);
+}
+.goai-page .gn-btn-primary:hover {
+  background: var(--gn-brand-strong);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(79,70,229,.4);
+}
+
+.goai-page .gn-btn-secondary {
+  background: var(--gn-surface);
+  color: var(--gn-ink);
+  border: 1.5px solid var(--gn-line-2);
+}
+.goai-page .gn-btn-secondary:hover {
+  border-color: var(--gn-brand-line);
+  color: var(--gn-brand-ink);
+  transform: translateY(-1px);
+}
+
+.goai-page .gn-btn-wa {
+  background: var(--gn-whatsapp);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(37,211,102,.35);
+}
+.goai-page .gn-btn-wa:hover {
+  background: #1dad55;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(37,211,102,.45);
+}
+
+.goai-page .gn-btn-lg {
+  font-size: var(--gn-text-base);
+  padding: 14px 32px;
+}
+
+.goai-page .gn-btn-outline {
+  background: transparent;
+  color: var(--gn-brand-ink);
+  border: 1.5px solid var(--gn-brand-line);
+}
+.goai-page .gn-btn-outline:hover {
+  background: var(--gn-brand-soft);
+}
+
+/* ---- Chip ---- */
+.goai-page .gn-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: var(--gn-radius-full);
+  font-size: var(--gn-text-xs);
+  font-weight: 600;
+  background: var(--gn-surface);
+  color: var(--gn-ink-2);
+  border: 1px solid var(--gn-line);
+  box-shadow: var(--gn-shadow-sm);
+}
+
+/* ---- Card ---- */
+.goai-page .gn-card {
+  background: var(--gn-surface);
+  border: 1px solid var(--gn-line);
+  border-radius: var(--gn-radius-lg);
+  padding: var(--gn-card-pad);
+  box-shadow: var(--gn-shadow-card);
+}
+
+.goai-page .gn-card-hover {
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+.goai-page .gn-card-hover:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--gn-shadow-lg);
+  border-color: var(--gn-brand-line);
+}
+
+/* ---- Icon badge ---- */
+.goai-page .gn-icon-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--gn-radius-md);
+  background: var(--gn-brand-soft);
+  color: var(--gn-brand-ink);
+  flex-shrink: 0;
+}
+
+/* ---- Section shared ---- */
+.goai-page .gn-section {
+  padding-block: var(--gn-section-y);
+}
+.goai-page .gn-section-alt {
+  background: var(--gn-surface-2);
+  border-top: 1px solid var(--gn-line);
+  border-bottom: 1px solid var(--gn-line);
+}
+.goai-page .gn-section-head {
+  text-align: center;
+  margin-bottom: clamp(40px, 6vw, 64px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.goai-page .gn-section-head h2 {
+  font-size: var(--gn-text-4xl);
+  letter-spacing: -.03em;
+  max-width: 22ch;
+}
+.goai-page .gn-section-head p {
+  font-size: var(--gn-text-lg);
+  color: var(--gn-ink-2);
+  max-width: 56ch;
+}
+
+/* ---- Hero ---- */
+.goai-page .gn-hero {
+  padding-top: clamp(100px, 12vw, 148px);
+  padding-bottom: clamp(72px, 8vw, 112px);
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -5%, color-mix(in srgb, var(--gn-brand) 13%, transparent) 0%, transparent 65%),
+    var(--gn-bg);
+  position: relative;
+  overflow: hidden;
+}
+
+.goai-page .gn-hero-inner {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.goai-page .gn-hero h1 {
+  font-size: var(--gn-text-5xl);
+  letter-spacing: -.04em;
+  max-width: 20ch;
+  margin-inline: auto;
+}
+
+.goai-page .gn-hero-sub {
+  font-size: var(--gn-text-lg);
+  color: var(--gn-ink-2);
+  max-width: 58ch;
+  line-height: 1.6;
+}
+
+.goai-page .gn-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+
+.goai-page .gn-proof-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 28px;
+  justify-content: center;
+  margin-top: 4px;
+}
+
+.goai-page .gn-proof-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: var(--gn-text-sm);
+  color: var(--gn-ink-3);
+  font-weight: 500;
+}
+
+/* browser mockup */
+.goai-page .gn-browser-wrap {
+  position: relative;
+  max-width: 900px;
+  width: 100%;
+  margin-top: 24px;
+}
+
+.goai-page .gn-browser-wrap::before {
+  content: '';
+  position: absolute;
+  inset: -8% 6% -14%;
+  background: radial-gradient(60% 70% at 50% 30%, color-mix(in srgb, var(--gn-brand) 22%, transparent), transparent 70%);
+  filter: blur(40px);
+  opacity: .45;
+  pointer-events: none;
+}
+
+.goai-page .gn-browser {
+  position: relative;
+  background: var(--gn-surface);
+  border-radius: var(--gn-radius-xl);
+  border: 1px solid var(--gn-line-2);
+  box-shadow: var(--gn-shadow-lg);
+  overflow: hidden;
+}
+
+.goai-page .gn-browser-bar {
+  height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 18px;
+  border-bottom: 1px solid var(--gn-line);
+  background: var(--gn-surface-2);
+}
+
+.goai-page .gn-browser-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+}
+
+.goai-page .gn-browser-url {
+  flex: 1;
+  max-width: 280px;
+  height: 24px;
+  margin-inline: auto;
+  background: var(--gn-surface);
+  border: 1px solid var(--gn-line);
+  border-radius: var(--gn-radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  font-size: 12px;
+  color: var(--gn-ink-3);
+  font-family: var(--gn-font-mono);
+}
+
+.goai-page .gn-browser-body {
+  position: relative;
+  height: 420px;
+}
+
+.goai-page .gn-browser-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.goai-page .gn-browser-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(8,12,24,.35) 0%, rgba(8,12,24,.1) 40%, rgba(8,12,24,.65) 100%);
+}
+
+.goai-page .gn-browser-nav-bar {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+}
+
+.goai-page .gn-browser-content {
+  position: absolute;
+  left: 28px; bottom: 28px; right: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.goai-page .gn-float-chip {
+  position: absolute;
+  right: -16px;
+  top: 80px;
+  background: var(--gn-surface);
+  border: 1px solid var(--gn-line);
+  border-radius: var(--gn-radius-xl);
+  padding: 14px 18px;
+  box-shadow: var(--gn-shadow-lg);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ---- Pricing ---- */
+.goai-page .gn-packages-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.goai-page .gn-pkg {
+  background: var(--gn-surface);
+  border: 1.5px solid var(--gn-line);
+  border-radius: var(--gn-radius-xl);
+  padding: 32px;
+  position: relative;
+  box-shadow: var(--gn-shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.goai-page .gn-pkg:hover { transform: translateY(-4px); box-shadow: var(--gn-shadow-lg); }
+
+.goai-page .gn-pkg.popular {
+  border-color: var(--gn-brand);
+  box-shadow: 0 0 0 1px var(--gn-brand), var(--gn-shadow-lg);
+  transform: scale(1.02);
+  background: linear-gradient(180deg, var(--gn-brand-soft), var(--gn-surface) 55%);
+}
+.goai-page .gn-pkg.popular:hover { transform: scale(1.02) translateY(-4px); }
+
+.goai-page .gn-pkg-badge {
+  position: absolute;
+  top: -13px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--gn-brand);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  padding: 4px 14px;
+  border-radius: var(--gn-radius-full);
+  white-space: nowrap;
+}
+
+.goai-page .gn-pkg-price {
+  font-size: var(--gn-text-3xl);
+  font-weight: 800;
+  color: var(--gn-ink);
+  line-height: 1.1;
+  letter-spacing: -.03em;
+}
+
+.goai-page .gn-pkg-price-unit {
+  font-size: var(--gn-text-sm);
+  font-weight: 500;
+  color: var(--gn-ink-3);
+  margin-left: 4px;
+}
+
+.goai-page .gn-pkg-divider {
+  border: none;
+  border-top: 1px solid var(--gn-line);
+  margin: 4px 0;
+}
+
+.goai-page .gn-pkg-bestfor-label {
+  font-size: var(--gn-text-xs);
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--gn-ink-3);
+  margin-bottom: 4px;
+}
+
+/* ---- Services grid ---- */
+.goai-page .gn-services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+/* ---- Industries ---- */
+.goai-page .gn-industries-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.goai-page .gn-industry-tile {
+  background: var(--gn-surface);
+  border: 1px solid var(--gn-line);
+  border-radius: var(--gn-radius-lg);
+  padding: 20px;
+  text-align: center;
+  transition: all .2s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: default;
+}
+.goai-page .gn-industry-tile:hover {
+  border-color: var(--gn-brand-line);
+  background: var(--gn-surface-accent);
+  transform: translateY(-2px);
+}
+
+/* ---- Steps ---- */
+.goai-page .gn-steps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  position: relative;
+}
+
+.goai-page .gn-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+  position: relative;
+}
+
+.goai-page .gn-step-icon-wrap {
+  position: relative;
+  z-index: 1;
+}
+
+.goai-page .gn-step-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--gn-surface);
+  border: 1px solid var(--gn-line);
+  box-shadow: var(--gn-shadow-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gn-brand-ink);
+}
+
+.goai-page .gn-step-num {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--gn-brand);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  border: 2.5px solid var(--gn-bg);
+}
+
+.goai-page .gn-step-line {
+  position: absolute;
+  top: 28px;
+  left: calc(50% + 38px);
+  right: calc(-50% + 38px);
+  height: 2px;
+  background: var(--gn-line-2);
+}
+
+/* ---- CTA band ---- */
+.goai-page .gn-cta-band {
+  background:
+    radial-gradient(ellipse 70% 80% at 50% 50%, color-mix(in srgb, var(--gn-brand) 11%, transparent) 0%, transparent 70%),
+    var(--gn-surface-2);
+  border-radius: var(--gn-radius-xl);
+  margin: 0 24px var(--gn-section-y);
+  padding: clamp(56px, 7vw, 88px) 24px;
+  text-align: center;
+  border: 1px solid var(--gn-brand-line);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.goai-page .gn-cta-band h2 {
+  font-size: var(--gn-text-4xl);
+  letter-spacing: -.03em;
+  max-width: 22ch;
+}
+
+/* ---- Divider ---- */
+.goai-page .gn-divider {
+  border: none;
+  border-top: 1px solid var(--gn-line);
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 960px) {
+  .goai-page .gn-packages-grid { grid-template-columns: 1fr; max-width: 480px; margin-inline: auto; }
+  .goai-page .gn-pkg.popular { transform: none; }
+  .goai-page .gn-pkg.popular:hover { transform: translateY(-4px); }
+  .goai-page .gn-services-grid { grid-template-columns: 1fr 1fr; }
+  .goai-page .gn-industries-grid { grid-template-columns: repeat(2, 1fr); }
+  .goai-page .gn-steps-grid { grid-template-columns: 1fr; }
+  .goai-page .gn-step-line { display: none; }
+}
+
+@media (max-width: 600px) {
+  .goai-page .gn-browser-body { height: 280px; }
+  .goai-page .gn-float-chip { display: none; }
+  .goai-page .gn-browser-nav-bar span:not(:first-child) { display: none; }
+  .goai-page .gn-services-grid { grid-template-columns: 1fr; }
+  .goai-page .gn-section-head h2 { font-size: var(--gn-text-3xl); }
+  .goai-page .gn-hero h1 { font-size: 2.25rem; }
+  .goai-page .gn-cta-band { margin-inline: 0; border-radius: 0; }
+}
